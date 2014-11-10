@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.index
 
-import com.blinkbox.books.catalogue.ingester.Distribute.Book
+import com.blinkbox.books.catalogue.common.Distribute.Book
 import com.sksamuel.elastic4s.ElasticClient
 import com.typesafe.config.Config
 import scala.concurrent.Future

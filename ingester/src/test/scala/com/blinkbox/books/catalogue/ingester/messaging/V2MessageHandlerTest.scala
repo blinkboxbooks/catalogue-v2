@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
-import com.blinkbox.books.catalogue.ingester.Distribute.Book
+import com.blinkbox.books.catalogue.common.Distribute.Book
 import com.blinkbox.books.catalogue.ingester.index.Search
 import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
 import com.blinkbox.books.messaging._

@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.xml
 
-import com.blinkbox.books.catalogue.ingester.Distribute._
+import com.blinkbox.books.catalogue.common.Distribute._
 import com.blinkbox.books.messaging.{MediaType, EventBody, JsonEventBody}
 import scala.util.Try
 import scala.xml.{NodeSeq, XML, Elem}
