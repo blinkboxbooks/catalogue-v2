@@ -25,3 +25,5 @@ target/
 .idea_modules
 .project
 .settings
+*.swp
+

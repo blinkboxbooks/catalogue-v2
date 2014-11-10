@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<book
+        xmlns="http://schemas.blinkbox.com/books/distribution"
+        xmlns:r="http://schemas.blinkbox.com/books/routing"
+        r:originator="quill"
+        r:instance=""
+        rev=""
+        for="distribution"
+        r:version="0.0.4">
+    <isbn>9781405368223</isbn>
+    <title>DK Eyewitness Top 10 Travel Guide: San Francisco</title>
+    <subtitle>San Francisco</subtitle>
+    <series>
+        <title>DK Eyewitness Top 10 Travel Guide</title>
+        <number></number>
+    </series>
+    <contributors>
+        <contributor role="Author" id="c0b6e1e314ce1dcf62a54c8f3f82e1a7feb8600b">
+            <displayName>Jeffrey Kennedy</displayName>
+            <sortName>Kennedy, Jeffrey</sortName>
+        </contributor>
+    </contributors>
+    <descriptions>
+        <description format="html" default="true" source="Main description">&lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco &lt;/I&gt;will lead you straight to the very best of this waterfront city. Whether you’re looking for the liveliest bars and clubs, the best day trips to the Bay Area or the best restaurants or shopping malls in San Francisco; this guide is your perfect travel companion. Rely on dozens of Top 10 lists – from the Top 10 architectural highlights and Top 10 outdoor activities, to the Top 10 children’s attractions, there's even a list of the Top 10 things to avoid! The guide is divided by area: Oceanfront; The North Shoreline; Central Neighbourhoods; Southern Neighbourhoods and Downtown. You’ll find restaurant reviews for every area, as well as recommendations for luxury hotels, bars and places to shop. Plus, you’ll  find the insider knowledge every visitor needs to explore every corner of San Francisco effortlessly in the &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt;. &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt; - showing you what others only tell you.</description>
+        <description format="html" source="Short description/annotation">&lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco &lt;/I&gt;will lead you straight to the very best of this waterfront city. Whether you’re looking for the liveliest bars and clubs, the best day trips to the Bay Area or the best restaurants or shopping malls in San Francisco; this guide is your perfect travel companion. Rely on dozens of Top 10 lists – from the Top 10 architectural highlights and Top 10 outdoor activities, to the Top 10 children’s attractions, there's even a list of the Top 10 things to avoid! The guide is divided by area: Oceanfront; The North Shoreline; Central Neighbourhoods; Southern Neighbourhoods and Downtown. You’ll find restaurant reviews for every area, as well as recommendations for luxury hotels, bars and places to shop. Plus, you’ll  find the insider knowledge every visitor needs to explore every corner of San Francisco effortlessly in the &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt;. &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt; - showing you what others only tell you.</description>
+        <description format="html" source="Long description">&lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco &lt;/I&gt;will lead you straight to the very best of this waterfront city. Whether you’re looking for the liveliest bars and clubs, the best day trips to the Bay Area or the best restaurants or shopping malls in San Francisco; this guide is your perfect travel companion. Rely on dozens of Top 10 lists – from the Top 10 architectural highlights and Top 10 outdoor activities, to the Top 10 children’s attractions, there's even a list of the Top 10 things to avoid! The guide is divided by area: Oceanfront; The North Shoreline; Central Neighbourhoods; Southern Neighbourhoods and Downtown. You’ll find restaurant reviews for every area, as well as recommendations for luxury hotels, bars and places to shop. Plus, you’ll  find the insider knowledge every visitor needs to explore every corner of San Francisco effortlessly in the &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt;. &lt;I&gt;DK Eyewitness Top 10 Travel Guide San Francisco&lt;/I&gt; - showing you what others only tell you.</description>
+    </descriptions>
+    <publisher>
+        <name>Dorling Kindersley UK</name>
+        <username>penguin</username>
+        <imprint>Dorling Kindersley</imprint>
+        <discountRate>0.3</discountRate>
+        <isAgency />
+    </publisher>
+    <prices>
+        <price currency="GBP" agency="true">		<!-- should be ingested -->
+            <amount>1.23</amount>
+            <tax included="false">
+                1.00
+            </tax>
+        </price>
+        <price currency="GBP" agency="true">		<!-- should be ignored since VAT included -->
+            <amount>2.22</amount>
+            <tax included="true">
+                2.00
+            </tax>
+        </price>
+        <price currency="GBP" agency="true">		<!-- should be ignored since no tax element  -->
+            <amount>3.33</amount>
+        </price>
+        <price currency="GBP" agency="false">		<!-- should be ignored since non-agency price -->
+            <amount>4.44</amount>
+            <tax included="false">
+                3.00
+            </tax>
+        </price>
+    </prices>
+    <subjects>
+        <subject type="BISAC" main="true">FIC000000</subject>
+        <subject type="Keyword">keyword</subject>
+    </subjects>
+    <language>en</language>
+    <publishedOn>2011-03-01</publishedOn>
+    <modifiedAt>2014-10-21 09:27:44 +0100</modifiedAt>
+    <regions>
+        <region>GB</region>
+    </regions>
+    <media>
+        <cover default="true" size="76201">http://internalmedia.mobcastdev.com/9870/000/000/000/blah.jpg</cover>
+        <epub type="full" size="7371393">http://internalmedia.mobcastdev.com/9870/000/000/000/blah.epub</epub>
+        <epub type="sample" size="1765294">http://internalmedia.mobcastdev.com/9870/000/000/000/blah.sample.epub</epub>
+    </media>
+</book>
