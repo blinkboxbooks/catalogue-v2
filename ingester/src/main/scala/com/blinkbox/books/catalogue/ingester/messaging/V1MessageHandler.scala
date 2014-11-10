@@ -1,7 +1,7 @@
 package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.Distribute.Book
+import com.blinkbox.books.catalogue.common.Book
 import com.blinkbox.books.catalogue.ingester.index.Search
 import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
 import com.blinkbox.books.messaging.{ErrorHandler, Event, ReliableEventHandler}

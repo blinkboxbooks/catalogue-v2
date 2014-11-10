@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.common
 
-import com.blinkbox.books.catalogue.common.Distribute.Book
 import com.blinkbox.books.catalogue.common.Indexer.IndexContent
 
 class BookIndexContent extends IndexContent[Book] {
