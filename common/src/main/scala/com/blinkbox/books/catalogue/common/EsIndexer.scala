@@ -12,24 +12,28 @@ object EsIndexer {
   case class EsFailedIndex(message: String, code: Int, meta: EsDocumentMeta) extends RuntimeException(message)
 }
 
-class EsIndexer(client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
-  import com.blinkbox.books.catalogue.common.EsIndexer._
+trait EsIndexerTypes extends IndexerTypes {
+  import EsIndexer._
 
   type IndexCommand = IndexDefinition
   type BulkIndexCommand = BulkDefinition
 
   type SuccessfulCommand = EsSuccessfulIndex
   type FailedCommand = Throwable
+}
+
+class EsIndexer(client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer[EsIndexerTypes] {
+  import com.blinkbox.books.catalogue.common.EsIndexer._
 
   private def createMeta(r: BulkItemResponse): EsDocumentMeta = EsDocumentMeta(r.getIndex, r.getType, r.getId, r.getVersion)
   private def createMeta(r: EsIndexResponse): EsDocumentMeta = EsDocumentMeta(r.getIndex, r.getType, r.getId, r.getVersion)
 
-  override def index[T](content: T)(implicit cnt: IndexContent[T, this.type]): Future[IndexResponse] =
+  override def index[T](content: T)(implicit cnt: IndexContent[T, EsIndexerTypes]): Future[IndexResponse] =
     client.execute(cnt.single(content)).map { resp =>
       Right(EsSuccessfulIndex(createMeta(resp)))
     } recover { case ex => Left(ex)}
 
-  override def index[T](content: Iterable[T])(implicit cnt: IndexContent[T, this.type]): Future[Iterable[IndexResponse]] =
+  override def index[T](content: Iterable[T])(implicit cnt: IndexContent[T, EsIndexerTypes]): Future[Iterable[IndexResponse]] =
     client.execute(cnt.bulk(content)).map { resp =>
       resp.getItems.map { item =>
         val meta = createMeta(item)
