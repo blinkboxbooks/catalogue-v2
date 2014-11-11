@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester.xml
 
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.messaging.{MediaType, EventBody, JsonEventBody}
-import scala.util.Try
+import scala.util.{Failure, Try}
 import scala.xml.{NodeSeq, XML, Elem}
 
 trait IngestionParser[T, R] {
@@ -123,6 +123,6 @@ class JsonV2IngestionParser extends IngestionParser[EventBody,Book] {
   }
 
   override def parse(content: EventBody): Try[Book] =
-    Try(JsonEventBody.unapply[Book](content)getOrElse(throw new RuntimeException("Not able to parse json")))
-      .orElse(Try(throw new RuntimeException("Invalid json format")))
+    Try(JsonEventBody.unapply[Book](content).getOrElse(throw new RuntimeException("Not able to parse json")))
+      .orElse(Failure(new RuntimeException("Invalid json format")))
 }
