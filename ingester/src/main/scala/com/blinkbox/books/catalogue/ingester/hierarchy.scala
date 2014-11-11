@@ -1,12 +1,13 @@
 package com.blinkbox.books.catalogue.ingester
 
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.{Executors, TimeUnit}
 import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
+import com.blinkbox.books.catalogue.common.EsIndexer
 import com.blinkbox.books.catalogue.ingester.Main._
-import com.blinkbox.books.catalogue.ingester.index.EsSearch
+import com.blinkbox.books.catalogue.ingester.index.Schema
 import com.blinkbox.books.catalogue.ingester.messaging.{V2MessageHandler, V1MessageHandler}
 import com.blinkbox.books.catalogue.ingester.xml.{XmlV1IngestionParser, JsonV2IngestionParser}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
@@ -14,8 +15,10 @@ import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration
 import com.blinkbox.books.rabbitmq.RabbitMqConsumer.QueueConfiguration
 import com.blinkbox.books.rabbitmq.{RabbitMqConsumer, RabbitMqConfirmedPublisher, RabbitMq, RabbitMqConfig}
+import com.sksamuel.elastic4s.ElasticClient
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import org.json4s.JsonAST.JObject
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 object Hierarchy {
@@ -71,6 +74,20 @@ class MessagingSupervisor extends Actor with StrictLogging {
     }
 
   override def receive: Receive = {
+    startMessaging()
+    started()
+  }
+
+  private def started(): Receive = {
+    case Children =>
+      sender ! context.children.toList.map(_.path.toString);
+    case Success(_) =>
+      ()
+    case msg =>
+      logger.warn(s"Unknown message [$msg]")
+  }
+
+  private def startMessaging(): Unit = {
     implicit val msgExecutionCtx = DiagnosticExecutionContext(context.dispatcher)
     implicit val apiTimeout = Timeout(config.getDuration("messageListener.actorTimeout", TimeUnit.SECONDS).seconds)
 
@@ -85,6 +102,9 @@ class MessagingSupervisor extends Actor with StrictLogging {
           config.getConfig("messageListener.distributor.book.errors")))))
 
     val errorHandler = new ActorErrorHandler(errorsPublisher)
+    val esClient = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
+    val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
+    val indexer = new EsIndexer(esClient)(indexingEc)
 
     val v1messageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -94,7 +114,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
           Props(new V1MessageHandler(
             errorHandler = errorHandler,
             retryInterval = 10.seconds,
-            search = new EsSearch(config),
+            indexer = indexer,
             messageParser = new XmlV1IngestionParser))),
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.book.inputv1")))))
@@ -107,22 +127,15 @@ class MessagingSupervisor extends Actor with StrictLogging {
           Props(new V2MessageHandler(
             errorHandler = new ActorErrorHandler(errorsPublisher),
             retryInterval = 10.seconds,
-            search = new EsSearch(config),
+            indexer = indexer,
             messageParser = new JsonV2IngestionParser))),
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.book.inputv2")))))
 
-    v1messageConsumer ! RabbitMqConsumer.Init
-    v2messageConsumer ! RabbitMqConsumer.Init
-    started()
-  }
-
-  private def started(): Receive = {
-    case Children =>
-      sender ! context.children.toList.map(_.path.toString);
-    case Success(_) =>
-      ()
-    case msg =>
-      logger.warn(s"Unknown message [$msg]")
+    esClient.execute(Schema.catalogue).onComplete {
+      case _ =>
+        v1messageConsumer ! RabbitMqConsumer.Init
+        v2messageConsumer ! RabbitMqConsumer.Init
+    }
   }
 }

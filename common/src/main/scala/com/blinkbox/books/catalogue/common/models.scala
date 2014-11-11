@@ -14,14 +14,18 @@ case class Price(amount: Double, currency: String, includesTax: Boolean,
                  isAgency: Boolean, discountRate: Option[Int], tax: Option[Tax])
 case class Series(title: String, number: Option[Int])
 case class Contributor(role: String, id: String, displayName: String, sortName: String)
-case class Book(title: String, subtitle: Option[String],
+case class Book(distribute: Boolean,
+                title: String, subtitle: Option[String],
                 availability: Availability,  isbn: String,
                 regionalRights: RegionalRights, publisher: String, media: Media,
                 languages: List[String], descriptions: List[Description], subjects: List[Subject],
                 prices: List[Price], series: Option[Series], contributors: List[Contributor])
 
+case class Undistribute(isbn: String)
+
 object Book {
   def empty = Book(
+    distribute = true,
     title = "", subtitle = Option.empty[String],
     availability = Availability(available = false, "", ""),
     isbn = "",

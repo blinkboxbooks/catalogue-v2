@@ -2,8 +2,7 @@ package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
-import com.blinkbox.books.catalogue.common.Book
-import com.blinkbox.books.catalogue.ingester.index.Search
+import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
 import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.test.MockitoSyrup
@@ -90,12 +89,12 @@ class V2MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFact
 
   private class MessageHandlerFixture {
     import scala.concurrent.duration._
-    val search = mock[Search]
     val errorHandler = mock[ErrorHandler]
     val messageParser = mock[IngestionParser[EventBody, Book]]
+    val indexer = mock[Indexer[EsIndexerTypes]]
     val retryInterval = 100.millis
     doReturn(Future.successful(())).when(errorHandler).handleError(any[Event], any[Throwable])
-    val messageHandler = TestActorRef(Props(new V2MessageHandler(errorHandler, retryInterval, search, messageParser)))
+    val messageHandler = TestActorRef(Props(new V2MessageHandler(errorHandler, retryInterval, indexer, messageParser)))
   }
 
   private lazy val completeJson = {

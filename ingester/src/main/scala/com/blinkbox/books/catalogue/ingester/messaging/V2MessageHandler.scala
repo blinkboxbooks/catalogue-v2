@@ -1,8 +1,7 @@
 package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.Book
-import com.blinkbox.books.catalogue.ingester.index.Search
+import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
 import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
 import com.blinkbox.books.messaging._
 import org.json4s.DefaultFormats
@@ -11,7 +10,7 @@ import scala.concurrent.duration.FiniteDuration
 import scala.util.{Success, Failure, Try}
 
 class V2MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
-                       search: Search, messageParser: IngestionParser[EventBody, Book])
+                       indexer: Indexer[EsIndexerTypes], messageParser: IngestionParser[EventBody, Book])
   extends ReliableEventHandler(errorHandler, retryInterval) {
 
   implicit private val formats = DefaultFormats
