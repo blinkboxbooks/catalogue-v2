@@ -1,9 +1,8 @@
 package com.blinkbox.books.catalogue.common
 
-import com.blinkbox.books.catalogue.common.Indexer.IndexContent
-import com.sksamuel.elastic4s.{ElasticClient, IndexDefinition, ElasticDsl => E}
+import com.sksamuel.elastic4s.{BulkDefinition, ElasticClient, IndexDefinition}
 import org.elasticsearch.action.bulk.BulkItemResponse
-import org.elasticsearch.action.index.IndexResponse
+import org.elasticsearch.action.index.{IndexResponse => EsIndexResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -14,33 +13,30 @@ object EsIndexer {
 }
 
 class EsIndexer(client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
-  import EsIndexer._
+  import com.blinkbox.books.catalogue.common.EsIndexer._
 
   type IndexCommand = IndexDefinition
+  type BulkIndexCommand = BulkDefinition
 
   type SuccessfulCommand = EsSuccessfulIndex
   type FailedCommand = Throwable
 
   private def createMeta(r: BulkItemResponse): EsDocumentMeta = EsDocumentMeta(r.getIndex, r.getType, r.getId, r.getVersion)
-  private def createMeta(r: IndexResponse): EsDocumentMeta = EsDocumentMeta(r.getIndex, r.getType, r.getId, r.getVersion)
+  private def createMeta(r: EsIndexResponse): EsDocumentMeta = EsDocumentMeta(r.getIndex, r.getType, r.getId, r.getVersion)
 
-  private def attachId[T](definition: IndexDefinition, id: Option[T]): IndexDefinition =
-    id.map(definition id _).getOrElse(definition)
+  override def index[T](content: T)(implicit cnt: IndexContent[T, this.type]): Future[IndexResponse] =
+    client.execute(cnt.single(content)).map { resp =>
+      Right(EsSuccessfulIndex(createMeta(resp)))
+    } recover { case ex => Left(ex)}
 
-  override def index[T](content: T)(implicit idx: IndexContent[T]): IndexCommand =
-    attachId(E.index into idx.path fields idx.fields(content), idx.id(content))
+  override def index[T](content: Iterable[T])(implicit cnt: IndexContent[T, this.type]): Future[Iterable[IndexResponse]] =
+    client.execute(cnt.bulk(content)).map { resp =>
+      resp.getItems.map { item =>
+        val meta = createMeta(item)
 
-  override def execute(cmd: IndexCommand): Future[CommandResponse] = client execute cmd map { r =>
-    Right(EsSuccessfulIndex(createMeta(r)))
-  } recover { case ex => Left(ex)}
-
-  override def bulk(cmd: BulkCommand): Future[BulkCommandResponse] = client execute E.bulk(cmd.toSeq: _*) map { resp =>
-    resp.getItems.map { item =>
-      val meta = createMeta(item)
-
-      if (item.isFailed) Left(EsFailedIndex(item.getFailureMessage, item.getFailure.getStatus.getStatus, meta))
-      else Right(EsSuccessfulIndex(meta))
+        if (item.isFailed) Left(EsFailedIndex(item.getFailureMessage, item.getFailure.getStatus.getStatus, meta))
+        else Right(EsSuccessfulIndex(meta))
+      }
     }
-  }
 }
 

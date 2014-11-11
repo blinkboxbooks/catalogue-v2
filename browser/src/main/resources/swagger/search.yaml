@@ -1,0 +1,169 @@
+swagger: 2.0
+
+info:
+  version: "0.0.1"
+  title: catalog
+
+paths:
+  /books:
+    get:
+      parameters:
+        - name: q
+          in: query
+          description: User query
+        - name: categoryExpr
+          in: query
+          description: Filter-expression for categories
+        - name: contributorExpr
+          in: query
+          description: Filter-expression for contributors
+        - name: publisherExpr
+          in: query
+          description: Filter-expression for publishers
+        - name: orderExpr
+          in: query
+          description: Expression for ordering the result-set
+        - name: pubblicationDateExpr
+          in: query
+          description: Filter-expression for pubblication date
+        - name: offset
+          in: query
+          description: First result to return
+        - name: count
+          in: query
+          description: Amount of results to be returned
+      responses:
+        "200":
+          description: A list of books matching the given filter
+          schema: { $ref: BooksResult }
+  /contributors:
+    get:
+      parameters:
+        - name: q
+          in: query
+          description: User query
+        - name: orderExpr
+          in: query
+          description: Expression for ordering the result-set
+        - name: offset
+          in: query
+          description: First result to return
+        - name: count
+          in: query
+          description: Amount of results to be returned
+      responses:
+        "200":
+          description: A list of contributors matching the given filter
+          schema: { $ref: ContributorsResult }
+  /publishers:
+    get:
+      parameters:
+        - name: q
+          in: query
+          description: User query
+        - name: orderExpr
+          in: query
+          description: Expression for ordering the result-set
+        - name: offset
+          in: query
+          description: First result to return
+        - name: count
+          in: query
+          description: Amount of results to be returned
+      responses:
+        "200":
+          description: A list of publishers matching the given filter
+          schema: { $ref: PublishersResult }
+  /suggest:
+    get:
+      parameters:
+        - name: q
+          in: query
+          description: User query
+        - name: categoryExpr
+          in: query
+          description: Filter-expression for categories
+        - name: contributorExpr
+          in: query
+          description: Filter-expression for contributors
+        - name: publisherExpr
+          in: query
+          description: Filter-expression for publishers
+        - name: pubblicationDateExpr
+          in: query
+          description: Filter-expression for pubblication date
+        - name: count
+          in: query
+          description: Amount of results to be returned
+      responses:
+        "200":
+          description: A break-down list of possible books, contributors or publishers. Filters will be applied to the books section only; the other sections of the response will use only the "count" and "q" parameters. Order will always be relevance.
+          schema: { $ref: SuggestionsResult }
+
+definitions:
+  BooksResult:
+    properties:
+      offset: { type: int }
+      count: { type: int }
+      items:
+        type: object
+        schema: { $ref: Book }
+
+  ContributorsResult:
+    properties:
+      offset: { type: int }
+      count: { type: int }
+      items:
+        type: object
+        schema: { $ref: Contributor }
+
+  PublishersResult:
+    properties:
+      offset: { type: int }
+      count: { type: int }
+      items:
+        type: object
+        schema: { $ref: Publisher }
+
+  SuggestionsResult:
+    properties:
+      books:
+        type: array
+        items:
+          type: object
+          schema: { $ref: Book }
+      contributors:
+        type: array
+        items:
+          type: object
+          schema: { $ref: Contributor }
+      publishers:
+        type: array
+        items:
+          type: object
+          schema: { $ref: Publisher }
+      categories:
+        type: array
+        items:
+          type: object
+          schema: { $ref: Category }
+
+  Book:
+    properties:
+      id: { type: string }
+      title: { type: string }
+
+  Contributor:
+    properties:
+      id: { type: string }
+      name: { type: string }
+
+  Publisher:
+    properties:
+      id: { type: string }
+      name: { type: string }
+
+  Category:
+    properties:
+      id: { type: string }
+      name: { type: string }

@@ -8,30 +8,20 @@ import scala.collection.convert.Wrappers.JMapWrapper
 import scala.concurrent.{ExecutionContext, Future}
 
 trait Indexer {
-  import Indexer._
-
   type IndexCommand
+  type BulkIndexCommand
 
   type SuccessfulCommand
   type FailedCommand
 
-  type CommandResponse = Either[FailedCommand, SuccessfulCommand]
+  type IndexResponse = Either[FailedCommand, SuccessfulCommand]
 
-  type BulkCommand = Iterable[IndexCommand]
-  type BulkCommandResponse = Iterable[CommandResponse]
-
-  def index[T: IndexContent](content: T): IndexCommand
-
-  def execute(cmd: IndexCommand): Future[CommandResponse]
-
-  def bulk(cmd: BulkCommand): Future[BulkCommandResponse]
+  def index[T](content: T)(implicit cnt: IndexContent[T, this.type]): Future[IndexResponse]
+  def index[T](content: Iterable[T])(implicit cnt: IndexContent[T, this.type]): Future[Iterable[IndexResponse]]
 }
 
-object Indexer {
-  trait IndexContent[ContentType] {
-    type IdType
-    def path: String
-    def id(content: ContentType): Option[IdType]
-    def fields(content: ContentType): Map[String, Any]
-  }
+trait IndexContent[ContentType, I <: Indexer] {
+  def single(content: ContentType): I#IndexCommand
+  def bulk(content: Iterable[ContentType]): I#BulkIndexCommand
 }
+
