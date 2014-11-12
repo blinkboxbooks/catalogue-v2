@@ -1,4 +1,4 @@
-package com.blinkbox.books.catalogue.ingester.xml
+package com.blinkbox.books.catalogue.ingester.parser
 
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
@@ -14,7 +14,9 @@ class XmlV1IngestionParserTest extends FlatSpecLike
     val book = v1Parser.parse(xmlContent)
 
     book match {
-      case Success(b) => assert(b.media.images.size == 1)
+      case Success(b) =>
+        assert(b.media.epubs.size == 2)
+        assert(b.media.images.size == 1)
       case Failure(e) => fail(e)
     }
   }

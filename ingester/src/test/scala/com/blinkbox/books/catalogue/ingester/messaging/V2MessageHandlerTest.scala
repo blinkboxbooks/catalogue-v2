@@ -3,7 +3,7 @@ package com.blinkbox.books.catalogue.ingester.messaging
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
 import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
-import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
+import com.blinkbox.books.catalogue.ingester.parser.IngestionParser
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.test.MockitoSyrup
 import com.typesafe.config.ConfigFactory

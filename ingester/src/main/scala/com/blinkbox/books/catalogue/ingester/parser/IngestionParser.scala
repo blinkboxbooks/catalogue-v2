@@ -1,4 +1,4 @@
-package com.blinkbox.books.catalogue.ingester.xml
+package com.blinkbox.books.catalogue.ingester.parser
 
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.messaging.{MediaType, EventBody, JsonEventBody}

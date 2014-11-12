@@ -1,4 +1,4 @@
-package com.blinkbox.books.catalogue.ingester.xml
+package com.blinkbox.books.catalogue.ingester.parser
 
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.test.MockitoSyrup

@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.ActorRef
 import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
-import com.blinkbox.books.catalogue.ingester.xml.IngestionParser
+import com.blinkbox.books.catalogue.ingester.parser.IngestionParser
 import com.blinkbox.books.messaging.{ErrorHandler, Event, ReliableEventHandler}
 import org.json4s.DefaultFormats
 import scala.concurrent.Future

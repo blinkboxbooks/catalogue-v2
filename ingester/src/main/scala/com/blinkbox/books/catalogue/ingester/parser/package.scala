@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester
 
 import scala.util.Try
 
-package object xml {
+package object parser {
   trait Optionable[T, R] {
     def toOption(value: T): Option[R]
   }
