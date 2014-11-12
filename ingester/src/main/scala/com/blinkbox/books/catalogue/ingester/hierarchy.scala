@@ -5,9 +5,8 @@ import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
-import com.blinkbox.books.catalogue.common.EsIndexer
+import com.blinkbox.books.catalogue.common.{Schema, EsIndexer}
 import com.blinkbox.books.catalogue.ingester.Main._
-import com.blinkbox.books.catalogue.ingester.index.Schema
 import com.blinkbox.books.catalogue.ingester.messaging.{V2MessageHandler, V1MessageHandler}
 import com.blinkbox.books.catalogue.ingester.parser.{XmlV1IngestionParser, JsonV2IngestionParser}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
