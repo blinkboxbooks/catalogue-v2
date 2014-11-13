@@ -23,7 +23,13 @@ lazy val browser = (project in file("browser")).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*)
 
+lazy val catalogue = (project in file("catalogue")).
+  dependsOn(common % "compile->compile;test->test").aggregate(common).
+  settings(aggregate in publish := false).
+  settings(buildSettings: _*).
+  settings(rpmPrepSettings: _*)
+
 lazy val root = (project in file(".")).
-  dependsOn(ingester, browser).aggregate(ingester, browser).
+  dependsOn(ingester, browser, catalogue).aggregate(ingester, browser, catalogue).
   settings(buildSettings: _*).
   settings(publish := {})
