@@ -39,8 +39,7 @@ class ElasticSearchBookService extends BookService {
     client.execute {
       get id isbn from "catalogue/books"
     } map { res =>
-      println("=====================")
-      println(res.getSourceAsString)
+      
       if(res.isSourceEmpty)
           None
         else {
