@@ -12,6 +12,11 @@ package object parser {
       Try(value.toInt).toOption
   }
 
+  implicit object StringToOptLong extends Optionable[String, Long] {
+    override def toOption(value: String): Option[Long] =
+      Try(value.toLong).toOption
+  }
+
   implicit object StringToOptDouble extends Optionable[String, Double] {
     override def toOption(value: String): Option[Double] =
       Try(value.toDouble).toOption

@@ -1,11 +1,12 @@
 package com.blinkbox.books.catalogue.ingester
 
+import java.io.File
 import java.util.concurrent.{Executors, TimeUnit}
 import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
-import com.blinkbox.books.catalogue.common.{Schema, EsIndexer}
+import com.blinkbox.books.catalogue.common.search.{EsSearch, Schema, EsIndexer}
 import com.blinkbox.books.catalogue.ingester.Main._
 import com.blinkbox.books.catalogue.ingester.messaging.{V2MessageHandler, V1MessageHandler}
 import com.blinkbox.books.catalogue.ingester.parser.{XmlV1IngestionParser, JsonV2IngestionParser}
@@ -19,6 +20,8 @@ import com.typesafe.scalalogging.slf4j.StrictLogging
 import org.json4s.JsonAST.JObject
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
+import scala.io.Source
+import scala.xml
 
 object Hierarchy {
   def start(actorSystem: ActorSystem): ActorRef =
@@ -29,22 +32,52 @@ object Hierarchy {
     val rabbitmqConfig = RabbitMqConfig(config)
     val publisherConnection = RabbitMq.recoveredConnection(rabbitmqConfig)
 
-    val messagePublisher = actorSystem.actorOf(
+    val messagePublisherV2 = actorSystem.actorOf(
       Props(new RabbitMqConfirmedPublisher(
         connection = publisherConnection,
         config = PublisherConfiguration(
-          config.getConfig("messageListener.distributor.book.output")))))
+          config.getConfig("messageListener.distributor.book.outputv2")))))
+
+    val messagePublisherV1 = actorSystem.actorOf(
+      Props(new RabbitMqConfirmedPublisher(
+        connection = publisherConnection,
+        config = PublisherConfiguration(
+          config.getConfig("messageListener.distributor.book.outputv1")))))
+
     implicit object JObjectJson extends JsonEventBody[JObject] {
       val jsonMediaType = MediaType("application/vnd.blinkbox.books.ingestion.book.metadata.v2+json")
     }
     val json = Event.json(EventHeader("application/vnd.blinkbox.books.ingestion.book.metadata.v2+json"), jvalue)
+    actorSystem.scheduler.scheduleOnce(10.seconds){
+      messagePublisherV2 ! json
+    }
     actorSystem.scheduler.schedule(0.milliseconds, 5.seconds, new Runnable {
       override def run(): Unit = {
         for(i <- 0 to 0) {
-          messagePublisher ! json
+          messagePublisherV2 ! json
         }
       }
     })
+
+    actorSystem.scheduler.scheduleOnce(5.seconds){
+      val xml =
+        """
+          <undistribute xmlns="http://schemas.blinkboxbooks.com/distribution/undistribute/v1" xmlns:r="http://schemas.blinkboxbooks.com/messaging/routing/v1" xmlns:v="http://schemas.blinkboxbooks.com/messaging/versioning" r:timestamp="2014-11-06T19:14:05Z" r:originator="" v:version="1.0">
+          <book ref="isbn">9780373876396</book>
+          </undistribute>
+        """
+      val event = Event.xml(xml, EventHeader("application/vnd.blinkbox.books.ingestion.book.metadata.v1"))
+      messagePublisherV1 ! event
+    }
+
+//    actorSystem.scheduler.scheduleOnce(5.seconds){
+//      val dirName = "/Users/alinp/work/blinkbox/zz.Distribution.Book"
+//      val xmlFiles = new File(dirName).listFiles.filter(_.getName.endsWith(".xml")).map(file => s"$dirName/${file.getName}")
+//      xmlFiles.foreach{ file =>
+//        val event = Event.xml(Source.fromFile(file, "UTF-8").mkString, EventHeader("application/vnd.blinkbox.books.ingestion.book.metadata.v1"))
+//        messagePublisherV1 ! event
+//      }
+//    }
   }
 }
 
@@ -103,7 +136,8 @@ class MessagingSupervisor extends Actor with StrictLogging {
     val errorHandler = new ActorErrorHandler(errorsPublisher)
     val esClient = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
-    val indexer = new EsIndexer(esClient)(indexingEc)
+    val indexer = new EsIndexer(config, esClient)(indexingEc)
+    val search = new EsSearch(config, esClient)(indexingEc)
 
     val v1messageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -114,9 +148,10 @@ class MessagingSupervisor extends Actor with StrictLogging {
             errorHandler = errorHandler,
             retryInterval = 10.seconds,
             indexer = indexer,
+            search = search,
             messageParser = new XmlV1IngestionParser))),
         queueConfig = QueueConfiguration(
-          config.getConfig("messageListener.distributor.book.inputv1")))))
+          config.getConfig("messageListener.distributor.book.inputv1")))), name = "V1-Message-Consumer")
 
     val v2messageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -129,9 +164,9 @@ class MessagingSupervisor extends Actor with StrictLogging {
             indexer = indexer,
             messageParser = new JsonV2IngestionParser))),
         queueConfig = QueueConfiguration(
-          config.getConfig("messageListener.distributor.book.inputv2")))))
+          config.getConfig("messageListener.distributor.book.inputv2")))), name = "V2-Message-Consumer")
 
-    esClient.execute(Schema.catalogue).onComplete {
+    esClient.execute(Schema(config).catalogue).onComplete {
       case _ =>
         v1messageConsumer ! RabbitMqConsumer.Init
         v2messageConsumer ! RabbitMqConsumer.Init

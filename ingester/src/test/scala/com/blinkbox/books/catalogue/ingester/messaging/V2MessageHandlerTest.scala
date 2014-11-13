@@ -2,7 +2,8 @@ package com.blinkbox.books.catalogue.ingester.messaging
 
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
-import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
+import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.catalogue.common.search.{SingleResponse, Indexer}
 import com.blinkbox.books.catalogue.ingester.parser.IngestionParser
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.test.MockitoSyrup
@@ -19,10 +20,10 @@ class V2MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFact
   with FlatSpecLike
   with MockitoSyrup {
 
-  it should "notify error handler when not able to parse the incoming message" in new MessageHandlerFixture {
+  it should "notify error handler when not able to index the incoming message" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
     val book = Book.empty
-    val indexFuture = Future.failed(new RuntimeException("test exception"))
+    when(indexer.index(book)).thenReturn(Future.failed(new RuntimeException("test exception")))
     when(messageParser.parse(event.body)).thenReturn(Success(book))
 
     messageHandler ! event
@@ -31,11 +32,23 @@ class V2MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFact
     verify(errorHandler).handleError(any(), isA(classOf[RuntimeException]))
   }
 
+  it should "not notify error handler when able to index the incoming message" in new MessageHandlerFixture {
+    val event = createEvent(dummyJValue)
+    val book = Book.empty
+    when(indexer.index(book)).thenReturn(Future.successful(SingleResponse(docId = "")))
+    when(messageParser.parse(event.body)).thenReturn(Success(book))
+
+    messageHandler ! event
+
+    expectMsgType[Status.Success]
+    verifyZeroInteractions(errorHandler)
+  }
+
   private class MessageHandlerFixture {
     import scala.concurrent.duration._
     val errorHandler = mock[ErrorHandler]
     val messageParser = mock[IngestionParser[EventBody, Book]]
-    val indexer = mock[Indexer[EsIndexerTypes]]
+    val indexer = mock[Indexer]
     val retryInterval = 100.millis
     doReturn(Future.successful(())).when(errorHandler).handleError(any[Event], any[Throwable])
     val messageHandler = TestActorRef(Props(new V2MessageHandler(errorHandler, retryInterval, indexer, messageParser)))

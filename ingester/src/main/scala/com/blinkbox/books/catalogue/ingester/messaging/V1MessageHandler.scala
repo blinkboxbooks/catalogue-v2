@@ -1,35 +1,41 @@
 package com.blinkbox.books.catalogue.ingester.messaging
 
+import java.net.ConnectException
+
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.{EsIndexerTypes, Indexer, Book}
+import com.blinkbox.books.catalogue.common.{Undistribute, Book}
+import com.blinkbox.books.catalogue.common.search.{Search, Indexer}
 import com.blinkbox.books.catalogue.ingester.parser.IngestionParser
 import com.blinkbox.books.messaging.{ErrorHandler, Event, ReliableEventHandler}
-import org.json4s.DefaultFormats
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
-import scala.util.{Failure, Success, Try}
+import scala.util.{Either, Failure, Success}
 
 class V1MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
-                       indexer: Indexer[EsIndexerTypes], messageParser: IngestionParser[String, Book])
+                       indexer: Indexer, search: Search,
+                       messageParser: IngestionParser[String, Either[Book, Undistribute]])
   extends ReliableEventHandler(errorHandler, retryInterval) {
 
-  import com.blinkbox.books.catalogue.common.Indexers._
-  implicit private val formats = DefaultFormats
+  override protected[this] def handleEvent(event: Event, originalSender: ActorRef): Future[Unit] = {
+    for {
+      book <- toBook(event)
+      _ <- index(book)
+    } yield ()
+  }
 
-  override protected[this] def handleEvent(event: Event, originalSender: ActorRef): Future[Unit] =
-    toBook(event) match {
-      case Success(book) =>
-        index(book)
+  override protected[this] def isTemporaryFailure(e: Throwable): Boolean =
+    e.isInstanceOf[ConnectException]
+
+  private def toBook(event: Event): Future[Book] = {
+    messageParser.parse(new String(event.body.content, "UTF-8")) match {
+      case Success(Left(book)) =>
+        Future.successful(book)
+      case Success(Right(undistribute)) =>
+        search.lookup(undistribute.isbn).map(_.getOrElse(throw new RuntimeException(s"book not found to undistribute for isbn [${undistribute.isbn}]")))
       case Failure(e) =>
         Future.failed(e)
     }
-
-  override protected[this] def isTemporaryFailure(exception: Throwable): Boolean =
-    // TODO: This needs to be implemented when having the search/index functionality in place
-    false
-
-  private def toBook(event: Event): Try[Book] =
-    messageParser.parse(new String(event.body.content, "UTF-8"))
+  }
 
   private def index(book: Book): Future[Unit] =
     indexer.index(book).map(_ => ())

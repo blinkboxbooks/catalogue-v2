@@ -14,10 +14,10 @@ class XmlV1IngestionParserTest extends FlatSpecLike
     val book = v1Parser.parse(xmlContent)
 
     book match {
-      case Success(b) =>
-        assert(b.media.epubs.size == 2)
-        assert(b.media.images.size == 1)
-      case Failure(e) => fail(e)
+      case Success(Left(book)) =>
+        assert(book.media.epubs.size == 2)
+        assert(book.media.images.size == 1)
+      case els => fail(new RuntimeException(s"got $els"))
     }
   }
 
