@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester.index
 
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.{WhitespaceAnalyzer, KeywordAnalyzer, SnowballAnalyzer}
-import com.sksamuel.elastic4s.mappings.FieldType.{IntegerType, BooleanType, ObjectType, StringType}
+import com.sksamuel.elastic4s.mappings.FieldType._
 
 object Schema {
   def classification = "classification" nested (
@@ -57,7 +57,8 @@ object Schema {
       "subjects" nested (
         "type" typed StringType analyzer KeywordAnalyzer,
         "code" typed StringType analyzer KeywordAnalyzer
-      )
+      ),
+      "autoComplete" typed CompletionType payloads(true)
     )
   )
 }

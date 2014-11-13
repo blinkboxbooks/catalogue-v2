@@ -19,6 +19,8 @@ class WebService extends HttpServiceActor with Json4sJacksonSupport {
   implicit def json4sJacksonFormats: Formats = DefaultFormats
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
+  val BookIdSegment = IntNumber.map(BookId.apply _)
+
   val validatePasswordResetToken: Route = get {
     pathPrefix("catalogue" / "search") {
       pathPrefix("books") {
@@ -31,7 +33,7 @@ class WebService extends HttpServiceActor with Json4sJacksonSupport {
             }
           }
         } ~
-        path(IntNumber / "similar") { bookId =>
+        path(BookIdSegment / "similar") { bookId =>
           get {
             complete(searchService.similar(bookId))
           }

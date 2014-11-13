@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester
 
 import scala.util.Try
 
-package object xml {
+package object parser {
   trait Optionable[T, R] {
     def toOption(value: T): Option[R]
   }
@@ -10,6 +10,11 @@ package object xml {
   implicit object StringToOptInt extends Optionable[String, Int] {
     override def toOption(value: String): Option[Int] =
       Try(value.toInt).toOption
+  }
+
+  implicit object StringToOptLong extends Optionable[String, Long] {
+    override def toOption(value: String): Option[Long] =
+      Try(value.toLong).toOption
   }
 
   implicit object StringToOptDouble extends Optionable[String, Double] {

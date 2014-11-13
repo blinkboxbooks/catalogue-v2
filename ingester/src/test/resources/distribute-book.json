@@ -1,4 +1,5 @@
 {
+  "distribute": true,
   "title": "Little park bear",
   "availability": {
     "available": true,
@@ -8,7 +9,7 @@
   "isbn": "9780007236893",
   "regionalRights": {
     "GB": true,
-    "IE": true,
+    "WORLD": true,
     "ROW": false
   },
   "publisher": "PamPublish",
@@ -76,7 +77,7 @@
             "uri": "https://media.blinkboxbooks.com/path/to/file.sample.epub"
           }
         ],
-        "wordcount": 3746,
+        "wordCount": 3746,
         "size": 2548
       }
     ]
@@ -103,6 +104,22 @@
     {
       "type": "BISAC",
       "code": "FIC050000"
+    }
+  ],
+  "prices": [
+    {
+      "amount": 10.0,
+      "currency": "GBP",
+      "includesTax": false,
+      "isAgency": false
+    }
+  ],
+  "contributors": [
+    {
+      "role": "Author",
+      "id": "metheauthor",
+      "displayName": "displayName1",
+      "sortName": "SortName1"
     }
   ]
 }

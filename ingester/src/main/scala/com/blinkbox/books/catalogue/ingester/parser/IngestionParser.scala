@@ -1,17 +1,23 @@
-package com.blinkbox.books.catalogue.ingester.xml
+package com.blinkbox.books.catalogue.ingester.parser
 
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.messaging.{MediaType, EventBody, JsonEventBody}
-import scala.util.Try
+import scala.util.{Failure, Try}
 import scala.xml.{NodeSeq, XML, Elem}
 
 trait IngestionParser[T, R] {
   def parse(content: T): Try[R]
 }
 
-class XmlV1IngestionParser extends IngestionParser[String, Book]{
-  override def parse(content: String): Try[Book] =
-    Try(xmlToBook(XML.loadString(content)))
+class XmlV1IngestionParser extends IngestionParser[String, Either[Book, Undistribute]]{
+  override def parse(content: String): Try[Either[Book, Undistribute]] =
+    Try(XML.loadString(content)).map { xml =>
+      xml.label match {
+        case "book" => Left(xmlToBook(xml))
+        case "undistribute" => Right(Undistribute((xml \\ "undistribute" \ "book").text))
+        case _ => throw new IllegalArgumentException(s"Unexpected XML with root element: ${xml.label}")
+      }
+    }
 
   private def xmlToBook(xml: Elem): Book = {
     val xmlBook = xml \\ "book"
@@ -102,7 +108,7 @@ class XmlV1IngestionParser extends IngestionParser[String, Book]{
         uris = List(Uri(`type` = "static", uri = node.text, params = None)),
         keyFile = None,
         wordCount = 0,
-        size = (node \ "@size").toString.toInt)
+        size = (node \ "@size").toString.opt[Long].getOrElse(0))
     }.toList
     val images = List(
       Image(
@@ -110,7 +116,7 @@ class XmlV1IngestionParser extends IngestionParser[String, Book]{
         uris = List(Uri(`type` = "static", uri = coverNode.text, params = None)),
         width = 0,
         height = 0,
-        size = (coverNode \ "@size").toString.toInt))
+        size = (coverNode \ "@size").toString.opt[Int].getOrElse(0)))
     Media(
       epubs = epubs,
       images = images)
@@ -123,6 +129,6 @@ class JsonV2IngestionParser extends IngestionParser[EventBody,Book] {
   }
 
   override def parse(content: EventBody): Try[Book] =
-    Try(JsonEventBody.unapply[Book](content)getOrElse(throw new RuntimeException("Not able to parse json")))
-      .orElse(Try(throw new RuntimeException("Invalid json format")))
+    Try(JsonEventBody.unapply[Book](content).getOrElse(throw new RuntimeException("Not able to parse json")))
+      .orElse(Failure(new RuntimeException("Invalid json format")))
 }
