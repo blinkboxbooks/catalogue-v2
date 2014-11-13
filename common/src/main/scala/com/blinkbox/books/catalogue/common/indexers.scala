@@ -10,8 +10,8 @@ object Indexers {
     // TODO: Switch this to common-json provided formats
     implicit val formats = DefaultFormats
 
-    override def single(content: Book): IndexDefinition =
-      E.index into "catalogue/book" doc StringDocumentSource(Serialization.write(content))
+  override def single(content: Book): IndexDefinition =
+    E.index into "catalogue/book" doc StringDocumentSource(Serialization.write(content)) id content.isbn
 
     override def bulk(content: Iterable[Book]): BulkDefinition =
       E.bulk(content.map(single).toSeq: _*)

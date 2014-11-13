@@ -21,4 +21,3 @@ trait IndexContent[ContentType, T <: IndexerTypes] {
   def single(content: ContentType): T#IndexCommand
   def bulk(content: Iterable[ContentType]): T#BulkIndexCommand
 }
-

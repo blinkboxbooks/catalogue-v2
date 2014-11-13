@@ -1,30 +1,44 @@
 package com.blinkbox.books.catalogue.browser
 
 import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.json.DefaultFormats
 import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
+import org.elasticsearch.search.suggest.Suggest
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
+import org.json4s.jackson.Serialization
 import org.elasticsearch.action.search.SearchResponse
 
+import scala.collection.convert.Wrappers.JIteratorWrapper
 import scala.concurrent.{ExecutionContext, Future}
 
 trait Suggestion
 
+case class BookId(value: Int) extends AnyVal
+
 trait V1SearchService {
-  def search(q: String): Future[List[Book]]
-  def similar(bookId: Int): Future[List[Book]]
-  def suggestions(q: String): Future[List[Suggestion]]
+  def search(q: String): Future[Iterable[Book]]
+  def similar(bookId: BookId): Future[Iterable[Book]]
+  def suggestions(q: String): Future[Iterable[Suggestion]]
 }
 
 class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
+  implicit val formats = DefaultFormats
 
-  private def toBookList(resp: SearchResponse): List[Book] = {
+  private def toBookIterable(resp: SearchResponse): Iterable[Book] =
     resp.getHits.hits().map { hit =>
-      hit.getSourceAsString
+      Serialization.read[Book](hit.getSourceAsString)
     }
-    ???
-  }
 
-  override def search(q: String): Future[List[Book]] = client.execute {
-    E.search in "catalogue" -> "book" query {
+  private def toSuggestionIterable(resp: SearchResponse): Iterable[Suggestion] =
+    JIteratorWrapper(resp.
+      getSuggest.
+      getSuggestion[Suggest.Suggestion[Entry]]("autoComplete").
+      iterator).
+      map(s => Serialization.read[Suggestion](s.getText.string)).
+      toIterable
+
+  override def search(q: String): Future[Iterable[Book]] = client.execute {
+    E.search in "catalogue/book" query {
       E.dismax query {
         E.term("title", q) boost 5
         E.term("author", q) boost 4
@@ -33,8 +47,15 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
         } boost 1
       } tieBreaker 0.2
     }
-  } map toBookList
+  } map toBookIterable
 
-  override def similar(bookId: Int): Future[List[Book]] = ???
-  override def suggestions(q: String): Future[List[Suggestion]] = ???
+  override def similar(bookId: BookId): Future[Iterable[Book]] = client.execute {
+    E.morelike id bookId.value in "catalogue/book"
+  } map toBookIterable
+
+  override def suggestions(q: String): Future[Iterable[Suggestion]] = client.execute {
+    E.search in "catalogue" suggestions (
+      E.suggest as "autoComplete" on q from "autoComplete"
+    )
+  } map toSuggestionIterable
 }
