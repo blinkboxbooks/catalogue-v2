@@ -31,7 +31,12 @@ class V1MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration
       case Success(Left(book)) =>
         Future.successful(book)
       case Success(Right(undistribute)) =>
-        search.lookup(undistribute.isbn).map(_.getOrElse(throw new RuntimeException(s"book not found to undistribute for isbn [${undistribute.isbn}]")))
+        search.lookup(undistribute.isbn)
+          .map { optBook =>
+            optBook
+              .map(book => book.copy(distribute = false))
+              .getOrElse(throw new RuntimeException(s"book not found to undistribute for isbn [${undistribute.isbn}]"))
+          }
       case Failure(e) =>
         Future.failed(e)
     }
