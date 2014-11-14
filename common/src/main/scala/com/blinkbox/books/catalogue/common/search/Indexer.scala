@@ -7,7 +7,6 @@ import com.sksamuel.elastic4s.mappings.FieldType.{BooleanType, StringType, Integ
 import com.sksamuel.elastic4s.source.DocumentSource
 import com.typesafe.config.Config
 import org.elasticsearch.index.VersionType
-import org.json4s.NoTypeHints
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -12,8 +12,7 @@ import scala.concurrent.duration.FiniteDuration
 import scala.util.{Failure, Success}
 
 class V1MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
-                       indexer: Indexer, search: Search,
-                       messageParser: IngestionParser[String, DistributeContent])
+                       indexer: Indexer, messageParser: IngestionParser[String, DistributeContent])
   extends ReliableEventHandler(errorHandler, retryInterval) {
 
   override protected[this] def handleEvent(event: Event, originalSender: ActorRef): Future[Unit] = {
@@ -31,12 +30,7 @@ class V1MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration
       case Success(book: Book) =>
         Future.successful(book)
       case Success(undistribute: Undistribute) =>
-        search.lookup(undistribute.isbn)
-          .map { optBook =>
-            optBook
-              .map(book => book.copy(distribute = false, modifiedAt = undistribute.effectiveTimestamp))
-              .getOrElse(throw new RuntimeException(s"book not found to undistribute for isbn [${undistribute.isbn}]"))
-          }
+        Future.successful(Book.empty.copy(distribute = false, modifiedAt = undistribute.effectiveTimestamp))
       case Failure(e) =>
         Future.failed(e)
     }
