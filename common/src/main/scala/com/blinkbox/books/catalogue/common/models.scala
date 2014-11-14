@@ -50,30 +50,33 @@ object IndexEntities {
   case class BookPayload(isbn: String, title: String, authors: List[String]) extends SuggestionPayload
   case class ContributorPayload(id: String, displayName: String) extends SuggestionPayload
 
-  case class Suggestion(input: List[String], output: String, payload: SuggestionPayload)
+  case class SuggestionField(input: List[String], output: String, payload: SuggestionPayload)
+
+  case class SuggestionOption(text: String, score: Double, payload: SuggestionPayload)
+  case class SuggestionResponse(text: String, offset: Int, length: Int, options: List[SuggestionOption])
 
   case class Book(title: String, subtitle: Option[String],
                   availability: Availability,  isbn: String,
                   regionalRights: RegionalRights, publisher: String, media: Media,
                   languages: List[String], descriptions: List[Description], subjects: List[Subject],
                   prices: List[Price], series: Option[Series], contributors: List[Contributor],
-                  autoComplete: List[Suggestion])
+                  autoComplete: List[SuggestionField])
 
   object Book {
 
-    def buildSuggestions(book: common.Book): List[Suggestion] = {
-      val authors = book.contributors.filter(_.role == "author")
+    def buildSuggestions(book: common.Book): List[SuggestionField] = {
+      val authors = book.contributors.filter(_.role.toLowerCase == "author")
 
       val authorDisplayNames = authors.map(_.displayName)
 
-      val bookSuggestion: Suggestion = Suggestion(
+      val bookSuggestion: SuggestionField = SuggestionField(
         input = book.title :: authorDisplayNames,
         output = s"${book.title} - ${authorDisplayNames.mkString(", ")}",
         payload = BookPayload(book.isbn, book.title, authorDisplayNames)
       )
 
-      val authorSuggestions: List[Suggestion] = authors.map { a =>
-        Suggestion(
+      val authorSuggestions: List[SuggestionField] = authors.map { a =>
+        SuggestionField(
           input = a.displayName :: Nil,
           output = a.displayName,
           payload = ContributorPayload(a.id, a.displayName)
