@@ -7,6 +7,8 @@ import com.blinkbox.books.catalogue.common.{DistributeContent, Undistribute, Boo
 import com.blinkbox.books.catalogue.common.search.{Search, Indexer}
 import com.blinkbox.books.catalogue.ingester.parser.IngestionParser
 import com.blinkbox.books.messaging.{ErrorHandler, Event, ReliableEventHandler}
+import org.elasticsearch.index.engine.VersionConflictEngineException
+import org.elasticsearch.transport.RemoteTransportException
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
 import scala.util.{Failure, Success}
@@ -30,12 +32,25 @@ class V1MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration
       case Success(book: Book) =>
         Future.successful(book)
       case Success(undistribute: Undistribute) =>
-        Future.successful(Book.empty.copy(distribute = false, modifiedAt = undistribute.effectiveTimestamp))
+        Future.successful(Book.empty.copy(
+          isbn = undistribute.isbn,
+          distribute = false,
+          modifiedAt = undistribute.effectiveTimestamp))
       case Failure(e) =>
         Future.failed(e)
     }
   }
 
-  private def index(book: Book): Future[Unit] =
-    indexer.index(book).map(_ => ())
+  private def index(book: Book): Future[Unit] = {
+    val indexing = indexer.index(book)
+    indexing.onFailure{
+      case e: VersionConflictEngineException =>
+        log.error(s"CONFLICT: ${e.getMessage} - modifiedAt[${book.modifiedAt}]")
+      case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] =>
+        log.error(s"CONFLICT: ${e.getCause.getMessage} - modifiedAt[${book.modifiedAt}]")
+    }
+    indexing.recover{
+      case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] => ()
+    }.map(_ => ())
+  }
 }

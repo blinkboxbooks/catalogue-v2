@@ -5,6 +5,7 @@ XMLS_FOLDER="/Users/alinp/work/blinkbox/zz.Distribution.Book"
 
 abort("No such folder #{XMLS_FOLDER}!!!") unless File.exist?(XMLS_FOLDER)
 
+t0 = Time.now
 puts "Connecting to RabbitMQ..."
 connection = Bunny.new
 connection.start
@@ -20,6 +21,7 @@ xmls.each{|file|
                   :content_type => "application/xml",
                   :headers => {'content-type' => "application/xml"})
 }
+puts "Completed to publish files within #{Time.now - t0} seconds."
 sleep 3
 puts "Done"
 
