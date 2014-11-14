@@ -143,14 +143,14 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
   private def toDates(xml: NodeSeq): Dates = {
     val publishDate = (xml \ "publishedOn").text
     val announceDate = (xml \ "announcedOn").text
-    if(publishDate.isEmpty)
-      throw new RuntimeException("Missing 'publishedOn' field.")
-    else if(announceDate.isEmpty)
-      Dates(publish = PublishedOnFormatter.parseDateTime(publishDate), announce = None)
-    else
-      Dates(
-        publish = PublishedOnFormatter.parseDateTime(publishDate),
-        announce = Some(AnnouncedOnFormatter.parseDateTime(announceDate)))
+    Dates(
+      publish =
+        if(publishDate.isEmpty) None
+        else Some(PublishedOnFormatter.parseDateTime(publishDate)),
+      announce =
+        if(announceDate.isEmpty) None
+        else Some(AnnouncedOnFormatter.parseDateTime(announceDate))
+    )
   }
 }
 

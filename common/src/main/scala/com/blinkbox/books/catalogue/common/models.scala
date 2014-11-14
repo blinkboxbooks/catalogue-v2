@@ -18,7 +18,7 @@ case class Price(amount: Double, currency: String, includesTax: Boolean,
                  isAgency: Boolean, discountRate: Option[Int], tax: Option[Tax])
 case class Series(title: String, number: Option[Int])
 case class Contributor(role: String, id: String, displayName: String, sortName: String)
-case class Dates(publish: DateTime, announce: Option[DateTime])
+case class Dates(publish: Option[DateTime], announce: Option[DateTime]) // TODO: publish date shouldn't be optional in V2
 case class Book(distribute: Boolean,
                 title: String, subtitle: Option[String],
                 availability: Availability,  isbn: String,
@@ -40,7 +40,7 @@ object Book {
     languages = List.empty[String], descriptions = List.empty[Description],
     subjects = List.empty[Subject], prices = List.empty[Price],
     series = Option.empty[Series], contributors = List.empty[Contributor],
-    dates = Dates(publish = DateTime.now, announce = Option.empty[DateTime]),
+    dates = Dates(publish = Option.empty[DateTime], announce = Option.empty[DateTime]),
     modifiedAt = DateTime.now)
 }
 
