@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.ingester
 
+import org.joda.time.DateTime
 import scala.util.Try
 
 package object parser {
@@ -30,6 +31,11 @@ package object parser {
   implicit object StringToOptBoolean extends Optionable[String, Boolean] {
     override def toOption(value: String): Option[Boolean] =
       Try(value.toBoolean).toOption
+  }
+
+  implicit object StringToOptDate extends Optionable[String, DateTime] {
+    override def toOption(value: String): Option[DateTime] =
+      Try(DateTime.parse(value)).toOption
   }
 
   implicit class RichXmlString(value: String) {

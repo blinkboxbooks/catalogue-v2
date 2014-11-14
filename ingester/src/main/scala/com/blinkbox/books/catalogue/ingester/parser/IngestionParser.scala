@@ -2,6 +2,8 @@ package com.blinkbox.books.catalogue.ingester.parser
 
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.messaging.{MediaType, EventBody, JsonEventBody}
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import scala.util.{Failure, Try}
 import scala.xml.{NodeSeq, XML, Elem}
 
@@ -9,12 +11,20 @@ trait IngestionParser[T, R] {
   def parse(content: T): Try[R]
 }
 
-class XmlV1IngestionParser extends IngestionParser[String, Either[Book, Undistribute]]{
-  override def parse(content: String): Try[Either[Book, Undistribute]] =
+class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
+  private val ModifiedAtFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss z")
+  private val PublishedOnFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+  private val AnnouncedOnFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
+
+  override def parse(content: String): Try[DistributeContent] =
     Try(XML.loadString(content)).map { xml =>
       xml.label match {
-        case "book" => Left(xmlToBook(xml))
-        case "undistribute" => Right(Undistribute((xml \\ "undistribute" \ "book").text))
+        case "book" => xmlToBook(xml)
+        case "undistribute" => Undistribute(
+          isbn = (xml \\ "undistribute" \ "book").text,
+          effectiveTimestamp = (xml \\ "undistribute" \ "effectiveTimestamp")
+            .text.opt[DateTime]
+            .getOrElse(throw new IllegalArgumentException("Missing 'effectiveTimestamp' field.")))
         case _ => throw new IllegalArgumentException(s"Unexpected XML with root element: ${xml.label}")
       }
     }
@@ -33,7 +43,9 @@ class XmlV1IngestionParser extends IngestionParser[String, Either[Book, Undistri
       prices = toPrices(xmlBook),
       subjects = toSubjects(xmlBook),
       regionalRights = toRegionalRights(xmlBook),
-      media = toMedia(xmlBook))
+      media = toMedia(xmlBook),
+      modifiedAt = toModifiedAt(xmlBook),
+      dates = toDates(xmlBook))
   }
 
   private def toContributors(xml: NodeSeq): List[Contributor] =
@@ -120,6 +132,25 @@ class XmlV1IngestionParser extends IngestionParser[String, Either[Book, Undistri
     Media(
       epubs = epubs,
       images = images)
+  }
+
+  private def toModifiedAt(xml: NodeSeq): DateTime = {
+    val modifiedAt = (xml \ "modifiedAt").text
+    if(modifiedAt.isEmpty) throw new RuntimeException("Missing 'modifiedAt' field.")
+    else ModifiedAtFormatter.parseDateTime(modifiedAt)
+  }
+
+  private def toDates(xml: NodeSeq): Dates = {
+    val publishDate = (xml \ "publishedOn").text
+    val announceDate = (xml \ "announcedOn").text
+    Dates(
+      publish =
+        if(publishDate.isEmpty) None
+        else Some(PublishedOnFormatter.parseDateTime(publishDate)),
+      announce =
+        if(announceDate.isEmpty) None
+        else Some(AnnouncedOnFormatter.parseDateTime(announceDate))
+    )
   }
 }
 

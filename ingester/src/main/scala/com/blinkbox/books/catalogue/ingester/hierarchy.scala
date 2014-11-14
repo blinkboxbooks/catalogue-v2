@@ -91,7 +91,6 @@ class MessagingSupervisor extends Actor with StrictLogging {
             errorHandler = errorHandler,
             retryInterval = 10.seconds,
             indexer = indexer,
-            search = search,
             messageParser = new XmlV1IngestionParser))),
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.book.inputv1")))), name = "V1-Message-Consumer")

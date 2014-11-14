@@ -13,7 +13,7 @@ trait Search {
 
 class EsSearch(config: Config, client: ElasticClient)(implicit ec: ExecutionContext) extends Search{
   import com.sksamuel.elastic4s.ElasticDsl._
-  implicit val formats = Serialization.formats(NoTypeHints)
+  implicit val formats = org.json4s.DefaultFormats ++ com.blinkbox.books.json.DefaultFormats.customSerializers
 
   override def lookup(isbn: String): Future[Option[Book]] = {
     client.execute{

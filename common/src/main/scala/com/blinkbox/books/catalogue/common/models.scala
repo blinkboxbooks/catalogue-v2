@@ -1,7 +1,9 @@
 package com.blinkbox.books.catalogue.common
 
 import com.blinkbox.books.catalogue.common
+import org.joda.time.DateTime
 
+sealed trait DistributeContent
 case class Classification(realm: String, id: String)
 case class Availability(available: Boolean, code: String, extra: String)
 case class Description(classification: List[Classification], content: String, `type`: String, author: String)
@@ -16,14 +18,16 @@ case class Price(amount: Double, currency: String, includesTax: Boolean,
                  isAgency: Boolean, discountRate: Option[Int], tax: Option[Tax])
 case class Series(title: String, number: Option[Int])
 case class Contributor(role: String, id: String, displayName: String, sortName: String)
+case class Dates(publish: Option[DateTime], announce: Option[DateTime]) // TODO: publish date shouldn't be optional in V2
 case class Book(distribute: Boolean,
                 title: String, subtitle: Option[String],
                 availability: Availability,  isbn: String,
                 regionalRights: RegionalRights, publisher: String, media: Media,
                 languages: List[String], descriptions: List[Description], subjects: List[Subject],
-                prices: List[Price], series: Option[Series], contributors: List[Contributor])
+                prices: List[Price], series: Option[Series], contributors: List[Contributor],
+                dates: Dates, modifiedAt: DateTime) extends DistributeContent
 
-case class Undistribute(isbn: String)
+case class Undistribute(isbn: String, effectiveTimestamp: DateTime) extends DistributeContent
 
 object Book {
   def empty = Book(
@@ -35,7 +39,9 @@ object Book {
     publisher = "", media = Media(List.empty[Epub], List.empty[Image]),
     languages = List.empty[String], descriptions = List.empty[Description],
     subjects = List.empty[Subject], prices = List.empty[Price],
-    series = Option.empty[Series], contributors = List.empty[Contributor])
+    series = Option.empty[Series], contributors = List.empty[Contributor],
+    dates = Dates(publish = Option.empty[DateTime], announce = Option.empty[DateTime]),
+    modifiedAt = DateTime.now)
 }
 
 object IndexEntities {
