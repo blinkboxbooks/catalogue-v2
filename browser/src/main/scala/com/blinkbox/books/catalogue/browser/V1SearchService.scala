@@ -4,7 +4,7 @@ import com.blinkbox.books.catalogue.common.IndexEntities.{ContributorPayload, Bo
 import com.blinkbox.books.json.DefaultFormats
 import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
 import org.elasticsearch.search.suggest.Suggest
-import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
+import org.elasticsearch.search.suggest.term.TermSuggestion.Entry
 import org.json4s.jackson.Serialization
 import org.elasticsearch.action.search.SearchResponse
 import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
@@ -12,7 +12,7 @@ import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
 import scala.collection.convert.Wrappers.JIteratorWrapper
 import scala.concurrent.{ExecutionContext, Future}
 
-case class BookId(value: Int) extends AnyVal
+case class BookId(value: String) extends AnyVal
 
 trait V1SearchService {
   case class Book(id: String, title: String, authors: List[String])
@@ -46,14 +46,18 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
       }.toIterable
 
   override def search(q: String): Future[Iterable[Book]] = client.execute {
-    E.search in "catalogue/book" query {
-      E.dismax query {
-        E.term("title", q) boost 5
-        E.term("author", q) boost 4
-        E.nested("description") query {
-          E.term("content", q)
+    E.search in "catalogue/book" filter {
+      E.termFilter("distribute", true)
+    } query {
+      E.dismax query (
+        E.term("title", q) boost 5,
+        E.nested("contributors") query (
+          E.term("contributors.displayName", q)
+        ) boost 4,
+        E.nested("descriptions") query {
+          E.term("descriptions.content", q)
         } boost 1
-      } tieBreaker 0.2
+      ) tieBreaker 0.2
     }
   } map toBookIterable
 

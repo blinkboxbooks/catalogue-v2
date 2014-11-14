@@ -65,7 +65,7 @@ object IndexEntities {
   object Book {
 
     def buildSuggestions(book: common.Book): List[SuggestionField] = {
-      val authors = book.contributors.filter(_.role == "author")
+      val authors = book.contributors.filter(_.role.toLowerCase == "author")
 
       val authorDisplayNames = authors.map(_.displayName)
 
