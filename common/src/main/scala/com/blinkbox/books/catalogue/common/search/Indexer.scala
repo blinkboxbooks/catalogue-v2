@@ -6,6 +6,7 @@ import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.mappings.FieldType.{BooleanType, StringType, IntegerType}
 import com.sksamuel.elastic4s.source.DocumentSource
 import com.typesafe.config.Config
+import org.elasticsearch.index.VersionType
 import org.json4s.NoTypeHints
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
@@ -25,13 +26,18 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
 
   case class JsonSource(book: Book) extends DocumentSource {
-    implicit val formats = Serialization.formats(NoTypeHints)
+    implicit val formats = org.json4s.DefaultFormats ++ com.blinkbox.books.json.DefaultFormats.customSerializers
     def json = Serialization.write(book)
   }
 
   override def index(book: Book): Future[SingleResponse] = {
     client.execute {
-      esIndex into s"${config.getString("search.index.name")}/book" doc JsonSource(book) id book.isbn
+      esIndex
+        .into(s"${config.getString("search.index.name")}/book")
+        .doc(JsonSource(book))
+        .id(book.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version((book.modifiedAt.getMillis/1000).toInt)
     } map { resp =>
       SingleResponse(resp.getId)
     }
@@ -41,13 +47,20 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
     client.execute {
       bulk(
         books.map { book =>
-          esIndex into s"${config.getString("search.index.name")}/book" doc JsonSource(book) id book.isbn
+          esIndex
+            .into(s"${config.getString("search.index.name")}/book")
+            .doc(JsonSource(book))
+            .id(book.isbn)
+            .versionType(VersionType.EXTERNAL)
+            .version((book.modifiedAt.getMillis/1000).toInt)
         }.toList: _*
       )
     } map { response =>
       response.getItems.map { item =>
-        if(item.isFailed) Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))
-        else Successful(item.getId)
+        if(item.isFailed)
+          Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))
+        else
+          Successful(item.getId)
       }
     }
   }
