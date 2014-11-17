@@ -27,7 +27,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
     config.publisher.path, config.price.path, config.book.path, config.book.synopsisPathLink)
 
 
-  val bookApi = new BookApi(config.service, config.book, new ElasticSearchBookService(linkHelper))
+  val bookApi = new BookApi(config.service, config.book, new ElasticSearchBookService(config.elasticSearch, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)
 
   val route = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {

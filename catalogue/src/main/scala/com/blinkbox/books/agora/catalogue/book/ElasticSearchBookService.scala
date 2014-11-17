@@ -14,18 +14,17 @@ import org.elasticsearch.action.get.GetResponse
 import com.blinkbox.books.catalogue.common._
 
 import com.blinkbox.books.spray.v1.Link
-import com.blinkbox.books.agora.catalogue.app.LinkHelper
+import com.blinkbox.books.agora.catalogue.app.{ElasticSearchConfig, LinkHelper}
 
 /**
  * ES-based implementation.
  */
-class ElasticSearchBookService(linkHelper: LinkHelper) extends BookService {
+class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHelper) extends BookService {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
 
-  // TODO - config
-  val settings = ImmutableSettings.settingsBuilder().put("cluster.name", "elasticsearch").build()
-  val client = ElasticClient.remote(settings, ("localhost", 9300))
+  val settings = ImmutableSettings.settingsBuilder().put("cluster.name", esConfig.cluster).build()
+  val client = ElasticClient.remote(settings, (esConfig.host, esConfig.port))
 
   private def toBookRepresentation(book: Book): BookRepresentation = {
     BookRepresentation(
