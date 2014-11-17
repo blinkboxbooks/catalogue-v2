@@ -6,20 +6,22 @@ import com.blinkbox.books.config.{ApiConfig, Configuration}
 import com.blinkbox.books.json.DefaultFormats
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.HttpServer
+import com.sksamuel.elastic4s.ElasticClient
+import com.typesafe.config.Config
 import org.json4s.Formats
 import spray.can.Http
-import spray.http.StatusCodes._
 import spray.httpx.Json4sJacksonSupport
 import spray.routing._
 import com.blinkbox.books.spray.url2uri
 
-class WebService extends HttpServiceActor with Json4sJacksonSupport {
-  val searchService: V1SearchService = ???
+class WebService(config: Config) extends HttpServiceActor with Json4sJacksonSupport {
+  lazy val client = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
+  lazy val searchService: V1SearchService = new EsV1SearchService(client)
 
   implicit def json4sJacksonFormats: Formats = DefaultFormats
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
-  val BookIdSegment = IntNumber.map(BookId.apply _)
+  val BookIdSegment = Segment.map(BookId.apply _)
 
   val validatePasswordResetToken: Route = get {
     pathPrefix("catalogue" / "search") {
@@ -62,7 +64,7 @@ object Main extends Configuration {
     implicit val startTimeout = Timeout(apiConfig.timeout)
 
     sys.addShutdownHook(actorSystem.shutdown())
-    val service = actorSystem.actorOf(Props[WebService], "catalog-browser-actor")
+    val service = actorSystem.actorOf(Props(classOf[WebService], config), "catalog-browser-actor")
     val localUrl = apiConfig.localUrl
     HttpServer(Http.Bind(service, localUrl.getHost, localUrl.effectivePort))
   }
