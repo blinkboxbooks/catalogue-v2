@@ -8,12 +8,11 @@ case class BookRepresentation(guid: String, id: String, title: String, publicati
 
 // TODO - should this (and any other v1 model classes) be in an explicit v1 package?
 
-/*
-object Book {
+object BookRepresentation {
   val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
   def apply(isbn: String, title: String, publicationDate: DateTime, sampleEligible: Boolean, images: List[Image], links: Option[List[Link]]) = {
     println("*****************************")
-    new Book(s"urn:blinkboxbooks:id:book:$isbn", isbn, title, fmt.print(publicationDate), sampleEligible, images, links)
+    new BookRepresentation(s"urn:blinkboxbooks:id:book:$isbn", isbn, title, fmt.print(publicationDate), sampleEligible, images, links)
   }
 }
-*/
+

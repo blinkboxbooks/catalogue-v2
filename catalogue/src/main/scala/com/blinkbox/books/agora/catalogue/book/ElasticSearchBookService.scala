@@ -29,10 +29,9 @@ class ElasticSearchBookService(linkHelper: LinkHelper) extends BookService {
 
   private def toBookRepresentation(book: Book): BookRepresentation = {
     BookRepresentation(
-      s"urn:blinkboxbooks:id:book:${book.isbn}",
       book.isbn,
       book.title,
-      "13/11/2014", // TODO - publicationDate, from which field?
+      book.dates.publish.get,
       isSampleEligible(book),
       extractImages(book),
       generateLinks(book)
