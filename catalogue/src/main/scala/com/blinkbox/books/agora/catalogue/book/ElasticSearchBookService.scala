@@ -33,7 +33,7 @@ class ElasticSearchBookService(linkHelper: LinkHelper) extends BookService {
       book.isbn,
       book.title,
       "13/11/2014", // TODO - publicationDate, from which field?
-      true, // TODO - sampleEligible, derive from epub section? or always true?
+      isSampleEligible(book),
       extractImages(book),
       generateLinks(book)
     )
@@ -49,13 +49,27 @@ class ElasticSearchBookService(linkHelper: LinkHelper) extends BookService {
     images
   }
 
+  private def isSampleEligible(book: Book) = {
+    book.media.epubs.exists(epub => epub.classification.exists(c => c.realm.equals("type") && c.id.equals("sample")) &&
+                                    epub.uris.exists(u => u.`type`.equals("static")))
+  }
+
+  private def extractSampleLink(book: Book): Link = {
+    def isSample(epub: Epub): Boolean = epub.classification.filter(c => c.realm.equals("type") && c.id.equals("sample")).size > 0
+    def extractSampleUri(epub: Epub): String = epub.uris.filter(u => u.`type`.equals("static")).head.uri
+
+    val sampleUri = for (epub <- book.media.epubs; if isSample(epub)) yield extractSampleUri(epub)
+    linkHelper.linkForSampleMedia(sampleUri.head)
+  }
+
   private def generateLinks(book: Book) : Option[List[Link]] = {
     var links = List.empty[Link]
     for (c <- book.contributors) links :+= linkHelper.linkForContributor(c.id, c.displayName)
     links :+= linkHelper.linkForBookSynopsis(book.isbn)
-    links :+= linkHelper.linkForPublisher(123, book.publisher) //TODO Add publisher id to search index
+    links :+= linkHelper.linkForPublisher(123, book.publisher) // TODO Add publisher id to search index
     links :+= linkHelper.linkForBookPricing(book.isbn)
-    // sample link
+
+    if (isSampleEligible(book)) links :+= extractSampleLink(book)
     Some(links)
   }
 
