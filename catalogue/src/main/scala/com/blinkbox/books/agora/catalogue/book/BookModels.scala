@@ -11,7 +11,6 @@ case class BookRepresentation(guid: String, id: String, title: String, publicati
 object BookRepresentation {
   val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
   def apply(isbn: String, title: String, publicationDate: DateTime, sampleEligible: Boolean, images: List[Image], links: Option[List[Link]]) = {
-    println("*****************************")
     new BookRepresentation(s"urn:blinkboxbooks:id:book:$isbn", isbn, title, fmt.print(publicationDate), sampleEligible, images, links)
   }
 }
