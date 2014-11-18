@@ -61,14 +61,12 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
   }
 
   private def generateLinks(book: Book) : List[Link] = {
-    var links = List.empty[Link]
-    for (c <- book.contributors) links :+= linkHelper.linkForContributor(c.id, c.displayName)
-    links :+= linkHelper.linkForBookSynopsis(book.isbn)
-    links :+= linkHelper.linkForPublisher(123, book.publisher) // TODO Add publisher id to search index
-    links :+= linkHelper.linkForBookPricing(book.isbn)
-
-    if (isSampleEligible(book)) links :+= extractSampleLink(book)
-    links
+    List(
+      for (c <- book.contributors) yield linkHelper.linkForContributor(c.id, c.displayName),
+      List(linkHelper.linkForBookSynopsis(book.isbn)),
+      List(linkHelper.linkForPublisher(123, book.publisher)),
+      List(linkHelper.linkForBookPricing(book.isbn)),
+      if (isSampleEligible(book)) List(extractSampleLink(book)) else List.empty[Link]).flatten
   }
 
   override def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]] = {
