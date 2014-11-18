@@ -1,15 +1,14 @@
 package com.blinkbox.books.catalogue.browser
 
-import com.blinkbox.books.catalogue.common.IndexEntities.{ContributorPayload, BookPayload}
-import com.blinkbox.books.json.DefaultFormats
-import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
-import org.elasticsearch.search.suggest.Suggest
-import org.elasticsearch.search.suggest.term.TermSuggestion.Entry
-import org.json4s.jackson.Serialization
-import org.elasticsearch.action.search.SearchResponse
+import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
 import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
+import com.sksamuel.elastic4s.{ElasticClient, MoreLikeThisDefinition, ElasticDsl => E}
+import org.elasticsearch.action.search.SearchResponse
+import org.elasticsearch.search.suggest.Suggest
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
+import org.json4s.jackson.Serialization
 
-import scala.collection.convert.Wrappers.JIteratorWrapper
+import scala.collection.convert.Wrappers.{JIteratorWrapper, JListWrapper}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class BookId(value: String) extends AnyVal
@@ -24,7 +23,7 @@ trait V1SearchService {
 }
 
 class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
-  implicit val formats = DefaultFormats
+  import com.blinkbox.books.catalogue.common.Json._
 
   private def toBookIterable(resp: SearchResponse): Iterable[Book] =
     resp.getHits.hits().map { hit =>
@@ -32,42 +31,47 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
       Book(book.isbn, book.title, book.contributors.map(_.displayName))
     }
 
-  private def toSuggestionIterable(resp: SearchResponse): Iterable[Suggestion] =
-    JIteratorWrapper(resp.
-      getSuggest.
-      getSuggestion[Suggest.Suggestion[Entry]]("autoComplete").
-      iterator).
-      map(s => Serialization.read[idx.SuggestionResponse](s.getText.string)).
-      flatMap { s =>
-        s.options.map(_.payload).collect {
-          case BookPayload(isbn, title, authors) => Suggestion(isbn, title, "book", Some(authors))
-          case ContributorPayload(id, name) => Suggestion(id, name, "contributor", None)
-        }
-      }.toIterable
+  def toSuggestion(payload: SuggestionPayload): Suggestion =
+    if (payload.`type` == SuggestionType.Book) {
+      val bookItem = payload.item.asInstanceOf[SuggestionItem.Book]
+      Suggestion(bookItem.isbn, bookItem.title, "book", Some(bookItem.authors))
+    } else {
+      val contributorItem = payload.item.asInstanceOf[SuggestionItem.Contributor]
+      Suggestion(contributorItem.id, contributorItem.displayName, "author", None)
+    }
 
-  override def search(q: String): Future[Iterable[Book]] = client.execute {
-    E.search in "catalogue/book" filter {
-      E.termFilter("distribute", true)
-    } query {
-      E.dismax query (
-        E.term("title", q) boost 5,
-        E.nested("contributors") query (
-          E.term("contributors.displayName", q)
-        ) boost 4,
-        E.nested("descriptions") query {
-          E.term("descriptions.content", q)
-        } boost 1
-      ) tieBreaker 0.2
+  private def toSuggestionIterable(resp: SearchResponse): Iterable[Suggestion] =
+    (for {
+      autoComplete <- JIteratorWrapper(resp.getSuggest.getSuggestion[Suggest.Suggestion[Entry]]("autoComplete").iterator)
+      option <- JListWrapper(autoComplete.getOptions)
+      payload = Serialization.read[SuggestionPayload](option.getPayloadAsString)
+    } yield toSuggestion(payload)).toIterable
+
+  override def search(q: String): Future[Iterable[Book]] = client execute {
+    E.search in "catalogue/book"  query {
+      E.filteredQuery query {
+        E.dismax query(
+          E.matchPhrase("title", q) boost 5 slop 1,
+          E.nested("contributors") query (
+            E.matchPhrase("contributors.displayName", q) slop 1
+            ) boost 4,
+          E.nested("descriptions") query {
+            E.matchPhrase("descriptions.content", q) slop 1
+          } boost 1
+          ) tieBreaker 0.2
+      } filter {
+        E.termFilter("distribute", true)
+      }
     }
   } map toBookIterable
 
-  override def similar(bookId: BookId): Future[Iterable[Book]] = client.execute {
+  override def similar(bookId: BookId): Future[Iterable[Book]] = client execute {
     E.morelike id bookId.value in "catalogue/book"
   } map toBookIterable
 
-  override def suggestions(q: String): Future[Iterable[Suggestion]] = client.execute {
+  override def suggestions(q: String): Future[Iterable[Suggestion]] = client execute {
     E.search in "catalogue" suggestions (
-      E.suggest as "autoComplete" on q from "autoComplete"
+      E.suggest using(E.completion) as "autoComplete" on q from "autoComplete"
     )
   } map toSuggestionIterable
 }
