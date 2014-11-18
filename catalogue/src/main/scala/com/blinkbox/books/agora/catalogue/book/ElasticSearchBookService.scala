@@ -43,8 +43,7 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
 
     val coverUri = for (bookImage <- book.media.images; if isCoverImage(bookImage)) yield extractCoverUri(bookImage)
     val coverImage: com.blinkbox.books.spray.v1.Image = new com.blinkbox.books.spray.v1.Image("urn:blinkboxbooks:image:cover",coverUri.head)
-    val images : List[com.blinkbox.books.spray.v1.Image] = coverImage :: List()
-    images
+    List(coverImage)
   }
 
   private def isSampleEligible(book: Book) = {
