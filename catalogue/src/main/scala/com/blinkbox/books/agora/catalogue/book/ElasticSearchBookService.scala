@@ -33,7 +33,7 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
       book.dates.publish.get,
       isSampleEligible(book),
       extractImages(book),
-      generateLinks(book)
+      Some(generateLinks(book))
     )
   }
 
@@ -60,7 +60,7 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
     linkHelper.linkForSampleMedia(sampleUri.head)
   }
 
-  private def generateLinks(book: Book) : Option[List[Link]] = {
+  private def generateLinks(book: Book) : List[Link] = {
     var links = List.empty[Link]
     for (c <- book.contributors) links :+= linkHelper.linkForContributor(c.id, c.displayName)
     links :+= linkHelper.linkForBookSynopsis(book.isbn)
@@ -68,7 +68,7 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
     links :+= linkHelper.linkForBookPricing(book.isbn)
 
     if (isSampleEligible(book)) links :+= extractSampleLink(book)
-    Some(links)
+    links
   }
 
   override def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]] = {
