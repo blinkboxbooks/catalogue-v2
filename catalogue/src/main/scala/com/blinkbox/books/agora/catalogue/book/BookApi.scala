@@ -24,12 +24,14 @@ trait BookService {
    * Retrieve book by ISBN.
    */
   def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
+  def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
 }
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
+  def getBookSynopsis: Route
+
   // TODO
-//  def getBookSynopsis: Route
 //  def getRelatedBooks: Route
 //  def getBooks: Route
 }
@@ -46,9 +48,9 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   
   override val responseTypeHints = ExplicitTypeHints(Map(
     classOf[ListPage[_]] -> "urn:blinkboxbooks:schema:list",
-    classOf[BookRepresentation] -> "urn:blinkboxbooks:schema:book"
-  //  classOf[BookSynopsis] -> "urn:blinkboxbooks:schema:synopsis")
-  ))
+    classOf[BookRepresentation] -> "urn:blinkboxbooks:schema:book",
+    classOf[BookSynopsis] -> "urn:blinkboxbooks:schema:synopsis")
+  )
 
   val idParam = "id"
   val qParam = "q"
@@ -76,13 +78,13 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
 
-/*
   val getBookSynopsis = path(Segment / "synopsis") { id =>
     get {
       onSuccess(service.getBookSynopsis(id))(cacheable(config.maxAge, _))
     }
   }
 
+  /*
   val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
@@ -150,8 +152,8 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   val routes = rootPath(api.localUrl.path + config.path) {
     monitor() {
       respondWithHeader(RawHeader("Vary", "Accept, Accept-Encoding")) {
-        getBookByIsbn
-        // TODO ~ getBookSynopsis ~ getRelatedBooks ~ getBooks
+        getBookByIsbn ~ getBookSynopsis
+        // TODO ~ getRelatedBooks ~ getBooks
       }
     }
   }
