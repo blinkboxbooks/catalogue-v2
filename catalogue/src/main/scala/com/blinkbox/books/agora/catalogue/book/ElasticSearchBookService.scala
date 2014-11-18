@@ -68,6 +68,13 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
       if (isSampleEligible(book)) List(extractSampleLink(book)) else List.empty[Link]).flatten
   }
 
+  private def toBookSynopsis(book: Book): BookSynopsis = {
+    def isMainDescription(description: Description): Boolean = description.classification.exists(c => c.realm.equals("source") && c.id.equals("Main description"))
+
+    val synopsisText = for (desc <- book.descriptions; if isMainDescription(desc)) yield desc.content
+    BookSynopsis(book.isbn, synopsisText.head)
+  }
+
   override def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]] = {
     client.execute {
       get id isbn from "catalogue/book"
@@ -79,6 +86,20 @@ class ElasticSearchBookService(esConfig: ElasticSearchConfig, linkHelper: LinkHe
           val book = Serialization.read[Book](res.getSourceAsString)
           Some(toBookRepresentation(book))
         }
+    }
+  }
+
+  override def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]] = {
+    client.execute {
+      get id isbn from "catalogue/book"
+    } map { res =>
+
+      if(res.isSourceEmpty)
+        None
+      else {
+        val book = Serialization.read[Book](res.getSourceAsString)
+        Some(toBookSynopsis(book))
+      }
     }
   }
 }
