@@ -9,6 +9,7 @@ import com.typesafe.config.Config
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
+import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -25,8 +26,8 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
 
   case class JsonSource(book: Book) extends DocumentSource {
-    implicit val formats = org.json4s.DefaultFormats ++ com.blinkbox.books.json.DefaultFormats.customSerializers
-    def json = Serialization.write(book)
+    import com.blinkbox.books.catalogue.common.Json.formats
+    def json = Serialization.write(idx.Book.fromMessage(book))
   }
 
   override def index(book: Book): Future[SingleResponse] = {
@@ -127,7 +128,7 @@ case class Schema(config: Config) {
       ),
       "autoComplete" typed CompletionType payloads(true),
       "distribute" typed BooleanType
-    )
+    ) dynamic(false)
   )).analysis(
     CustomAnalyzerDefinition("descriptionAnalyzer",
       StandardTokenizer,

@@ -46,14 +46,21 @@ object Book {
 
 object IndexEntities {
 
-  sealed trait SuggestionPayload
-  case class BookPayload(isbn: String, title: String, authors: List[String]) extends SuggestionPayload
-  case class ContributorPayload(id: String, displayName: String) extends SuggestionPayload
+  sealed trait SuggestionType
+  object SuggestionType {
+    case object Book extends SuggestionType
+    case object Contributor extends SuggestionType
+  }
+
+  case class SuggestionPayload(`type`: SuggestionType, item: SuggestionItem)
+
+  sealed trait SuggestionItem
+  object SuggestionItem {
+    case class Book(isbn: String, title: String, authors: List[String]) extends SuggestionItem
+    case class Contributor(id: String, displayName: String) extends SuggestionItem
+  }
 
   case class SuggestionField(input: List[String], output: String, payload: SuggestionPayload)
-
-  case class SuggestionOption(text: String, score: Double, payload: SuggestionPayload)
-  case class SuggestionResponse(text: String, offset: Int, length: Int, options: List[SuggestionOption])
 
   case class Book(title: String, subtitle: Option[String],
                   availability: Availability,  isbn: String,
@@ -64,22 +71,28 @@ object IndexEntities {
 
   object Book {
 
+    def bookPayload(isbn: String, title: String, contributors: List[String]) =
+      SuggestionPayload(SuggestionType.Book, SuggestionItem.Book(isbn, title, contributors))
+
+    def contributorPayload(id: String, name: String) =
+      SuggestionPayload(SuggestionType.Contributor, SuggestionItem.Contributor(id, name))
+
     def buildSuggestions(book: common.Book): List[SuggestionField] = {
       val authors = book.contributors.filter(_.role.toLowerCase == "author")
 
-      val authorDisplayNames = authors.map(_.displayName)
+      val authorNames = authors.map(_.displayName)
 
       val bookSuggestion: SuggestionField = SuggestionField(
-        input = book.title :: authorDisplayNames,
-        output = s"${book.title} - ${authorDisplayNames.mkString(", ")}",
-        payload = BookPayload(book.isbn, book.title, authorDisplayNames)
+        input = book.title :: authorNames,
+        output = s"${book.title} - ${authorNames.mkString(", ")}",
+        payload = bookPayload(book.isbn, book.title, authorNames)
       )
 
       val authorSuggestions: List[SuggestionField] = authors.map { a =>
         SuggestionField(
           input = a.displayName :: Nil,
           output = a.displayName,
-          payload = ContributorPayload(a.id, a.displayName)
+          payload = contributorPayload(a.id, a.displayName)
         )
       }
 
