@@ -137,7 +137,8 @@ object IndexEntities {
                   media: Option[Media],
                   distributionStatus: DistributionStatus,
                   source: Source,
-                  autoComplete: List[SuggestionField])
+                  autoComplete: List[SuggestionField],
+                  descriptionContents: List[String])
 
   object Book {
 
@@ -169,9 +170,9 @@ object IndexEntities {
       bookSuggestion :: authorSuggestions
     }
 
-    case class Wrapper(
-      book: Book,
-      autoComplete: List[SuggestionField])
+    def buildMoreLikeThis(book: common.Book): List[String] = {
+      book.descriptions.map(_.content)
+    }
 
     def fromMessage(msg: common.Book): Book = Book(
       sequenceNumber = msg.sequenceNumber,
@@ -200,6 +201,7 @@ object IndexEntities {
       media = msg.media,
       distributionStatus = msg.distributionStatus,
       source = msg.source,
-      autoComplete = buildSuggestions(msg))
+      autoComplete = buildSuggestions(msg),
+      descriptionContents = buildMoreLikeThis(msg))
   }
 }

@@ -66,7 +66,9 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
   } map toBookIterable
 
   override def similar(bookId: BookId): Future[Iterable[Book]] = client execute {
-    E.morelike id bookId.value in "catalogue/book"
+    E.search in "catalogue/book" query {
+      E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 maxQueryTerms 12 ids bookId.value
+    }
   } map toBookIterable
 
   override def suggestions(q: String): Future[Iterable[Suggestion]] = client execute {

@@ -127,7 +127,8 @@ case class Schema(config: Config) {
         "sortName" typed StringType analyzer KeywordAnalyzer
       ),
       "autoComplete" typed CompletionType payloads(true),
-      "distribute" typed BooleanType
+      "distribute" typed BooleanType,
+      "descriptionContents" typed StringType
     ) dynamic(false)
   )).analysis(
     CustomAnalyzerDefinition("descriptionAnalyzer",
