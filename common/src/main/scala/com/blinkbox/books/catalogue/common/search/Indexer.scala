@@ -37,7 +37,7 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
         .doc(JsonSource(book))
         .id(book.isbn)
         .versionType(VersionType.EXTERNAL)
-        .version((book.modifiedAt.getMillis/1000).toInt)
+        .version(book.sequenceNumber)
     } map { resp =>
       SingleResponse(resp.getId)
     }
@@ -52,7 +52,7 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
             .doc(JsonSource(book))
             .id(book.isbn)
             .versionType(VersionType.EXTERNAL)
-            .version((book.modifiedAt.getMillis/1000).toInt)
+            .version(book.sequenceNumber)
         }.toList: _*
       )
     } map { response =>
