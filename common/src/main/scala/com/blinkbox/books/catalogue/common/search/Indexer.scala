@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.common.search
 
-import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.catalogue.common.{IndexEntities => idx, SearchConfig, Book}
 import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.mappings.FieldType.{CompletionType, BooleanType, StringType, IntegerType}
@@ -9,7 +9,6 @@ import com.typesafe.config.Config
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
-import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -22,7 +21,7 @@ trait Indexer {
   def index(books: Iterable[Book]): Future[Iterable[BulkItemResponse]]
 }
 
-class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
+class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
   import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
 
   case class JsonSource(book: Book) extends DocumentSource {
@@ -33,7 +32,7 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   override def index(book: Book): Future[SingleResponse] = {
     client.execute {
       esIndex
-        .into(s"${config.getString("search.index.name")}/book")
+        .into(s"${config.indexName}/book")
         .doc(JsonSource(book))
         .id(book.isbn)
         .versionType(VersionType.EXTERNAL)
@@ -48,7 +47,7 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
       bulk(
         books.map { book =>
           esIndex
-            .into(s"${config.getString("search.index.name")}/book")
+            .into(s"${config.indexName}/book")
             .doc(JsonSource(book))
             .id(book.isbn)
             .versionType(VersionType.EXTERNAL)
@@ -66,7 +65,7 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   }
 }
 
-case class Schema(config: Config) {
+case class Schema(config: SearchConfig) {
   def classification = "classification" nested(
     "realm" typed StringType analyzer KeywordAnalyzer,
     "id" typed StringType analyzer KeywordAnalyzer
@@ -78,7 +77,7 @@ case class Schema(config: Config) {
     "params" typed StringType index "not_analyzed"
     )
 
-  def catalogue = (create index s"${config.getString("search.index.name")}" mappings (
+  def catalogue = (create index config.indexName mappings (
     "book" as(
       "title" typed StringType analyzer SnowballAnalyzer,
       "availability" inner(

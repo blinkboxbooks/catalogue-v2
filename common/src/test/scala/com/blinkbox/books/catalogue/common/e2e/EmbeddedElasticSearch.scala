@@ -1,14 +1,15 @@
 package com.blinkbox.books.catalogue.common.e2e
 
 import java.nio.file.Files
+import com.blinkbox.books.catalogue.common.SearchConfig
 import org.apache.commons.io.FileUtils
 import org.elasticsearch.client.Client
 import org.elasticsearch.common.settings.ImmutableSettings
 import org.elasticsearch.node.NodeBuilder._
 
-class EmbeddedElasticSearch {
+class EmbeddedElasticSearch(config: SearchConfig) {
 
-  private val clusterName = "elasticsearch"
+  private val clusterName = config.clusterName
   private val dataDir = Files.createTempDirectory("elasticsearch_data_").toFile
   private val settings = ImmutableSettings.settingsBuilder
     .put("path.data", dataDir.toString)

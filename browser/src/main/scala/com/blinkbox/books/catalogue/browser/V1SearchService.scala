@@ -1,8 +1,8 @@
 package com.blinkbox.books.catalogue.browser
 
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
-import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
-import com.sksamuel.elastic4s.{ElasticClient, MoreLikeThisDefinition, ElasticDsl => E}
+import com.blinkbox.books.catalogue.common.{SearchConfig, IndexEntities => idx}
+import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
 import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
@@ -22,7 +22,7 @@ trait V1SearchService {
   def suggestions(q: String): Future[Iterable[Suggestion]]
 }
 
-class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
+class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
   import com.blinkbox.books.catalogue.common.Json._
 
   private def toBookIterable(resp: SearchResponse): Iterable[Book] =
@@ -47,8 +47,10 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
       payload = Serialization.read[SuggestionPayload](option.getPayloadAsString)
     } yield toSuggestion(payload)).toIterable
 
+  private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
+
   override def search(q: String): Future[Iterable[Book]] = client execute {
-    E.search in "catalogue/book"  query {
+    searchIn("book") query {
       E.filteredQuery query {
         E.dismax query(
           E.matchPhrase("title", q) boost 5 slop 1,
@@ -66,13 +68,13 @@ class EsV1SearchService(client: ElasticClient)(implicit ec: ExecutionContext) ex
   } map toBookIterable
 
   override def similar(bookId: BookId): Future[Iterable[Book]] = client execute {
-    E.search in "catalogue/book" query {
+    searchIn("book") query {
       E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 maxQueryTerms 12 ids bookId.value
     }
   } map toBookIterable
 
   override def suggestions(q: String): Future[Iterable[Suggestion]] = client execute {
-    E.search in "catalogue" suggestions (
+    searchIn("catalogue") suggestions (
       E.suggest using(E.completion) as "autoComplete" on q from "autoComplete"
     )
   } map toSuggestionIterable

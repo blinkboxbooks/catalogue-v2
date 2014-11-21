@@ -1,23 +1,20 @@
 package com.blinkbox.books.catalogue.browser
 
-import akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
+import com.blinkbox.books.catalogue.common.{ElasticFactory, SearchConfig}
 import com.blinkbox.books.config.{ApiConfig, Configuration}
 import com.blinkbox.books.json.DefaultFormats
 import com.blinkbox.books.logging.DiagnosticExecutionContext
-import com.blinkbox.books.spray.HttpServer
+import com.blinkbox.books.spray.{HttpServer, url2uri}
 import com.sksamuel.elastic4s.ElasticClient
-import com.typesafe.config.Config
+import org.elasticsearch.common.settings.ImmutableSettings
 import org.json4s.Formats
 import spray.can.Http
 import spray.httpx.Json4sJacksonSupport
 import spray.routing._
-import com.blinkbox.books.spray.url2uri
 
-class WebService(config: Config) extends HttpServiceActor with Json4sJacksonSupport {
-  lazy val client = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
-  lazy val searchService: V1SearchService = new EsV1SearchService(client)
-
+class WebService(searchService: V1SearchService) extends HttpServiceActor with Json4sJacksonSupport {
   implicit def json4sJacksonFormats: Formats = DefaultFormats
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
@@ -58,14 +55,19 @@ object Main extends Configuration {
   def main(args: Array[String]): Unit = {
     val Prefix = "service.catalog-browser.api.public"
     val apiConfig = ApiConfig(config, Prefix)
+    val searchConfig = SearchConfig(config)
 
     implicit val actorSystem = ActorSystem("catalog-browser-system")
     implicit val executionContext = actorSystem.dispatcher
     implicit val startTimeout = Timeout(apiConfig.timeout)
 
-    sys.addShutdownHook(actorSystem.shutdown())
-    val service = actorSystem.actorOf(Props(classOf[WebService], config), "catalog-browser-actor")
+    val client = ElasticFactory.remote(searchConfig)
+    val searchService: V1SearchService = new EsV1SearchService(searchConfig, client)
+
+    val service = actorSystem.actorOf(Props(classOf[WebService], searchService), "catalog-browser-actor")
     val localUrl = apiConfig.localUrl
     HttpServer(Http.Bind(service, localUrl.getHost, localUrl.effectivePort))
+
+    sys.addShutdownHook(actorSystem.shutdown())
   }
 }

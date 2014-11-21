@@ -1,7 +1,8 @@
 package com.blinkbox.books.catalogue.common.e2e
 
 import ch.qos.logback.classic.{Level, LoggerContext}
-import com.blinkbox.books.catalogue.common.search.EsIndexer
+import com.blinkbox.books.catalogue.common.SearchConfig
+import com.blinkbox.books.catalogue.common.search.{Schema, EsIndexer}
 import com.blinkbox.books.config.Configuration
 import com.sksamuel.elastic4s.ElasticClient
 import org.scalatest.{Suite, BeforeAndAfterAll}
@@ -16,12 +17,17 @@ trait E2ESpec
   this: Suite =>
 
   implicit def executionContext: ExecutionContext
-  lazy val esServer = new EmbeddedElasticSearch
+  lazy val searchConfig = SearchConfig(config)
+  lazy val esServer = new EmbeddedElasticSearch(searchConfig)
   lazy val esClient = new ElasticClient(esServer.client, 2000)
-  lazy val indexer = new EsIndexer(config, esClient)
+  lazy val indexer = new EsIndexer(searchConfig, esClient)
+  lazy val catalogue = Schema(searchConfig).catalogue
+
   lazy val esLogLevel = Level.WARN
 
   lazy val e2e = using(esClient, indexer)
+
+  def esType(`type`: String) = s"${searchConfig.indexName}/${`type`}"
 
   override protected def beforeAll() = {
     val loggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
