@@ -8,7 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class MappingsSpec extends FlatSpec with E2ESpec with Matchers with ScalaFutures {
 
-  override implicit val executionContext = scala.concurrent.ExecutionContext.Implicits.global
+  override implicit val e2eExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
   override implicit def patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
 
   "The mappings for the \"catalogue\" index" should "be valid for the \"book\" type" in {

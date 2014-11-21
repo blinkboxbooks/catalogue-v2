@@ -16,11 +16,11 @@ trait E2ESpec
     with E2EDsl {
   this: Suite =>
 
-  implicit def executionContext: ExecutionContext
+  def e2eExecutionContext: ExecutionContext
   lazy val searchConfig = SearchConfig(config)
   lazy val esServer = new EmbeddedElasticSearch(searchConfig)
   lazy val esClient = new ElasticClient(esServer.client, 2000)
-  lazy val indexer = new EsIndexer(searchConfig, esClient)
+  lazy val indexer = new EsIndexer(searchConfig, esClient)(e2eExecutionContext)
   lazy val catalogue = Schema(searchConfig).catalogue
 
   lazy val esLogLevel = Level.WARN
