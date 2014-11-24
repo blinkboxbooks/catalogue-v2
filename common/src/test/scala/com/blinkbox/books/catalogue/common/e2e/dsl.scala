@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.common.e2e
 
 import java.util.NoSuchElementException
 
-import com.blinkbox.books.catalogue.common.{SearchConfig, Book}
+import com.blinkbox.books.catalogue.common.Book
 import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, EsIndexer, Successful}
 import com.blinkbox.books.test.FailHelper
 import com.sksamuel.elastic4s.ElasticClient

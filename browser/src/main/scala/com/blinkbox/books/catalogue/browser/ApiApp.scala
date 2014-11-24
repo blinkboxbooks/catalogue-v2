@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.browser
 
-import akka.actor.Actor.Receive
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
 import com.blinkbox.books.catalogue.browser.v1.{EsV1SearchService, SearchApi, V1SearchService}
@@ -20,8 +19,8 @@ class RestApi(v1Api: SearchApi) extends HttpServiceActor {
 
 object ApiApp extends App with Configuration with Loggers with StrictLogging{
   try {
-    val Prefix = "service.catalog-browser.api.public"
-    val apiConfig = ApiConfig(config, Prefix)
+    val prefix = "service.catalog-browser.api.public"
+    val apiConfig = ApiConfig(config, prefix)
     val searchConfig = SearchConfig(config)
 
     implicit val actorSystem = ActorSystem("catalog-browser-system")
