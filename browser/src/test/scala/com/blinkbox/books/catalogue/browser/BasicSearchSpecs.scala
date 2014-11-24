@@ -24,6 +24,8 @@ class BasicSearchSpecs extends FlatSpec with E2ESpec with Matchers with Scalates
   override def e2eExecutionContext = executor
   override implicit def json4sJacksonFormats: Formats = DefaultFormats
 
+  implicit val routeTestTimeout = RouteTestTimeout(3.seconds)
+
   lazy val searchService = new EsV1SearchService(searchConfig, esClient)
   lazy val apiUrl = new URL("http://localhost:9595")
   lazy val apiConfig = ApiConfig(apiUrl, apiUrl, 2.seconds)
