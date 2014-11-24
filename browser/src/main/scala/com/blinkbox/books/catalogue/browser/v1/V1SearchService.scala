@@ -59,15 +59,15 @@ class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(impli
       E.filteredQuery query {
         E.dismax query(
           E.matchPhrase("title", q) boost 5 slop 1,
-          E.nested("contributors") query (
+          E.nestedQuery("contributors") query (
             E.matchPhrase("contributors.displayName", q) slop 1
             ) boost 4,
-          E.nested("descriptions") query {
+          E.nestedQuery("descriptions") query {
             E.matchPhrase("descriptions.content", q) slop 1
           } boost 1
           ) tieBreaker 0.2
       } filter {
-        E.termFilter("distribute", true)
+        E.termFilter("distributionStatus.usable", true)
       }
     }
   } map toBookIterable

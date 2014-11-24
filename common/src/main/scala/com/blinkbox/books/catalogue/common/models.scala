@@ -112,7 +112,6 @@ object IndexEntities {
   case class SuggestionField(input: List[String], output: String, payload: SuggestionPayload)
 
   case class Book(sequenceNumber: Long,
-                  `$schema`: Option[String],
                   classification: List[Classification],
                   isbn: String,
                   format: Option[Format],
@@ -176,7 +175,6 @@ object IndexEntities {
 
     def fromMessage(msg: common.Book): Book = Book(
       sequenceNumber = msg.sequenceNumber,
-      `$schema` = msg.`$schema`,
       classification = msg.classification,
       isbn = msg.isbn,
       format = msg.format,

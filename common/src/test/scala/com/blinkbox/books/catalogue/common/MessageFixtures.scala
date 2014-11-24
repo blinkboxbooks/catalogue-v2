@@ -4,22 +4,48 @@ import org.joda.time.DateTime
 
 object MessageFixtures {
   val simpleBook = Book(
-    distribute = true,
+    sequenceNumber = 100,
+    `$schema` = Some("book"),
+    classification = Classification("book", "1234567890123") :: Nil,
+    isbn = "1234567890123",
+    format = None,
     title = "A simple book",
     subtitle = Some("How to be a very simple book"),
-    availability = Availability(true, "UK", "Some extra"),
-    isbn = "1234567890123",
-    regionalRights = RegionalRights(Some(true), None, None),
-    publisher = "The Simplest Publisher",
-    media = Media(Nil, Nil),
-    languages = "EN" :: Nil,
-    descriptions = Description(Nil, "The simple description of a simple book", "", "Contentus") :: Nil,
-    subjects = Subject("a type", "acode") :: Nil,
-    prices = Price(12.3, "GBP", true, true, None, None) :: Nil,
-    series = None,
     contributors = Contributor("author", "abc123", "Foo C. Bar", "Bar Foo") :: Nil,
-    dates = Dates(Some(new DateTime()), None),
-    modifiedAt = new DateTime()
-  )
+    availability = Some(
+      BookAvailability(
+        notificationType = None,
+        publishingStatus = None,
+        availabilityCode = None,
+        productAvailability = None,
+        blinkboxBooks = None
+      )),
+    dates = Some(Dates(Some(new DateTime()), None)),
+    descriptions = OtherText(Nil, "The simple description of a simple book", "", Some("Contentus")) :: Nil,
+    reviews = Nil,
+    languages = "EN" :: Nil,
+    originalLanguages = "EN" :: Nil,
+    supplyRights = Some(Regions(Some(true), None, None)),
+    salesRights = Some(Regions(Some(true), None, None)),
+    publisher = Some("The Simplest Publisher"),
+    imprint = None,
+    prices = Price(
+      amount = 12.3,
+      currency =  "GBP",
+      includesTax =  true,
+      isAgency =  true,
+      discountRate = None,
+      validFrom = None,
+      validUntil = None,
+      applicableRegions = Some(Regions(Some(true), None, None)),
+      tax = None
+    ) :: Nil,
+    statistics = None,
+    subjects = Subject("a type", "acode", Some(true)) :: Nil,
+    series = None,
+    related = Nil,
+    media = None,
+    distributionStatus = DistributionStatus(true, Nil),
+    source = Source(new DateTime(), None, None, None, "some-role", "some-username", None, None))
 }
 
