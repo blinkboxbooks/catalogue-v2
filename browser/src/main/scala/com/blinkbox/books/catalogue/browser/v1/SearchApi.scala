@@ -27,9 +27,9 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
       pathPrefix("books") {
         pathEnd {
           get {
-            parameter('q.?) { q =>
-              q.fold[Route](complete(StatusCodes.BadRequest)) { q =>
-                onSuccess(searchService.search(q)) { res =>
+            parameter('q.?) { query =>
+              query.fold[Route](complete(StatusCodes.BadRequest)) { query =>
+                onSuccess(searchService.search(query)) { res =>
                   complete(res)
                 }
               }
