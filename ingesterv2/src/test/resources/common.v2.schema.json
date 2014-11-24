@@ -1,0 +1,188 @@
+{
+  "title": "Common elements for ingestion JSON schema",
+  "definitions": {
+    "iso639-2b": {
+      "title": "The list of ISO-639/2B language codes, for validating languages recognised by blinkbox books.",
+      "enum": ["aar","abk","ace","ach","ada","ady","afa","afh","afr","ain","aka","akk","alb","ale","alg","alt","amh","ang","anp","apa","ara","arc","arg","arm","arn","arp","art","arw","asm","ast","ath","aus","ava","ave","awa","aym","aze","bad","bai","bak","bal","bam","ban","baq","bas","bat","bej","bel","bem","ben","ber","bho","bih","bik","bin","bis","bla","bnt","bos","bra","bre","btk","bua","bug","bul","bur","byn","cad","cai","car","cat","cau","ceb","cel","cha","chb","che","chg","chi","chk","chm","chn","cho","chp","chr","chu","chv","chy","cmc","cop","cor","cos","cpe","cpf","cpp","cre","crh","crp","csb","cus","cze","dak","dan","dar","day","del","den","dgr","din","div","doi","dra","dsb","dua","dum","dut","dyu","dzo","efi","egy","eka","elx","eng","enm","epo","est","ewe","ewo","fan","fao","fat","fij","fil","fin","fiu","fon","fre","frm","fro","frr","frs","fry","ful","fur","gaa","gay","gba","gem","geo","ger","gez","gil","gla","gle","glg","glv","gmh","goh","gon","gor","got","grb","grc","gre","grn","gsw","guj","gwi","hai","hat","hau","haw","heb","her","hil","him","hin","hit","hmn","hmo","hrv","hsb","hun","hup","iba","ibo","ice","ido","iii","ijo","iku","ile","ilo","ina","inc","ind","ine","inh","ipk","ira","iro","ita","jav","jbo","jpn","jpr","jrb","kaa","kab","kac","kal","kam","kan","kar","kas","kau","kaw","kaz","kbd","kha","khi","khm","kho","kik","kin","kir","kmb","kok","kom","kon","kor","kos","kpe","krc","krl","kro","kru","kua","kum","kur","kut","lad","lah","lam","lao","lat","lav","lez","lim","lin","lit","lol","loz","ltz","lua","lub","lug","lui","lun","luo","lus","mac","mad","mag","mah","mai","mak","mal","man","mao","map","mar","mas","may","mdf","mdr","men","mga","mic","min","mis","mkh","mlg","mlt","mnc","mni","mno","moh","mol","mon","mos","mul","mun","mus","mwl","mwr","myn","myv","nah","nai","nap","nau","nav","nbl","nde","ndo","nds","nep","new","nia","nic","niu","nno","nob","nog","non","nor","nqo","nso","nub","nwc","nya","nym","nyn","nyo","nzi","oci","oji","ori","orm","osa","oss","ota","oto","paa","pag","pal","pam","pan","pap","pau","peo","per","phi","phn","pli","pol","pon","por","pra","pro","pus","qar","qav","que","raj","rap","rar","roa","roh","rom","rum","run","rup","rus","sad","sag","sah","sai","sal","sam","san","sas","sat","scc","scn","sco","scr","sel","sem","sga","sgn","shn","sid","sin","sio","sit","sla","slo","slv","sma","sme","smi","smj","smn","smo","sms","sna","snd","snk","sog","som","son","sot","spa","srd","srn","srp","srr","ssa","ssw","suk","sun","sus","sux","swa","swe","syc","syr","tah","tai","tam","tat","tel","tem","ter","tet","tgk","tgl","tha","tib","tig","tir","tiv","tkl","tlh","tli","tmh","tog","ton","tpi","tsi","tsn","tso","tuk","tum","tup","tur","tut","tvl","twi","tyv","udm","uga","uig","ukr","umb","und","urd","uzb","vai","ven","vie","vol","vot","wak","wal","war","was","wel","wen","wln","wol","xal","xho","yao","yap","yid","yor","ypk","zap","zbl","zen","zha","znd","zul","zun","zxx","zza"]
+    },
+    "iso-4217": {
+      "title": "The list of ISO-4217 currency codes, for validating currencies recognised by blinkbox books.",
+      "enum": ["AED","AFN","ALL","AMD","ANG","AOA","ARS","AUD","AWG","AZN","BAM","BBD","BDT","BGN","BHD","BIF","BMD","BND","BOB","BOV","BRL","BSD","BTN","BWP","BYR","BZD","CAD","CDF","CHE","CHF","CHW","CLF","CLP","CNY","COP","COU","CRC","CUC","CUP","CVE","CZK","DJF","DKK","DOP","DZD","EGP","ERN","ETB","EUR","FJD","FKP","GBP","GEL","GHS","GIP","GMD","GNF","GTQ","GYD","HKD","HNL","HRK","HTG","HUF","IDR","ILS","INR","IQD","IRR","ISK","JMD","JOD","JPY","KES","KGS","KHR","KMF","KPW","KRW","KWD","KYD","KZT","LAK","LBP","LKR","LRD","LSL","LTL","LYD","MAD","MDL","MGA","MKD","MMK","MNT","MOP","MRO","MUR","MVR","MWK","MXN","MXV","MYR","MZN","NAD","NGN","NIO","NOK","NPR","NZD","OMR","PAB","PEN","PGK","PHP","PKR","PLN","PYG","QAR","RON","RSD","RUB","RWF","SAR","SBD","SCR","SDG","SEK","SGD","SHP","SLL","SOS","SRD","SSP","STD","SVC","SYP","SZL","THB","TJS","TMT","TND","TOP","TRY","TTD","TWD","TZS","UAH","UGX","USD","USN","UYI","UYU","UZS","VEF","VND","VUV","WST","XAF","XAG","XAU","XBA","XBB","XBC","XBD","XCD","XDR","XOF","XPD","XPF","XPT","XSU","XTS","XUA","XXX","YER","ZAR","ZMW","ZWL"]
+    },
+    "classification": {
+      "title": "An ordered list of identifiers classifying this entity, most general at index 0.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "realm": {
+            "title": "The name of the realm in which this unique identifier exists",
+            "type": "string"
+          },
+          "id": {
+            "title": "The value defining the uniqueness of this object within the realm specified. Values here should not clash unless the objects should be merged.",
+            "type": "string"
+          }
+        },
+        "required": ["realm", "id"],
+        "additionalProperties": false
+      }
+    },
+    "source": {
+      "title": "Contains information about the provenance of the data in this document. This will be an object with each value detailing the provenance of data for its corresponding key.",
+      "$ref": "#/definitions/source_description"
+    },
+    "source_description": {
+      "type": "object",
+      "properties": {
+        "deliveredAt": {
+          "title": "The ISO 8601 timestamp of when this asset is considered to be valid from.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "uri": {
+          "title": "The location of the source asset for the metadata described.",
+          "type": "string",
+          "format": "uri"
+        },
+        "fileName": {
+          "title": "The original file name the file was uploaded/retrieved with.",
+          "type": "string"
+        },
+        "contentType": {
+          "title": "The detected content type of the source file. This will be pulled out into a header for routing to processing.",
+          "type": "string"
+        },
+        "role": {
+          "title": "The role of the source that provided this data.",
+          "enum": ["publisher_ftp", "content_manager"]
+        },
+        "username": {
+          "title": "The username of the source entity",
+          "type": "string"
+        },
+        "system": {
+          "title": "The system which processed this asset. Not required as the message metadata contains the fallback.",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "The name of the service which did the processing to generate the information in this document. Format: organisation/repo (github).",
+              "type":"string",
+              "pattern": "^[a-zA-Z0-9_-]+/[a-zA-Z0-9_-]+$"
+            },
+            "version": {
+              "title": "The (semver) Version number of the system which generated this information.",
+              "type": "string",
+              "pattern": "^((\\d+)\\.(\\d+)\\.(\\d+))(?:-([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?(?:\\+([\\dA-Za-z\\-]+(?:\\.[\\dA-Za-z\\-]+)*))?$"
+            }
+          },
+          "required": ["name", "version"],
+          "additionalProperties": false
+        },
+        "processedAt": {
+          "title": "The ISO 8601 timestamp of when this asset was processed. Not required as the timestamp of the message is the fallback.",
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["deliveredAt", "role", "username"],
+      "additionalProperties": false
+    },
+    "image_media": {
+      "title": "This holds info about one or more images and can be applied to a book or a contributor.",
+      "type": "object",
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/image_item" }
+        }
+      }
+    },
+    "image_item": {
+      "title": "An image media element.",
+      "type": "object",
+      "properties": {
+        "$ref": "#/definitions/media_item",
+        "width": {
+          "title": "The width of the image in pixels.",
+          "type": "integer"
+        },
+        "height": {
+          "title": "The height of the image in pixels.",
+          "type": "integer"
+        }
+      },
+      "additionalProperties": { "$ref": "#/definitions/media_item" }
+    },
+    "media_item": {
+      "title": "A mix-in for describing media items.",
+      // NB. Whatever you mix this into needs to define whether additionalProperties are allowed as this does not.
+      "type": "object",
+      "properties": {
+        "classification":  { "$ref": "#/definitions/classification" },
+        "uris": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": ["static", "resource_server"]
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "params": {
+                "type": "string",
+                "format": "resource server params"
+              }
+            },
+            "required": ["type", "uri"],
+            "additionalProperties": false
+          }
+        },
+        "size": {
+          "title": "The size of the asset in bytes",
+          "type": "integer"
+        },
+        "source": {
+          "title": "If the source of this element is different to that of the parent document (eg. with merged documents) then the details should be contained here.",
+          "$ref": "#/definitions/source"
+        }
+      },
+      "required": ["classification", "uris", "size"],
+      "additionalProperties": false
+    },
+    "regions": {
+      "title": "An object which defines a series of regions which explicitly are, explictly are not and implicitly included in the object this field is included in.",
+      "type": "object",
+      "patternProperties": {
+        "^([A-Z]{2}|ROW|WORLD)$": {
+          "title": "The ISO 3166-2 code, ROW (rest of world) or WORLD (the whole world) which we wish to define applicability for.",
+          "type": "boolean"
+        }
+      }
+    },
+    "format": {
+      "type": "object",
+      "properties": {
+        "marvinIncompatible": {
+          "title": "Whether this work is a digital work compatible with Marvin 2. Negative phrasing is because the absence of this key implies that it is compatible.",
+          "type": "boolean",
+          "default": false
+        },
+        "epubType": {
+          "title": "How the ePub is classified in the ONIX, using codelist 23",
+          "type": "string",
+          "format": "^\\d{3}$"
+        },
+        "productForm": {
+          "title": "The form of the book this data describes, using codelist 7",
+          "type": "string",
+          "format": "^[A-Z]{2}$"
+        }
+      },
+      "required": ["marvinIncompatible"]
+    }
+  }
+}

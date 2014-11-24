@@ -11,11 +11,18 @@ lazy val buildSettings = Seq(
 
 lazy val common = (project in file("common")).settings(buildSettings: _*)
 
-lazy val ingester = (project in file("ingester")).
+lazy val ingesterv1 = (project in file("ingesterv1")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*)
+
+lazy val ingesterv2 = (project in file("ingesterv2")).
+  dependsOn(common % "compile->compile;test->test").aggregate(common).
+  settings(aggregate in publish := false).
+  settings(buildSettings: _*).
+  settings(rpmPrepSettings: _*)
+
 
 lazy val browser = (project in file("browser")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
@@ -30,6 +37,7 @@ lazy val catalogue = (project in file("catalogue")).
   settings(rpmPrepSettings: _*)
 
 lazy val root = (project in file(".")).
-  dependsOn(ingester, browser, catalogue).aggregate(ingester, browser, catalogue).
+  dependsOn(ingesterv1, ingesterv2, browser, catalogue).
+  aggregate(ingesterv1, ingesterv2, browser, catalogue).
   settings(buildSettings: _*).
   settings(publish := {})
