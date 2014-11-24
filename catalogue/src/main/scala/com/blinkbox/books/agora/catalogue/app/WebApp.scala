@@ -30,7 +30,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
   val bookApi = new BookApi(config.service, config.book, new ElasticSearchBookService(config.elasticSearch, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)
 
-  val route = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {
+  val routes = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {
 //    priceApi.routes ~ synopsisApi.routes ~ publisherApi.routes ~ contributorApi.routes ~
 //    contributorGroupApi.routes ~ categoryApi.routes ~ bookApi.routes
     bookApi.routes ~ contributorApi.routes 
@@ -43,7 +43,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
   }
   */
   
-  def receive = runRoute(route)
+  def receive = runRoute(routes)
 }
 
 object WebApp extends App with Configuration with Loggers {

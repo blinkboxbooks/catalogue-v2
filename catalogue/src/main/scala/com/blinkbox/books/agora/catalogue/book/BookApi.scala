@@ -20,9 +20,6 @@ import scala.concurrent.{ExecutionContext, Future}
  * Book service.
  */
 trait BookService {
-  /**
-   * Retrieve book by ISBN.
-   */
   def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
 }
