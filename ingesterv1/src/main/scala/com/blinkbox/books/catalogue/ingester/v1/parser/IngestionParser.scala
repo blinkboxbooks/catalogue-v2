@@ -41,8 +41,8 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
       publisher = (xmlBook \ "publisher" \ "name").text.opt[String],
       prices = toPrices(xmlBook),
       subjects = toSubjects(xmlBook),
-      supplyRights = toRegionalRights(xmlBook),
-      media = toMedia(xmlBook),
+      supplyRights = Option(toRegionalRights(xmlBook)),
+      media = Option(toMedia(xmlBook)),
       sequenceNumber = toModifiedAt(xmlBook).getMillis,
       dates = toDates(xmlBook))
   }
@@ -99,10 +99,10 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         main = None)
     }.toList
 
-  private def toRegionalRights(xml: NodeSeq): Option[Regions] = {
+  private def toRegionalRights(xml: NodeSeq): Regions = {
     val regions = (xml \ "regions").map(node => (node \ "region").text.toUpperCase)
     val emptyRegionalRights = Regions(None, None, None)
-    Some(regions
+    regions
       .foldLeft(emptyRegionalRights)((acc, element) =>
           element match {
             case "GB" => acc.copy(`GB` = Some(true))
@@ -110,10 +110,10 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
             case "ROW" => acc.copy(`ROW` = Some(true))
             case _ => acc
           }
-      ))
+      )
   }
 
-  private def toMedia(xml: NodeSeq): Option[Media] = {
+  private def toMedia(xml: NodeSeq): Media = {
     val coverNode = xml \ "media" \ "cover"
     val epubNodes = xml \ "media" \ "epub"
     val coverClassification = Classification(realm = "type", id = "front_cover")
@@ -132,9 +132,9 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         width = 0,
         height = 0,
         size = (coverNode \ "@size").toString.opt[Int].getOrElse(0)))
-    Some(Media(
+    Media(
       epubs = epubs,
-      images = images))
+      images = images)
   }
 
   private def toModifiedAt(xml: NodeSeq): DateTime = {

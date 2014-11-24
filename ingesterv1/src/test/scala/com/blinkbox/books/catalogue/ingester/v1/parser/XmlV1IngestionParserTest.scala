@@ -16,11 +16,9 @@ class XmlV1IngestionParserTest extends FlatSpecLike
 
     book match {
       case Success(book: Book) =>
-        book.media.fold(fail("Missing media")){
-          media => {
-            assert(media.epubs.size == 2)
-            assert(media.images.size == 1)
-          }
+        book.media.fold(fail("Missing media")) { media =>
+          assert(media.epubs.size == 2)
+          assert(media.images.size == 1)
         }
       case els => fail(new RuntimeException(s"got $els"))
     }

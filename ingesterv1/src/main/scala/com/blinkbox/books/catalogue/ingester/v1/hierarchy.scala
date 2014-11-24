@@ -57,7 +57,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
     case Children =>
       sender ! context.children.toList.map(_.path.toString);
     case Success(_) =>
-      ()
+      // Do nothing; this is the expected behaviour.
     case msg =>
       logger.warn(s"Unknown message [$msg]")
   }
