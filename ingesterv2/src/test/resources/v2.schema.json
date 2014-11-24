@@ -1,0 +1,427 @@
+{
+  "title": "Metadata about a book.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "title": "The schema for this document.",
+      "type": "string",
+      "pattern": "^ingestion.book.metadata.v2$"
+    },
+    "classification": { "$ref": "../../common/v2.schema.json#/definitions/classification" },
+    "isbn": {
+      "title": "The ISBN of the book. This field may not be useful if classifiers more general than ISBN are used.",
+      "type": "string"
+    },
+    "format": { "$ref": "../../common/v2.schema.json#/definitions/format" },
+    "title": {
+      "title": "The title of the book",
+      "type": "string"
+    },
+    "subtitle": {
+      "title": "The subtitle of the book",
+      "type": "string"
+    },
+    "contributors": {
+      "title": "The array listing, in order, contributors this work is attributed to. If there are no contributors for a book, this should be an empty array, not missing.",
+      "type": "array",
+      "items": {
+        "$ref": "../../contributor/metadata/v2.schema.json#/",
+        "required": ["role"]
+      }
+    },
+    "availability": {
+      "title": "Details about the availability of this book item according to the publisher",
+      "type": "object",
+      "properties": {
+        "notificationType": {
+          "$ref": "#/definitions/availability"
+        },
+        "publishingStatus": {
+          "$ref": "#/definitions/availability"
+        },
+        "availabilityCode": {
+          "$ref": "#/definitions/availability"
+        },
+        "productAvailability":  {
+          "$ref": "#/definitions/availability"
+        },
+        "blinkboxBooks": {
+          "title": "Custom availability code for manual undistributions.",
+          "$ref": "#/definitions/availability"
+        }
+      }
+    },
+    "dates": {
+      "title": "Information about dates relevant to the publishing of this book.",
+      "type": "object",
+      "properties": {
+        "announce": {
+          "title": "The date and time at which the publisher allows this book to be announced - ie. have metadata released. If this date is absent it should be assumed that the anncouncement date has passed.",
+          "type": "string",
+          "format": ["date-time", "date"]
+        },
+        "publish": {
+          "title": "The date and time at which the publisher allows this book to go on sale. If this date is absent then it should be assumed it is the same as the anncouncement date.",
+          "type": "string",
+          "format": ["date-time", "date"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "descriptions": {
+      "title": "The list of descriptions attached to a book. The preferred description is determined by the type codes used: 01, 03, 18, 02, <anything else>",
+      "type": "array",
+      "items": { "$ref": "#/definitions/othertext" }
+    },
+    "reviews": {
+      "title": "The list of reviews attached to a book.",
+      "type": "array",
+      "items": { "$ref": "#/definitions/othertext" }
+    },
+    "languages": {
+      "title": "The languages (ISO-639/2B) the book is written in. Order is significant, with the 0 indexed language being the most promenant.",
+      "type": "array",
+      "items": { "$ref": "../../common/v2.schema.json#/definitions/iso639-2b" }
+    },
+    "originalLanguages": {
+      "title": "The languages (ISO-639/2B) the book was originally written in before being translated for the work being described. Order is significant, with the 0 indexed language being the most promenant.",
+      "type": "array",
+      "items": {
+        "$ref": "../../common/v2.schema.json#/definitions/iso639-2b"
+      }
+    },
+    "supplyRights": { "$ref": "../../common/v2.schema.json#/definitions/regions" },
+    "salesRights": { "$ref": "../../common/v2.schema.json#/definitions/regions" },
+    "publisher": {
+      "title": "The name of the publisher as it should appear on the site.",
+      "type": "string"
+    },
+    "imprint": {
+      "title": "The name of the publisher's imprint as it should appear on the site.",
+      "type": "string"
+    },
+    "prices": {
+      "title": "The array holding all publisher delivered prices for this book.",
+      "type": "array",
+      "items": {
+        "title": "An individual price object detailing all aspects of a specific price for a book.",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "title": "The amount associated with this price.",
+            "type": "number"
+          },
+          "currency": {
+            "title": "The ISO-4217 currency code associated with this price.",
+            "$ref": "../../common/v2.schema.json#/definitions/iso-4217"
+          },
+          "includesTax": {
+            "title": "Whether this price includes tax or not.",
+            "type": "boolean"
+          },
+          "isAgency": {
+            "title": "Whether this price is an agency model price or not.",
+            "type": "boolean"
+          },
+          "discountRate": {
+            "title": "The discount rate which should be applied to this price (if no publisher level rate overrides it).",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "validFrom": {
+            "title": "The date time from which this price is valid.",
+            "type": "string",
+            "format": ["date-time", "date"]
+          },
+          "validUntil": {
+            "title": "The date time until which this price is valid.",
+            "type": "string",
+            "format": ["date-time", "date"]
+          },
+          "applicableRegions": {
+            "title": "The regions where this price can be used",
+            "$ref": "../../common/v2.schema.json#/definitions/regions"
+          },
+          "tax": {
+            "title": "The list of taxes which need to be (includes_tax? = false), or have been (includes_tax? = true) applied to the amount. This is an array to be able to cope with banded taxing.",
+            "type": "array",
+            "items": {
+              "title": "An object describing one tax band as it applies to this book.",
+              "type": "object",
+              "properties": {
+                "rate": {
+                  "title": "The rate of tax. See ONIX 2.1 codelist 62 for details.",
+                  "enum": ["H","R","S","P","Z"]
+                },
+                "percent": {
+                  "type": "The percentage of the taxable_amount which should be considered the tax as a fraction of 1.",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1,
+                  "format": "percentage"
+                },
+                "amount": {
+                  "type": "The amount of money which the above percentage translates to (in the same currency).",
+                  "type": "number"
+                },
+                "taxableAmount": {
+                  "type": "The amount of money which is taxable at the specified rate.",
+                  "type": "number"
+                }
+              },
+              "required": ["rate"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["amount", "currency", "includesTax", "isAgency"],
+        "additionalProperties": false
+      }
+    },
+    "statistics": {
+      "title": "An as-yet undefined list of statistics",
+      "type": "object",
+      "properties": {
+        "pages": {
+          "title": "Number of pages in an equivalent physical book",
+          "type": "integer",
+          "mimumum": 0
+        },
+        "sentences": {
+          "title": "Number of sentences in the epub. Assumes British English conventions.",
+          "type": "integer",
+          "mimumum": 0
+        },
+        "words":{
+          "title": "Number of words in the epub. It is possible that this number is different to the one specified within the ePub media section; this statistic should be used for analytics, the one in ePub should be used for calculating percentage through a book.",
+          "type": "integer",
+          "mimumum": 0
+        },
+        "syllables": {
+          "title": "An estimate of the number of syllables in the words of the epub. Assumes British English conventions.",
+          "type": "integer",
+          "mimumum": 0
+        },
+        "polysyllables": {
+          "title": "An estimate of the number of words with 3 or more syllables in the words of the epub. Assumes British English conventions.",
+          "type": "integer",
+          "mimumum": 0
+        },
+        "smog_grade": {
+          "title": "An estimate of the SMOG grade of the entire body of text.",
+          "type": "number"
+        },
+        "adultThemes": {
+          "title": "An object describing how adult this book appears.",
+          "type": "object",
+          "properties": {
+            "rating": {
+              "title": "The averaged rating for this book (a percentage).",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "reviewers": {
+              "title": "The number of people who have reviewed this book",
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false,
+          "required": ["rating", "reviewers"]
+        }
+      },
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "subjects": {
+      "title": "Categorisation of the book; keywords, genres etc.",
+      "type": "array",
+      "items": {
+        "title": "A collection of BISAC, BIC and keywords categorising the content of the book.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "title": "The realm of the code (eg. BISAC, BIC or keyword)",
+            "type": "string"
+          },
+          "code": {
+            "title": "The text or code for this subject.",
+            "type": "string"
+          },
+          "main": {
+            "title": "Set to true for subject codes which are considered more important in classifying the work.",
+            "type": "boolean"
+          }
+        },
+        "required": ["type", "code"],
+        "additionalProperties": false
+      }
+    },
+    "series": {
+      "title": "Details about the series this book is in.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "title": "The title of the series this book is in. This should be globally unique, but I have no clue how we can ensure that...",
+          "type": "string"
+        },
+        "number": {
+          "title": "This book's number in the series",
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["title"],
+      "additionalProperties": false
+    },
+    "related": {
+      "title": "Other books related to this one.",
+      "type": "array",
+      "items": {
+        "title": "The details of a related book",
+        "type": "object",
+        "properties": {
+          "classification": {
+            "title": "The details of the related book. This should include a format (eg. 'print')",
+            "$ref": "../../common/v2.schema.json#/definitions/classification"
+          },
+          "relation": {
+            "title": "How the book described in the parent document (Product) relates to the one described in this object (RelatedProdct). Uses ONIX codelist 51.",
+            "type": "string",
+            "format": "^\\d{2}$"
+          },
+          "isbn": {
+            "title": "The ISBN of the related product, if applicable.",
+            "type": "string",
+            "format": "^\\d{13}$"
+          }
+        }
+      }
+    },
+    "media": {
+      "anyOf": [
+        { "$ref": "#/definitions/epub_media" },
+        { "$ref": "../../common/v2.schema.json#/definitions/image_media" }
+      ]
+    },
+    "distributionStatus": {
+      "title": "Information about whether this book should be used by the shop.",
+      "type": "object",
+      "properties": {
+        "usable": {
+          "title": "Whether this book should be sellable/displayable/usable in planning (according to shop-side logic).",
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "Title",
+              "Availability",
+              "RegionalRights",
+              "Publisher",
+              "Cover",
+              "Epub",
+              "Language",
+              "Description",
+              "Price",
+              "Racy"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": ["usable", "reasons"]
+    },
+    "source": {
+      "title": "The providence of the data contained within this object.",
+      "$ref": "../../common/v2.schema.json#/definitions/source"
+    }
+  },
+  "required": ["classification", "source", "$schema"],
+  "additionalProperties": false,
+  "definitions": {
+    "epub_media": {
+      "title": "This holds info about one or more epubs.",
+      "type": "object",
+      "properties": {
+        "epubs": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/epub_item" }
+        }
+      }
+    },
+    "epub_item": {
+      "title": "The additional components of the media item which are specific to epubs.",
+      "type": "object",
+      "properties": {
+        "keyfile": {
+          "title": "The location of the (secured) keyfile for decrypting the ePub. This property should be present for books with 'drm:blinkboxbooks' in their classification.",
+          "type": "string",
+          "format": "uri"
+        },
+        "wordCount": {
+          "title": "The number of words in the associated epub.",
+          "type": "integer"
+        },
+        "imageCount": {
+          "title": "The number of images in the associated epub.",
+          "type": "integer"
+        },
+        "startCfi": {
+          "title": "The location of where the book should open the first time a customer reads it. Expressed as a CFI.",
+          "type": "string"
+        }
+      },
+      "required": ["wordCount"],
+      "additionalProperties": { "$ref": "../../common/v2.schema.json#/definitions/media_item" }
+    },
+    "availability": {
+      "title": "An individual availability property",
+      "type": "object",
+      "properties": {
+        "available": {
+          "title": "Whether or not this book is available for sale by consequence of this availability metric",
+          "type": "boolean"
+        },
+        "code": {
+          "title": "The ONIX code for this availability type",
+          "type": "string",
+          "format": "^.{2}$"
+        },
+        "extra": {
+          "title": "Extra information around this availability.",
+          "type": "string"
+        }
+      },
+      "required": ["available"],
+      "additionalProperties": false
+    },
+    "othertext": {
+      "title": "Text associated with the book, used for reviews and descriptions.",
+      "type": "object",
+      "properties": {
+        "classification": { "$ref": "../../common/v2.schema.json#/definitions/classification" },
+        "content": {
+          "title": "The content of the text. Will be interpreted as HTML.",
+          "type": "string"
+        },
+        "type": {
+          "title": "What kind of description this text represents. Uses ONIX codelist 33 codes.",
+          "type": "string",
+          "format": "^\\d{2}$"
+        },
+        "author": {
+          "title": "The author of this body of text, if applicable",
+          "type": "string"
+        }
+      },
+      "required": ["classification", "content", "type"],
+      "additionalProperties": false
+    }
+  }
+}
