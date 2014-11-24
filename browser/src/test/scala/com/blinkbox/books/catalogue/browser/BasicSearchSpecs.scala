@@ -44,7 +44,7 @@ class BasicSearchSpecs extends FlatSpec with E2ESpec with Matchers with Scalates
   }
 
   it should "retrieve a simple book if given a query that match in the title" in {
-    e2e createIndex catalogue index MessageFixtures.simpleBook ensure allSucceded andAfter { _ =>
+    e2e createIndex catalogue indexAndCheck MessageFixtures.simpleBook andAfter { _ =>
       Get("/catalogue/search/books?q=simple") ~> routes ~> check {
         status should equal(StatusCodes.OK)
         responseAs[List[Book]] should equal(simpleBookResponse)
@@ -53,7 +53,7 @@ class BasicSearchSpecs extends FlatSpec with E2ESpec with Matchers with Scalates
   }
 
   it should "retrieve a simple book if given a query that match in the author" in {
-    e2e createIndex catalogue index MessageFixtures.simpleBook ensure allSucceded andAfter { _ =>
+    e2e createIndex catalogue indexAndCheck MessageFixtures.simpleBook andAfter { _ =>
       Get("/catalogue/search/books?q=foo") ~> routes ~> check {
         status should equal(StatusCodes.OK)
         responseAs[List[Book]] should equal(simpleBookResponse)
@@ -62,7 +62,7 @@ class BasicSearchSpecs extends FlatSpec with E2ESpec with Matchers with Scalates
   }
 
   it should "retrieve a simple book if given a query that match in the content" in {
-    e2e createIndex catalogue index MessageFixtures.simpleBook ensure allSucceded andAfter { _ =>
+    e2e createIndex catalogue indexAndCheck MessageFixtures.simpleBook andAfter { _ =>
       Get("/catalogue/search/books?q=description") ~> routes ~> check {
         status should equal(StatusCodes.OK)
         responseAs[List[Book]] should equal(simpleBookResponse)
@@ -71,7 +71,7 @@ class BasicSearchSpecs extends FlatSpec with E2ESpec with Matchers with Scalates
   }
 
   it should "retrieve an empty result set if the given query do not match any field" in {
-    e2e createIndex catalogue index MessageFixtures.simpleBook ensure allSucceded andAfter { _ =>
+    e2e createIndex catalogue indexAndCheck MessageFixtures.simpleBook andAfter { _ =>
       Get("/catalogue/search/books?q=foobar") ~> routes ~> check {
         status should equal(StatusCodes.OK)
         responseAs[List[Book]] should equal(Nil)

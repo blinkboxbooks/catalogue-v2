@@ -66,6 +66,8 @@ trait E2EDsl
             throw new RuntimeException("Mapping creation has not been acknowledged")
         }
       }
+
+    def indexAndCheck(content: Book*): E2EContext[Future[Iterable[BulkItemResponse]]] = index(content: _*) ensure allSucceded
   }
 
   implicit class WithContentOps(context: E2EContext[Future[Iterable[BulkItemResponse]]])(implicit ec: ExecutionContext) {
