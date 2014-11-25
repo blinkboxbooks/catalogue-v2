@@ -9,15 +9,10 @@ import org.elasticsearch.common.settings.ImmutableSettings
 import org.json4s.jackson.Serialization
 import com.blinkbox.books.json.DefaultFormats
 import com.blinkbox.books.catalogue.common.Book
-import com.blinkbox.books.agora.catalogue.app.ElasticSearchConfig
 
-class ElasticBookDao(esConfig: ElasticSearchConfig) extends BookDao {
+class ElasticBookDao(client: ElasticClient) extends BookDao {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
-
-  // TODO - replace with common component
-  val settings = ImmutableSettings.settingsBuilder().put("cluster.name", esConfig.cluster).build()
-  val client = ElasticClient.remote(settings, (esConfig.host, esConfig.port))
 
   override def getBookByIsbn(isbn: String): Future[Option[Book]] = {
     client.execute {

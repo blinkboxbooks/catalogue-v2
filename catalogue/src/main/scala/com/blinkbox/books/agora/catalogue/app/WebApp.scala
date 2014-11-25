@@ -14,8 +14,8 @@ import com.typesafe.config.Config
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.agora.catalogue.contributor._
 import com.blinkbox.books.agora.catalogue.book._
-
 import scala.concurrent.duration._
+import com.blinkbox.books.catalogue.common.ElasticFactory
 
 class WebService(config: AppConfig) extends HttpServiceActor {
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
@@ -30,7 +30,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
     config.book.synopsisPathLink
   )
 
-  val dao = new ElasticBookDao(config.elasticSearch)
+  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic))
 
   val bookApi = new BookApi(config.service, config.book, new DefaultBookService(dao, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)
