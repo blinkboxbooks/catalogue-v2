@@ -16,14 +16,6 @@ import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
- * Book service.
- */
-trait BookService {
-  def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
-  def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
-}
-
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
   def getBookSynopsis: Route

@@ -17,17 +17,22 @@ import com.blinkbox.books.agora.catalogue.book._
 
 import scala.concurrent.duration._
 
-
-
 class WebService(config: AppConfig) extends HttpServiceActor {
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
+  // TODO - this sucks, just pass the config
+  val linkHelper = new LinkHelper(
+    config.service.externalUrl,
+    config.contributor.path,
+    config.publisher.path,
+    config.price.path,
+    config.book.path,
+    config.book.synopsisPathLink
+  )
 
-  val linkHelper = new LinkHelper(config.service.externalUrl, config.contributor.path,
-    config.publisher.path, config.price.path, config.book.path, config.book.synopsisPathLink)
+  val dao = new ElasticBookDao(config.elasticSearch)
 
-
-  val bookApi = new BookApi(config.service, config.book, new ElasticSearchBookService(config.elasticSearch, linkHelper))
+  val bookApi = new BookApi(config.service, config.book, new DefaultBookService(dao, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)
 
   val routes = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {
