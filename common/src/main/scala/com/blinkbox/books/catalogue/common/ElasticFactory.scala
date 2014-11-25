@@ -5,11 +5,14 @@ import org.elasticsearch.common.settings.ImmutableSettings
 
 object ElasticFactory {
 
-  def remote(config: SearchConfig) =
+  def remote(config: SearchConfig) = {
+
+
     ElasticClient.remote(
       ImmutableSettings.
         builder().
         put("cluster.name", config.clusterName).
         build(),
-        config.host -> config.port)
+      config.host -> config.port)
+  }
 }

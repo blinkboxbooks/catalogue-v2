@@ -17,7 +17,7 @@ class RestApi(v1Api: SearchApi) extends HttpServiceActor {
   override def receive: Receive = runRoute(v1Api.routes)
 }
 
-object ApiApp extends App with Configuration with Loggers with StrictLogging{
+object ApiApp extends App with Configuration with Loggers with StrictLogging {
   try {
     val prefix = "service.catalog-browser.api.public"
     val apiConfig = ApiConfig(config, prefix)
@@ -32,7 +32,7 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging{
 
     val v1Api = new SearchApi(apiConfig, searchService)
 
-    val service = actorSystem.actorOf(Props(classOf[SearchApi], v1Api), "catalog-browser-actor")
+    val service = actorSystem.actorOf(Props(classOf[RestApi], v1Api), "catalog-browser-actor")
     val localUrl = apiConfig.localUrl
     HttpServer(Http.Bind(service, localUrl.getHost, localUrl.effectivePort))
 
@@ -41,6 +41,6 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging{
     case ex: ControlThrowable => throw ex
     case ex: Throwable =>
       logger.error("Error during initialization of the service", ex)
-      System.exit(1)
+      sys.exit(1)
   }
 }
