@@ -1,6 +1,7 @@
 package com.blinkbox.books.catalogue.ingester.v1
 
 import java.util.concurrent.{Executors, TimeUnit}
+
 import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
@@ -9,13 +10,15 @@ import com.blinkbox.books.catalogue.common.search.{Schema, EsIndexer}
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
 import com.blinkbox.books.catalogue.ingester.v1.parser.XmlV1IngestionParser
+import com.blinkbox.books.catalogue.common.search.{EsIndexer, Schema}
+import com.blinkbox.books.catalogue.common.{ElasticFactory, SearchConfig}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration
 import com.blinkbox.books.rabbitmq.RabbitMqConsumer.QueueConfiguration
-import com.blinkbox.books.rabbitmq.{RabbitMqConsumer, RabbitMqConfirmedPublisher, RabbitMq, RabbitMqConfig}
-import com.sksamuel.elastic4s.ElasticClient
+import com.blinkbox.books.rabbitmq.{RabbitMq, RabbitMqConfig, RabbitMqConfirmedPublisher, RabbitMqConsumer}
 import com.typesafe.scalalogging.slf4j.StrictLogging
+
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
@@ -76,10 +79,11 @@ class MessagingSupervisor extends Actor with StrictLogging {
         config = PublisherConfiguration(
           config.getConfig("messageListener.distributor.book.errors")))))
 
+    val searchConfig = SearchConfig(config)
     val errorHandler = new ActorErrorHandler(errorsPublisher)
-    val esClient = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
+    val esClient = ElasticFactory.remote(searchConfig)
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
-    val indexer = new EsIndexer(config, esClient)(indexingEc)
+    val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
 
     val v1messageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -94,7 +98,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.book.input")))), name = "V1-Message-Consumer")
 
-    esClient.execute(Schema(config).catalogue).onComplete {
+    esClient.execute(Schema(searchConfig).catalogue).onComplete {
       case _ =>
         v1messageConsumer ! RabbitMqConsumer.Init
     }

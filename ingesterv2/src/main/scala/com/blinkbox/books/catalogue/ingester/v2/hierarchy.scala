@@ -5,6 +5,7 @@ import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
+import com.blinkbox.books.catalogue.common.SearchConfig
 import com.blinkbox.books.catalogue.common.search.{Schema, EsIndexer}
 import com.blinkbox.books.catalogue.ingester.v2.Main._
 import com.blinkbox.books.catalogue.ingester.v2.messaging.MessageHandler
@@ -79,7 +80,8 @@ class MessagingSupervisor extends Actor with StrictLogging {
     val errorHandler = new ActorErrorHandler(errorsPublisher)
     val esClient = ElasticClient.remote(config.getString("search.host"), config.getInt("search.port"))
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
-    val indexer = new EsIndexer(config, esClient)(indexingEc)
+    val searchConfig = SearchConfig(config)
+    val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
 
     val messageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -94,7 +96,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.book.input")))), name = "V2-Message-Consumer")
 
-    esClient.execute(Schema(config).catalogue).onComplete {
+    esClient.execute(Schema(searchConfig).catalogue).onComplete {
       case _ =>
         messageConsumer ! RabbitMqConsumer.Init
     }
