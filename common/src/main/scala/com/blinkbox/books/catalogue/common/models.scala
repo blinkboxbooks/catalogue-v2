@@ -62,6 +62,7 @@ case class Book(sequenceNumber: Long,
                 source: Source) extends DistributeContent
 
 case class Undistribute(isbn: String, effectiveTimestamp: DateTime) extends DistributeContent
+case class BookPrice(isbn: String, price: Double, currency: String) extends DistributeContent
 
 object Book {
   def empty = Book(
