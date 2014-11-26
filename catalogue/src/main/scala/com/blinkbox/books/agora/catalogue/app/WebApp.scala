@@ -14,23 +14,28 @@ import com.typesafe.config.Config
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.agora.catalogue.contributor._
 import com.blinkbox.books.agora.catalogue.book._
-
 import scala.concurrent.duration._
-
-
+import com.blinkbox.books.catalogue.common.ElasticFactory
 
 class WebService(config: AppConfig) extends HttpServiceActor {
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
+  // TODO - this sucks, just pass the config
+  val linkHelper = new LinkHelper(
+    config.service.externalUrl,
+    config.contributor.path,
+    config.publisher.path,
+    config.price.path,
+    config.book.path,
+    config.book.synopsisPathLink
+  )
 
-  val linkHelper = new LinkHelper(config.service.externalUrl, config.contributor.path,
-    config.publisher.path, config.price.path, config.book.path, config.book.synopsisPathLink)
+  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic))
 
-
-  val bookApi = new BookApi(config.service, config.book, new ElasticSearchBookService(config.elasticSearch, linkHelper))
+  val bookApi = new BookApi(config.service, config.book, new DefaultBookService(dao, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)
 
-  val route = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {
+  val routes = respondWithHeader(`Access-Control-Allow-Origin`(AllOrigins)) {
 //    priceApi.routes ~ synopsisApi.routes ~ publisherApi.routes ~ contributorApi.routes ~
 //    contributorGroupApi.routes ~ categoryApi.routes ~ bookApi.routes
     bookApi.routes ~ contributorApi.routes 
@@ -43,7 +48,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
   }
   */
   
-  def receive = runRoute(route)
+  def receive = runRoute(routes)
 }
 
 object WebApp extends App with Configuration with Loggers {
