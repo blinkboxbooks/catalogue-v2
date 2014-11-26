@@ -1,18 +1,8 @@
 package com.blinkbox.books.agora.catalogue.book
 
-import scala.concurrent.Future
-import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.agora.catalogue.app.LinkHelper
-import java.util.concurrent.Executors
-import com.blinkbox.books.catalogue.common.Book
-import com.blinkbox.books.logging.DiagnosticExecutionContext
-import scala.concurrent.{ExecutionContext, Future}
-import com.sksamuel.elastic4s.ElasticClient
-import com.sksamuel.elastic4s.ElasticDsl._
-import org.elasticsearch.common.settings.ImmutableSettings
-import org.json4s.jackson.Serialization
-import com.blinkbox.books.json.DefaultFormats
-import com.blinkbox.books.catalogue.common._
+import scala.concurrent.Future
 import com.blinkbox.books.spray.v1.{Link => V1Link, Image => V1Image}
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.logging.DiagnosticExecutionContext
