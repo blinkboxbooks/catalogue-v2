@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<undistribute xmlns="http://schemas.blinkboxbooks.com/distribution/undistribute/v1" xmlns:r="http://schemas.blinkboxbooks.com/messaging/routing/v1" xmlns:v="http://schemas.blinkboxbooks.com/messaging/versioning" r:timestamp="2014-11-06T16:25:09Z" r:originator="" v:version="1.0">
+    <book ref="isbn">9781486423170</book>
+    <reasonList>
+        <reason>
+            <code>99</code>
+            <description>Manually rejected because Emereo books are really, really bad.</description>
+            <authorizedBy>
+                <entity>content manager</entity>
+                <name>Jamie Boardman</name>
+            </authorizedBy>
+        </reason>
+    </reasonList>
+    <effectiveTimestamp>2014-11-06T16:25:09Z</effectiveTimestamp>
+</undistribute>

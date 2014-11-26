@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.v2.parser
 
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.messaging.EventBody
 import org.json4s.jackson.Serialization

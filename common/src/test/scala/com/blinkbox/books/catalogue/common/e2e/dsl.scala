@@ -1,15 +1,13 @@
 package com.blinkbox.books.catalogue.common.e2e
 
 import java.util.NoSuchElementException
-
-import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, EsIndexer, Successful}
 import com.blinkbox.books.test.FailHelper
 import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse
 import org.scalatest.concurrent.ScalaFutures
-
 import scala.concurrent.{ExecutionContext, Future}
 
 object Blank

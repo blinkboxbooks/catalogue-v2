@@ -8,3 +8,5 @@ libraryDependencies ++= Seq(
   "com.blinkbox.books.hermes" %% "rabbitmq-ha"      % "7.1.0",
   "com.typesafe.akka"         %% "akka-testkit"     % AkkaVersion % Test
 )
+
+fork in Test := true
