@@ -137,7 +137,8 @@ case class Schema(config: SearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType analyzer SnowballAnalyzer,
+      "title" typed StringType copyTo("titleWithStopwords") analyzer SnowballAnalyzer,
+      "titleWithStopwords" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
         "role" typed StringType analyzer KeywordAnalyzer,

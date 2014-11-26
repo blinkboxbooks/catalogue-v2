@@ -7,6 +7,8 @@ import org.elasticsearch.client.Client
 import org.elasticsearch.common.settings.ImmutableSettings
 import org.elasticsearch.node.NodeBuilder._
 
+import scala.util.Random
+
 class EmbeddedElasticSearch(config: SearchConfig) {
 
   private val clusterName = config.clusterName
