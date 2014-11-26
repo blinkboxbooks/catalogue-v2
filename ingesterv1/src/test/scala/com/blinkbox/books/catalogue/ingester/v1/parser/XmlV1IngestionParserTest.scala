@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.v1.parser
 
-import com.blinkbox.books.catalogue.common.Events.Book
+import com.blinkbox.books.catalogue.common.Events.{Undistribute, Book}
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
 import scala.io.Source
@@ -58,6 +58,36 @@ class XmlV1IngestionParserTest extends FlatSpecLike
     val undistribute = v1Parser.parse(xmlContent)
 
     assert(undistribute.isSuccess)
+  }
+
+  it should "parse all reasons from an 'undistribute' xml" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("undistribute.xml")
+
+    val undistribute = v1Parser.parse(xmlContent)
+
+    undistribute match {
+      case Failure(e) =>
+        fail(s"Expected to pass the parsing, but failed [$e]")
+      case Success(undistribute: Undistribute) =>
+        assert(undistribute.reasons.size == 1)
+      case Success(c) =>
+        fail(s"Expected to parse to 'undistribute', got [$c] ")
+    }
+  }
+
+  it should "not fail when 'reasonList' field is missing for the 'undistribute' xml" in new XmlV1IngestionParserFixture {
+    val xmlContent = removeNode("reasonList", asString("undistribute.xml"))
+
+    val undistribute = v1Parser.parse(xmlContent)
+
+    undistribute match {
+      case Failure(e) =>
+        fail(s"Expected to pass the parsing, but failed [$e]")
+      case Success(undistribute: Undistribute) =>
+        assert(undistribute.reasons.isEmpty)
+      case Success(c) =>
+        fail(s"Expected to parse to 'undistribute', got [$c] ")
+    }
   }
 
   it should "fail parsing when 'effectiveTimestamp' field is missing" in new XmlV1IngestionParserFixture {
@@ -139,6 +169,6 @@ class XmlV1IngestionParserTest extends FlatSpecLike
     // !!! NOTE: this *should* not be used within production code
     //           as it's not optimal.
     def removeNode(nodeName: String, content: String): String =
-      content.replaceAll(s"<$nodeName.*</$nodeName>", "")
+      content.replaceAll(s"(?s)<$nodeName.*</$nodeName>", "")
   }
 }

@@ -18,8 +18,8 @@ object Json {
       JObject(JField("type", JString("contributor")), JField("item", Extraction.decompose(i)))
   }))
 
-  implicit val formats = (org.json4s.DefaultFormats ++
+  implicit val formats =
+    org.json4s.DefaultFormats ++
     com.blinkbox.books.json.DefaultFormats.customSerializers +
-    suggestionPayloadSerializer)
-
+    suggestionPayloadSerializer
 }

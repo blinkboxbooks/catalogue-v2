@@ -59,7 +59,8 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         sequenceNumber = (undistributeXml \ "effectiveTimestamp")
           .text.opt[DateTime]
           .getOrElse(throw MissingFieldException("effectiveTimestamp"))
-          .getMillis
+          .getMillis,
+        reasons = toReasons(undistributeXml)
       )
     }
 
@@ -188,5 +189,8 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         )
       )
     }
+
+    private def toReasons(xml: NodeSeq): List[String] =
+      (xml  \ "reasonList" \ "reason").map(node => (node \ "description").text).toList
   }
 }

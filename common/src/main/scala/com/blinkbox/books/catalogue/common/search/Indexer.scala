@@ -19,10 +19,8 @@ case class Failure(docId: String, cause: Option[Throwable] = None) extends BulkI
 case class SingleResponse(docId: String)
 
 trait Indexer {
-  def index(book: EventBook): Future[SingleResponse]
-  def index(books: Iterable[EventBook]): Future[Iterable[BulkItemResponse]]
-  def index(undistribute: EventUndistribute): Future[SingleResponse]
-  def index(bookPrice: EventBookPrice): Future[SingleResponse]
+  def index(content: DistributeContent): Future[SingleResponse]
+  def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
 }
 
 class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
@@ -43,29 +41,15 @@ class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: Execut
     def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
   }
 
-  override def index(book: EventBook): Future[SingleResponse] =
-    client.execute {
-      esIndex
-        .into(s"${config.indexName}/book")
-        .doc(BookJsonSource(book))
-        .id(book.isbn)
-        .versionType(VersionType.EXTERNAL)
-        .version(book.sequenceNumber)
-    } map { resp =>
-      SingleResponse(resp.getId)
-    }
+  override def index(content: DistributeContent): Future[SingleResponse] =
+    client
+      .execute(indexDefinition(content))
+      .map(resp => SingleResponse(resp.getId))
 
-  override def index(books: Iterable[EventBook]): Future[Iterable[BulkItemResponse]] =
-    client.execute {
+  override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
+    client.execute{
       bulk(
-        books.map { book =>
-          esIndex
-            .into(s"${config.indexName}/book")
-            .doc(BookJsonSource(book))
-            .id(book.isbn)
-            .versionType(VersionType.EXTERNAL)
-            .version(book.sequenceNumber)
-        }.toList: _*
+        contents.map(indexDefinition).toList: _*
       )
     } map { response =>
       response.getItems.map { item =>
@@ -76,24 +60,31 @@ class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: Execut
       }
     }
 
-  override def index(undistribute: EventUndistribute): Future[SingleResponse] =
-    client.execute {
-      esIndex
-        .into(s"${config.indexName}/book")
-        .doc(UndistributeJsonSource(undistribute))
-        .id(undistribute.isbn)
-        .versionType(VersionType.EXTERNAL)
-        .version(undistribute.sequenceNumber)
-    } map(resp => SingleResponse(resp.getId))
+  private def indexDefinition(content: DistributeContent): IndexDefinition = {
+    content match {
+      case book: EventBook =>
+        esIndex
+          .into(s"${config.indexName}/book")
+          .doc(BookJsonSource(book))
+          .id(book.isbn)
+          .versionType(VersionType.EXTERNAL)
+          .version(book.sequenceNumber)
+      case undistribute: EventUndistribute =>
+        esIndex
+          .into(s"${config.indexName}/book")
+          .doc(UndistributeJsonSource(undistribute))
+          .id(undistribute.isbn)
+          .versionType(VersionType.EXTERNAL)
+          .version(undistribute.sequenceNumber)
+      case bookPrice: EventBookPrice =>
+        esIndex
+          .into(s"${config.indexName}/book-price")
+          .doc(BookPriceJsonSource(bookPrice))
+          .id(bookPrice.isbn)
+          .parent(bookPrice.isbn)
+    }
+  }
 
-  override def index(bookPrice: EventBookPrice): Future[SingleResponse] =
-    client.execute {
-      esIndex
-        .into(s"${config.indexName}/book-price")
-        .doc(BookPriceJsonSource(bookPrice))
-        .id(bookPrice.isbn)
-        .parent(bookPrice.isbn)
-    } map(resp => SingleResponse(resp.getId))
 }
 
 case class Schema(config: SearchConfig) {
@@ -239,8 +230,15 @@ case class Schema(config: SearchConfig) {
       ),
       // Calculated fields for specific search scenarios
       "descriptionContents" typed StringType,
-      "autoComplete" typed CompletionType payloads(true)
-    ) dynamic(false)
+      "autoComplete" typed CompletionType payloads true
+    ) dynamic false,
+
+    "book-price" as(
+      "isbn" typed StringType analyzer KeywordAnalyzer,
+      "price" typed DoubleType,
+      "currency" typed StringType analyzer KeywordAnalyzer
+    ) dynamic false parent "book"
+
   )).analysis(
     CustomAnalyzerDefinition("descriptionAnalyzer",
       StandardTokenizer,
