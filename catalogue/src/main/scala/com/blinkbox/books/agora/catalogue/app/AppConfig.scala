@@ -1,18 +1,14 @@
 package com.blinkbox.books.agora.catalogue.app
 
-
 import java.net.{MalformedURLException, URL}
 import java.util.concurrent.TimeUnit
-
 import com.blinkbox.books.config._
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException.BadValue
-
 import scala.concurrent.duration._
-
 import com.blinkbox.books.agora.catalogue.book.BookConfig
 import com.blinkbox.books.agora.catalogue.contributor.ContributorConfig
-
+import com.blinkbox.books.catalogue.common.SearchConfig
 
 case class AppConfig(service: ApiConfig,
                      book: BookConfig,
@@ -20,7 +16,7 @@ case class AppConfig(service: ApiConfig,
                      publisher: PublisherConfig,
                      price: PriceConfig,
                      synopsis: SynopsisConfig,
-                     elasticSearch: ElasticSearchConfig
+                     elastic: SearchConfig
                      )
 
 case class PublisherConfig(api: ApiConfig, path: String, maxAge: FiniteDuration, maxResults: Int)
@@ -29,8 +25,6 @@ case class PriceConfig(api: ApiConfig, path: String, maxAge: FiniteDuration, max
                        discountScalar: Double, ukSalePriceTaxRate: Double)
 
 case class SynopsisConfig(api: ApiConfig, path: String, maxAge: FiniteDuration, maxResults: Int)
-
-case class ElasticSearchConfig(host: String, port: Int, cluster: String)
 
 object AppConfig {
   def apply(config: Config): AppConfig = {
@@ -44,7 +38,7 @@ object AppConfig {
       PublisherConfig(config, s"$prefix.api.public"),
       PriceConfig(config, s"$prefix.api.public"),
       SynopsisConfig(config, s"$prefix.api.public"),
-      ElasticSearchConfig(cfg.getConfig("elasticsearch"))
+      SearchConfig(config)
     )
   }
 }
@@ -75,14 +69,6 @@ object SynopsisConfig {
     config.getString(s"$prefix.synopsis.path"),
     config.getDuration(s"$prefix.synopsis.maxAge", TimeUnit.MILLISECONDS).millis,
     config.getInt(s"$prefix.synopsis.maxResults")
-  )
-}
-
-object ElasticSearchConfig {
-  def apply(config: Config) : ElasticSearchConfig = ElasticSearchConfig(
-    config.getString("host"),
-    config.getInt("port"),
-    config.getString("cluster")
   )
 }
 

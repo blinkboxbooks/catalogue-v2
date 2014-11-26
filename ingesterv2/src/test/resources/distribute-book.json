@@ -1,0 +1,238 @@
+{
+  "sequenceNumber": 1,
+  "$schema": "ingestion.book.metadata.v2",
+  "classification": [
+    {
+      "realm": "source_username",
+      "id": "randomhouse_uk"
+    }
+  ],
+  "isbn": "9780007236893",
+  "format": {
+    "marvinIncompatible": false,
+    "epubType": "TYPE",
+    "productForm": "FORM"
+  },
+  "title": "Little park bear",
+  "subtitle": "Little park bear sub.",
+  "contributors": [
+    {
+      "role": "Author",
+      "id": "AUTH",
+      "displayName": "Author-Display",
+      "sortName": "Author-Sort"
+    }
+  ],
+  "availability": {
+    "notificationType": {
+      "available": true,
+      "code": "av-code",
+      "extra": "extra"
+    },
+    "publishingStatus": {
+      "available": true,
+      "code": "av-code",
+      "extra": "extra"
+    },
+    "availabilityCode": {
+      "available": true,
+      "code": "av-code",
+      "extra": "extra"
+    },
+    "productAvailability": {
+      "available": true,
+      "code": "av-code",
+      "extra": "extra"
+    },
+    "blinkboxBooks": {
+      "available": true,
+      "code": "av-code",
+      "extra": "extra"
+    }
+  },
+  "dates": {
+    "publish": "2014-11-06T16:36:52Z",
+    "announce": "2014-11-06T16:36:52Z"
+  },
+  "descriptions": [
+    {
+      "classification": [
+        {
+          "realm": "realm1",
+          "id": "id1"
+        }
+      ],
+      "content": "Some content",
+      "type": "some_type",
+      "author": "some author"
+    }
+  ],
+  "reviews": [
+    {
+      "classification": [
+        {
+          "realm": "realm2",
+          "id": "id2"
+        }
+      ],
+      "content": "Some content1",
+      "type": "some_type1",
+      "author": "some author1"
+    }
+  ],
+  "languages": ["eng"],
+  "originalLanguages": ["eng"],
+  "supplyRights": {
+    "GB": true,
+    "WORLD": true,
+    "ROW": false
+  },
+  "salesRights": {
+    "GB": true,
+    "WORLD": true,
+    "ROW": false
+  },
+  "publisher": "Some publisher",
+  "imprint": "Some imprint",
+  "prices": [
+    {
+      "amount": 19.00,
+      "currency": "GBP",
+      "includesTax": false,
+      "isAgency": false,
+      "discountRate": 2,
+      "validFrom": "2014-11-06T16:36:52Z",
+      "validUntil": "2014-11-06T16:36:52Z",
+      "applicableRegions": {
+        "GB": true,
+        "WORLD": true,
+        "ROW": false
+      },
+      "tax": {
+        "rate": "r",
+        "percent": 25.30,
+        "amount": 10.50,
+        "taxableAmount": 1.50
+      }
+    }
+  ],
+  "statistics": {
+    "pages": 5,
+    "sentences": 10,
+    "words": 11,
+    "syllables": 12,
+    "polysyllables": 3,
+    "smog_grade": 2,
+    "adultThemes": {
+      "rating": 10.00,
+      "reviewers": 20
+    }
+  },
+  "subjects": [
+    {
+      "type": "T1",
+      "code": "C1",
+      "main": false
+    }
+  ],
+  "series": {
+    "title": "S1",
+    "number": 9
+  },
+  "related": [
+    {
+      "classification": {
+        "realm": "realm1",
+        "id": "id1"
+      },
+      "relation": "some_relation",
+      "isbn": "34534223466"
+    }
+  ],
+  "media": {
+    "images": [
+      {
+        "classification": [
+          {
+            "realm": "type",
+            "id": "front_cover"
+          }
+        ],
+        "uris": [
+          {
+            "type": "resource_server",
+            "uri": "https://media.blinkboxbooks.com/path/to/file.png"
+          },
+          {
+            "type": "static",
+            "uri": "http://container.azure.com/path/to/file.jpg"
+          },
+          {
+            "type": "static",
+            "uri": "http://container.azure.com/path/to/file.jpg",
+            "params": "img:m=scale;img:w=300;v=0"
+          }
+        ],
+        "width": 1200,
+        "height": 2500,
+        "size": 25485
+      }
+    ],
+    "epubs": [
+      {
+        "classification": [
+          {
+            "realm": "type",
+            "id": "full_bbbdrm"
+          }
+        ],
+        "uris": [
+          {
+            "type": "static",
+            "uri": "http://container.azure.com/path/to/file.epub"
+          },
+          {
+            "type": "resource_server",
+            "uri": "https://media.blinkboxbooks.com/path/to/file.epub"
+          }
+        ],
+        "keyfile": "https://keys.blinkboxbooks.com/path/to/keyfile.epub.9780111222333.key",
+        "wordCount": 37462,
+        "size": 25485
+      },
+      {
+        "classification": [
+          {
+            "realm": "type",
+            "id": "sample"
+          }
+        ],
+        "uris": [
+          {
+            "type": "resource_server",
+            "uri": "https://media.blinkboxbooks.com/path/to/file.sample.epub"
+          }
+        ],
+        "wordCount": 3746,
+        "size": 2548
+      }
+    ]
+  },
+  "distributionStatus": {
+    "usable": true,
+    "reasons": []
+  },
+  "source": {
+    "deliveredAt": "2014-11-06T16:36:52Z",
+    "uri": "http://some/uri",
+    "fileName": "simpleFile",
+    "contentType": "content-type-x",
+    "role": "sample-role",
+    "username": "UUU",
+    "system": {
+      "name": "TEST_SYS",
+      "version": "67.32.4"
+    },
+    "processedAt": "2014-11-06T16:36:52Z"
+  }
+}

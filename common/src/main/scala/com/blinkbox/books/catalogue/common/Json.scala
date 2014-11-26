@@ -12,8 +12,10 @@ object Json {
     case JObject(JField("type", JString("contributor")) :: JField("item", i) :: Nil) =>
       SuggestionPayload(SuggestionType.Contributor, i.extract[SuggestionItem.Contributor])
   }, {
-    case SuggestionPayload(SuggestionType.Book, i) => JObject(JField("book", Extraction.decompose(i)))
-    case SuggestionPayload(SuggestionType.Contributor, i) => JObject(JField("contributor", Extraction.decompose(i)))
+    case SuggestionPayload(SuggestionType.Book, i) =>
+      JObject(JField("type", JString("book")), JField("item", Extraction.decompose(i)))
+    case SuggestionPayload(SuggestionType.Contributor, i) =>
+      JObject(JField("type", JString("contributor")), JField("item", Extraction.decompose(i)))
   }))
 
   implicit val formats = (org.json4s.DefaultFormats ++

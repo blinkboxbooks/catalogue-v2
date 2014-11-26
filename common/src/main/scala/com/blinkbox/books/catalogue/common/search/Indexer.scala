@@ -1,15 +1,13 @@
 package com.blinkbox.books.catalogue.common.search
 
-import com.blinkbox.books.catalogue.common.Book
+import com.blinkbox.books.catalogue.common.{IndexEntities => idx, SearchConfig, Book}
 import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.ElasticDsl._
-import com.sksamuel.elastic4s.mappings.FieldType.{CompletionType, BooleanType, StringType, IntegerType}
+import com.sksamuel.elastic4s.mappings.FieldType._
 import com.sksamuel.elastic4s.source.DocumentSource
-import com.typesafe.config.Config
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
-import com.blinkbox.books.catalogue.common.{IndexEntities => idx}
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -22,7 +20,7 @@ trait Indexer {
   def index(books: Iterable[Book]): Future[Iterable[BulkItemResponse]]
 }
 
-class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
+class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
   import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
 
   case class JsonSource(book: Book) extends DocumentSource {
@@ -33,11 +31,11 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   override def index(book: Book): Future[SingleResponse] = {
     client.execute {
       esIndex
-        .into(s"${config.getString("search.index.name")}/book")
+        .into(s"${config.indexName}/book")
         .doc(JsonSource(book))
         .id(book.isbn)
         .versionType(VersionType.EXTERNAL)
-        .version((book.modifiedAt.getMillis/1000).toInt)
+        .version(book.sequenceNumber)
     } map { resp =>
       SingleResponse(resp.getId)
     }
@@ -48,11 +46,11 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
       bulk(
         books.map { book =>
           esIndex
-            .into(s"${config.getString("search.index.name")}/book")
+            .into(s"${config.indexName}/book")
             .doc(JsonSource(book))
             .id(book.isbn)
             .versionType(VersionType.EXTERNAL)
-            .version((book.modifiedAt.getMillis/1000).toInt)
+            .version(book.sequenceNumber)
         }.toList: _*
       )
     } map { response =>
@@ -66,33 +64,113 @@ class EsIndexer(config: Config, client: ElasticClient)(implicit ec: ExecutionCon
   }
 }
 
-case class Schema(config: Config) {
+case class Schema(config: SearchConfig) {
   def classification = "classification" nested(
     "realm" typed StringType analyzer KeywordAnalyzer,
     "id" typed StringType analyzer KeywordAnalyzer
-    )
+  )
 
   def uris = "uris" inner(
     "type" typed StringType analyzer KeywordAnalyzer,
     "uri" typed StringType index "not_analyzed",
     "params" typed StringType index "not_analyzed"
-    )
+  )
 
-  def catalogue = (create index s"${config.getString("search.index.name")}" mappings (
+  def availability(`type`: String) = `type` inner(
+    "available" typed BooleanType,
+    "code" typed StringType analyzer KeywordAnalyzer,
+    "extra" typed StringType
+  )
+
+  def otherText(name: String) = name nested(
+    classification,
+    "content" typed StringType analyzer "descriptionAnalyzer",
+    "type" typed StringType analyzer KeywordAnalyzer,
+    "author" typed StringType analyzer WhitespaceAnalyzer
+  )
+
+  def regions(name: String) = name nested(
+    "GB" typed BooleanType nullValue false,
+    "ROW" typed BooleanType nullValue false,
+    "WORLD" typed BooleanType nullValue false
+  )
+
+  def catalogue = (create index config.indexName mappings (
     "book" as(
-      "title" typed StringType analyzer SnowballAnalyzer,
-      "availability" inner(
-        "available" typed BooleanType,
-        "code" typed StringType analyzer KeywordAnalyzer,
-        "extra" typed StringType
-      ),
+      "sequenceNumber" typed LongType,
+      classification,
       "isbn" typed StringType analyzer KeywordAnalyzer,
-      "regionalRights" inner(
-        "GB" typed BooleanType nullValue false,
-        "ROW" typed BooleanType nullValue false,
-        "WORLD" typed BooleanType nullValue false
+      "format" inner(
+        "marvinIncompatible" typed BooleanType,
+        "epubType" typed StringType,
+        "productForm" typed StringType
       ),
+      "title" typed StringType analyzer SnowballAnalyzer,
+      "subtitle" typed StringType analyzer SnowballAnalyzer,
+      "contributors" nested (
+        "role" typed StringType analyzer KeywordAnalyzer,
+        "id" typed StringType analyzer KeywordAnalyzer,
+        "displayName" typed StringType analyzer SimpleAnalyzer,
+        "sortName" typed StringType analyzer KeywordAnalyzer
+        ),
+      "availability" inner(
+        availability("notificationType"),
+        availability("publishingStatus"),
+        availability("availabilityCode"),
+        availability("productAvailability"),
+        availability("blinkboxBooks")
+      ),
+      "dates" inner(
+        "publish" typed DateType,
+        "announce" typed DateType
+      ),
+      otherText("descriptions"),
+      otherText("reviews"),
+      "languages" typed StringType analyzer KeywordAnalyzer,
+      "originalLanguages" typed StringType analyzer KeywordAnalyzer,
+      regions("supplyRights"),
+      regions("salesRights"),
       "publisher" typed StringType analyzer KeywordAnalyzer,
+      "imprint" typed StringType,
+      "prices" nested(
+        "amount" typed DoubleType,
+        "currency" typed StringType analyzer KeywordAnalyzer,
+        "includeTax" typed BooleanType,
+        "isAgency" typed BooleanType,
+        "discountRate" typed IntegerType,
+        "validFrom" typed DateType,
+        "validUntil" typed DateType,
+        regions("applicableRegions"),
+        "tax" nested(
+          "rate" typed StringType,
+          "percent" typed DoubleType,
+          "amount" typed DoubleType,
+          "taxableAmount" typed DoubleType
+        )
+      ),
+      "statistics" inner(
+        "pages" typed IntegerType,
+        "sentences" typed IntegerType,
+        "words" typed IntegerType,
+        "syllables" typed IntegerType,
+        "polysyllables" typed IntegerType,
+        "smog_grade" typed IntegerType, // TODO: Change to use camel case
+        "adultThemes" typed BooleanType
+      ),
+      "subjects" nested(
+        "type" typed StringType analyzer KeywordAnalyzer,
+        "code" typed StringType analyzer KeywordAnalyzer,
+        "main" typed BooleanType
+      ),
+      "series" nested(
+        "title" typed StringType,
+        "number" typed IntegerType
+      ),
+      "related" nested(
+        classification,
+        "relation" typed StringType analyzer KeywordAnalyzer,
+        "isbn" typed StringType analyzer KeywordAnalyzer
+      ),
       "media" inner(
         "images" inner(
           classification,
@@ -109,25 +187,26 @@ case class Schema(config: Config) {
           "size" typed IntegerType
         )
       ),
-      "languages" typed StringType analyzer KeywordAnalyzer,
-      "descriptions" nested(
-        classification,
-        "content" typed StringType analyzer "descriptionAnalyzer",
-        "type" typed StringType analyzer KeywordAnalyzer,
-        "author" typed StringType analyzer WhitespaceAnalyzer
+      "distributionStatus" inner(
+        "usable" typed BooleanType,
+        "reasons" typed StringType
       ),
-      "subjects" nested(
-        "type" typed StringType analyzer KeywordAnalyzer,
-        "code" typed StringType analyzer KeywordAnalyzer
+      "source" inner(
+        "deliveredAt" typed DateType,
+        "uri" typed StringType,
+        "fileName" typed StringType,
+        "contentType" typed StringType,
+        "role" typed StringType,
+        "username" typed StringType,
+        "system" inner(
+          "name" typed StringType,
+          "version" typed StringType
+        ),
+        "processedAt" typed DateType
       ),
-      "contributors" nested (
-        "role" typed StringType analyzer KeywordAnalyzer,
-        "id" typed StringType analyzer KeywordAnalyzer,
-        "displayName" typed StringType analyzer SimpleAnalyzer,
-        "sortName" typed StringType analyzer KeywordAnalyzer
-      ),
-      "autoComplete" typed CompletionType payloads(true),
-      "distribute" typed BooleanType
+      // Calculated fields for specific search scenarios
+      "descriptionContents" typed StringType,
+      "autoComplete" typed CompletionType payloads(true)
     ) dynamic(false)
   )).analysis(
     CustomAnalyzerDefinition("descriptionAnalyzer",
