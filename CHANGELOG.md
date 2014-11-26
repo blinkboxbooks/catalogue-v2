@@ -1,5 +1,16 @@
 
 
+## 0.1.3 ([#13](https://git.mobcastdev.com/Agora/catalogue-v2/pull/13) 2014-11-26 13:55:10)
+
+CAT-29 Search books by title
+
+### Improvements
+
+* Implement E2E tests aiming to ensure the correct order for title matches in book search
+* Introduce a computed field that uses a simpler analyser which doesn't strip stop-words for the title
+* Use the stop-word-aware title field in the search query so that it takes precedence over the stop-word-removing one
+
+
 ## 0.1.2 ([#12](https://git.mobcastdev.com/Agora/catalogue-v2/pull/12) 2014-11-26 10:45:03)
 
 CAT-52: V1 XML messages parser
