@@ -6,7 +6,8 @@ lazy val buildSettings = Seq(
   organization := "com.blinkbox.books",
   version := scala.util.Try(scala.io.Source.fromFile("VERSION").mkString.trim).getOrElse("0.0.0"),
   scalaVersion := "2.11.4",
-  scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-target:jvm-1.7")
+  scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-target:jvm-1.7"),
+  parallelExecution in Test := false
 )
 
 lazy val common = (project in file("common")).settings(buildSettings: _*)

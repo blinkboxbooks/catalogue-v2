@@ -58,14 +58,18 @@ class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(impli
     searchIn("book") query {
       E.filteredQuery query {
         E.dismax query(
-          E.matchPhrase("title", q) boost 5 slop 1,
+          // Query for the title - give precedence to title that match including stop-words
+          E.dismax query(
+            E.matchPhrase("title", q) boost 1 slop 1,
+            E.matchPhrase("titleWithStopwords", q) boost 2 slop 1
+          ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
           E.nestedQuery("contributors") query (
             E.matchPhrase("contributors.displayName", q) slop 1
-            ) boost 4,
-          E.nestedQuery("descriptions") query {
+          ) boost 2,
+          E.nestedQuery("descriptions") query (
             E.matchPhrase("descriptions.content", q) slop 1
-          } boost 1
-          ) tieBreaker 0.2
+          ) boost 1
+        ) tieBreaker 0.2
       } filter {
         E.termFilter("distributionStatus.usable", true)
       }
@@ -75,12 +79,16 @@ class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(impli
   override def similar(bookId: BookId): Future[Iterable[Book]] = client execute {
     searchIn("book") query {
       E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 maxQueryTerms 12 ids bookId.value
+    } filter {
+      E.termFilter("distributionStatus.usable", true)
     }
   } map toBookIterable
 
   override def suggestions(q: String): Future[Iterable[Suggestion]] = client execute {
     searchIn("catalogue") suggestions (
       E.suggest using(E.completion) as "autoComplete" on q from "autoComplete"
-    )
+    ) filter {
+      E.termFilter("distributionStatus.usable", true)
+    }
   } map toSuggestionIterable
 }
