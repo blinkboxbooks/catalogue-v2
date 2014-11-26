@@ -1,5 +1,13 @@
 
 
+## 0.1.4 ([#11](https://git.mobcastdev.com/Agora/catalogue-v2/pull/11) 2014-11-26 15:27:45)
+
+Cat 58
+
+### Patch
+- Unit-tests for /books API prototype
+- Separated ES and service code
+
 ## 0.1.3 ([#13](https://git.mobcastdev.com/Agora/catalogue-v2/pull/13) 2014-11-26 13:55:10)
 
 CAT-29 Search books by title
