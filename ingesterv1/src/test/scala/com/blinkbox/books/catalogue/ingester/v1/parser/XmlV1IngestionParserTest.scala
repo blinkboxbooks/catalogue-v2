@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.v1.parser
 
-import com.blinkbox.books.catalogue.common.{Undistribute, Book}
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
 import scala.io.Source
@@ -20,7 +20,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
           assert(media.epubs.size == 2)
           assert(media.images.size == 1)
         }
-      case els => fail(new RuntimeException(s"got $els"))
+      case els => fail(s"Expected a valid 'book', got $els")
     }
   }
 

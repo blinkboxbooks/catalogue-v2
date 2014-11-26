@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.common
 
+import com.blinkbox.books.catalogue.common.Events.Book
 import org.joda.time.DateTime
 
 object MessageFixtures {
@@ -48,4 +49,3 @@ object MessageFixtures {
     distributionStatus = DistributionStatus(true, Nil),
     source = Source(new DateTime(), None, None, None, "some-role", "some-username", None, None))
 }
-

@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.v1.parser
 
+import com.blinkbox.books.catalogue.common.Events.{BookPrice, Undistribute, Book}
 import com.blinkbox.books.catalogue.common._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -34,6 +35,7 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
       val xmlBook = value \\ "book"
       val contributors = toContributors(xmlBook)
       Book.empty.copy(
+        sequenceNumber = toModifiedAt(xmlBook).getMillis,
         isbn = (xmlBook \ "isbn").text,
         title = (xmlBook \ "title").text,
         subtitle = (xmlBook \ "subtitle").text.opt[String],
@@ -43,19 +45,22 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         publisher = (xmlBook \ "publisher" \ "name").text.opt[String],
         prices = toPrices(xmlBook),
         subjects = toSubjects(xmlBook),
+        languages = List((xmlBook \ "language").text),
         supplyRights = Option(toRegionalRights(xmlBook)),
-        media = Option(toMedia(xmlBook)),
-        sequenceNumber = toModifiedAt(xmlBook).getMillis,
-        dates = toDates(xmlBook))
+        dates = toDates(xmlBook),
+        media = Option(toMedia(xmlBook))
+      )
     }
 
     def toUndistribute: Undistribute = {
       val undistributeXml = value \\ "undistribute"
       Undistribute(
         isbn = (undistributeXml \ "book").text,
-        effectiveTimestamp = (undistributeXml \ "effectiveTimestamp")
+        sequenceNumber = (undistributeXml \ "effectiveTimestamp")
           .text.opt[DateTime]
-          .getOrElse(throw MissingFieldException("effectiveTimestamp")))
+          .getOrElse(throw MissingFieldException("effectiveTimestamp"))
+          .getMillis
+      )
     }
 
     def toBookPrice: BookPrice = {
@@ -83,9 +88,12 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
       }.toList
 
     private def toSeries(xml: NodeSeq): Option[Series] =
-      Some(Series(
-        title = (xml \ "series" \ "title").text,
-        number = (xml \ "series" \ "number").text.opt[Int]))
+      Option(
+        Series(
+          title = (xml \ "series" \ "title").text,
+          number = (xml \ "series" \ "number").text.opt[Int]
+        )
+      )
 
     private def toDescriptions(xml: NodeSeq, contributors: List[Contributor]): List[OtherText] = {
       val author = contributors.map(_.role).find(_ == "Author").getOrElse("NONE")
@@ -127,15 +135,13 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
     private def toRegionalRights(xml: NodeSeq): Regions = {
       val regions = (xml \ "regions").map(node => (node \ "region").text.toUpperCase)
       val emptyRegionalRights = Regions(None, None, None)
-      regions
-        .foldLeft(emptyRegionalRights)((acc, element) =>
+      regions.foldLeft(emptyRegionalRights)((acc, element) =>
         element match {
           case "GB" => acc.copy(`GB` = Some(true))
           case "WORLD" => acc.copy(`WORLD` = Some(true))
           case "ROW" => acc.copy(`ROW` = Some(true))
           case _ => acc
-        }
-        )
+        })
     }
 
     private def toMedia(xml: NodeSeq): Media = {
@@ -171,14 +177,16 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
     private def toDates(xml: NodeSeq): Option[Dates] = {
       val publishDate = (xml \ "publishedOn").text
       val announceDate = (xml \ "announcedOn").text
-      Some(Dates(
-        publish =
-          if(publishDate.isEmpty) None
-          else Some(PublishedOnFormatter.parseDateTime(publishDate)),
-        announce =
-          if(announceDate.isEmpty) None
-          else Some(AnnouncedOnFormatter.parseDateTime(announceDate))
-      ))
+      Option(
+        Dates(
+          publish =
+            if(publishDate.isEmpty) None
+            else Some(PublishedOnFormatter.parseDateTime(publishDate)),
+          announce =
+            if(announceDate.isEmpty) None
+            else Some(AnnouncedOnFormatter.parseDateTime(announceDate))
+        )
+      )
     }
   }
 }

@@ -1,6 +1,7 @@
 package com.blinkbox.books.agora.catalogue.book
 
 import java.util.concurrent.Executors
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import scala.concurrent.{ExecutionContext, Future}
 import com.sksamuel.elastic4s.ElasticClient
