@@ -1,6 +1,9 @@
 package com.blinkbox.books.catalogue.common.search
 
-import com.blinkbox.books.catalogue.common.{IndexEntities => idx, SearchConfig, Book}
+import com.blinkbox.books.catalogue.common.Events.{Book => EventBook}
+import com.blinkbox.books.catalogue.common.Events.{Undistribute => EventUndistribute}
+import com.blinkbox.books.catalogue.common.Events.{BookPrice => EventBookPrice}
+import com.blinkbox.books.catalogue.common.{IndexEntities => idx, DistributeContent, SearchConfig}
 import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.mappings.FieldType._
@@ -16,38 +19,49 @@ case class Failure(docId: String, cause: Option[Throwable] = None) extends BulkI
 case class SingleResponse(docId: String)
 
 trait Indexer {
-  def index(book: Book): Future[SingleResponse]
-  def index(books: Iterable[Book]): Future[Iterable[BulkItemResponse]]
+  def index(book: EventBook): Future[SingleResponse]
+  def index(books: Iterable[EventBook]): Future[Iterable[BulkItemResponse]]
+  def index(undistribute: EventUndistribute): Future[SingleResponse]
+  def index(bookPrice: EventBookPrice): Future[SingleResponse]
 }
 
 class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
   import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
 
-  case class JsonSource(book: Book) extends DocumentSource {
+  case class BookJsonSource(book: EventBook) extends DocumentSource {
     import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.Book.fromMessage(book))
   }
 
-  override def index(book: Book): Future[SingleResponse] = {
+  case class UndistributeJsonSource(undistribute: EventUndistribute) extends DocumentSource {
+    import com.blinkbox.books.catalogue.common.Json.formats
+    def json = Serialization.write(idx.Undistribute.fromMessage(undistribute))
+  }
+
+  case class BookPriceJsonSource(bookPrice: EventBookPrice) extends DocumentSource {
+    import com.blinkbox.books.catalogue.common.Json.formats
+    def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
+  }
+
+  override def index(book: EventBook): Future[SingleResponse] =
     client.execute {
       esIndex
         .into(s"${config.indexName}/book")
-        .doc(JsonSource(book))
+        .doc(BookJsonSource(book))
         .id(book.isbn)
         .versionType(VersionType.EXTERNAL)
         .version(book.sequenceNumber)
     } map { resp =>
       SingleResponse(resp.getId)
     }
-  }
 
-  override def index(books: Iterable[Book]): Future[Iterable[BulkItemResponse]] = {
+  override def index(books: Iterable[EventBook]): Future[Iterable[BulkItemResponse]] =
     client.execute {
       bulk(
         books.map { book =>
           esIndex
             .into(s"${config.indexName}/book")
-            .doc(JsonSource(book))
+            .doc(BookJsonSource(book))
             .id(book.isbn)
             .versionType(VersionType.EXTERNAL)
             .version(book.sequenceNumber)
@@ -61,7 +75,25 @@ class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: Execut
           Successful(item.getId)
       }
     }
-  }
+
+  override def index(undistribute: EventUndistribute): Future[SingleResponse] =
+    client.execute {
+      esIndex
+        .into(s"${config.indexName}/book")
+        .doc(UndistributeJsonSource(undistribute))
+        .id(undistribute.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version(undistribute.sequenceNumber)
+    } map(resp => SingleResponse(resp.getId))
+
+  override def index(bookPrice: EventBookPrice): Future[SingleResponse] =
+    client.execute {
+      esIndex
+        .into(s"${config.indexName}/book-price")
+        .doc(BookPriceJsonSource(bookPrice))
+        .id(bookPrice.isbn)
+        .parent(bookPrice.isbn)
+    } map(resp => SingleResponse(resp.getId))
 }
 
 case class Schema(config: SearchConfig) {
@@ -105,7 +137,8 @@ case class Schema(config: SearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType analyzer SnowballAnalyzer,
+      "title" typed StringType copyTo("titleWithStopwords") analyzer SnowballAnalyzer,
+      "titleWithStopwords" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
         "role" typed StringType analyzer KeywordAnalyzer,

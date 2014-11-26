@@ -3,8 +3,8 @@ package com.blinkbox.books.catalogue.ingester.v2.messaging
 import java.net.ConnectException
 
 import akka.actor.ActorRef
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.search.Indexer
-import com.blinkbox.books.catalogue.common.Book
 import com.blinkbox.books.catalogue.ingester.v2.parser.IngestionParser
 import com.blinkbox.books.messaging._
 import scala.concurrent.Future
