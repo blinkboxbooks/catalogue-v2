@@ -20,7 +20,7 @@ trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Json4sJacksonSupp
   override def e2eExecutionContext = executor
   override implicit def json4sJacksonFormats: Formats = DefaultFormats
 
-  implicit val routeTestTimeout = RouteTestTimeout(3.seconds)
+  implicit val routeTestTimeout = RouteTestTimeout(5.seconds)
 
   lazy val searchService = new EsV1SearchService(searchConfig, esClient)
   lazy val apiUrl = new URL("http://localhost:9595")
