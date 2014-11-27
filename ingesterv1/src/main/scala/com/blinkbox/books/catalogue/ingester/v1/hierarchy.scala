@@ -89,6 +89,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
     val esClient = ElasticFactory.remote(searchConfig)
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
     val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
+    val retryInterval = config.getDuration("messageListener.retryInterval", TimeUnit.SECONDS).seconds
 
     val bookMessageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
@@ -97,7 +98,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         output = context.actorOf(
           Props(new MessageHandler(
             errorHandler = new ActorErrorHandler(bookErrorsPublisher),
-            retryInterval = 10.seconds,
+            retryInterval = retryInterval,
             indexer = indexer,
             messageParser = new BookXmlV1IngestionParser))),
         queueConfig = QueueConfiguration(
@@ -110,7 +111,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         output = context.actorOf(
           Props(new MessageHandler(
             errorHandler = new ActorErrorHandler(priceErrorsPublisher),
-            retryInterval = 10.seconds,
+            retryInterval = retryInterval,
             indexer = indexer,
             messageParser = new PriceXmlV1IngestionParser))),
         queueConfig = QueueConfiguration(

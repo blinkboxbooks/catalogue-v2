@@ -3,7 +3,7 @@ package com.blinkbox.books.catalogue.ingester.v1.parser
 import com.blinkbox.books.catalogue.common.Events.{Undistribute, Book}
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
-import scala.util.{Success, Failure}
+import scala.util.{Failure, Success}
 
 class BookXmlV1IngestionParserTest extends FlatSpecLike
   with MockitoSyrup{
@@ -14,13 +14,10 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val book = parser.parse(xmlContent)
 
-    book match {
-      case Success(book: Book) =>
-        book.media.fold(fail("Missing media")) { media =>
-          assert(media.epubs.size == 2)
-          assert(media.images.size == 1)
-        }
-      case els => fail(s"Expected a valid 'book', got $els")
+    val Success(b: Book) = book
+    b.media.fold(fail("Missing media")) { media =>
+      assert(media.epubs.size == 2)
+      assert(media.images.size == 1)
     }
   }
 
@@ -29,12 +26,8 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val book = parser.parse(xmlContent)
 
-    book match {
-      case Success(_) =>
-        fail("Expected to fail parsing the book")
-      case Failure(e) =>
-        assert(e.isInstanceOf[InvalidContentException])
-    }
+    val Failure(e) = book
+    assert(e.isInstanceOf[InvalidContentException])
   }
 
   it should "fail parsing when 'modifiedAt' field is missing" in new XmlV1IngestionParserFixture {
@@ -42,14 +35,8 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val book = parser.parse(xmlContent)
 
-    book match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "modifiedAt")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(modifiedAt')', but got $e")
-    }
+    val Failure(e: MissingFieldException) = book
+    assert(e.field == "modifiedAt")
   }
 
   it should "successfully parse a correct formatted 'undistribute' xml message" in new XmlV1IngestionParserFixture {
@@ -65,14 +52,8 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val undistribute = parser.parse(xmlContent)
 
-    undistribute match {
-      case Failure(e) =>
-        fail(s"Expected to pass the parsing, but failed [$e]")
-      case Success(undistribute: Undistribute) =>
-        assert(undistribute.reasons.size == 1)
-      case Success(c) =>
-        fail(s"Expected to parse to 'undistribute', got [$c] ")
-    }
+    val Success(u: Undistribute) = undistribute
+    assert(u.reasons.size == 1)
   }
 
   it should "not fail when 'reasonList' field is missing for the 'undistribute' xml" in new XmlV1IngestionParserFixture {
@@ -80,14 +61,8 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val undistribute = parser.parse(xmlContent)
 
-    undistribute match {
-      case Failure(e) =>
-        fail(s"Expected to pass the parsing, but failed [$e]")
-      case Success(undistribute: Undistribute) =>
-        assert(undistribute.reasons.isEmpty)
-      case Success(c) =>
-        fail(s"Expected to parse to 'undistribute', got [$c] ")
-    }
+    val Success(u: Undistribute) = undistribute
+    assert(u.reasons.isEmpty)
   }
 
   it should "fail parsing when 'effectiveTimestamp' field is missing" in new XmlV1IngestionParserFixture {
@@ -95,13 +70,7 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
 
     val undistribute = parser.parse(xmlContent)
 
-    undistribute match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'undistribute' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "effectiveTimestamp")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
-    }
+    val Failure(e: MissingFieldException) = undistribute
+    assert(e.field == "effectiveTimestamp")
   }
 }

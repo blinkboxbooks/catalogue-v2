@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.ingester.v1.parser
 
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
-import scala.util.{Failure, Success}
+import scala.util.Failure
 
 class PriceXmlV1IngestionParserTest extends FlatSpecLike
   with MockitoSyrup{
@@ -22,14 +22,8 @@ class PriceXmlV1IngestionParserTest extends FlatSpecLike
 
     val bookPrice = parser.parse(xmlContent)
 
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "isbn")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(isbn')', but got $e")
-    }
+    val Failure(e: MissingFieldException) = bookPrice
+    assert(e.field == "isbn")
   }
 
   it should "fail parsing when 'price' field is missing" in new XmlV1IngestionParserFixture {
@@ -37,14 +31,8 @@ class PriceXmlV1IngestionParserTest extends FlatSpecLike
 
     val bookPrice = parser.parse(xmlContent)
 
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "price")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
-    }
+    val Failure(e: MissingFieldException) = bookPrice
+    assert(e.field == "price")
   }
 
   it should "fail parsing when 'currency' field is missing" in new XmlV1IngestionParserFixture {
@@ -52,13 +40,7 @@ class PriceXmlV1IngestionParserTest extends FlatSpecLike
 
     val bookPrice = parser.parse(xmlContent)
 
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "currency")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
-    }
+    val Failure(e: MissingFieldException) = bookPrice
+    assert(e.field == "currency")
   }
 }
