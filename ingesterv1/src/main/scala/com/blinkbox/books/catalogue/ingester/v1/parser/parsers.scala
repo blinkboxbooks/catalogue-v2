@@ -170,10 +170,10 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
     Option(
       Dates(
         publish =
-          if(publishDate.isEmpty) None
+          if (publishDate.isEmpty) None
           else Some(PublishedOnFormatter.parseDateTime(publishDate)),
         announce =
-          if(announceDate.isEmpty) None
+          if (announceDate.isEmpty) None
           else Some(AnnouncedOnFormatter.parseDateTime(announceDate))
       )
     )
