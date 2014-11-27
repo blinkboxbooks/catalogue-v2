@@ -1,5 +1,14 @@
 
 
+## 0.1.5 ([#14](https://git.mobcastdev.com/Agora/catalogue-v2/pull/14) 2014-11-27 11:15:35)
+
+CAT-59: Index the parsed/validated requests
+
+Patch
+- create a new mappings for 'book-price' messages
+- parse 'undistribute' reasons messages in order to be indexed next to the book
+- refactor the indexer service in order to accept the distribution supertype instead of the concrete implementations
+
 ## 0.1.4 ([#11](https://git.mobcastdev.com/Agora/catalogue-v2/pull/11) 2014-11-26 15:27:45)
 
 Cat 58
