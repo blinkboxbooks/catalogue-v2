@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<book-price xmlns="http://schemas.blinkbox.com/books/pricing" xmlns:r="http://schemas.blinkbox.com/books/routing"
+            r:originator="ingestion" r:instance="" r:version="0.0.1">
+    <isbn>9781905010943</isbn>
+    <price>123.45</price>
+    <currency>GBP</currency>
+</book-price>

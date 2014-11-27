@@ -25,7 +25,10 @@ package object parser {
 
   implicit object StringToOptString extends Optionable[String, String] {
     override def toOption(value: String): Option[String] =
-      Some(value)
+      Try(
+        if(value.isEmpty) throw new RuntimeException("empty string")
+        else value
+      ).toOption
   }
 
   implicit object StringToOptBoolean extends Optionable[String, Boolean] {

@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.common
 
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
 import org.json4s.{Extraction, CustomSerializer}
-import org.json4s.JsonAST.{JField, JValue, JObject, JString}
+import org.json4s.JsonAST.{JField, JObject, JString}
 
 object Json {
 

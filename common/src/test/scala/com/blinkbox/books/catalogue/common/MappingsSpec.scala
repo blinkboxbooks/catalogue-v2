@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.common
 
+import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.sksamuel.elastic4s.{ElasticDsl => E}
 import org.scalatest.concurrent.ScalaFutures
