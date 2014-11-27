@@ -3,16 +3,16 @@ package com.blinkbox.books.catalogue.ingester.v1.parser
 import com.blinkbox.books.catalogue.common.Events.{Undistribute, Book}
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
-import scala.io.Source
 import scala.util.{Success, Failure}
 
-class XmlV1IngestionParserTest extends FlatSpecLike
+class BookXmlV1IngestionParserTest extends FlatSpecLike
   with MockitoSyrup{
+  private val parser = new BookXmlV1IngestionParser
 
   it should "successfully parse a correct formatted 'book' xml message" in new XmlV1IngestionParserFixture {
     val xmlContent = asString("book.xml")
 
-    val book = v1Parser.parse(xmlContent)
+    val book = parser.parse(xmlContent)
 
     book match {
       case Success(book: Book) =>
@@ -27,7 +27,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "fail parsing when incorrect xml format" in new XmlV1IngestionParserFixture {
     val xmlContent = """{"json": "instead", "of": "xml"}"""
 
-    val book = v1Parser.parse(xmlContent)
+    val book = parser.parse(xmlContent)
 
     book match {
       case Success(_) =>
@@ -40,7 +40,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "fail parsing when 'modifiedAt' field is missing" in new XmlV1IngestionParserFixture {
     val xmlContent = removeNode("modifiedAt", asString("book.xml"))
 
-    val book = v1Parser.parse(xmlContent)
+    val book = parser.parse(xmlContent)
 
     book match {
       case Success(_) =>
@@ -55,7 +55,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "successfully parse a correct formatted 'undistribute' xml message" in new XmlV1IngestionParserFixture {
     val xmlContent = asString("undistribute.xml")
 
-    val undistribute = v1Parser.parse(xmlContent)
+    val undistribute = parser.parse(xmlContent)
 
     assert(undistribute.isSuccess)
   }
@@ -63,7 +63,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "parse all reasons from an 'undistribute' xml" in new XmlV1IngestionParserFixture {
     val xmlContent = asString("undistribute.xml")
 
-    val undistribute = v1Parser.parse(xmlContent)
+    val undistribute = parser.parse(xmlContent)
 
     undistribute match {
       case Failure(e) =>
@@ -78,7 +78,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "not fail when 'reasonList' field is missing for the 'undistribute' xml" in new XmlV1IngestionParserFixture {
     val xmlContent = removeNode("reasonList", asString("undistribute.xml"))
 
-    val undistribute = v1Parser.parse(xmlContent)
+    val undistribute = parser.parse(xmlContent)
 
     undistribute match {
       case Failure(e) =>
@@ -93,7 +93,7 @@ class XmlV1IngestionParserTest extends FlatSpecLike
   it should "fail parsing when 'effectiveTimestamp' field is missing" in new XmlV1IngestionParserFixture {
     val xmlContent = removeNode("effectiveTimestamp", asString("undistribute.xml"))
 
-    val undistribute = v1Parser.parse(xmlContent)
+    val undistribute = parser.parse(xmlContent)
 
     undistribute match {
       case Success(_) =>
@@ -103,72 +103,5 @@ class XmlV1IngestionParserTest extends FlatSpecLike
       case Failure(e) =>
         fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
     }
-  }
-
-  it should "successfully parse a corrent formatted 'book-price' xml message" in new XmlV1IngestionParserFixture {
-    val xmlContent = asString("book-price.xml")
-
-    val bookPrice = v1Parser.parse(xmlContent)
-
-    assert(bookPrice.isSuccess)
-  }
-
-  it should "fail parsing when 'isbn' field is missing" in new XmlV1IngestionParserFixture {
-    val xmlContent = removeNode("isbn", asString("book-price.xml"))
-
-    val bookPrice = v1Parser.parse(xmlContent)
-
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "isbn")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(isbn')', but got $e")
-    }
-  }
-
-  it should "fail parsing when 'price' field is missing" in new XmlV1IngestionParserFixture {
-    val xmlContent = removeNode("price", asString("book-price.xml"))
-
-    val bookPrice = v1Parser.parse(xmlContent)
-
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "price")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
-    }
-  }
-
-  it should "fail parsing when 'currency' field is missing" in new XmlV1IngestionParserFixture {
-    val xmlContent = removeNode("currency", asString("book-price.xml"))
-
-    val bookPrice = v1Parser.parse(xmlContent)
-
-    bookPrice match {
-      case Success(_) =>
-        fail("Expected to fail parsing the 'book-price' xml")
-      case Failure(e: MissingFieldException) =>
-        assert(e.field == "currency")
-      case Failure(e) =>
-        fail(s"Expected 'MissingFieldException(effectiveTimestamp')', but got $e")
-    }
-  }
-
-  private class XmlV1IngestionParserFixture {
-    def asString(xmlResource: String): String =
-      Source.fromURL(getClass.getResource(s"/$xmlResource")).mkString
-
-    val v1Parser = new XmlV1IngestionParser
-
-    // A regex based naive implementation of
-    // node replacement within xml.
-    // !!! NOTE: this *should* not be used within production code
-    //           as it's not optimal.
-    def removeNode(nodeName: String, content: String): String =
-      content.replaceAll(s"(?s)<$nodeName.*</$nodeName>", "")
   }
 }

@@ -9,7 +9,7 @@ import akka.util.Timeout
 import com.blinkbox.books.catalogue.common.search.{Schema, EsIndexer}
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
-import com.blinkbox.books.catalogue.ingester.v1.parser.XmlV1IngestionParser
+import com.blinkbox.books.catalogue.ingester.v1.parser.{PriceXmlV1IngestionParser, BookXmlV1IngestionParser}
 import com.blinkbox.books.catalogue.common.search.{EsIndexer, Schema}
 import com.blinkbox.books.catalogue.common.{ElasticFactory, SearchConfig}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
@@ -73,34 +73,53 @@ class MessagingSupervisor extends Actor with StrictLogging {
     val consumerConnection = RabbitMq.reliableConnection(rabbitmqConfig)
     val publisherConnection = RabbitMq.recoveredConnection(rabbitmqConfig)
 
-    val errorsPublisher = context.actorOf(
+    val bookErrorsPublisher = context.actorOf(
       Props(new RabbitMqConfirmedPublisher(
         connection = publisherConnection,
         config = PublisherConfiguration(
           config.getConfig("messageListener.distributor.book.errors")))))
 
+    val priceErrorsPublisher = context.actorOf(
+      Props(new RabbitMqConfirmedPublisher(
+        connection = publisherConnection,
+        config = PublisherConfiguration(
+          config.getConfig("messageListener.distributor.price.errors")))))
+
     val searchConfig = SearchConfig(config)
-    val errorHandler = new ActorErrorHandler(errorsPublisher)
     val esClient = ElasticFactory.remote(searchConfig)
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
     val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
 
-    val v1messageConsumer = context.actorOf(
+    val bookMessageConsumer = context.actorOf(
       Props(new RabbitMqConsumer(
         channel = consumerConnection.createChannel(),
-        consumerTag = "ingester-books-consumer-v1",
+        consumerTag = "ingester-book-consumer-v1",
         output = context.actorOf(
           Props(new MessageHandler(
-            errorHandler = errorHandler,
+            errorHandler = new ActorErrorHandler(bookErrorsPublisher),
             retryInterval = 10.seconds,
             indexer = indexer,
-            messageParser = new XmlV1IngestionParser))),
+            messageParser = new BookXmlV1IngestionParser))),
         queueConfig = QueueConfiguration(
-          config.getConfig("messageListener.distributor.book.input")))), name = "V1-Message-Consumer")
+          config.getConfig("messageListener.distributor.book.input")))), name = "V1-Book-Message-Consumer")
+
+    val priceMessageConsumer = context.actorOf(
+      Props(new RabbitMqConsumer(
+        channel = consumerConnection.createChannel(),
+        consumerTag = "ingester-price-consumer-v1",
+        output = context.actorOf(
+          Props(new MessageHandler(
+            errorHandler = new ActorErrorHandler(priceErrorsPublisher),
+            retryInterval = 10.seconds,
+            indexer = indexer,
+            messageParser = new PriceXmlV1IngestionParser))),
+        queueConfig = QueueConfiguration(
+          config.getConfig("messageListener.distributor.price.input")))), name = "V1-Price-Message-Consumer")
 
     esClient.execute(Schema(searchConfig).catalogue).onComplete {
       case _ =>
-        v1messageConsumer ! RabbitMqConsumer.Init
+        bookMessageConsumer ! RabbitMqConsumer.Init
+        priceMessageConsumer ! RabbitMqConsumer.Init
     }
   }
 }
