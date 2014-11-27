@@ -1,5 +1,23 @@
 
 
+## 0.1.6 ([#15](https://git.mobcastdev.com/Agora/catalogue-v2/pull/15) 2014-11-27 15:25:08)
+
+CAT-62: Update messaging configuration
+
+Patch
+- having two messaging configurations: book and book-price
+- create two different messaging consumers, one for each type of message
+- split the xml parsers in order to have different parsing strategies for each message type.
+
+## 0.1.5 ([#14](https://git.mobcastdev.com/Agora/catalogue-v2/pull/14) 2014-11-27 11:15:35)
+
+CAT-59: Index the parsed/validated requests
+
+Patch
+- create a new mappings for 'book-price' messages
+- parse 'undistribute' reasons messages in order to be indexed next to the book
+- refactor the indexer service in order to accept the distribution supertype instead of the concrete implementations
+
 ## 0.1.4 ([#11](https://git.mobcastdev.com/Agora/catalogue-v2/pull/11) 2014-11-26 15:27:45)
 
 Cat 58

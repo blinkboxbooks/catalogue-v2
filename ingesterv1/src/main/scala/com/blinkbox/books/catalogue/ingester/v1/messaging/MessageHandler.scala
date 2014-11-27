@@ -2,9 +2,8 @@ package com.blinkbox.books.catalogue.ingester.v1.messaging
 
 import java.net.ConnectException
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.Events.{BookPrice, Undistribute, Book}
 import com.blinkbox.books.catalogue.common.search.Indexer
-import com.blinkbox.books.catalogue.common.{DistributionStatus, DistributeContent}
+import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
 import com.blinkbox.books.messaging.{ReliableEventHandler, ErrorHandler, Event}
 import org.elasticsearch.index.engine.VersionConflictEngineException
@@ -23,11 +22,7 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
     e.isInstanceOf[ConnectException]
 
   private def index(content: DistributeContent): Future[Unit] = {
-    val indexing = content match {
-      case book: Book => indexer.index(book)
-      case undistribute: Undistribute => indexer.index(undistribute)
-      case bookPrice: BookPrice => indexer.index(bookPrice)
-    }
+    val indexing = indexer.index(content)
     indexing.onFailure{
       case e: VersionConflictEngineException =>
         log.error(s"CONFLICT: ${e.getMessage}")
