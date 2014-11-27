@@ -160,7 +160,7 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
 
   private def toModifiedAt(xml: NodeSeq): DateTime = {
     val modifiedAt = (xml \ "modifiedAt").text
-    if(modifiedAt.isEmpty) throw MissingFieldException("modifiedAt")
+    if (modifiedAt.isEmpty) throw MissingFieldException("modifiedAt")
     else ModifiedAtFormatter.parseDateTime(modifiedAt)
   }
 
