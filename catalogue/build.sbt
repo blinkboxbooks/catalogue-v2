@@ -9,3 +9,5 @@ libraryDependencies ++= Seq(
   "io.spray"                  %% "spray-testkit"      % "1.3.2"         % Test,
   "com.blinkbox.books"        %% "common-spray"       % "0.17.5"
 )
+
+fork in Test := true
