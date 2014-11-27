@@ -1,16 +1,13 @@
 package com.blinkbox.books.agora.catalogue.book
 
+import com.blinkbox.books.catalogue.common.Events.Book
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.mockito.Matchers._
 import org.mockito.Mockito._
 import com.blinkbox.books.agora.catalogue.app.LinkHelper
 import com.blinkbox.books.test.MockitoSyrup
 import scala.concurrent.Future
-import com.blinkbox.books.catalogue.common.Book
 import org.scalatest.concurrent.ScalaFutures
-import scala.util.Success
 import com.blinkbox.books.catalogue.common._
 import org.joda.time.DateTime
 import org.scalatest.FlatSpecLike

@@ -11,8 +11,8 @@ trait IngestionParser[T, R] {
   def parse(content: T): Try[R]
 }
 
-case class InvalidContentException(content: String) extends RuntimeException
-case class MissingFieldException(field: String) extends RuntimeException
+case class InvalidContentException(content: String) extends RuntimeException(content)
+case class MissingFieldException(field: String) extends RuntimeException(field)
 
 class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
   private val ModifiedAtFormatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss z")
@@ -59,7 +59,8 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         sequenceNumber = (undistributeXml \ "effectiveTimestamp")
           .text.opt[DateTime]
           .getOrElse(throw MissingFieldException("effectiveTimestamp"))
-          .getMillis
+          .getMillis,
+        reasons = toReasons(undistributeXml)
       )
     }
 
@@ -188,5 +189,8 @@ class XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
         )
       )
     }
+
+    private def toReasons(xml: NodeSeq): List[String] =
+      (xml  \ "reasonList" \ "reason").map(node => (node \ "description").text).toList
   }
 }

@@ -63,7 +63,9 @@ object Events {
                   distributionStatus: DistributionStatus,
                   source: Source) extends DistributeContent
 
-  case class Undistribute(isbn: String, sequenceNumber: Long) extends DistributeContent
+  case class Undistribute(isbn: String,
+                          sequenceNumber: Long,
+                          reasons: List[String]) extends DistributeContent
 
   case class BookPrice(isbn: String, price: Double, currency: String) extends DistributeContent
 

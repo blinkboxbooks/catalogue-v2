@@ -16,7 +16,7 @@ import scala.concurrent.duration._
 trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Json4sJacksonSupport {
   this: Suite =>
 
-  override implicit def patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
+  override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(100, Millis))
   override def e2eExecutionContext = executor
   override implicit def json4sJacksonFormats: Formats = DefaultFormats
 

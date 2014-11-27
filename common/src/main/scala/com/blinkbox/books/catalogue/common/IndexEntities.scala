@@ -116,7 +116,7 @@ object IndexEntities {
       isbn = msg.isbn,
       distributionStatus = DistributionStatus(
         usable = false,
-        reasons = List("V1 undistribute.")
+        reasons = msg.reasons
       ),
       sequenceNumber = msg.sequenceNumber
     )
