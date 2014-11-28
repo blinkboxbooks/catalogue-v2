@@ -19,7 +19,7 @@ import org.joda.time.DateTimeZone
 @RunWith(classOf[JUnitRunner])
 class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaFutures {
   override implicit val e2eExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
-  override implicit def patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
+  override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(500, Millis))
 
   val dao = new ElasticBookDao(esClient)
   

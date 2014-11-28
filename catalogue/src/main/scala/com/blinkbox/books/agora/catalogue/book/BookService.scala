@@ -2,12 +2,13 @@ package com.blinkbox.books.agora.catalogue.book
 
 import com.blinkbox.books.agora.catalogue.app.LinkHelper
 import scala.concurrent.Future
-import com.blinkbox.books.spray.v1.{Link => V1Link, Image => V1Image}
+import com.blinkbox.books.spray.v1.{Link => V1Link, Image => V1Image, ListPage, pageLink2Link}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import scala.concurrent.ExecutionContext
 import java.util.concurrent.Executors
 import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common._
+import com.blinkbox.books.spray.{Page, Paging}
 
 trait BookDao {
   def getBookByIsbn(isbn: String): Future[Option[Book]]
@@ -17,6 +18,7 @@ trait BookDao {
 trait BookService {
   def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
+  def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]]
 }
 
 class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookService {
@@ -83,6 +85,31 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   override def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]] = {
     dao.getBookByIsbn(isbn).map(_.map(book => toBookSynopsis(book)))
   }
-
+  
+  override def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]] = {
+    // Construct links
+    val params = Some(isbns.toSeq.map(isbn => ("id", isbn)))
+    val links = if (isbns.size > page.count) {
+      val paging = Paging.links(Some(isbns.size), page.offset, page.count, /*s"$serviceBaseUrl$path"*/"url", params, includeSelf=false)
+      Some(paging.toList.map(pageLink2Link))
+    } else None
+    
+    // Build slice of results
+    val slice = isbns.slice(page.offset, page.offset + page.count).toList    
+    val books = dao.getBooks(slice).map(_.map(book => toBookRepresentation(book)))
+    
+    // Paginate
+    books.map(results => ListPage(isbns.size, page.offset, slice.size, results, links))
+  }
+  
+  /*
+  def bookList(list: java.util.List[BookDTO], mediaMap: Option[Map[String, Map[BookMediaType, BookMediaDTO]]], linkHelper: LinkHelper): List[Book] =
+    list.map(m => model(m, mediaMap.flatMap(_.get(m.getIsbn)), linkHelper)).toList
+  
+  private def getMediaMap(isbn: String*): Option[Map[String, Map[BookMediaType, BookMediaDTO]]] = {
+    if (isbn.nonEmpty) Option(bookMediaService.getMediaForIsbns(isbn).toMap.mapValues(_.toMap)) else None
+  }
+  */
+  
   private def getWithException[T](from: Option[T], exceptionMessage: String): T = from.getOrElse(throw new IllegalArgumentException(exceptionMessage))
 }
