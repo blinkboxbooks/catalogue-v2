@@ -1,5 +1,13 @@
 
 
+## 0.1.7 ([#17](https://git.mobcastdev.com/Agora/catalogue-v2/pull/17) 2014-11-28 15:24:58)
+
+:s/browser/searchv1/g
+
+### Improvements
+
+This patch makes the project structure a bit more uniform by renaming the "browser" submodule to "searchv1" thus communicating the purpose of being a replacement for the old search APIs.
+
 ## 0.1.6 ([#15](https://git.mobcastdev.com/Agora/catalogue-v2/pull/15) 2014-11-27 15:25:08)
 
 CAT-62: Update messaging configuration

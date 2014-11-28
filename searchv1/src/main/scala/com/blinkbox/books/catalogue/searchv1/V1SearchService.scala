@@ -1,4 +1,4 @@
-package com.blinkbox.books.catalogue.browser.v1
+package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
 import com.blinkbox.books.catalogue.common.{SearchConfig, IndexEntities => idx}
@@ -19,7 +19,7 @@ object V1SearchService {
 }
 
 trait V1SearchService {
-  import V1SearchService._
+  import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
   def search(q: String): Future[Iterable[Book]]
   def similar(bookId: BookId): Future[Iterable[Book]]
@@ -28,7 +28,7 @@ trait V1SearchService {
 
 class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
   import com.blinkbox.books.catalogue.common.Json._
-  import V1SearchService._
+  import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
   private def toBookIterable(resp: SearchResponse): Iterable[Book] =
     resp.getHits.hits().map { hit =>

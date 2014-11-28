@@ -1,4 +1,4 @@
-package com.blinkbox.books.catalogue.browser.v1
+package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.ActorRefFactory
 import com.blinkbox.books.config.ApiConfig

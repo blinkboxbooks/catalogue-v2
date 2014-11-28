@@ -25,7 +25,7 @@ lazy val ingesterv2 = (project in file("ingesterv2")).
   settings(rpmPrepSettings: _*)
 
 
-lazy val browser = (project in file("browser")).
+lazy val searchv1 = (project in file("searchv1")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
@@ -38,7 +38,7 @@ lazy val catalogue = (project in file("catalogue")).
   settings(rpmPrepSettings: _*)
 
 lazy val root = (project in file(".")).
-  dependsOn(ingesterv1, ingesterv2, browser, catalogue).
-  aggregate(ingesterv1, ingesterv2, browser, catalogue).
+  dependsOn(ingesterv1, ingesterv2, searchv1, catalogue).
+  aggregate(ingesterv1, ingesterv2, searchv1, catalogue).
   settings(buildSettings: _*).
   settings(publish := {})
