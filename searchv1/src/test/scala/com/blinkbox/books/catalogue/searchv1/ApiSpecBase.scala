@@ -1,8 +1,7 @@
-package com.blinkbox.books.catalogue.browser
+package com.blinkbox.books.catalogue.searchv1
 
 import java.net.URL
 
-import com.blinkbox.books.catalogue.browser.v1.{SearchApi, EsV1SearchService}
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.json.DefaultFormats
