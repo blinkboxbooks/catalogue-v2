@@ -10,32 +10,39 @@ lazy val buildSettings = Seq(
   parallelExecution in Test := false
 )
 
-lazy val common = (project in file("common")).settings(buildSettings: _*)
+lazy val artifactSettings = addArtifact(artifact in (Compile, assembly), assembly).
+  settings
+
+lazy val common = (project in file("common")).
+  settings(buildSettings: _*)
 
 lazy val ingesterv1 = (project in file("ingesterv1")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
-  settings(rpmPrepSettings: _*)
+  settings(rpmPrepSettings: _*).
+  settings(artifactSettings: _*)
 
 lazy val ingesterv2 = (project in file("ingesterv2")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
-  settings(rpmPrepSettings: _*)
-
+  settings(rpmPrepSettings: _*).
+  settings(artifactSettings: _*)
 
 lazy val searchv1 = (project in file("searchv1")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
-  settings(rpmPrepSettings: _*)
+  settings(rpmPrepSettings: _*).
+  settings(artifactSettings: _*)
 
 lazy val catalogue = (project in file("catalogue")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
-  settings(rpmPrepSettings: _*)
+  settings(rpmPrepSettings: _*).
+  settings(artifactSettings: _*)
 
 lazy val root = (project in file(".")).
   dependsOn(ingesterv1, ingesterv2, searchv1, catalogue).
