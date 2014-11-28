@@ -6,12 +6,11 @@ import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
-import com.blinkbox.books.catalogue.common.search.{Schema, EsIndexer}
+import com.blinkbox.books.catalogue.common.search.{EsIndexer, Schema}
+import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig}
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
-import com.blinkbox.books.catalogue.ingester.v1.parser.{PriceXmlV1IngestionParser, BookXmlV1IngestionParser}
-import com.blinkbox.books.catalogue.common.search.{EsIndexer, Schema}
-import com.blinkbox.books.catalogue.common.{ElasticFactory, SearchConfig}
+import com.blinkbox.books.catalogue.ingester.v1.parser.{BookXmlV1IngestionParser, PriceXmlV1IngestionParser}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration
@@ -85,7 +84,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         config = PublisherConfiguration(
           config.getConfig("messageListener.distributor.price.errors")))))
 
-    val searchConfig = SearchConfig(config)
+    val searchConfig = ElasticsearchConfig(config)
     val esClient = ElasticFactory.remote(searchConfig)
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
     val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
