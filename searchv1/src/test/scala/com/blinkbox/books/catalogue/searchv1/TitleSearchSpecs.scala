@@ -1,6 +1,6 @@
-package com.blinkbox.books.catalogue.browser
+package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.browser.v1.V1SearchService.{Book => BookResponse}
+import V1SearchService.{Book => BookResponse}
 import com.blinkbox.books.catalogue.common.Events.{Book => BookMessage}
 import com.blinkbox.books.catalogue.common.BookFixtures
 import org.scalatest.{FlatSpec, Matchers}

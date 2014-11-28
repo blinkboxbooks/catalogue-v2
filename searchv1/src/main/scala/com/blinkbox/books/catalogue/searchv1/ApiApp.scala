@@ -1,8 +1,7 @@
-package com.blinkbox.books.catalogue.browser
+package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.{ActorSystem, Props}
 import akka.util.Timeout
-import com.blinkbox.books.catalogue.browser.v1.{EsV1SearchService, SearchApi, V1SearchService}
 import com.blinkbox.books.catalogue.common.{ElasticFactory, SearchConfig}
 import com.blinkbox.books.config.{ApiConfig, Configuration}
 import com.blinkbox.books.logging.Loggers
