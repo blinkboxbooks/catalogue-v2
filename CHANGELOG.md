@@ -1,5 +1,13 @@
 
 
+## 0.1.8 ([#19](https://git.mobcastdev.com/Agora/catalogue-v2/pull/19) 2014-11-28 17:39:42)
+
+s/search/elasticsearch in config
+
+### Improvements
+
+Improve the configuration by renaming the too generic `search` to a more specific `elasticsearch`.
+
 ## 0.1.7 ([#17](https://git.mobcastdev.com/Agora/catalogue-v2/pull/17) 2014-11-28 15:24:58)
 
 :s/browser/searchv1/g
