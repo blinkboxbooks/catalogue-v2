@@ -1,7 +1,7 @@
 package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
-import com.blinkbox.books.catalogue.common.{SearchConfig, IndexEntities => idx}
+import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
 import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
@@ -26,7 +26,7 @@ trait V1SearchService {
   def suggestions(q: String): Future[Iterable[Suggestion]]
 }
 
-class EsV1SearchService(searchConfig: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
+class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
