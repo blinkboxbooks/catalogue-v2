@@ -10,8 +10,11 @@ import org.scalatest.time.{Millis, Span}
 import org.scalatest.concurrent.ScalaFutures
 import scala.concurrent.Future
 import com.blinkbox.books.catalogue.common.Events.Book
+import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.catalogue.common.BookFixtures.simpleBook
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 
 @RunWith(classOf[JUnitRunner])
 class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaFutures {
@@ -19,7 +22,8 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   override implicit def patienceConfig = PatienceConfig(timeout = Span(3000, Millis), interval = Span(100, Millis))
 
   val dao = new ElasticBookDao(esClient)
-  val book = simpleBook.copy(`$schema`=None) // TODO - why is the schema of the indexed book not Some("book")?
+  
+  val book = simpleBook.copy(`$schema` = None)
   val cobblers = "cobblers"
   
   "The DAO" should "Find an indexed book by ISBN" in {

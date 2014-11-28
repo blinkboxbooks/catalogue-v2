@@ -59,6 +59,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
 
   private def generateLinks(book: Book, media: Media) : List[V1Link] = {
     // TODO - nasty creating all these lists then flattening the result, better way? (other than using mutable list?)
+    // list of producers and to fold over an accumulator (which would be the final result containing all the links)
     List(
       for (c <- book.contributors) yield linkHelper.linkForContributor(c.id, c.displayName),
       List(linkHelper.linkForBookSynopsis(book.isbn)),

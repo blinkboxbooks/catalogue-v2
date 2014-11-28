@@ -10,4 +10,6 @@ libraryDependencies ++= Seq(
   "com.blinkbox.books"        %% "common-spray"       % "0.17.5"
 )
 
+javaOptions := Seq("-Duser.timezone=UTC")
+
 fork in Test := true
