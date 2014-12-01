@@ -2,11 +2,9 @@ package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.ActorRefFactory
 import com.blinkbox.books.config.ApiConfig
-import com.blinkbox.books.json.DefaultFormats
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.v1.Version1JsonSupport
 import com.blinkbox.books.spray.{Directives, _}
-import org.json4s.Formats
 import org.slf4j.LoggerFactory
 import spray.http.StatusCodes
 import spray.routing._
@@ -17,7 +15,6 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
     with Version1JsonSupport {
 
   implicit val log = LoggerFactory.getLogger(classOf[SearchApi])
-  implicit def json4sJacksonFormats: Formats = DefaultFormats
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
   val BookIdSegment = Segment.map(BookId.apply _)
