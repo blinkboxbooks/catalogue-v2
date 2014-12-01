@@ -66,7 +66,14 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     related = List.empty[Related],
     media = Some(Media(List(sample), List(image))),
     distributionStatus = DistributionStatus(usable = true, List.empty[String]),
-    source = Source(now, None, None, None, "NONE-ROLE", "NONE-USERNAME", None, None)
+    source = Source(deliveredAt = Option.empty,
+      uri = Option.empty,
+      fileName = Option.empty,
+      contentType = Option.empty,
+      role = Option.empty,
+      username = "some-username",
+      system = Option.empty,
+      processedAt = Option.empty)
   )
   
   val expectedImage = SprayImage("urn:blinkboxbooks:image:cover", "image")
