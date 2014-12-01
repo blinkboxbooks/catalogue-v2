@@ -1,5 +1,12 @@
 
 
+## 0.1.11 ([#18](https://git.mobcastdev.com/Agora/catalogue-v2/pull/18) 2014-12-01 16:39:55)
+
+Add RPM/gpg/fatjar capabilities.
+
+Patch
+- RPM/gpg/fatjar capabilities
+
 ## 0.1.10 ([#20](https://git.mobcastdev.com/Agora/catalogue-v2/pull/20) 2014-12-01 16:17:39)
 
 CAT-66 Use the correct marshallers to support Accept headers
