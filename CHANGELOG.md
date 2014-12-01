@@ -1,5 +1,46 @@
 
 
+## 0.1.13 ([#22](https://git.mobcastdev.com/Agora/catalogue-v2/pull/22) 2014-12-01 17:03:58)
+
+CAT-24 Implement pagination and response wrappers for compatibility with existing v1 APIs
+
+### Improvements
+
+* Improve the response format to be compatible with the one of the existing v1 APIs
+* Implement pagination
+
+## 0.1.12 ([#21](https://git.mobcastdev.com/Agora/catalogue-v2/pull/21) 2014-12-01 16:47:44)
+
+CAT-68 Include ISBN as a criteria for book search
+
+### Improvements
+
+This patch fixes the search endpoint as it wasn't matching on the ISBN field; now books can be found by ISBN as well.
+
+## 0.1.11 ([#18](https://git.mobcastdev.com/Agora/catalogue-v2/pull/18) 2014-12-01 16:39:55)
+
+Add RPM/gpg/fatjar capabilities.
+
+Patch
+- RPM/gpg/fatjar capabilities
+
+## 0.1.10 ([#20](https://git.mobcastdev.com/Agora/catalogue-v2/pull/20) 2014-12-01 16:17:39)
+
+CAT-66 Use the correct marshallers to support Accept headers
+
+### Bugfix
+
+This patch fixes the v1 search API to support the correct content-types and Accept headers.
+
+## 0.1.9 ([#16](https://git.mobcastdev.com/Agora/catalogue-v2/pull/16) 2014-12-01 11:07:37)
+
+Cat 54
+
+### Patch
+- Added DAO unit-test
+- Couple of review fixes that didn't make last PR
+- Added framework for get bulk books API method
+
 ## 0.1.8 ([#19](https://git.mobcastdev.com/Agora/catalogue-v2/pull/19) 2014-11-28 17:39:42)
 
 s/search/elasticsearch in config

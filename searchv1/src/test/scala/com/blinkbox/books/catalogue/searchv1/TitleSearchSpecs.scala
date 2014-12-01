@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import V1SearchService.{Book => BookResponse}
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.{Book => BookResponse, BookSearchResponse}
 import com.blinkbox.books.catalogue.common.Events.{Book => BookMessage}
 import com.blinkbox.books.catalogue.common.BookFixtures
 import org.scalatest.{FlatSpec, Matchers}
@@ -8,18 +8,17 @@ import spray.http.StatusCodes
 
 class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
-  def catalogueIndex = e2e createIndex catalogue
   val f = BookFixtures
 
-  private def toBookResponse(books: BookMessage*): List[BookResponse] = books.map { b =>
-    BookResponse(b.isbn, b.title, b.contributors.filter(_.role.toLowerCase == "author").map(_.displayName))
-  }.toList
+  private def toBookResponse(q: String, total: Int, books: BookMessage*): BookSearchResponse = BookSearchResponse(q, books.map { b =>
+      BookResponse(b.isbn, b.title, b.contributors.filter(_.role.toLowerCase == "author").map(_.displayName))
+    }.toList, total)
 
   "Matching a document" should "ignore stop-words in the document title" in {
     catalogueIndex indexAndCheck(f.theUniverse, f.universe, f.theUniverseAndOtherThings) andAfter { _ =>
       Get("/catalogue/search/books?q=universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
-        responseAs[List[BookResponse]].size should equal(3)
+        responseAs[BookSearchResponse].numberOfResults should equal(3)
       }
     }
   }
@@ -28,7 +27,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex indexAndCheck(f.theUniverse, f.universe, f.theUniverseAndOtherThings) andAfter { _ =>
       Get("/catalogue/search/books?q=a%20the%20for%20universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
-        responseAs[List[BookResponse]].size should equal(3)
+        responseAs[BookSearchResponse].numberOfResults should equal(3)
       }
     }
   }
@@ -38,10 +37,10 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       Get("/catalogue/search/books?q=universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
 
-        val respBooks = responseAs[List[BookResponse]]
+        val respBooks = responseAs[BookSearchResponse]
 
-        respBooks.size should equal(3)
-        respBooks should equal(toBookResponse(f.universe, f.theUniverse, f.theUniverseAndOtherThings))
+        respBooks.numberOfResults should equal(3)
+        respBooks should equal(toBookResponse("universe", 3, f.universe, f.theUniverse, f.theUniverseAndOtherThings))
       }
     }
   }
@@ -51,10 +50,10 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       Get("/catalogue/search/books?q=the%20universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
 
-        val respBooks = responseAs[List[BookResponse]]
+        val respBooks = responseAs[BookSearchResponse]
 
-        respBooks.size should equal(3)
-        respBooks should equal(toBookResponse(f.theUniverse, f.theUniverseAndOtherThings, f.universe))
+        respBooks.numberOfResults should equal(3)
+        respBooks should equal(toBookResponse("the universe", 3, f.theUniverse, f.theUniverseAndOtherThings, f.universe))
       }
     }
   }
@@ -64,10 +63,10 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       Get("/catalogue/search/books?q=universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
 
-        val respBooks = responseAs[List[BookResponse]]
+        val respBooks = responseAs[BookSearchResponse]
 
-        respBooks.size should equal(4)
-        respBooks should equal(toBookResponse(f.universe, f.theUniverse, f.theUniverseAndOtherThings, f.everything))
+        respBooks.numberOfResults should equal(4)
+        respBooks should equal(toBookResponse("universe", 4, f.universe, f.theUniverse, f.theUniverseAndOtherThings, f.everything))
       }
     }
   }
@@ -77,10 +76,10 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       Get("/catalogue/search/books?q=universe") ~> routes ~> check {
         status should equal(StatusCodes.OK)
 
-        val respBooks = responseAs[List[BookResponse]]
+        val respBooks = responseAs[BookSearchResponse]
 
-        respBooks.size should equal(3)
-        respBooks should equal(toBookResponse(f.universe, f.theUniverse, f.universeAndOtherThingsWithDescription))
+        respBooks.numberOfResults should equal(3)
+        respBooks should equal(toBookResponse("universe", 3, f.universe, f.theUniverse, f.universeAndOtherThingsWithDescription))
       }
     }
   }

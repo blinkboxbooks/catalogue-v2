@@ -3,7 +3,6 @@
 db/schema.rb
 doc/
 pkg/
-*.properties
 *.db
 *.dat
 *.log

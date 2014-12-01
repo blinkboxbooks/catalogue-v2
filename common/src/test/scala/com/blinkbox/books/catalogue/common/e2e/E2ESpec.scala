@@ -17,9 +17,12 @@ trait E2ESpec
     with E2EDsl {
   this: Suite =>
 
+  val alphabet = "abcdefghijklmnopqrstuvwxyz01234567890"
+  val randomName = (0 to 16).foldLeft("")((str, _) => str + alphabet.charAt(Random.nextInt(alphabet.length)))
+
   def e2eExecutionContext: ExecutionContext
   // The random cluster name is needed to avoid race conditions between different test-suites running in parallel
-  lazy val searchConfig = ElasticsearchConfig(config).copy(clusterName = Random.nextString(32))
+  lazy val searchConfig = ElasticsearchConfig(config).copy(clusterName = randomName)
   lazy val esServer = new EmbeddedElasticSearch(searchConfig)
   lazy val esClient = new ElasticClient(esServer.client, 2000)
   lazy val indexer = new EsIndexer(searchConfig, esClient)(e2eExecutionContext)
