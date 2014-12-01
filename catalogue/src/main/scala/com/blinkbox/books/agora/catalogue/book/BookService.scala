@@ -9,6 +9,8 @@ import java.util.concurrent.Executors
 import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.spray.{Page, Paging}
+import org.joda.time.DateTime
+import com.blinkbox.books.spray.SortOrder
 
 trait BookDao {
   def getBookByIsbn(isbn: String): Future[Option[Book]]
@@ -19,11 +21,14 @@ trait BookService {
   def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
   def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]]
+  def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]]
 }
 
 class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookService {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
 
+  private def getWithException[T](from: Option[T], exceptionMessage: String): T = from.getOrElse(throw new IllegalArgumentException(exceptionMessage))
+    
   private def toBookRepresentation(book: Book): BookRepresentation = {
     val media = getWithException(book.media, "'media' missing.")
     val publicationDate = book.dates.map(_.publish).flatten
@@ -111,5 +116,9 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   }
   */
   
-  private def getWithException[T](from: Option[T], exceptionMessage: String): T = from.getOrElse(throw new IllegalArgumentException(exceptionMessage))
+  override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = {
+    //dao.getBooksByContributor
+    // TODO
+    null
+  }
 }

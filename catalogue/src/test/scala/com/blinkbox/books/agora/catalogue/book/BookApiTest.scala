@@ -18,6 +18,8 @@ import scala.concurrent.Future
 import java.net.URL
 import com.blinkbox.books.spray.Page
 import com.blinkbox.books.spray.v1.ListPage
+import com.blinkbox.books.spray.SortOrder
+import org.joda.time.format.DateTimeFormat
 
 @RunWith(classOf[JUnitRunner])
 class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService with Matchers with MockitoSyrup with Version1JsonSupport {
@@ -39,6 +41,10 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   val routes = api.routes
   
   val book = BookRepresentation("guid", "id", "title", "date", true, List(), None)
+  val defaultOrder = SortOrder("title", false)
+  val defaultPage = Page(0, bookConfig.maxResults)
+  val expectedListPage = ListPage(1, 0, 1, List(book), None)
+  val emptyListPage = ListPage(0, 0, 0, List.empty[BookRepresentation], None)
 
   it should "return the book if it exists" in {
     when(service.getBookByIsbn(anyString)).thenReturn(Future.successful(Option(book)))
@@ -98,11 +104,44 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   }
   
   it should "return empty results for unknown books" in {
-    val expected = ListPage(0,0,0,List.empty[BookRepresentation],None)
-    when(service.getBooks(any[List[String]], any[Page])).thenReturn(Future.successful(expected))
-    Get("/book/?id=1&id=2&id=3&offset=1&count=1") ~> routes ~> check {
+    when(service.getBooks(any[List[String]], any[Page])).thenReturn(Future.successful(emptyListPage))
+    Get("/book/?id=999") ~> routes ~> check {
       status shouldEqual OK
-      responseAs[ListPage[BookRepresentation]] shouldEqual expected
+      responseAs[ListPage[BookRepresentation]] shouldEqual emptyListPage
     }
   }
+  
+  it should "return books by the given contributor" in {
+    when(service.getBooksByContributor("42", None, None, defaultPage, defaultOrder)).thenReturn(Future.successful(expectedListPage))
+    Get("/book/?contributor=42") ~> routes ~> check {
+      status shouldEqual OK
+      responseAs[ListPage[BookRepresentation]] shouldEqual expectedListPage
+    }
+  }
+  
+  it should "return empty results for an unknown contributor" in {
+    when(service.getBooksByContributor("999", None, None, defaultPage, defaultOrder)).thenReturn(Future.successful(emptyListPage))
+    Get("/book/?contributor=999") ~> routes ~> check {
+      status shouldEqual OK
+      responseAs[ListPage[BookRepresentation]] shouldEqual emptyListPage
+    }
+  }
+  
+  it should "return books by a given contributor within the specified publication date-range" in {
+    val dateParam = "2014-01-01"
+    val date = api.fmt.parseDateTime(dateParam)
+    when(service.getBooksByContributor("42", Some(date), Some(date), Page(0, bookConfig.maxResults), SortOrder("title", false))).thenReturn(Future.successful(expectedListPage))
+    Get(s"/book/?contributor=42&minPublicationDate=${dateParam}&maxPublicationDate=${dateParam}") ~> routes ~> check {
+      status shouldEqual OK
+      responseAs[ListPage[BookRepresentation]] shouldEqual expectedListPage
+    }
+  }
+  
+  it should "Return books by a given contributor with the specified sort order" in {
+    
+  }
+  
+  // TODO
+  // - max < min
+  // - invalid sort order
 }

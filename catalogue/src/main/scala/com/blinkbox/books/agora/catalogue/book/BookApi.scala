@@ -42,14 +42,10 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   )
 
   val idParam = "id"
-  val qParam = "q"
   val conParam = "contributor"
-  val catParam = "category"
-  val pubParam = "publisher"
-  val promParam = "promotion"
-  val catLocParam = "categoryLocation"
   val minPubDateParam = "minPublicationDate"
   val maxPubDateParam = "maxPublicationDate"
+
   val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
   val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
   
@@ -88,19 +84,20 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
         validateOrderParameters(order) {
+          /*
           cancelRejection(MissingQueryParamRejection(qParam)) {
             parameter(qParam) { query =>
               // TODO: This was missing from the old service, but it's supposed to be working, according to the API -- ?!?
               uncacheable(NotFound, None)
             }
           } ~
+          * 
+          */
           parameter(minPubDateParam.as[DateTime].?, maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
             validateDateParameters(minPubDate, maxPubDate) {
               cancelRejection(MissingQueryParamRejection(conParam)) {
                 parameter(conParam) { contributorId =>
-                  // TODO
-                  //onSuccess(service.getBooksByContributor(contributorId, conParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                  null
+                  onSuccess(service.getBooksByContributor(contributorId, minPubDate, maxPubDate, page, order))(cacheable(config.maxAge, _))
                 }
               }
               /*
