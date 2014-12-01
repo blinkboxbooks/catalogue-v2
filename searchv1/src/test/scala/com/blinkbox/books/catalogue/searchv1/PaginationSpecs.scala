@@ -1,11 +1,12 @@
 package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.BookFixtures
-import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSearchResponse
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSimilarResponse, BookSuggestionResponse, BookSearchResponse}
+import com.sksamuel.elastic4s.{CompletionSuggestionDefinition, GetDefinition}
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
 
-class SearchPaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
+class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   def populateIndex(howManyBooks: Int) = catalogueIndex indexAndCheck(BookFixtures.dummyBooks(howManyBooks).toSeq: _*)
 
@@ -80,6 +81,40 @@ class SearchPaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
   it should "fail with a 400 (Bad Request) if a negative offset is provided" in {
     populateIndex(10) andAfter { _ =>
       Get("/catalogue/search/books?q=dummy&offset=-1") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+      }
+    }
+  }
+
+  "Suggestions pagination" should "return 10 results if no limit is provided" in {
+    populateIndex(15) andAfter { _ =>
+      Get("/catalogue/search/suggestions?q=dum") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSuggestionResponse].items.size should equal(10)
+      }
+    }
+  }
+
+  it should "return a specified number of result if limit is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/suggestions?q=dummy&limit=5") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSuggestionResponse].items.size should equal(5)
+      }
+    }
+  }
+
+  it should "return a 400 (Bad Request) if a 0 limit is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/suggestions?q=dummy&limit=0") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+      }
+    }
+  }
+
+  it should "return a 400 (Bad Request) if a negative limit is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/suggestions?q=dummy&limit=-1") ~> routes ~> check {
         status should equal(StatusCodes.BadRequest)
       }
     }

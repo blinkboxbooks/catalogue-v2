@@ -91,9 +91,9 @@ object BookFixtures {
   def dummyBooks(amount: Int) = 0 until amount map { idx =>
     simpleBook.copy(
       isbn = f"$idx%013d",
-      title = s"A Dummy Book $idx",
+      title = s"Dummy Book $idx",
       contributors = Contributor("author", s"ctrb-$idx", s"Dummy Author $idx", s"DummyAuthor $idx") :: Nil,
-      descriptions = OtherText(Nil, s"Some dummy description number $idx", "description", None) :: Nil
+      descriptions = OtherText(Nil, s"Some dummy description $idx", "description", None) :: Nil
     )
   }
 }
