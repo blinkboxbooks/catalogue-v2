@@ -4,20 +4,18 @@ import java.net.URL
 
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.config.ApiConfig
-import com.blinkbox.books.json.DefaultFormats
-import org.json4s.Formats
+import com.blinkbox.books.spray.v1.Version1JsonSupport
 import org.scalatest.Suite
 import org.scalatest.time.{Millis, Span}
-import spray.httpx.Json4sJacksonSupport
 import spray.testkit.ScalatestRouteTest
+
 import scala.concurrent.duration._
 
-trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Json4sJacksonSupport {
+trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSupport {
   this: Suite =>
 
   override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(100, Millis))
   override def e2eExecutionContext = executor
-  override implicit def json4sJacksonFormats: Formats = DefaultFormats
 
   implicit val routeTestTimeout = RouteTestTimeout(5.seconds)
 
