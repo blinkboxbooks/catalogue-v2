@@ -1,5 +1,13 @@
 
 
+## 0.1.10 ([#20](https://git.mobcastdev.com/Agora/catalogue-v2/pull/20) 2014-12-01 16:17:39)
+
+CAT-66 Use the correct marshallers to support Accept headers
+
+### Bugfix
+
+This patch fixes the v1 search API to support the correct content-types and Accept headers.
+
 ## 0.1.9 ([#16](https://git.mobcastdev.com/Agora/catalogue-v2/pull/16) 2014-12-01 11:07:37)
 
 Cat 54
