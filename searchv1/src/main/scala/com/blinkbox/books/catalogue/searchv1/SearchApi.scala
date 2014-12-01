@@ -1,6 +1,7 @@
 package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.ActorRefFactory
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.Book
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.v1.Version1JsonSupport
@@ -17,6 +18,10 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
   implicit val log = LoggerFactory.getLogger(classOf[SearchApi])
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
+  val searchDefaultCount = 50
+  val similarDefaultCount = 10
+  val suggestionsDefaultCount = 10
+
   val BookIdSegment = Segment.map(BookId.apply _)
 
   val serviceRoutes: Route = get {
@@ -26,8 +31,10 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
           get {
             parameter('q.?) { query =>
               query.fold[Route](complete(StatusCodes.BadRequest)) { query =>
-                onSuccess(searchService.search(query)) { res =>
-                  complete(res)
+                paged(searchDefaultCount) { page =>
+                  onSuccess(searchService.search(query, page)) { res =>
+                    complete(res)
+                  }
                 }
               }
             }
@@ -35,14 +42,16 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
         } ~
         path(BookIdSegment / "similar") { bookId =>
           get {
-            complete(searchService.similar(bookId))
+            paged(similarDefaultCount) { page =>
+              complete(searchService.similar(bookId, page))
+            }
           }
         }
       } ~
       path("suggestions") {
         get {
-          parameter('q) { q =>
-            complete(searchService.suggestions(q))
+          parameter('q, 'limit.as[Int].?) { (q, limit) =>
+            complete(searchService.suggestions(q, limit getOrElse suggestionsDefaultCount))
           }
         }
       }
