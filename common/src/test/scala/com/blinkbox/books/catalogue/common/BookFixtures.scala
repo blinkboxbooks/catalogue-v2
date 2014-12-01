@@ -8,7 +8,7 @@ object BookFixtures {
     sequenceNumber = 100,
     `$schema` = Some("book"),
     classification = Classification("book", "1234567890123") :: Nil,
-    isbn = "0000000000000",
+    isbn = "1234567890123",
     format = None,
     title = "A simple book",
     subtitle = Some("How to be a very simple book"),
