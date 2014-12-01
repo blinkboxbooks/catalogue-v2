@@ -1,5 +1,13 @@
 
 
+## 0.1.12 ([#21](https://git.mobcastdev.com/Agora/catalogue-v2/pull/21) 2014-12-01 16:47:44)
+
+CAT-68 Include ISBN as a criteria for book search
+
+### Improvements
+
+This patch fixes the search endpoint as it wasn't matching on the ISBN field; now books can be found by ISBN as well.
+
 ## 0.1.11 ([#18](https://git.mobcastdev.com/Agora/catalogue-v2/pull/18) 2014-12-01 16:39:55)
 
 Add RPM/gpg/fatjar capabilities.
