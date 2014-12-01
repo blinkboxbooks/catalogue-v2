@@ -5,7 +5,7 @@ import org.elasticsearch.common.settings.ImmutableSettings
 
 object ElasticFactory {
 
-  def remote(config: SearchConfig) = {
+  def remote(config: ElasticsearchConfig) = {
 
 
     ElasticClient.remote(

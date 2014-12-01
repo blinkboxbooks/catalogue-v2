@@ -1,15 +1,14 @@
 package com.blinkbox.books.catalogue.common.search
 
-import com.blinkbox.books.catalogue.common.Events.{Book => EventBook}
-import com.blinkbox.books.catalogue.common.Events.{Undistribute => EventUndistribute}
-import com.blinkbox.books.catalogue.common.Events.{BookPrice => EventBookPrice}
-import com.blinkbox.books.catalogue.common.{IndexEntities => idx, DistributeContent, SearchConfig}
-import com.sksamuel.elastic4s._
+import com.blinkbox.books.catalogue.common.Events.{Book => EventBook, BookPrice => EventBookPrice, Undistribute => EventUndistribute}
+import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
 import com.sksamuel.elastic4s.ElasticDsl._
+import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.mappings.FieldType._
 import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
+
 import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait BulkItemResponse
@@ -23,8 +22,8 @@ trait Indexer {
   def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
 }
 
-class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
-  import com.sksamuel.elastic4s.ElasticDsl.{index => esIndex, bulk}
+class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
+  import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
 
   case class BookJsonSource(book: EventBook) extends DocumentSource {
     import com.blinkbox.books.catalogue.common.Json.formats
@@ -87,7 +86,7 @@ class EsIndexer(config: SearchConfig, client: ElasticClient)(implicit ec: Execut
 
 }
 
-case class Schema(config: SearchConfig) {
+case class Schema(config: ElasticsearchConfig) {
   def classification = "classification" nested(
     "realm" typed StringType analyzer KeywordAnalyzer,
     "id" typed StringType analyzer KeywordAnalyzer

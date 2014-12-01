@@ -2,13 +2,15 @@ package com.blinkbox.books.agora.catalogue.app
 
 import java.net.{MalformedURLException, URL}
 import java.util.concurrent.TimeUnit
+
+import com.blinkbox.books.agora.catalogue.book.BookConfig
+import com.blinkbox.books.agora.catalogue.contributor.ContributorConfig
+import com.blinkbox.books.catalogue.common.ElasticsearchConfig
 import com.blinkbox.books.config._
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException.BadValue
+
 import scala.concurrent.duration._
-import com.blinkbox.books.agora.catalogue.book.BookConfig
-import com.blinkbox.books.agora.catalogue.contributor.ContributorConfig
-import com.blinkbox.books.catalogue.common.SearchConfig
 
 case class AppConfig(service: ApiConfig,
                      book: BookConfig,
@@ -16,7 +18,7 @@ case class AppConfig(service: ApiConfig,
                      publisher: PublisherConfig,
                      price: PriceConfig,
                      synopsis: SynopsisConfig,
-                     elastic: SearchConfig
+                     elastic: ElasticsearchConfig
                      )
 
 case class PublisherConfig(api: ApiConfig, path: String, maxAge: FiniteDuration, maxResults: Int)
@@ -38,7 +40,7 @@ object AppConfig {
       PublisherConfig(config, s"$prefix.api.public"),
       PriceConfig(config, s"$prefix.api.public"),
       SynopsisConfig(config, s"$prefix.api.public"),
-      SearchConfig(config)
+      ElasticsearchConfig(config)
     )
   }
 }
