@@ -1,5 +1,14 @@
 
 
+## 0.1.13 ([#22](https://git.mobcastdev.com/Agora/catalogue-v2/pull/22) 2014-12-01 17:03:58)
+
+CAT-24 Implement pagination and response wrappers for compatibility with existing v1 APIs
+
+### Improvements
+
+* Improve the response format to be compatible with the one of the existing v1 APIs
+* Implement pagination
+
 ## 0.1.12 ([#21](https://git.mobcastdev.com/Agora/catalogue-v2/pull/21) 2014-12-01 16:47:44)
 
 CAT-68 Include ISBN as a criteria for book search
