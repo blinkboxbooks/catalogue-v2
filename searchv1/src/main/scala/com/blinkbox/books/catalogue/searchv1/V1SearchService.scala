@@ -58,6 +58,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
     searchIn("book") query {
       E.filteredQuery query {
         E.dismax query(
+          E.termQuery("isbn", q) boost 4,
           // Query for the title - give precedence to title that match including stop-words
           E.dismax query(
             E.matchPhrase("title", q) boost 1 slop 1,
