@@ -1,5 +1,14 @@
 
 
+## 0.1.9 ([#16](https://git.mobcastdev.com/Agora/catalogue-v2/pull/16) 2014-12-01 11:07:37)
+
+Cat 54
+
+### Patch
+- Added DAO unit-test
+- Couple of review fixes that didn't make last PR
+- Added framework for get bulk books API method
+
 ## 0.1.8 ([#19](https://git.mobcastdev.com/Agora/catalogue-v2/pull/19) 2014-11-28 17:39:42)
 
 s/search/elasticsearch in config
