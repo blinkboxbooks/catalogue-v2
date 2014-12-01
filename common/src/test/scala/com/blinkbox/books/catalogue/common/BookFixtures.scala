@@ -74,4 +74,13 @@ object BookFixtures {
     isbn = "5555555555555",
     descriptions = simpleBook.descriptions.head.copy(content = "A description of the Universe and other things") :: Nil
   )
+
+  def dummyBooks(amount: Int) = 0 until amount map { idx =>
+    simpleBook.copy(
+      isbn = f"$idx%013d",
+      title = s"A Dummy Book $idx",
+      contributors = Contributor("author", s"ctrb-$idx", s"Dummy Author $idx", s"DummyAuthor $idx") :: Nil,
+      descriptions = OtherText(Nil, s"Some dummy description number $idx", "description", None) :: Nil
+    )
+  }
 }
