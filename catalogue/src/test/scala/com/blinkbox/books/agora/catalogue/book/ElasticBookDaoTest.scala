@@ -21,7 +21,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   override implicit val e2eExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
   override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(500, Millis))
 
-  val dao = new ElasticBookDao(esClient)
+  val dao = new ElasticBookDao(esClient, "catalogue/book")
   
   val book = simpleBook.copy(`$schema` = None)
   val cobblers = "cobblers"

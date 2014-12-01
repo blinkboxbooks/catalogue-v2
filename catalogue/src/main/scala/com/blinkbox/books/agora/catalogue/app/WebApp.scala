@@ -30,7 +30,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
     config.book.synopsisPathLink
   )
 
-  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic))
+  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic), config.elastic.indexName)
 
   val bookApi = new BookApi(config.service, config.book, new DefaultBookService(dao, linkHelper))
   val contributorApi = new ContributorApi(config.service, config.contributor, new ElasticSearchContributorService)

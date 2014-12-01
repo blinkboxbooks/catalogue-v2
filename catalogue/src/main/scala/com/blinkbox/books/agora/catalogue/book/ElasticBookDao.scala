@@ -9,11 +9,9 @@ import com.sksamuel.elastic4s.ElasticDsl._
 import org.json4s.jackson.Serialization
 import com.blinkbox.books.json.DefaultFormats
 
-class ElasticBookDao(client: ElasticClient) extends BookDao {
+class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
-  
-  val index = "catalogue/book"
 
   override def getBookByIsbn(isbn: String): Future[Option[Book]] = {
     client.execute {
