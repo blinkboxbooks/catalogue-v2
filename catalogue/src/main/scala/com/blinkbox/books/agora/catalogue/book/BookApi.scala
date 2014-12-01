@@ -19,10 +19,10 @@ import scala.concurrent.{ExecutionContext, Future}
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
   def getBookSynopsis: Route
-
+  def getBooks: Route
+  
   // TODO
-//  def getRelatedBooks: Route
-//  def getBooks: Route
+  //  def getRelatedBooks: Route
 }
 
 /**
@@ -74,6 +74,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   }
 
   /*
+   * TODO
   val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
@@ -81,7 +82,8 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
     }
   }
-
+  */
+  
   val getBooks = pathEndOrSingleSlash {
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
@@ -96,9 +98,13 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
             validateDateParameters(minPubDate, maxPubDate) {
               cancelRejection(MissingQueryParamRejection(conParam)) {
                 parameter(conParam) { contributorId =>
-                  onSuccess(service.getBooksByContributor(contributorId, conParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
+                  // TODO
+                  //onSuccess(service.getBooksByContributor(contributorId, conParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
+                  null
                 }
-              } ~
+              }
+              /*
+              ~
               cancelRejection(MissingQueryParamRejection(catParam)) {
                 parameter(catParam.as[Long]) { categoryId =>
                   onSuccess(service.getBooksByCategory(categoryId, catParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
@@ -119,14 +125,16 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
                   onSuccess(service.getBooksByCategoryLocation(categoryLocationId, catLocParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
                 }
               }
+              */
             }
           } ~
           cancelRejection(MissingQueryParamRejection(idParam)) {
             parameterSeq { params =>
               val list = params.collect { case ("id", value) => value}
               if (list.nonEmpty) {
-                if (list.size <= config.maxResults)
-                  onSuccess(service.getBooksById(list, idParam, page))(cacheable(config.maxAge, _))
+                if (list.size <= config.maxResults) {
+                  onSuccess(service.getBooks(list, page))(cacheable(config.maxAge, _))
+                }
                 else
                   uncacheable(BadRequest, Error("max_results_exceeded", s"Max results exceeded: ${config.maxResults}"))
               } else reject(MissingQueryParamRejection(idParam))
@@ -136,13 +144,12 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
     }
   }
-*/
   
   val routes = rootPath(api.localUrl.path + config.path) {
     monitor() {
       respondWithHeader(RawHeader("Vary", "Accept, Accept-Encoding")) {
-        getBookByIsbn ~ getBookSynopsis
-        // TODO ~ getRelatedBooks ~ getBooks
+        getBookByIsbn ~ getBookSynopsis ~ getBooks
+        // TODO ~ getRelatedBooks
       }
     }
   }

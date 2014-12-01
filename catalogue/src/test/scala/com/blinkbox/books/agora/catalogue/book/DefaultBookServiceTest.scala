@@ -13,6 +13,7 @@ import org.joda.time.DateTime
 import org.scalatest.FlatSpecLike
 import org.scalatest.Matchers
 import com.blinkbox.books.spray.v1.{Image => SprayImage, Link}
+import com.blinkbox.books.spray.Page
 
 @RunWith(classOf[JUnitRunner])
 class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyrup with ScalaFutures {
@@ -68,6 +69,10 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     source = Source(now, None, None, None, "NONE-ROLE", "NONE-USERNAME", None, None)
   )
   
+  val expectedImage = SprayImage("urn:blinkboxbooks:image:cover", "image")
+  val link = mock[Link]
+  val expected = BookRepresentation("isbn", "title", now, true, List(expectedImage), Some(List(link, link, link, link, link)))
+  
   val dao = mock[BookDao]
   val linkHelper = mock[LinkHelper]
   val service = new DefaultBookService(dao, linkHelper)
@@ -76,16 +81,13 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   
   it should "return a book representation for an existing book" in {
     addBook(book)
-    val link = mock[Link]
     when(linkHelper.linkForContributor("id", "contributor")).thenReturn(link)
     when(linkHelper.linkForBookSynopsis(isbn)).thenReturn(link)
     when(linkHelper.linkForPublisher(123, "publisher")).thenReturn(link) // TODO - publisher ID
     when(linkHelper.linkForBookPricing(isbn)).thenReturn(link)
     when(linkHelper.linkForSampleMedia("sample")).thenReturn(link)
     whenReady(service.getBookByIsbn(isbn)) { result =>
-      val image = SprayImage("urn:blinkboxbooks:image:cover", "image")
-      val rep = BookRepresentation("isbn", "title", now, true, List(image), Some(List(link, link, link, link, link)))
-      assert(Some(rep) == result)
+      assert(Some(expected) == result)
     }
   }
   
@@ -129,6 +131,33 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     when(dao.getBookByIsbn(isbn)).thenReturn(Future.successful(None))
     whenReady(service.getBookSynopsis(isbn)) { result =>
       assert(None == result)
+    }
+  }
+
+  it should "return bulk books" in {
+    val isbns = List.fill(7)("isbn")
+    when(dao.getBooks(isbns)).thenReturn(Future.successful(List.fill(7)(book)))
+    whenReady(service.getBooks(isbns, Page(0, 999))) { listPage =>
+      assert(7 == listPage.numberOfResults, "Total number of books")
+      assert(0 == listPage.offset)
+      assert(7 == listPage.count)
+      assert(7 == listPage.items.size, "Page size")
+      assert(None == listPage.links)
+    }
+  }
+  
+  it should "return paginated results" in {
+    when(dao.getBooks(List("2"))).thenReturn(Future.successful(List(book)))
+    whenReady(service.getBooks(List("1", "2", "3"), Page(1, 1))) { listPage =>
+      assert(3 == listPage.numberOfResults, "Total number of books")
+      assert(1 == listPage.offset)
+      assert(1 == listPage.count)
+      assert(1 == listPage.items.size, "Page size")
+      assert(List(expected) == listPage.items)
+      
+      val prev = Link("prev","url?id=1&id=2&id=3&count=1&offset=0",None,None)
+      val next = Link("next","url?id=1&id=2&id=3&count=1&offset=2",None,None)
+      assert(Some(Set(prev, next)) == listPage.links.map(_.toSet))
     }
   }
 }
