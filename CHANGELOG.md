@@ -1,5 +1,15 @@
 
 
+## 0.1.17 ([#26](https://git.mobcastdev.com/Agora/catalogue-v2/pull/26) 2014-12-02 14:44:21)
+
+CAT-24 - More tests on pagination
+
+### Improvements
+
+* Introduce tests and fixes on pagination of suggestions
+* Introduce tests and fixes on pagination of MoreLikeThis
+* Increase the patience configuration for `ApiSpecBase` in order to avoid failing on CI
+
 ## 0.1.16 ([#24](https://git.mobcastdev.com/Agora/catalogue-v2/pull/24) 2014-12-02 13:53:28)
 
 Cat 54
