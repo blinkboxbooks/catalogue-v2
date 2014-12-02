@@ -10,13 +10,15 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   val f = BookFixtures
 
+  private def queryAndCheck[T](q: String)(f: => T) = Get(s"/catalogue/search/books?q=$q") ~> routes ~> check(f)
+
   private def toBookResponse(q: String, total: Int, books: BookMessage*): BookSearchResponse = BookSearchResponse(q, books.map { b =>
       BookResponse(b.isbn, b.title, b.contributors.filter(_.role.toLowerCase == "author").map(_.displayName))
     }.toList, total)
 
   "Matching a document" should "ignore stop-words in the document title" in {
     catalogueIndex indexAndCheck(f.theUniverse, f.universe, f.theUniverseAndOtherThings) andAfter { _ =>
-      Get("/catalogue/search/books?q=universe") ~> routes ~> check {
+      queryAndCheck("universe") {
         status should equal(StatusCodes.OK)
         responseAs[BookSearchResponse].numberOfResults should equal(3)
       }
@@ -25,7 +27,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "ignore stop-words in the provided query" in {
     catalogueIndex indexAndCheck(f.theUniverse, f.universe, f.theUniverseAndOtherThings) andAfter { _ =>
-      Get("/catalogue/search/books?q=a%20the%20for%20universe") ~> routes ~> check {
+      queryAndCheck("a%20the%20for%20universe") {
         status should equal(StatusCodes.OK)
         responseAs[BookSearchResponse].numberOfResults should equal(3)
       }
@@ -34,7 +36,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "rank documents that perfectly match the title on top of documents that match but include also stop-words" in {
     catalogueIndex indexAndCheck(f.theUniverseAndOtherThings, f.theUniverse, f.universe) andAfter { _ =>
-      Get("/catalogue/search/books?q=universe") ~> routes ~> check {
+      queryAndCheck("universe") {
         status should equal(StatusCodes.OK)
 
         val respBooks = responseAs[BookSearchResponse]
@@ -47,7 +49,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "rank documents that perfectly match the title including stop-words in the query on top of documents that match but do not have the provided stop-words in the title" in {
     catalogueIndex indexAndCheck(f.theUniverseAndOtherThings, f.theUniverse, f.universe) andAfter { _ =>
-      Get("/catalogue/search/books?q=the%20universe") ~> routes ~> check {
+      queryAndCheck("the%20universe") {
         status should equal(StatusCodes.OK)
 
         val respBooks = responseAs[BookSearchResponse]
@@ -60,7 +62,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "rank documents that match on the title on top of documents that match on the content" in {
     catalogueIndex indexAndCheck(f.theUniverseAndOtherThings, f.everything, f.theUniverse, f.universe) andAfter { _ =>
-      Get("/catalogue/search/books?q=universe") ~> routes ~> check {
+      queryAndCheck("universe") {
         status should equal(StatusCodes.OK)
 
         val respBooks = responseAs[BookSearchResponse]
@@ -73,13 +75,32 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "rank a document that matches perfectly on the title above a document that matches both title (partially) and content" in {
     catalogueIndex indexAndCheck(f.universeAndOtherThingsWithDescription, f.theUniverse, f.universe) andAfter { _ =>
-      Get("/catalogue/search/books?q=universe") ~> routes ~> check {
+      queryAndCheck("universe") {
         status should equal(StatusCodes.OK)
 
         val respBooks = responseAs[BookSearchResponse]
 
         respBooks.numberOfResults should equal(3)
         respBooks should equal(toBookResponse("universe", 3, f.universe, f.theUniverse, f.universeAndOtherThingsWithDescription))
+      }
+    }
+  }
+
+  it should "work correctly with title permutations (see CAT-77)" in {
+    catalogueIndex indexAndCheck(f.titlePermutationsBook) andAfter { _ =>
+      queryAndCheck("apple%20banana") {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSearchResponse].numberOfResults should equal(1)
+      }
+
+      queryAndCheck("apple%20banana%20pear") {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSearchResponse].numberOfResults should equal(1)
+      }
+
+      queryAndCheck("apple%20pear") {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSearchResponse].numberOfResults should equal(1)
       }
     }
   }
