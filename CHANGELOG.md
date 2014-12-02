@@ -1,5 +1,16 @@
 
 
+## 0.1.15 ([#23](https://git.mobcastdev.com/Agora/catalogue-v2/pull/23) 2014-12-02 13:20:59)
+
+Fix xml parsing issues
+
+Patch
+- add text trimming to the xml text nodes
+- make all the fields optional for Source, except 'username'
+- proper parsing of different fields like regions, prices, descriptions
+- update/add unit tests in order to cover different parsing scenarios
+- use different queue names in order to get the messages being published to the distribution exchanges
+
 ## 0.1.14 ([#25](https://git.mobcastdev.com/Agora/catalogue-v2/pull/25) 2014-12-02 11:29:41)
 
 CAT-77 Increase sloppines to better match word permutations
