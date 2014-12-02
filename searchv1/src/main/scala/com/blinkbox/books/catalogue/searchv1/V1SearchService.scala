@@ -79,14 +79,14 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
             E.termQuery("isbn", q) boost 4,
             // Query for the title - give precedence to title that match including stop-words
             E.dismax query(
-              E.matchPhrase("title", q) boost 1 slop 1,
-              E.matchPhrase("titleWithStopwords", q) boost 2 slop 1
+              E.matchPhrase("title", q) boost 1 slop 10,
+              E.matchPhrase("titleWithStopwords", q) boost 2 slop 10
             ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
             E.nestedQuery("contributors") query (
-              E.matchPhrase("contributors.displayName", q) slop 1
+              E.matchPhrase("contributors.displayName", q) slop 10
             ) boost 2,
             E.nestedQuery("descriptions") query (
-              E.matchPhrase("descriptions.content", q) slop 1
+              E.matchPhrase("descriptions.content", q) slop 100
             ) boost 1
           ) tieBreaker 0.2
         } filter {

@@ -75,6 +75,12 @@ object BookFixtures {
     descriptions = simpleBook.descriptions.head.copy(content = "A description of the Universe and other things") :: Nil
   )
 
+  val titlePermutationsBook = simpleBook.copy(
+    isbn = "",
+    title = "A apple an banana the pear",
+    contributors = Contributor("author", "ctrb", "Testy McTesterson", "Testy McTesterson") :: Nil
+  )
+
   def dummyBooks(amount: Int) = 0 until amount map { idx =>
     simpleBook.copy(
       isbn = f"$idx%013d",
