@@ -1,5 +1,15 @@
 
 
+## 0.1.16 ([#24](https://git.mobcastdev.com/Agora/catalogue-v2/pull/24) 2014-12-02 13:53:28)
+
+Cat 54
+
+### Patch
+- Implemented API spray layer for `/book/?contributor=xxx` method
+- Additional unit-tests for API layer
+- Removed some redundant code (more to do)
+- Tidied up API unit-test class a little
+
 ## 0.1.15 ([#23](https://git.mobcastdev.com/Agora/catalogue-v2/pull/23) 2014-12-02 13:20:59)
 
 Fix xml parsing issues
