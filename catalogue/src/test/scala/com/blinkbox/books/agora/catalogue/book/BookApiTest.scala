@@ -127,7 +127,7 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
     }
   }
   
-  it should "return books by a given contributor within the specified publication date-range" in {
+  it should "return books by a given contributor with a specified publication date-range" in {
     val dateParam = "2014-01-01"
     val date = api.fmt.parseDateTime(dateParam)
     when(service.getBooksByContributor("42", Some(date), Some(date), Page(0, bookConfig.maxResults), SortOrder("title", false))).thenReturn(Future.successful(expectedListPage))
@@ -137,11 +137,23 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
     }
   }
   
-  it should "Return books by a given contributor with the specified sort order" in {
-    
+  it should "fail if the end-date is before the start-date" in {
+    Get(s"/book/?contributor=42&minPublicationDate=2014-01-01&maxPublicationDate=2013-01-01") ~> routes ~> check {
+      status shouldEqual BadRequest
+    }
   }
   
-  // TODO
-  // - max < min
-  // - invalid sort order
+  it should "Return books by a given contributor with a specific sort order" in {
+    when(service.getBooksByContributor("42", None, None, Page(0, bookConfig.maxResults), SortOrder("author", true))).thenReturn(Future.successful(expectedListPage))
+    Get(s"/book/?contributor=42&order=author&desc=true") ~> routes ~> check {
+      status shouldEqual OK
+      responseAs[ListPage[BookRepresentation]] shouldEqual expectedListPage
+    }
+  }
+
+  it should "fail if given an invalid sort order" in {
+    Get(s"/book/?contributor=42&order=cobblers") ~> routes ~> check {
+      status shouldEqual BadRequest
+    }
+  }
 }

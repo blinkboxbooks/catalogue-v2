@@ -15,6 +15,7 @@ import com.blinkbox.books.spray.SortOrder
 trait BookDao {
   def getBookByIsbn(isbn: String): Future[Option[Book]]
   def getBooks(isbns: List[String]): Future[List[Book]]
+  def getRelatedBooks(isbns: List[String]): Future[List[Book]]
 }
 
 trait BookService {
@@ -22,6 +23,7 @@ trait BookService {
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
   def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]]
   def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]]
+  def getRelatedBooks(id: String, page: Page, limit: Int): Future[ListPage[BookRepresentation]]
 }
 
 class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookService {
@@ -95,7 +97,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
     // Construct links
     val params = Some(isbns.toSeq.map(isbn => ("id", isbn)))
     val links = if (isbns.size > page.count) {
-      val paging = Paging.links(Some(isbns.size), page.offset, page.count, /*s"$serviceBaseUrl$path"*/"url", params, includeSelf=false)
+      val paging = Paging.links(Some(isbns.size), page.offset, page.count, linkHelper.externalUrl.path.toString + linkHelper.bookPath, params, includeSelf=false)
       Some(paging.toList.map(pageLink2Link))
     } else None
     
@@ -106,19 +108,8 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
     // Paginate
     books.map(results => ListPage(isbns.size, page.offset, slice.size, results, links))
   }
+
+  override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = ???
   
-  /*
-  def bookList(list: java.util.List[BookDTO], mediaMap: Option[Map[String, Map[BookMediaType, BookMediaDTO]]], linkHelper: LinkHelper): List[Book] =
-    list.map(m => model(m, mediaMap.flatMap(_.get(m.getIsbn)), linkHelper)).toList
-  
-  private def getMediaMap(isbn: String*): Option[Map[String, Map[BookMediaType, BookMediaDTO]]] = {
-    if (isbn.nonEmpty) Option(bookMediaService.getMediaForIsbns(isbn).toMap.mapValues(_.toMap)) else None
-  }
-  */
-  
-  override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = {
-    //dao.getBooksByContributor
-    // TODO
-    null
-  }
+  override def getRelatedBooks(id: String, page: Page, limit: Int): Future[ListPage[BookRepresentation]] = ???
 }
