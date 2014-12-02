@@ -148,6 +148,9 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   
   it should "return paginated results" in {
     when(dao.getBooks(List("2"))).thenReturn(Future.successful(List(book)))
+    when(linkHelper.externalUrl).thenReturn(spray.http.Uri("catalogue"))
+    when(linkHelper.bookPath).thenReturn("/books")
+    
     whenReady(service.getBooks(List("1", "2", "3"), Page(1, 1))) { listPage =>
       assert(3 == listPage.numberOfResults, "Total number of books")
       assert(1 == listPage.offset)
@@ -155,8 +158,8 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(1 == listPage.items.size, "Page size")
       assert(List(expected) == listPage.items)
       
-      val prev = Link("prev","url?id=1&id=2&id=3&count=1&offset=0",None,None)
-      val next = Link("next","url?id=1&id=2&id=3&count=1&offset=2",None,None)
+      val prev = Link("prev","catalogue/books?id=1&id=2&id=3&count=1&offset=0",None,None)
+      val next = Link("next","catalogue/books?id=1&id=2&id=3&count=1&offset=2",None,None)
       assert(Some(Set(prev, next)) == listPage.links.map(_.toSet))
     }
   }
