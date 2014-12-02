@@ -1,5 +1,13 @@
 
 
+## 0.1.14 ([#25](https://git.mobcastdev.com/Agora/catalogue-v2/pull/25) 2014-12-02 11:29:41)
+
+CAT-77 Increase sloppines to better match word permutations
+
+### Bugfix
+
+Increase the sloppiness of the title/author/description queries in order to match documents where the word order is permuted with respect to the query.
+
 ## 0.1.13 ([#22](https://git.mobcastdev.com/Agora/catalogue-v2/pull/22) 2014-12-01 17:03:58)
 
 CAT-24 Implement pagination and response wrappers for compatibility with existing v1 APIs
