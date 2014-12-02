@@ -119,4 +119,65 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
       }
     }
   }
+
+  "More Like This pagination" should "return 10 elements if no count is provided" in {
+    populateIndex(20) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSimilarResponse].books.size should equal(10)
+      }
+    }
+  }
+
+
+  it should "return the specified number of elements if a count is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?count=5") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSimilarResponse].books.size should equal(5)
+      }
+    }
+  }
+
+  it should "observe the offset parameter when provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?offset=4") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSimilarResponse].books.size should equal(5)
+      }
+    }
+  }
+
+  it should "observe offset and count parameters if both are provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?offset=5&count=3") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
+        responseAs[BookSimilarResponse].books.size should equal(3)
+      }
+    }
+  }
+
+  it should "fail with a 400 (Bad Request) if a negative count is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?count=-1") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+      }
+    }
+  }
+
+  it should "fail with a 400 (Bad Request) if a 0 count is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?count=0") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+      }
+    }
+  }
+
+  it should "fail with a 400 (Bad Request) if a negative offset is provided" in {
+    populateIndex(10) andAfter { _ =>
+      Get("/catalogue/search/books/0000000000001/similar?offset=-1") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+      }
+    }
+  }
 }

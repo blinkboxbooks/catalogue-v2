@@ -97,13 +97,14 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       } limit page.count from page.offset
     } map toBookSearchResponse(q)
 
-  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] = client execute {
-    searchIn("book") query {
-      E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 maxQueryTerms 12 ids bookId.value
-    } filter {
-      E.termFilter("distributionStatus.usable", true)
-    } limit page.count from page.offset
-  } map toBookSimilarResponse
+  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
+    client execute {
+      searchIn("book") query {
+        E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids bookId.value
+      } filter {
+        E.termFilter("distributionStatus.usable", true)
+      } limit page.count from page.offset
+    } map toBookSimilarResponse
 
   override def suggestions(q: String, count: Int): Future[BookSuggestionResponse] = client execute {
     searchIn("catalogue") suggestions (
