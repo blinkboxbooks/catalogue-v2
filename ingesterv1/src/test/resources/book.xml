@@ -56,7 +56,9 @@
         </price>
     </prices>
     <subjects>
-        <subject type="BISAC" main="true">FIC000000</subject>
+        <subject type="BISAC" main="true">
+            FIC000000
+        </subject>
         <subject type="Keyword">keyword</subject>
     </subjects>
     <language>en</language>

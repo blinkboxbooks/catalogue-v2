@@ -47,7 +47,14 @@ object BookFixtures {
     related = Nil,
     media = None,
     distributionStatus = DistributionStatus(true, Nil),
-    source = Source(new DateTime(), None, None, None, "some-role", "some-username", None, None))
+    source = Source(deliveredAt = Option.empty,
+      uri = Option.empty,
+      fileName = Option.empty,
+      contentType = Option.empty,
+      role = Option.empty,
+      username = "some-username",
+      system = Option.empty,
+      processedAt = Option.empty))
 
   val theUniverse = simpleBook.copy(
     isbn = "1111111111111",

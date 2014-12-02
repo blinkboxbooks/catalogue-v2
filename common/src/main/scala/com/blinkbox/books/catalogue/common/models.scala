@@ -30,8 +30,8 @@ case class Statistics(pages: Option[Int], sentences: Option[Int], words: Option[
                       adultThemes: Option[AdultThemes])
 case class Related(classification: Option[Classification], relation: Option[String], isbn: Option[String])
 case class System(name: String, version: String)
-case class Source(deliveredAt: DateTime, uri: Option[String], fileName: Option[String],
-                  contentType: Option[String], role: String, username: String,
+case class Source(deliveredAt: Option[DateTime], uri: Option[String], fileName: Option[String],
+                  contentType: Option[String], role: Option[String], username: String,
                   system: Option[System], processedAt: Option[DateTime])
 
 object Events {
@@ -73,29 +73,37 @@ object Events {
     def empty = Book(
       sequenceNumber = 1,
       `$schema` = None,
-      classification = List.empty[Classification],
+      classification = List.empty,
       isbn = "",
       format = None,
       title = "",
-      subtitle = Option.empty[String],
-      contributors = List.empty[Contributor],
+      subtitle = Option.empty,
+      contributors = List.empty,
       availability = None,
       dates = None,
-      descriptions = List.empty[OtherText],
-      reviews = List.empty[OtherText],
-      languages = List.empty[String],
-      originalLanguages = List.empty[String],
+      descriptions = List.empty,
+      reviews = List.empty,
+      languages = List.empty,
+      originalLanguages = List.empty,
       supplyRights = None,
       salesRights = None,
       publisher = None,
       imprint = None,
       prices = List.empty[Price],
       statistics = None,
-      subjects = List.empty[Subject],
+      subjects = List.empty,
       series = None,
-      related = List.empty[Related],
+      related = List.empty,
       media = None,
-      distributionStatus = DistributionStatus(usable = true, List.empty[String]),
-      source = Source(DateTime.now, None, None, None, "NONE-ROLE", "NONE-USERNAME", None, None))
+      distributionStatus = DistributionStatus(usable = true, List.empty),
+      source = Source(
+        deliveredAt = Option.empty,
+        uri = Option.empty,
+        fileName = Option.empty,
+        contentType = Option.empty,
+        role = Option.empty,
+        username = "",
+        system = Option.empty,
+        processedAt = Option.empty))
   }
 }

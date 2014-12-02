@@ -9,7 +9,7 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
   with MockitoSyrup{
   private val parser = new BookXmlV1IngestionParser
 
-  it should "successfully parse a correct formatted 'book' xml message" in new XmlV1IngestionParserFixture {
+  it should "successfully parse media fields from a 'book' xml message" in new XmlV1IngestionParserFixture {
     val xmlContent = asString("book.xml")
 
     val book = parser.parse(xmlContent)
@@ -19,6 +19,61 @@ class BookXmlV1IngestionParserTest extends FlatSpecLike
       assert(media.epubs.size == 2)
       assert(media.images.size == 1)
     }
+  }
+
+  it should "successfully parse the bisac code from a 'book' xml message" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("book.xml")
+
+    val book = parser.parse(xmlContent)
+
+    val Success(b: Book) = book
+    assert(b.subjects.size == 2)
+    assert(b.subjects.head.`type` == "BISAC")
+    assert(b.subjects.head.code == "FIC000000")
+  }
+
+  it should "successfully parse the supply rights from a 'book' xml message" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("book-multiple-regions.xml")
+
+    val book = parser.parse(xmlContent)
+
+    val Success(b: Book) = book
+    val Some(supplyRights) = b.supplyRights
+    assert(supplyRights.`GB` == Some(true))
+    assert(supplyRights.`ROW` == None)
+    assert(supplyRights.`WORLD` == None)
+  }
+
+  it should "successfully parse the language from a 'book' xml message" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("book.xml")
+
+    val book = parser.parse(xmlContent)
+
+    val Success(b: Book) = book
+    assert(b.languages.head == "en")
+  }
+
+  it should "successfully parse the prices from a 'book' xml message" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("book-multiple-prices.xml")
+
+    val book = parser.parse(xmlContent)
+
+    val Success(b: Book) = book
+    assert(b.prices.size == 7)
+    val firstPrice = b.prices.head
+    assert(firstPrice.currency == "USD")
+    assert(!firstPrice.isAgency)
+    assert(firstPrice.amount == 2.17)
+    assert(!firstPrice.includesTax)
+  }
+
+  it should "successfully parse source username from a 'book' xml message" in new XmlV1IngestionParserFixture {
+    val xmlContent = asString("book.xml")
+
+    val book = parser.parse(xmlContent)
+
+    val Success(b: Book) = book
+    assert(b.source.username == "quill")
   }
 
   it should "fail parsing when incorrect xml format" in new XmlV1IngestionParserFixture {
