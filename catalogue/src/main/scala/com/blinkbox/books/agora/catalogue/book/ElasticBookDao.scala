@@ -34,4 +34,6 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
         .map(item => Serialization.read[Book](item.getResponse().getSourceAsString))
     }
   }
+  
+  override def getRelatedBooks(isbns: List[String]): Future[List[Book]] = ???
 }

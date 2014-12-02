@@ -20,9 +20,7 @@ trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
   def getBookSynopsis: Route
   def getBooks: Route
-  
-  // TODO
-  //  def getRelatedBooks: Route
+  def getRelatedBooks: Route
 }
 
 /**
@@ -42,14 +40,10 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   )
 
   val idParam = "id"
-  val qParam = "q"
   val conParam = "contributor"
-  val catParam = "category"
-  val pubParam = "publisher"
-  val promParam = "promotion"
-  val catLocParam = "categoryLocation"
   val minPubDateParam = "minPublicationDate"
   val maxPubDateParam = "maxPublicationDate"
+
   val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
   val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
   
@@ -73,8 +67,6 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
 
-  /*
-   * TODO
   val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
@@ -82,50 +74,18 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
     }
   }
-  */
   
   val getBooks = pathEndOrSingleSlash {
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
         validateOrderParameters(order) {
-          cancelRejection(MissingQueryParamRejection(qParam)) {
-            parameter(qParam) { query =>
-              // TODO: This was missing from the old service, but it's supposed to be working, according to the API -- ?!?
-              uncacheable(NotFound, None)
-            }
-          } ~
           parameter(minPubDateParam.as[DateTime].?, maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
             validateDateParameters(minPubDate, maxPubDate) {
               cancelRejection(MissingQueryParamRejection(conParam)) {
                 parameter(conParam) { contributorId =>
-                  // TODO
-                  //onSuccess(service.getBooksByContributor(contributorId, conParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                  null
+                  onSuccess(service.getBooksByContributor(contributorId, minPubDate, maxPubDate, page, order))(cacheable(config.maxAge, _))
                 }
               }
-              /*
-              ~
-              cancelRejection(MissingQueryParamRejection(catParam)) {
-                parameter(catParam.as[Long]) { categoryId =>
-                  onSuccess(service.getBooksByCategory(categoryId, catParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                }
-              } ~
-              cancelRejection(MissingQueryParamRejection(pubParam)) {
-                parameter(pubParam.as[Long]) { publisherId =>
-                  onSuccess(service.getBooksByPublisher(publisherId, pubParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                }
-              } ~
-              cancelRejection(MissingQueryParamRejection(promParam)) {
-                parameter(promParam.as[Long]) { promotionId =>
-                  onSuccess(service.getBooksByPromotion(promotionId, promParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                }
-              } ~
-              cancelRejection(MissingQueryParamRejection(catLocParam)) {
-                parameter(catLocParam.as[Int]) { categoryLocationId =>
-                  onSuccess(service.getBooksByCategoryLocation(categoryLocationId, catLocParam, minPubDate, minPubDateParam, maxPubDate, maxPubDateParam, fmt, page, order))(cacheable(config.maxAge, _))
-                }
-              }
-              */
             }
           } ~
           cancelRejection(MissingQueryParamRejection(idParam)) {
@@ -148,8 +108,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   val routes = rootPath(api.localUrl.path + config.path) {
     monitor() {
       respondWithHeader(RawHeader("Vary", "Accept, Accept-Encoding")) {
-        getBookByIsbn ~ getBookSynopsis ~ getBooks
-        // TODO ~ getRelatedBooks
+        getBookByIsbn ~ getBookSynopsis ~ getBooks ~ getRelatedBooks
       }
     }
   }
