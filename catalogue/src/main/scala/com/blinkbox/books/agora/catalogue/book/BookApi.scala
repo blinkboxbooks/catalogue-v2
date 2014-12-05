@@ -73,16 +73,16 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
         validateOrderParameters(order) {
-          parameter(service.minPubDateParam.as[DateTime].?, service.maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
+          parameter(BookService.minPubDateParam.as[DateTime].?, BookService.maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
             validateDateParameters(minPubDate, maxPubDate) {
-              cancelRejection(MissingQueryParamRejection(service.contributorParam)) {
-                parameter(service.contributorParam) { contributorId =>
+              cancelRejection(MissingQueryParamRejection(BookService.contributorParam)) {
+                parameter(BookService.contributorParam) { contributorId =>
                   onSuccess(service.getBooksByContributor(contributorId, minPubDate, maxPubDate, page, order))(cacheable(config.maxAge, _))
                 }
               }
             }
           } ~
-          cancelRejection(MissingQueryParamRejection(service.idParam)) {
+          cancelRejection(MissingQueryParamRejection(BookService.idParam)) {
             parameterSeq { params =>
               val list = params.collect { case ("id", value) => value}
               if (list.nonEmpty) {
@@ -91,7 +91,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
                 }
                 else
                   uncacheable(BadRequest, Error("max_results_exceeded", s"Max results exceeded: ${config.maxResults}"))
-              } else reject(MissingQueryParamRejection(service.idParam))
+              } else reject(MissingQueryParamRejection(BookService.idParam))
             }
           }
         }
@@ -111,10 +111,13 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     PermittedOrderVals.contains(order.field.toLowerCase),
     s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}")
 
-  private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = validate(
+  private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = {
+    println("validating min="+minDate+" max="+maxDate);
+    validate(
     (minDate, maxDate) match {
-      case (Some(min), Some(max)) => !min.isAfter(max)
+      case (Some(min), Some(max)) => println("min="+min+" max="+max+" "+min.isAfter(max)); !min.isAfter(max)
       case _ => true
     },
     s"$service.minPubDateParam cannot be after $service.maxPubDateParam")
+  }
 }

@@ -22,18 +22,19 @@ trait BookDao {
 }
 
 trait BookService {
-  val idParam = "id"
-  val contributorParam = "contributor"
-  val minPubDateParam = "minPublicationDate"
-  val maxPubDateParam = "maxPublicationDate"
-
-  val dateTimeFormat = DateTimeFormat.forPattern("yyyy-MM-dd")
-
   def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]]
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
   def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]]
   def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]]
   def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]]
+}
+
+object BookService {
+  val idParam = "id"
+  val contributorParam = "contributor"
+  val minPubDateParam = "minPublicationDate"
+  val maxPubDateParam = "maxPublicationDate"
+  val dateTimeFormat = DateTimeFormat.forPattern("yyyy-MM-dd")
 }
 
 class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookService {
@@ -109,16 +110,16 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   
   override def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]] = {
     val slice = isbns.slice(page.offset, page.offset + page.count).toList
-    val params = Some(isbns.toSeq.map(isbn => (idParam, isbn)))
+    val params = Some(isbns.toSeq.map(isbn => (BookService.idParam, isbn)))
     dao.getBooks(slice) map { books => toListPage(books, isbns.size, page, linkHelper.bookPath, params) }
   }
 
   override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = {
-    def dateQueryParam(param: String, date: Option[DateTime]):Option[(String, String)] = date.map(d => (param, dateTimeFormat.print(d)))
+    def dateQueryParam(param: String, date: Option[DateTime]):Option[(String, String)] = date.map(d => (param, BookService.dateTimeFormat.print(d)))
     val params = Seq(
-      Some((contributorParam, id)),
-      dateQueryParam(minPubDateParam, minPubDate),
-      dateQueryParam(maxPubDateParam, maxPubDate)
+      Some((BookService.contributorParam, id)),
+      dateQueryParam(BookService.minPubDateParam, minPubDate),
+      dateQueryParam(BookService.maxPubDateParam, maxPubDate)
     )
     val res = dao.getBooksByContributor(id, page.offset, page.count, order.field, order.desc)
     res map { bookList => toListPage(bookList.books, bookList.total, page, linkHelper.contributorPath, Some(params.flatten ++ order.asQueryParams)) }      
