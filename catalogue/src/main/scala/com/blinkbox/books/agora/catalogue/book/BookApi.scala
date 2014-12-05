@@ -39,12 +39,6 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     classOf[BookSynopsis] -> "urn:blinkboxbooks:schema:synopsis")
   )
 
-  val idParam = "id"
-  val conParam = "contributor"
-  val minPubDateParam = "minPublicationDate"
-  val maxPubDateParam = "maxPublicationDate"
-
-  val fmt = DateTimeFormat.forPattern("yyyy-MM-dd")
   val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
   
   implicit val DateTimeDeserializer = new FromStringDeserializer[DateTime] {
@@ -79,16 +73,16 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
         validateOrderParameters(order) {
-          parameter(minPubDateParam.as[DateTime].?, maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
+          parameter(service.minPubDateParam.as[DateTime].?, service.maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
             validateDateParameters(minPubDate, maxPubDate) {
-              cancelRejection(MissingQueryParamRejection(conParam)) {
-                parameter(conParam) { contributorId =>
+              cancelRejection(MissingQueryParamRejection(service.contributorParam)) {
+                parameter(service.contributorParam) { contributorId =>
                   onSuccess(service.getBooksByContributor(contributorId, minPubDate, maxPubDate, page, order))(cacheable(config.maxAge, _))
                 }
               }
             }
           } ~
-          cancelRejection(MissingQueryParamRejection(idParam)) {
+          cancelRejection(MissingQueryParamRejection(service.idParam)) {
             parameterSeq { params =>
               val list = params.collect { case ("id", value) => value}
               if (list.nonEmpty) {
@@ -97,7 +91,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
                 }
                 else
                   uncacheable(BadRequest, Error("max_results_exceeded", s"Max results exceeded: ${config.maxResults}"))
-              } else reject(MissingQueryParamRejection(idParam))
+              } else reject(MissingQueryParamRejection(service.idParam))
             }
           }
         }
@@ -122,5 +116,5 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       case (Some(min), Some(max)) => !min.isAfter(max)
       case _ => true
     },
-    s"$minPubDateParam cannot be after $maxPubDateParam")
+    s"$service.minPubDateParam cannot be after $service.maxPubDateParam")
 }

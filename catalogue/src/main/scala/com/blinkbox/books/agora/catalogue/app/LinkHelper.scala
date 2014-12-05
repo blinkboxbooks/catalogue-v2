@@ -4,7 +4,7 @@ import com.blinkbox.books.spray.v1.Link
 import spray.http.Uri
 import spray.http.Uri.{Authority, Path}
 
-class LinkHelper(val externalUrl: Uri, contributorPath: String, publisherPath: String, pricingPath: String, val bookPath: String, synopsisPath: String) {
+class LinkHelper(val externalUrl: Uri, val contributorPath: String, publisherPath: String, pricingPath: String, val bookPath: String, synopsisPath: String) {
   def linkForBook(isbn: String) = Link(
     "urn:blinkboxbooks:schema:book",
     makeRelative(externalUrl.withPath(externalUrl.path ++ Path(s"$bookPath/$isbn"))).toString(),

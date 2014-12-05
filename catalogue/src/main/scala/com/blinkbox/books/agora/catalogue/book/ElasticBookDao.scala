@@ -20,8 +20,9 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
 
   private def toBook(res: GetResponse): Book = toBook(res.getSourceAsString)
 
-  private def toBookList(res: SearchResponse): List[Book] = {
-    res.getHits.hits.toList.map(hit => toBook(hit.getSourceAsString))
+  private def toBookList(res: SearchResponse): BookList = {
+    val hits = res.getHits()
+    BookList(hits.hits.toList.map(hit => toBook(hit.getSourceAsString)), hits.getTotalHits().toInt)
   }
 
   override def getBookByIsbn(isbn: String): Future[Option[Book]] = {
@@ -54,7 +55,7 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
   
   private def mapSortField(field: String): String = sortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
   
-  override def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[List[Book]] = {
+  override def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList] = {
     require(offset >= 0, "Offset must be zero-or-more")
     require(count > 0, "Count must be one-or-more")
     
@@ -69,7 +70,7 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
     } map toBookList
   }
 
-  override def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[List[Book]] = {
+  override def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[BookList] = {
     require(offset >= 0, "Offset must be zero-or-more")
     require(count > 0, "Count must be one-or-more")
     

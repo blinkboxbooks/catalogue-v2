@@ -172,7 +172,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   }
   
   it should "return books given the contributor" in {
-    when(dao.getBooksByContributor("id", 0, 10, "title", true)).thenReturn(Future.successful(List(book)))
+    when(dao.getBooksByContributor("id", 0, 10, "title", true)).thenReturn(Future.successful(BookList(List(book), 1)))
     val page = Page(0, 10)
     val order = SortOrder("title", true)
     whenReady(service.getBooksByContributor("id", None, None, page, order)) { listPage =>

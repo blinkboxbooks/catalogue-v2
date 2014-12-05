@@ -77,7 +77,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "find books for a given contributor (with default sort order)" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, count, sortField, false)) { result =>
-        result should equal(List(one, two))
+        result should equal(BookList(List(one, two), 2))
       }
     }
   }
@@ -85,7 +85,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "return an empty results set for an unknown contributor" in {
     e2e createIndex catalogue andAfter { _ =>
       whenReady(dao.getBooksByContributor("cobblers", 0, count, sortField, true)) { result =>
-        result should equal(List())
+        result should equal(BookList(List(), 0))
       }
     }
   }
@@ -93,7 +93,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "limit the number of results to the specified count" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, 1, sortField, false)) { result =>
-        result should equal(List(one))
+        result should equal(BookList(List(one), 2))
       }
     }
   }
@@ -101,7 +101,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "start the results at the given offset" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 1, count, sortField, false)) { result =>
-        result should equal(List(two))
+        result should equal(BookList(List(two), 2))
       }
     }
   }
@@ -109,7 +109,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "return books in reverse order with ascending parameter specified" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, count, sortField, true)) { result =>
-        result should equal(List(two, one))
+        result should equal(BookList(List(two, one), 2))
       }
     }
   }
@@ -117,7 +117,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "sort books by publication date" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, count, "publication_date", true)) { result =>
-        result should equal(List(two, one))
+        result should equal(BookList(List(two, one), 2))
       }
     }
   }
@@ -125,7 +125,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "sort books by price" in {
     e2e createIndex catalogue index(one, two) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, count, "price", true)) { result =>
-        result should equal(List(two, one))
+        result should equal(BookList(List(two, one), 2))
       }
     }
   }
@@ -139,7 +139,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
     val second = createContributorBook(one, "bbb")
     e2e createIndex catalogue index(first, second) andAfter { _ =>
       whenReady(dao.getBooksByContributor(contributor, 0, count, "author", true)) { result =>
-        result should equal(List(second, first))
+        result should equal(BookList(List(second, first), 2))
       }
     }
   }
@@ -165,7 +165,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "return related books for a given ISBN" in {
     e2e createIndex catalogue index(related, one, two) andAfter { _ =>
       whenReady(dao.getRelatedBooks(related.isbn, 0, count)) { result =>
-        result should equal(List(one, two))
+        result should equal(BookList(List(one, two), 2))
       }
     }
   }
@@ -173,7 +173,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "limit the number of related books to the given count" in {
     e2e createIndex catalogue index(related, one, two) andAfter { _ =>
       whenReady(dao.getRelatedBooks(related.isbn, 0, 1)) { result =>
-        result should equal(List(one))
+        result should equal(BookList(List(one), 2))
       }
     }
   }
@@ -181,7 +181,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "start the related books at the given offset" in {
     e2e createIndex catalogue index(related, one, two) andAfter { _ =>
       whenReady(dao.getRelatedBooks(related.isbn, 1, count)) { result =>
-        result should equal(List(two))
+        result should equal(BookList(List(two), 2))
       }
     }
   }
@@ -189,7 +189,7 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "return an empty set of related books for an unknown ISBN" in {
     e2e createIndex catalogue andAfter { _ =>
       whenReady(dao.getRelatedBooks(cobblers, 0, count)) { result =>
-        result should equal(List())
+        result should equal(BookList(List(), 0))
       }
     }
   }
