@@ -47,7 +47,14 @@ object BookFixtures {
     related = Nil,
     media = None,
     distributionStatus = DistributionStatus(true, Nil),
-    source = Source(new DateTime(), None, None, None, "some-role", "some-username", None, None))
+    source = Source(deliveredAt = Option.empty,
+      uri = Option.empty,
+      fileName = Option.empty,
+      contentType = Option.empty,
+      role = Option.empty,
+      username = "some-username",
+      system = Option.empty,
+      processedAt = Option.empty))
 
   val theUniverse = simpleBook.copy(
     isbn = "1111111111111",
@@ -84,9 +91,9 @@ object BookFixtures {
   def dummyBooks(amount: Int) = 0 until amount map { idx =>
     simpleBook.copy(
       isbn = f"$idx%013d",
-      title = s"A Dummy Book $idx",
+      title = s"Dummy Book $idx",
       contributors = Contributor("author", s"ctrb-$idx", s"Dummy Author $idx", s"DummyAuthor $idx") :: Nil,
-      descriptions = OtherText(Nil, s"Some dummy description number $idx", "description", None) :: Nil
+      descriptions = OtherText(Nil, s"Some dummy description $idx", "description", None) :: Nil
     )
   }
 }

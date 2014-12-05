@@ -21,6 +21,10 @@ trait XmlV1IngestionParser extends IngestionParser[String, DistributeContent]{
       .map(xml => produceDistributeContent(xml)(xml.label))
 
   def produceDistributeContent(xml: Elem): PartialFunction[String, DistributeContent]
+
+  implicit class RichNodeSeq(nodeSeq: NodeSeq) {
+    def trimText = nodeSeq.text.trim
+  }
 }
 
 class BookXmlV1IngestionParser extends XmlV1IngestionParser {
@@ -39,28 +43,29 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
     val contributors = toContributors(xmlBook)
     Book.empty.copy(
       sequenceNumber = toModifiedAt(xmlBook).getMillis,
-      isbn = (xmlBook \ "isbn").text,
-      title = (xmlBook \ "title").text,
-      subtitle = (xmlBook \ "subtitle").text.opt[String],
+      isbn = (xmlBook \ "isbn").trimText,
+      title = (xmlBook \ "title").trimText,
+      subtitle = (xmlBook \ "subtitle").trimText.opt[String],
       series = toSeries(xmlBook),
       contributors = contributors,
       descriptions = toDescriptions(xmlBook, contributors),
-      publisher = (xmlBook \ "publisher" \ "name").text.opt[String],
+      publisher = (xmlBook \ "publisher" \ "name").trimText.opt[String],
       prices = toPrices(xmlBook),
       subjects = toSubjects(xmlBook),
-      languages = List((xmlBook \ "language").text),
+      languages = List((xmlBook \ "language").trimText),
       supplyRights = Option(toRegionalRights(xmlBook)),
       dates = toDates(xmlBook),
-      media = Option(toMedia(xmlBook))
+      media = Option(toMedia(xmlBook)),
+      source = toSource(xmlBook)
     )
   }
 
   def toUndistribute(xml: Elem): Undistribute = {
     val undistributeXml = xml \\ "undistribute"
     Undistribute(
-      isbn = (undistributeXml \ "book").text,
+      isbn = (undistributeXml \ "book").trimText,
       sequenceNumber = (undistributeXml \ "effectiveTimestamp")
-        .text.opt[DateTime]
+        .trimText.opt[DateTime]
         .getOrElse(throw MissingFieldException("effectiveTimestamp"))
         .getMillis,
       reasons = toReasons(undistributeXml)
@@ -68,42 +73,40 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
   }
 
   private def toContributors(xml: NodeSeq): List[Contributor] =
-    (xml \ "contributors").map{ node =>
-      val contributor = node \ "contributor"
+    (xml \ "contributors" \ "contributor").map{ node =>
       Contributor(
-        (contributor \ "@role").toString,
-        (contributor \ "@id").toString,
-        (contributor \ "displayName").text,
-        (contributor \ "sortName").text)
+        (node \ "@role").toString,
+        (node \ "@id").toString,
+        (node \ "displayName").trimText,
+        (node \ "sortName").trimText)
     }.toList
 
   private def toSeries(xml: NodeSeq): Option[Series] =
     Option(
       Series(
-        title = (xml \ "series" \ "title").text,
-        number = (xml \ "series" \ "number").text.opt[Int]
+        title = (xml \ "series" \ "title").trimText,
+        number = (xml \ "series" \ "number").trimText.opt[Int]
       )
     )
 
   private def toDescriptions(xml: NodeSeq, contributors: List[Contributor]): List[OtherText] = {
     val author = contributors.map(_.role).find(_ == "Author").getOrElse("NONE")
-    (xml \ "descriptions").map { node =>
-      val description = node \ "description"
+    (xml \ "descriptions" \ "description").map { node =>
       val classification = List(
-        Classification(realm = "format", id = (description \ "@format").text),
-        Classification(realm = "source", id = (description \ "@source").text))
+        Classification(realm = "format", id = (node \ "@format").toString),
+        Classification(realm = "source", id = (node \ "@source").toString))
       OtherText(
         classification = classification,
-        content = description.text,
-        `type` = (description \ "@format").text,
+        content = node.trimText,
+        `type` = (node \ "@format").toString,
         author = author.opt[String])
     }.toList
   }
 
   private def toPrices(xml: NodeSeq): List[Price] =
-    (xml \ "prices").map { node =>
+    (xml \ "prices" \ "price").map { node =>
       Price(
-        amount = (node \ "amount").text.opt[Double].getOrElse(0.0),
+        amount = (node \ "amount").trimText.opt[Double].getOrElse(0.0),
         currency = (node \ "@currency").toString,
         includesTax = (node \ "tax" \ "@included").toString.opt[Boolean].getOrElse(false),
         isAgency = (node \ "@agency").toString.opt[Boolean].getOrElse(false),
@@ -111,19 +114,19 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
         validFrom = Option.empty[DateTime],
         validUntil = Option.empty[DateTime],
         applicableRegions = Option.empty[Regions],
-        tax = (node \ "tax").text.opt[Double].map(value => Tax("H", None, Some(value), None)))
+        tax = (node \ "tax").trimText.opt[Double].map(value => Tax("H", None, Some(value), None)))
     }.toList
 
   private def toSubjects(xml: NodeSeq): List[Subject] =
-    (xml \ "subjects").map { node =>
+    (xml \ "subjects" \ "subject").map { node =>
       Subject(
         `type` = (node \ "@type").toString,
-        code = node.text,
+        code = node.trimText,
         main = None)
     }.toList
 
   private def toRegionalRights(xml: NodeSeq): Regions = {
-    val regions = (xml \ "regions").map(node => (node \ "region").text.toUpperCase)
+    val regions = (xml \ "regions" \ "region").map(node => node.trimText.toUpperCase)
     val emptyRegionalRights = Regions(None, None, None)
     regions.foldLeft(emptyRegionalRights)((acc, element) =>
       element match {
@@ -141,7 +144,7 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
     val epubs = epubNodes.map { node =>
       Epub(
         classification = List(Classification(realm = "type", id = (node \ "@type").toString)),
-        uris = List(Uri(`type` = "static", uri = node.text, params = None)),
+        uris = List(Uri(`type` = "static", uri = node.trimText, params = None)),
         keyFile = None,
         wordCount = 0,
         size = (node \ "@size").toString.opt[Long].getOrElse(0))
@@ -149,7 +152,7 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
     val images = List(
       Image(
         classification = List(coverClassification),
-        uris = List(Uri(`type` = "static", uri = coverNode.text, params = None)),
+        uris = List(Uri(`type` = "static", uri = coverNode.trimText, params = None)),
         width = 0,
         height = 0,
         size = (coverNode \ "@size").toString.opt[Int].getOrElse(0)))
@@ -159,14 +162,14 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
   }
 
   private def toModifiedAt(xml: NodeSeq): DateTime = {
-    val modifiedAt = (xml \ "modifiedAt").text
+    val modifiedAt = (xml \ "modifiedAt").trimText
     if (modifiedAt.isEmpty) throw MissingFieldException("modifiedAt")
     else ModifiedAtFormatter.parseDateTime(modifiedAt)
   }
 
   private def toDates(xml: NodeSeq): Option[Dates] = {
-    val publishDate = (xml \ "publishedOn").text
-    val announceDate = (xml \ "announcedOn").text
+    val publishDate = (xml \ "publishedOn").trimText
+    val announceDate = (xml \ "announcedOn").trimText
     Option(
       Dates(
         publish =
@@ -180,7 +183,21 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
   }
 
   private def toReasons(xml: NodeSeq): List[String] =
-    (xml  \ "reasonList" \ "reason").map(node => (node \ "description").text).toList
+    (xml  \ "reasonList" \ "reason").map(node => (node \ "description").trimText).toList
+
+  private def toSource(xml: NodeSeq): Source = {
+    val username = (xml \ "@{http://schemas.blinkbox.com/books/routing}originator").toString
+    Source(
+      deliveredAt = Option.empty,
+      uri = Option.empty,
+      fileName = Option.empty,
+      contentType = Option.empty,
+      role = Option.empty,
+      username = username,
+      system = Option.empty,
+      processedAt = Option.empty
+    )
+  }
 }
 
 class PriceXmlV1IngestionParser extends XmlV1IngestionParser{
@@ -192,13 +209,13 @@ class PriceXmlV1IngestionParser extends XmlV1IngestionParser{
   private def toBookPrice(xml: Elem): BookPrice = {
     val bookPriceXml = xml \\ "book-price"
     BookPrice(
-      isbn = (bookPriceXml \ "isbn").text
+      isbn = (bookPriceXml \ "isbn").trimText
         .opt[String]
         .getOrElse(throw MissingFieldException("isbn")),
-      price = (bookPriceXml \ "price").text
+      price = (bookPriceXml \ "price").trimText
         .opt[Double]
         .getOrElse(throw MissingFieldException("price")),
-      currency = (bookPriceXml \ "currency").text
+      currency = (bookPriceXml \ "currency").trimText
         .opt[String]
         .getOrElse(throw MissingFieldException("currency")))
   }

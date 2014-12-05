@@ -14,7 +14,7 @@ import scala.concurrent.duration._
 trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSupport {
   this: Suite =>
 
-  override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(100, Millis))
+  override implicit def patienceConfig = PatienceConfig(timeout = Span(60000, Millis), interval = Span(250, Millis))
   override def e2eExecutionContext = executor
 
   implicit val routeTestTimeout = RouteTestTimeout(5.seconds)

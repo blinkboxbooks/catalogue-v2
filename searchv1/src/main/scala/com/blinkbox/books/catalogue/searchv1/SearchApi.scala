@@ -51,7 +51,9 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
       path("suggestions") {
         get {
           parameter('q, 'limit.as[Int].?) { (q, limit) =>
-            complete(searchService.suggestions(q, limit getOrElse suggestionsDefaultCount))
+            validate(limit.fold(true)(_ > 0), "The limit parameter must be greater than 0 if provided") {
+              complete(searchService.suggestions(q, limit getOrElse suggestionsDefaultCount))
+            }
           }
         }
       }

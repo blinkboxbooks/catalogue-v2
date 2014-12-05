@@ -1,8 +1,9 @@
 package com.blinkbox.books.catalogue.ingester.v1.parser
 
+import com.blinkbox.books.catalogue.common.Events.BookPrice
 import com.blinkbox.books.test.MockitoSyrup
 import org.scalatest.FlatSpecLike
-import scala.util.Failure
+import scala.util.{Success, Failure}
 
 class PriceXmlV1IngestionParserTest extends FlatSpecLike
   with MockitoSyrup{
@@ -14,7 +15,10 @@ class PriceXmlV1IngestionParserTest extends FlatSpecLike
 
     val bookPrice = parser.parse(xmlContent)
 
-    assert(bookPrice.isSuccess)
+    val Success(b: BookPrice) = bookPrice
+    assert(b.isbn == "9781905010943")
+    assert(b.price == 123.45)
+    assert(b.currency == "GBP")
   }
 
   it should "fail parsing when 'isbn' field is missing" in new XmlV1IngestionParserFixture {

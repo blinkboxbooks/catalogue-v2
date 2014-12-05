@@ -34,7 +34,7 @@ trait V1SearchService {
 
   def search(q: String, page: Page): Future[BookSearchResponse]
   def similar(bookId: BookId, page: Page): Future[BookSimilarResponse]
-  def suggestions(q: String, count: Int): Future[Iterable[Suggestion]]
+  def suggestions(q: String, count: Int): Future[BookSuggestionResponse]
 }
 
 class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
@@ -53,6 +53,8 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   private def toBookSimilarResponse(resp: SearchResponse): BookSimilarResponse =
     BookSimilarResponse(toBookSeq(resp))
 
+  private def toSuggestionResponse(resp: SearchResponse): BookSuggestionResponse = BookSuggestionResponse(toSuggestionSeq(resp))
+
   def toSuggestion(payload: SuggestionPayload): Suggestion =
     if (payload.`type` == SuggestionType.Book) {
       val bookItem = payload.item.asInstanceOf[SuggestionItem.Book]
@@ -62,12 +64,12 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       Suggestion(contributorItem.id, contributorItem.displayName, contributorSuggestionType, None)
     }
 
-  private def toSuggestionIterable(resp: SearchResponse): Iterable[Suggestion] =
+  private def toSuggestionSeq(resp: SearchResponse): Seq[Suggestion] =
     (for {
       autoComplete <- JIteratorWrapper(resp.getSuggest.getSuggestion[Suggest.Suggestion[Entry]]("autoComplete").iterator)
       option <- JListWrapper(autoComplete.getOptions)
       payload = Serialization.read[SuggestionPayload](option.getPayloadAsString)
-    } yield toSuggestion(payload)).toIterable
+    } yield toSuggestion(payload)).toSeq
 
   private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
 
@@ -95,19 +97,20 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       } limit page.count from page.offset
     } map toBookSearchResponse(q)
 
-  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] = client execute {
-    searchIn("book") query {
-      E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 maxQueryTerms 12 ids bookId.value
-    } filter {
-      E.termFilter("distributionStatus.usable", true)
-    } limit page.count from page.offset
-  } map toBookSimilarResponse
+  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
+    client execute {
+      searchIn("book") query {
+        E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids bookId.value
+      } filter {
+        E.termFilter("distributionStatus.usable", true)
+      } limit page.count from page.offset
+    } map toBookSimilarResponse
 
-  override def suggestions(q: String, count: Int): Future[Iterable[Suggestion]] = client execute {
+  override def suggestions(q: String, count: Int): Future[BookSuggestionResponse] = client execute {
     searchIn("catalogue") suggestions (
-      E.suggest using(E.completion) as "autoComplete" on q from "autoComplete"
+      E.suggest using(E.completion) as "autoComplete" on q from "autoComplete" size count
     ) filter {
       E.termFilter("distributionStatus.usable", true)
-    } limit count
-  } map toSuggestionIterable
+    } limit 0 // We don't want search results, only suggestions
+  } map toSuggestionResponse
 }
