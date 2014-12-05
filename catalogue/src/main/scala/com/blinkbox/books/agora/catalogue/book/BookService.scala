@@ -15,7 +15,8 @@ import com.blinkbox.books.spray.SortOrder
 trait BookDao {
   def getBookByIsbn(isbn: String): Future[Option[Book]]
   def getBooks(isbns: List[String]): Future[List[Book]]
-  def getRelatedBooks(isbns: List[String]): Future[List[Book]]
+  def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[List[Book]]
+  def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[List[Book]]
 }
 
 trait BookService {
@@ -23,7 +24,7 @@ trait BookService {
   def getBookSynopsis(isbn: String): Future[Option[BookSynopsis]]
   def getBooks(isbns: Iterable[String], page: Page): Future[ListPage[BookRepresentation]]
   def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]]
-  def getRelatedBooks(id: String, page: Page, limit: Int): Future[ListPage[BookRepresentation]]
+  def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]]
 }
 
 class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookService {
@@ -80,9 +81,12 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
 
   private def toBookSynopsis(book: Book): BookSynopsis = {
     def isMainDescription(description: OtherText): Boolean = description.classification.exists(c => c.realm.equals("source") && c.id.equals("Main description"))
-
-    val synopsisText = for (desc <- book.descriptions; if isMainDescription(desc)) yield desc.content
-    BookSynopsis(book.isbn, synopsisText.head)
+    val synopsisList = for (desc <- book.descriptions; if isMainDescription(desc)) yield desc.content
+    val synopsis = synopsisList match {
+      case List() => ""
+      case _ => synopsisList.head
+    }
+    BookSynopsis(book.isbn, synopsis)
   }
   
   override def getBookByIsbn(isbn: String): Future[Option[BookRepresentation]] = {
@@ -106,10 +110,24 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
     val books = dao.getBooks(slice).map(_.map(book => toBookRepresentation(book)))
     
     // Paginate
-    books.map(results => ListPage(isbns.size, page.offset, slice.size, results, links))
+    books.map(results => ListPage(isbns.size, page.offset, results.size, results, links))
   }
 
-  override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = ???
+  override def getBooksByContributor(id: String, minPubDate: Option[DateTime], maxPubDate: Option[DateTime], page: Page, order: SortOrder): Future[ListPage[BookRepresentation]] = {
+    val books = dao.getBooksByContributor(id, page.offset, page.count, order.field, order.desc).map(_.map(book => toBookRepresentation(book)))
+
+    books.map { results =>
+      val links = if (results.size > page.count) {
+        val paging = Paging.links(Some(results.size), page.offset, page.count, linkHelper.externalUrl.path.toString + linkHelper.bookPath, None, includeSelf=false)
+        Some(paging.toList.map(pageLink2Link))
+      } else None
+      ListPage(results.size, 0, results.size, results, links) // TODO
+    }
+  }
   
-  override def getRelatedBooks(id: String, page: Page, limit: Int): Future[ListPage[BookRepresentation]] = ???
+  override def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]] = {
+    dao.getRelatedBooks(isbn, page.offset, page.count)
+      .map(_.map(book => toBookRepresentation(book)))
+      .map(results => ListPage(results.size, 0, results.size, results, null)) // TODO
+  }
 }

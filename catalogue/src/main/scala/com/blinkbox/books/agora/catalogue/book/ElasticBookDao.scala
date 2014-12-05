@@ -8,32 +8,75 @@ import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.json4s.jackson.Serialization
 import com.blinkbox.books.json.DefaultFormats
+import org.elasticsearch.search.sort.SortOrder
+import org.elasticsearch.action.search.SearchResponse
+import org.elasticsearch.action.get.GetResponse
 
 class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
+  
+  private def toBook(book: String): Book = Serialization.read[Book](book)
+
+  private def toBook(res: GetResponse): Book = toBook(res.getSourceAsString)
+
+  private def toBookList(res: SearchResponse): List[Book] = {
+    res.getHits.hits.toList.map(hit => toBook(hit.getSourceAsString))
+  }
 
   override def getBookByIsbn(isbn: String): Future[Option[Book]] = {
     client.execute {
       get id isbn from index
     } map { res =>
-      if(res.isSourceEmpty)
-          None
-        else {
-          Some(Serialization.read[Book](res.getSourceAsString))
-        }
+      if(res.isSourceEmpty) None else Some(toBook(res))
     }
   }
   
   override def getBooks(isbns: List[String]): Future[List[Book]] = {
     client.execute {
       multiget(isbns.map(isbn => get id isbn from index).toSeq: _*)
-    } map { multiRes =>
-      multiRes.getResponses().toList
-        .filter(item => !item.getResponse().isSourceEmpty())
-        .map(item => Serialization.read[Book](item.getResponse().getSourceAsString))
+    } map { multiRes => multiRes.getResponses().toList
+      .filter(item => !item.getResponse().isSourceEmpty())
+      .map(item => toBook(item.getResponse()))
     }
   }
   
-  override def getRelatedBooks(isbns: List[String]): Future[List[Book]] = ???
+  private def mapSortOrder(descending: Boolean): SortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
+  
+  private val sortFieldMapping = Map(
+    "title" -> "title",
+    "sales_rank" -> "title", 						// TODO - not yet implemented
+    "publication_date" -> "dates.publish",
+    "price" -> "prices.amount",
+    "sequential" -> "_score",
+    "author" -> "contributors.sortName"
+  )
+  
+  private def mapSortField(field: String): String = sortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
+  
+  override def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[List[Book]] = {
+    require(offset >= 0, "Offset must be zero-or-more")
+    require(count > 0, "Count must be one-or-more")
+    
+    client.execute {
+      search in index query {
+        nestedQuery("contributors") query {
+          termQuery("contributors.id", id)
+        }
+      } limit count from offset sort {
+        by field mapSortField(sortField) order mapSortOrder(sortDescending)
+      }
+    } map toBookList
+  }
+
+  override def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[List[Book]] = {
+    require(offset >= 0, "Offset must be zero-or-more")
+    require(count > 0, "Count must be one-or-more")
+    
+    client.execute {
+      search in index query {
+        morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
+      } limit count from offset
+    } map toBookList
+  }
 }

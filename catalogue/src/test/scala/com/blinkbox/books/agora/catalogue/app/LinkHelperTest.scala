@@ -8,6 +8,7 @@ import spray.http.Uri
 
 @RunWith(classOf[JUnitRunner])
 class LinkHelperTest extends FlatSpecLike with Matchers with MockitoSyrup {
+  val cfg = mock[AppConfig]
   val helper = new LinkHelper(Uri("test"), "/contributor", "/publisher", "/pricing", "/book", "/book/{isbn}/synopsis")
   
   it should "construct a link to a given book" in {

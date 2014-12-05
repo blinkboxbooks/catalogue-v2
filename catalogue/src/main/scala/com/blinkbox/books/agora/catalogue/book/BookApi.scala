@@ -70,7 +70,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
-        onSuccess(service.getRelatedBooks(id, page, config.maxRelatedBooks))(cacheable(config.maxAge, _))
+        onSuccess(service.getRelatedBooks(id, page))(cacheable(config.maxAge, _))
       }
     }
   }

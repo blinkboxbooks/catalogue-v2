@@ -13,7 +13,7 @@ import org.joda.time.DateTime
 import org.scalatest.FlatSpecLike
 import org.scalatest.Matchers
 import com.blinkbox.books.spray.v1.{Image => SprayImage, Link}
-import com.blinkbox.books.spray.Page
+import com.blinkbox.books.spray.{Page, SortOrder}
 
 @RunWith(classOf[JUnitRunner])
 class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyrup with ScalaFutures {
@@ -133,7 +133,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(None == result)
     }
   }
-
+  
   it should "return bulk books" in {
     val isbns = List.fill(7)("isbn")
     when(dao.getBooks(isbns)).thenReturn(Future.successful(List.fill(7)(book)))
@@ -161,6 +161,19 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       val prev = Link("prev","catalogue/books?id=1&id=2&id=3&count=1&offset=0",None,None)
       val next = Link("next","catalogue/books?id=1&id=2&id=3&count=1&offset=2",None,None)
       assert(Some(Set(prev, next)) == listPage.links.map(_.toSet))
+    }
+  }
+  
+  it should "return books given the contributor" in {
+    when(dao.getBooksByContributor("id", 0, 10, "title", true)).thenReturn(Future.successful(List(book)))
+    val page = Page(0, 10)
+    val order = SortOrder("title", true)
+    whenReady(service.getBooksByContributor("id", None, None, page, order)) { listPage =>
+      assert(1 == listPage.numberOfResults, "Total number of books")
+      assert(0 == listPage.offset)
+      assert(1 == listPage.count)
+      assert(1 == listPage.items.size, "Page size")
+      assert(List(expected) == listPage.items)
     }
   }
 }
