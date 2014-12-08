@@ -9,8 +9,7 @@ case class BookConfig(
   path: String,
   synopsisPathLink: String,
   maxAge: FiniteDuration,
-  maxResults: Int,
-  maxRelatedBooks: Int
+  maxResults: Int
 )
 
 object BookConfig {
@@ -18,7 +17,6 @@ object BookConfig {
     config.getString("path"),
     config.getString("synopsisLink"),
     config.getDuration("maxAge", TimeUnit.MILLISECONDS).millis,
-    config.getInt("maxResults"),
-    config.getInt("maxRelatedBooks")
+    config.getInt("maxResults")
   )
 }

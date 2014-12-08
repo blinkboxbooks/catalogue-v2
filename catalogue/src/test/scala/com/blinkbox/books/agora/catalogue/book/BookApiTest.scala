@@ -129,7 +129,7 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   
   it should "return books by a given contributor with a specified publication date-range" in {
     val dateParam = "2014-01-01"
-    val date = api.fmt.parseDateTime(dateParam)
+    val date = BookService.dateTimeFormat.parseDateTime(dateParam)
     when(service.getBooksByContributor("42", Some(date), Some(date), Page(0, bookConfig.maxResults), SortOrder("title", false))).thenReturn(Future.successful(expectedListPage))
     Get(s"/book/?contributor=42&minPublicationDate=${dateParam}&maxPublicationDate=${dateParam}") ~> routes ~> check {
       status shouldEqual OK
