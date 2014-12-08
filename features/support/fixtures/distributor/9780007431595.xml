@@ -1,0 +1,301 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="66c7de1b8917374bc881f77b9fdaea23:2-2dfb0432837388015ba07ac20c8542c9" r:version="0.14.3">
+  <isbn>9780007431595</isbn>
+  <title>Eats, Shoots and Leaves</title>
+  <contributors>
+    <oneLine>By Lynne Truss</oneLine>
+    <contributor role="Author" id="bb34e6b47ddd1551fb2a17635ca71819e5953a99">
+      <displayName>Lynne Truss</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Long description">&lt;p&gt;Anxious about the apostrophe? Confused by the comma? Stumped by the semicolon? Join Lynne Truss on a hilarious tour through the rules of punctuation that is sure to sort the dashes from the hyphens.&lt;/p&gt;
+        &lt;p&gt;We all had the basic rules of punctuation drilled into us at school, but punctuation pedants have good reason to suspect they never sank in. &#x2018;Its Summer!&#x2019; screams a sign that sets our teeth on edge. &#x2018;Pansy&#x2019;s ready&#x2019;, we learn to our considerable interest (&#x2018;Is she?&#x2019;) as we browse among the bedding plants.&lt;/p&gt;
+        &lt;p&gt;It is not only the rules of punctuation that have come under attack but also a sense of why they matter. In this runaway bestseller, Lynne Truss takes the fight to emoticons and greengrocers&#x2019; apostrophes with a war cry of &#x2018;Sticklers unite!&#x2019;&lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;Anxious about the apostrophe? Confused by the comma? Stumped by the semicolon? Join Lynne Truss on a hilarious tour through the rules of punctuation that is sure to sort the dashes from the hyphens.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;Lynne Truss is one of Britain's best-loved comic writers and is the author of the worldwide bestsellers &#x2018;Eats, Shoots &amp;amp; Leaves&#x2019; and &#x2018;Talk to the Hand&#x2019;. Her most recent book is &#x2018;Get Her Off the Pitch!&#x2019; She reviews for the Sunday Times and writes regularly for radio.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>HarperCollins Publishers</name>
+    <username>harpercollins_uk</username>
+    <imprint>Fourth Estate</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>6.95</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>3.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>14.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>7.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>11.12</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BIC" main="true">WH</subject>
+    <subject type="BISAC" main="true">HUM000000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-05-26</publishedOn>
+  <announcedOn>2011-05-06</announcedOn>
+  <modifiedAt>2014-06-27 14:56:58 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AN</region>
+    <region>AO</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AU</region>
+    <region>AW</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BW</region>
+    <region>BY</region>
+    <region>BZ</region>
+    <region>CA</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CM</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EG</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GL</region>
+    <region>GM</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>JP</region>
+    <region>KE</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KI</region>
+    <region>KM</region>
+    <region>KN</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LC</region>
+    <region>LI</region>
+    <region>LK</region>
+    <region>LR</region>
+    <region>LS</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MX</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NG</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>NZ</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PH</region>
+    <region>PK</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PN</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SE</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SI</region>
+    <region>SK</region>
+    <region>SL</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SO</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TO</region>
+    <region>TR</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TW</region>
+    <region>TZ</region>
+    <region>UA</region>
+    <region>UG</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VC</region>
+    <region>VE</region>
+    <region>VG</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>YT</region>
+    <region>RS</region>
+    <region>ME</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/007/431/595/0b37656e30ec10c9cd16021ab51c5bba.png</cover>
+    <epub default="true" type="full" size="643064">http://media.blinkboxbooks.com/9780/007/431/595/aef6b170ac3fd05bd9a63c045bfe169e.epub</epub>
+    <epub default="true" type="sample" size="291686">http://media.blinkboxbooks.com/9780/007/431/595/347a181199e5ab0b1b1e0cba47e9a607.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/harpercollins_uk/ebooks/9780007431595.epub</epub>
+  </media>
+</book>

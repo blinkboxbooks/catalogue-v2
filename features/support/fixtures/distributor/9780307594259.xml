@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="e8a9ddddf54662538f1eca851a8dde3b:1-eda29b8a4efea21770e70d82d76409ca" r:version="0.14.3">
+  <isbn>9780307594259</isbn>
+  <title>Once Before Time</title>
+  <contributors>
+    <contributor role="Author" id="7e5f65b0895b75bd52204cc9199dcd55b97c443e">
+      <displayName>Martin Bojowald</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">In 2000, Martin Bojowald, then a twenty-seven-year-old post-doc at Pennsylvania State University, used a relatively new theory called loop quantum gravity&#x2014;a cunning combination of Einstein&#x2019;s theory of gravity with quantum mechanics&#x2014;to create a simple model of the universe. Loop quantum cosmology was born, and with it, a theory that managed to do something even Einstein&#x2019;s general theory of relativity had failed to do&#x2014;illuminate the very birth of the universe.&lt;br /&gt;&lt;br /&gt;Ever since, loop quantum cosmology, or LQC, has been tantalizing physicists with the idea that our universe could conceivably have emerged from the collapse of a previous one. Now the theory is poised to formulate hypotheses we can actually test. If they are verified, the big bang will give way to the big bounce. Instead of a universe that emerged from a point of infinite density, we will have one that recycles, possibly through an eternal series of expansions and contractions, with no beginning and no end.&lt;br /&gt;&lt;br /&gt;Bojowald&#x2019;s major realization was that unlike general relativity, the physics of LQC do not break down at the big bang. The greatest mystery surrounding the origin of the universe is what cosmologists call the big bang &#x201C;singularity&#x201D;&#x2014;the point at the beginning of the universe, prior to the existence of space and time, when gravity, along with the temperature and density of the universe, becomes infinite. The equations of general relativity can&#x2019;t cope with such infinities, and as a result big bang theory has never been able to give any explanation for the initial condition of our universe, succeeding only in describing and explaining the evolution of the universe from that instant onward. Bojowald&#x2019;s theory takes us right up to the first moment of the universe&#x2014;and then back, even before the big bang itself.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;i&gt;From the Hardcover edition.&lt;/i&gt;</description>
+    <description format="html" source="Biographical note">Martin Bojowald is an associate professor of physics at Pennsylvania State University&#x2019;s Institute for Gravitation and the Cosmos. Originally from Germany, he now resides in Pennsylvania.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;i&gt;From the Hardcover edition.&lt;/i&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Knopf Doubleday Publishing Group</name>
+    <username>randomhouse_usa</username>
+    <imprint>Vintage</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="true">
+      <amount>11.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>13.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>16.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>16.0</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">SCI055000</subject>
+    <subject type="BISAC">SCI015000</subject>
+    <subject type="BISAC">SCI061000</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2010-11-09</publishedOn>
+  <modifiedAt>2014-07-02 14:36:54 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/307/594/259/a79396147faea6343c32eb88f9200845.png</cover>
+    <epub default="true" type="full" size="4275204">http://media.blinkboxbooks.com/9780/307/594/259/5c36e6de3943be9c06b0bf80b916ffb9.epub</epub>
+    <epub default="true" type="sample" size="2021196">http://media.blinkboxbooks.com/9780/307/594/259/f885e26e913fe3caed869f34ef7f3e98.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_usa/20130904/9780307594259.epub</epub>
+  </media>
+</book>

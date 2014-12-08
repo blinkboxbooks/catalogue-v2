@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="c2edc34117de40b8fba4fa1e6ac64e89:1-c770a2c6598a6ceafd2c45b0648ba46a" r:version="0.14.3">
+  <isbn>9789814390606</isbn>
+  <title>ADVENTURES IN COSMOLOGY</title>
+  <contributors>
+    <contributor role="Edited by" id="7d3cdcae648c8caf4a4b3882672d83045fb3ff6a">
+      <displayName>David Goodstein</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;This volume tells of the quest for cosmology as seen by some of the finest cosmologists in the world. It starts with &#x201C;Galaxy Formation from Start to Finish&#x201D; and ends with &#x201C;The First Supermassive Black Holes in the Universe,&#x201D; exploring in between the grand themes of galaxies, the early universe, expansion of the universe, dark matter and dark energy. This up-to-date collection of review articles offers a general introduction to cosmology and is intended for all probing into the profound questions on where we came from and where we are going.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Sample Chapter(s)&lt;/b&gt;&lt;br /&gt;&lt;a&gt;Chapter 1: Introduction (118 KB)&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;&lt;br /&gt;&lt;b&gt;Contents: &lt;/b&gt;&lt;ul&gt;&lt;li&gt;Galaxy Formation: From Start to Finish &lt;i&gt;(Andrew Benson, California Institute of Technology)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;The Reionization of Cosmic Hydrogen by the First Galaxies &lt;i&gt;(Abraham Loeb, Harvard University)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Clusters of Galaxies &lt;i&gt;(Elena Pierpaoli, University of Southern California)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Reionizing the Universe with the First Sources of Light &lt;i&gt;(Volker Bromm, University of Texas at Austin)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Mapping the Cosmic Dawn &lt;i&gt;(Steven Furlanetto, University of California, Los Angeles)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Neutrino Masses from Cosmology &lt;i&gt;(Ofer Lahav and Shaun Thomas, University College London)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Measuring the Expansion Rate of the Universe &lt;i&gt;(Laura Ferrarese, Herzberg Institute of Astrophysics)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Particles as Dark Matter &lt;i&gt;(Dan Hooper, The University of Chicago)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Detection of WIMP Dark Matter &lt;i&gt;(Sunil Golwala, California Institute of Technology &amp;amp; Dan McKinsey, Yale University)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;The Accelerating Universe &lt;i&gt;(Dragan Huterer, University of Michigan)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;Frontiers of Dark Energy &lt;i&gt;(Eric V Linder, University of California, Berkeley and Ewha Womans University)&lt;/i&gt;&lt;/li&gt;&lt;li&gt;The First Supermassive Black Holes in the Universe &lt;i&gt;(Xiaohui Fan, University of Arizona)&lt;/i&gt;&lt;/li&gt;&lt;/ul&gt;&lt;br /&gt;&lt;b&gt;Readership: &lt;/b&gt;Students, researchers and academics interested in cosmology.&lt;br /&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>World Scientific Publishing Company</name>
+    <username>IngramsCoreSource</username>
+    <imprint>WSPC</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>65.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>43.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SGD" agency="false">
+      <amount>68.0</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC">SCI034000</subject>
+    <subject type="BISAC">SCI005000</subject>
+    <subject type="BISAC">SCI015000</subject>
+    <subject type="BIC">PGZ</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-08-25</publishedOn>
+  <modifiedAt>2014-07-09 18:20:11 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9789/814/390/606/9971c0731be886efa0d5d3f80fe3944c.png</cover>
+    <epub default="true" type="full" size="9860524">http://media.blinkboxbooks.com/9789/814/390/606/13f14ebcb1d0de34a6a98bcdd3ca9c57.epub</epub>
+    <epub default="true" type="sample" size="1767217">http://media.blinkboxbooks.com/9789/814/390/606/3fd59af901717628d1181825f6f4beca.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/IngramsCoreSource/9789814390606.epub</epub>
+  </media>
+</book>

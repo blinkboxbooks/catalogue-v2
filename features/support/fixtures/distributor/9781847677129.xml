@@ -1,0 +1,417 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="00d42babee935b261125ba5d284b70b7:2-b735ee9e6d6ade50b6cd78bb2ef0857a" r:version="0.14.3">
+  <isbn>9781847677129</isbn>
+  <title>Na&#xEF;ve Super</title>
+  <contributors>
+    <contributor role="Author" id="25a4443e183364601f0c31ab5a76d31ac3280b6a">
+      <displayName>Erlend Loe</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="text" source="Main description">Troubled by an inability to find any meaning in his life, the 25-year-old narrator of this deceptively simple novel quits university and eventually arrives at his brother's New York apartment.
+In a bid to discover what life is all about, he writes lists. He becomes obsessed by time and whether it actually matters. He faxes his meteorologist friend. He endlessly bounces a ball against the wall. He befriends a small boy who lives next door.
+He yearns to get to the bottom of life and how best to live it.
+Funny, friendly, enigmatic and frequently poignant - superbly naive.</description>
+  </descriptions>
+  <publisher>
+    <name>Canongate Books</name>
+    <username>Canongate_Books</username>
+    <imprint>Canongate Books</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>9.16</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>10.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>12.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>9.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>38</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>45</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>5.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>6.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="INR" agency="true">
+      <amount>399</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="INR" agency="true">
+      <amount>399</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="INR" agency="true">
+      <amount>399</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>40.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>49</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="PHP" agency="true">
+      <amount>345</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="PHP" agency="true">
+      <amount>414</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>49.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>59</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>7.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>9</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="JPY" agency="true">
+      <amount>639</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="JPY" agency="true">
+      <amount>767</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC">FIC000000</subject>
+    <subject type="BIC">FA</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-12-01</publishedOn>
+  <modifiedAt>2014-06-27 14:54:56 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AN</region>
+    <region>AO</region>
+    <region>AQ</region>
+    <region>AR</region>
+    <region>AS</region>
+    <region>AT</region>
+    <region>AU</region>
+    <region>AW</region>
+    <region>AX</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BL</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BV</region>
+    <region>BW</region>
+    <region>BY</region>
+    <region>BZ</region>
+    <region>CA</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CM</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EG</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GL</region>
+    <region>GM</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GS</region>
+    <region>GT</region>
+    <region>GU</region>
+    <region>GW</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>HM</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>JP</region>
+    <region>KE</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KI</region>
+    <region>KM</region>
+    <region>KN</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LC</region>
+    <region>LI</region>
+    <region>LK</region>
+    <region>LR</region>
+    <region>LS</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MF</region>
+    <region>MG</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MP</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MX</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NG</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>NZ</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PH</region>
+    <region>PK</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PN</region>
+    <region>PR</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RS</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SE</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SI</region>
+    <region>SJ</region>
+    <region>SK</region>
+    <region>SL</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SO</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TO</region>
+    <region>TR</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TW</region>
+    <region>TZ</region>
+    <region>UA</region>
+    <region>UG</region>
+    <region>UM</region>
+    <region>US</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VC</region>
+    <region>VE</region>
+    <region>VG</region>
+    <region>VI</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>YT</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/847/677/129/4270d36391d50a6aaa4cbfccef02a8e8.png</cover>
+    <epub default="true" type="full" size="809942">http://media.blinkboxbooks.com/9781/847/677/129/1c091854cffd1640def9756ca2c73bac.epub</epub>
+    <epub default="true" type="sample" size="108197">http://media.blinkboxbooks.com/9781/847/677/129/cc2b72fb677d3e14fd47fba2536e65ac.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/Canongate_Books/from_ftp/epubs/60_9781847677129.epub</epub>
+  </media>
+</book>

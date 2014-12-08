@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="643914db4edc9c5966787d174648ed5c:1-f9aed97fe83d15befea6329f71a3410c" r:version="0.14.3">
+  <isbn>9781448164653</isbn>
+  <title>The Book Of The Eclipse</title>
+  <contributors>
+    <oneLine>David Ovason</oneLine>
+    <contributor role="Author" id="599bea081cd9c03ea17d7071e9989b3d3bc53052">
+      <displayName>David Ovason</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;As David Ovason shows, eclipse have always marked turning points in history and in the lives of individuals: the foundation of Rome, the crucifixion, the saving of the live of Christopher Columbus, the foundation of Washington DC, the death of Diana, Princess of Wales and even the future fall from grace of President Clinton are among Ovason's many examples. Ovason also shows how stone circles were linked to eclipses and how these events have always been supposed by initiates to create shadow-tunnels into the spiritual world, allowing special possibilities of communication with the spiritual world.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;David Ovason has published numerous books in the arcane field. His first, a study of the secret texts of the French prophet, Nostradamus, &lt;i&gt;The Nostradamus Code&lt;/i&gt;, has been hailed as a masterpiece of its kind. His second work, &lt;i&gt;The Zelator&lt;/i&gt;, presents the fascinating autobiography of the magus, Mark Hedsel - a personal story which tells of the tribulations and triumphs experienced by a man who sought initiation in the modern world. More recently he has written &lt;i&gt;Nostradamus: Prophecies for America&lt;/i&gt;,&lt;i&gt; The Secret Symbolism of the Dollar Bill&lt;/i&gt; and &lt;i&gt;The History of the Horoscope&lt;/i&gt;.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Random House</name>
+    <username>randomhouse_uk</username>
+    <imprint>Cornerstone Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>8.74</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>7.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>8.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>8.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>12.79</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>12.79</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>7.41</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>8.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>37.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>45.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>40.83</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>49.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>11.3</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>12.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>45.83</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>55.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>8.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.3</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>6.08</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>3.74</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.49</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">REF000000</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-10-31</publishedOn>
+  <modifiedAt>2014-07-15 16:31:20 UTC</modifiedAt>
+  <regions>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AQ</region>
+    <region>DZ</region>
+    <region>AS</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AR</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BH</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BT</region>
+    <region>BO</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BV</region>
+    <region>BR</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>KH</region>
+    <region>CM</region>
+    <region>CA</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>TW</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>CO</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>CR</region>
+    <region>HR</region>
+    <region>CU</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>EC</region>
+    <region>SV</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>GF</region>
+    <region>PF</region>
+    <region>TF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>PS</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GL</region>
+    <region>GD</region>
+    <region>GP</region>
+    <region>GU</region>
+    <region>GT</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>HT</region>
+    <region>HM</region>
+    <region>VA</region>
+    <region>HN</region>
+    <region>HK</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>ID</region>
+    <region>IR</region>
+    <region>IQ</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>JP</region>
+    <region>KZ</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KG</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LY</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MX</region>
+    <region>MC</region>
+    <region>MN</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MA</region>
+    <region>MZ</region>
+    <region>OM</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>CW</region>
+    <region>AW</region>
+    <region>SX</region>
+    <region>BQ</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NI</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MP</region>
+    <region>UM</region>
+    <region>FM</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PA</region>
+    <region>PG</region>
+    <region>PY</region>
+    <region>PE</region>
+    <region>PH</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>PR</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>BL</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>MF</region>
+    <region>PM</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SA</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SG</region>
+    <region>SK</region>
+    <region>VN</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>EH</region>
+    <region>SD</region>
+    <region>SR</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>SY</region>
+    <region>TJ</region>
+    <region>TH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>AE</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TM</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>EG</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>US</region>
+    <region>VI</region>
+    <region>BF</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VE</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/448/164/653/ada2896843b6891c71c77fc7895b1a82.png</cover>
+    <epub default="true" type="full" size="14886360">http://media.blinkboxbooks.com/9781/448/164/653/483f7ff083dc405c1b254f814136f37f.epub</epub>
+    <epub default="true" type="sample" size="3406562">http://media.blinkboxbooks.com/9781/448/164/653/e04b951c602268dbaa25eeca0276815f.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/20131023/9781448164653.epub</epub>
+  </media>
+</book>

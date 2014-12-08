@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="e338856bbb12327e4794b9bdaebbc202:6-c66a680a7faa2e9ada7f7b9cfc05287d" r:version="0.14.3">
+  <isbn>9780191648779</isbn>
+  <title>Einstein's Physics: Atoms, Quanta, and Relativity - Derived, Explained, and Appraised</title>
+  <contributors>
+    <contributor role="Author" id="f0dfa9f1fb3d2b2295aae8fb927a83698a90b4ec">
+      <displayName>Ta-Pei Cheng</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">Many regard Albert Einstein as the greatest physicist since Newton. What exactly did he do that is so important in physics? We provide an introduction to his physics at a level accessible to an undergraduate physics student. All equations are worked out in detail from the beginning. 
+
+Einstein's doctoral thesis and his Brownian motion paper were decisive contributions to our understanding of matter as composed of molecules and atoms. Einstein was one of the founding fathers of quantum theory: his photon proposal through the investigation of blackbody radiation, his quantum theory of photoelectric effect and specific heat, his calculation of radiation fluctuation giving the first statement of wave-particle duality, his introduction of probability in the description of quantum
+radiative transitions, and finally the quantum statistics and Bose-Einstein condensation. Einstein's special theory of relativity gave us the famous E=mc&#xC2;&#xB2; relation and the new kinematics leading to the idea of the 4-dimensional spacetime as the arena in which physical events take place. Einstein's
+geometric theory of gravity, general relativity, extends Newton's theory to time-dependent and strong gravitational fields. It laid the ground work for the study of black holes and cosmology. 
+
+This is a physics book with material presented in the historical context. We do not stop at Einstein's discovery, but carry the discussion onto some of the later advances: Bell's theorem, quantum field theory, gauge theories and Kaluza-Klein unification in a spacetime with an extra spatial dimension. 
+
+Accessibility of the material to a modern-day reader is the goal of our presentation. Although the book is written with primarily a physics readership in mind (it can also function as a textbook), enough pedagogical support material is provided that anyone with a solid background in introductory physics can, with some effort, understand a good part of this presentation.</description>
+    <description format="html" source="Short description/annotation">Many regard Albert Einstein as the greatest physicist since Newton. What exactly did he do that is so important in physics? We provide an introduction to his physics at a level accessible to an undergraduate physics student. All equations are worked out in detail from the beginning.</description>
+  </descriptions>
+  <publisher>
+    <name>OUP Oxford</name>
+    <username>oxford_press_academic</username>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>24.99</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">SCI061000</subject>
+    <subject type="BIC">PHU</subject>
+    <subject type="BIC">PDX</subject>
+    <subject type="BIC">PG</subject>
+    <subject type="BIC">PHM</subject>
+    <subject type="BIC">PHQ</subject>
+    <subject type="BIC">PGK</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-01-31</publishedOn>
+  <modifiedAt>2014-06-27 14:20:22 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/191/648/779/9fe7d12b370424937825843f75f3920c.png</cover>
+    <epub default="true" type="full" size="37089836">http://media.blinkboxbooks.com/9780/191/648/779/7c9e14408a54600877e03b5dbecf54c7.epub</epub>
+    <epub default="true" type="sample" size="20127233">http://media.blinkboxbooks.com/9780/191/648/779/637a8617d1647b4246b841283e44d5c8.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/oxford_press_academic/01-22-2014/epub/9780191648779.epub</epub>
+  </media>
+</book>

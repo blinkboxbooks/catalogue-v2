@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="deff0736bcd26d44a609c11aba1b8063:1-296626935af4deb7dbd1b2899cdd642f" r:version="0.14.3">
+  <isbn>9780141924014</isbn>
+  <title>The Universe Within</title>
+  <contributors>
+    <oneLine>Neil Shubin</oneLine>
+    <contributor role="Author" id="7bf361b9a94b65333529826f936a74936dee85a6">
+      <displayName>Neil Shubin</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;In &lt;i&gt;The Universe Within&lt;/i&gt;, Neil Shubin, one of the world's leading experts, reveals to us the extraordinary cosmic and evolutionary adventure of our own bodies.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+During the past 13.7 billion years (or so) since the Big Bang, our universe has evolved, stars have formed and died and our planet congealed from the matter in space. For aeons, the earth has circled the sun while mountains, seas and entire continents have come and gone. Against this epic backdrop, humanity's place in the cosmos can look tiny and insignificant. But as Neil Shubin shows in this revelatory new book, the one place where universe, solar system and planet merge is inside your body. Shubin shows how the origin of the Moon is tied to our internal body clocks; how the vast amounts of water on Earth and inside all living creatures crossed the deepest stretches of space to us; how strange fluctuations in the orbits within our solar system have led to our irregular ice-ages; and how tiny imbalances in the chaos immediately after the Big Bang can explain why matter exists at all.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+Delving below the earth's surface and into the frozen Arctic, exploring the smallest atomic structures and the vast reaches of space, Neil Shubin uncovers a sublimely beautiful, almost magical truth: that in every one of us lies the most profound story of all - how we and our world came to be.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+'Shubin is not only a distinguished scientist, but a wonderfully lucid and elegant writer; he is an irrepressibly enthusiastic teacher ... a science writer of the first rank', Oliver Sacks&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+Neil Shubin is a palaeontologist in the great tradition of his mentors, Ernst Mayr and Stephen Jay Gould. He has discovered fossils around the world that have changed the way we think about many of the key transitions in evolution and has pioneered a new synthesis of expeditionary palaeontology, developmental genetics and genomics. He trained at Columbia, Harvard and Berkeley and is currently a Professor in the Department of Organismal Biology and Anatomy at the University of Chicago. His previous book is &lt;i&gt;Your Inner Fish: The amazing discovery of our 375-million-year-old ancestor&lt;/i&gt;.&lt;/p&gt;</description>
+    <description format="text" source="Biographical note">Neil Shubin is a palaeontologist in the great tradition of his mentors, Ernst Mayr and Stephen Jay Gould. He has discovered fossils around the world that have changed the way we think about many of the key transitions in evolution and has pioneered a new synthesis of expeditionary palaeontology, developmental genetics and genomics. He trained at Columbia, Harvard and Berkeley and is currently a Professor in the Department of Organismal Biology and Anatomy at the University of Chicago.</description>
+  </descriptions>
+  <publisher>
+    <name>Penguin Books Ltd</name>
+    <username>Penguin_UK</username>
+    <imprint>Penguin</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="true">
+      <amount>6.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BIC">PHVB</subject>
+    <subject type="BIC">PN</subject>
+    <subject type="BIC">WNR</subject>
+    <subject type="BIC">RBG</subject>
+    <subject type="BIC">PH</subject>
+    <subject type="BIC">PD</subject>
+    <subject type="BIC">PS</subject>
+    <subject type="BIC">PGK</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-01-08</publishedOn>
+  <modifiedAt>2014-08-07 01:30:39 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AO</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AW</region>
+    <region>AX</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BL</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BV</region>
+    <region>BY</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GL</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GS</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>HM</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IO</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JP</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KM</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LI</region>
+    <region>LR</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MF</region>
+    <region>MG</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MP</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MV</region>
+    <region>MX</region>
+    <region>MZ</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RS</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SE</region>
+    <region>SI</region>
+    <region>SJ</region>
+    <region>SK</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TW</region>
+    <region>UA</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VE</region>
+    <region>VI</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>YT</region>
+    <region>AG</region>
+    <region>AQ</region>
+    <region>AU</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>CM</region>
+    <region>CY</region>
+    <region>DM</region>
+    <region>EG</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GM</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IQ</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KI</region>
+    <region>KN</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>LC</region>
+    <region>LK</region>
+    <region>LS</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>NA</region>
+    <region>NG</region>
+    <region>NP</region>
+    <region>NZ</region>
+    <region>PK</region>
+    <region>PN</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SL</region>
+    <region>SO</region>
+    <region>SZ</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TZ</region>
+    <region>UG</region>
+    <region>VC</region>
+    <region>VG</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/141/924/014/6012093ed4923f3844e5b0bcf4efc9a1.png</cover>
+    <epub default="true" type="full" size="3259524">http://media.blinkboxbooks.com/9780/141/924/014/8d86318fff1b0074ca9f6c4ad8d65098.epub</epub>
+    <epub default="true" type="sample" size="934243">http://media.blinkboxbooks.com/9780/141/924/014/678a42ec381186960be25e23f15c5e6d.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/Penguin_UK/IngramsDirect/Penguin/20131107/9780141924014.epub</epub>
+  </media>
+</book>

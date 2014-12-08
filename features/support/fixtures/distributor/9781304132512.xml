@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="a8069b56254d6c574300d81695e22e94:4-bbe978284940b8b0030d3446d8223cee" r:version="0.14.3">
+  <isbn>9781304132512</isbn>
+  <title>Great Expectations</title>
+  <contributors>
+    <contributor role="Author" id="1d1f0d88a461e2e143c44c7736460c663c27ef3b">
+      <displayName>Charles Dickens</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;Great Expectations by Charles Dickens follows the life of Pip, an orphan who is a semi-autobiographical representation of Dickens himself. The novel is considered a bildungsroman, or a coming of age story, which follows a protagonist from childhood into maturity. &lt;/p&gt;&amp;#13;
+&lt;p&gt;At the age of 7 Pip assists an escaped convict by stealing a pie for him to eat, some brandy to drink, and a file for him to cut off his shackles. The convict would eventually show his gratitude by granting Pip a sum of money made in far off Australia, which is meant for him to learn to lead the life of a gentleman. Through various deft Dickensian plot twists the boy squanders his money, and through the cursed fate of the convict his "great expectations" are snuffed out. Yet, in the manner of the coming of age novel, Pip finally ascends to manhood.&lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;Great Expectations by Charles Dickens follows the life of Pip, an orphan who is a semi-autobiographical representation of Dickens himself.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Sheba Blake Publishing</name>
+    <username>epubdirect</username>
+    <imprint>Sheba Blake Publishing</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>3.13</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>3.68</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>5.18</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>3.13</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>3.68</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>5.18</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>3.76</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC000000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-10-11</publishedOn>
+  <modifiedAt>2014-01-20 21:29:21 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/304/132/512/d49e896d644d3614d186ece874462bbe.png</cover>
+    <epub default="true" type="full" size="598973">http://media.blinkboxbooks.com/9781/304/132/512/3ad26c82d704f56b4dd552c4f0d70ce8.epub</epub>
+    <epub default="true" type="sample" size="186097">http://media.blinkboxbooks.com/9781/304/132/512/0369e4357d89f4ee6bb9e021f424ff72.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/epubdirect/20131127/9781304132512.epub</epub>
+  </media>
+</book>

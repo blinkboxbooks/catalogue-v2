@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="c2edc34117de40b8fba4fa1e6aae0544:1-aad696d838c957248a5caa3434a7e979" r:version="0.14.3">
+  <isbn>9781400834341</isbn>
+  <title>Angina Days</title>
+  <contributors>
+    <contributor role="Author" id="9a73f342c33e0e26bf1eae29c7f9500a16195a4a">
+      <displayName>G&#xFC;nter Eich</displayName>
+    </contributor>
+    <contributor role="Translated by" id="46cad81c1ece44bfeb85f4848a3da5e7a3df1cf9">
+      <displayName>Michael Hofmann</displayName>
+    </contributor>
+    <contributor role="Introduction by" id="46cad81c1ece44bfeb85f4848a3da5e7a3df1cf9">
+      <displayName>Michael Hofmann</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;This is the most comprehensive English translation of the work of G&#xFC;nter Eich, one of the greatest postwar German poets. The author of the POW poem "Inventory," among one of the most famous lyrics in the German language, Eich was rivaled only by Paul Celan as the leading poet in the generation after Gottfried Benn and Bertolt Brecht. Expertly translated and introduced by Michael Hofmann, this collection gathers eighty poems, many drawn from Eich's later work and most of them translated here for the first time. The volume also includes the original German texts on facing pages.&lt;/p&gt; &lt;p&gt; As an early member of "Gruppe 47" (from which G&#xFC;nter Grass and Heinrich B&#xF6;ll later shot to prominence), Eich (1907-72) was at the vanguard of an effort to restore German as a language for poetry after the vitriol, propaganda, and lies of the Third Reich. Short and clear, these are timeless poems in which the ominousness of fairy tales meets the delicacy and suggestiveness of Far Eastern poetry. In his late poems, he writes frequently, movingly, and often wryly of infirmity and illness. "To my mind," Hofmann writes, "there's something in Eich of Paul Klee's pictures: both are homemade, modest in scale, immediately delightful, inventive, cogent."&lt;/p&gt; &lt;p&gt; Unjustly neglected in English, Eich finds his ideal translator here.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Princeton University Press</name>
+    <username>IngramsCoreSource</username>
+    <imprint>Princeton University Press</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>24.95</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">POE005030</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2010-04-19</publishedOn>
+  <modifiedAt>2014-07-09 18:28:15 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/400/834/341/b841a050b9e94f9474d94e091eb7ce6a.png</cover>
+    <epub default="true" type="full" size="294808">http://media.blinkboxbooks.com/9781/400/834/341/2c277a5ef495d24a0051491550f697bb.epub</epub>
+    <epub default="true" type="sample" size="145415">http://media.blinkboxbooks.com/9781/400/834/341/72208c047860f02ffb761778a42d8889.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/IngramsCoreSource/Princeton/9781400834341.epub</epub>
+  </media>
+</book>

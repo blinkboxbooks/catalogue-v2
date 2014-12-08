@@ -1,0 +1,425 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="32a4f4675d58998edc7f435d683bd8fd:1-9d5bdc8e54b492b603ea7e886173e532" r:version="0.14.3">
+  <isbn>9781845969318</isbn>
+  <title>Darragh</title>
+  <contributors>
+    <oneLine>Darragh &#xD3; S&#xE9;</oneLine>
+    <contributor role="Author" id="266096f1902d43b3b46c33d527898edb6c2f700b">
+      <displayName>Darragh &#xD3; S&#xE9;</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;For 16 years, Darragh &#xD3; S&#xE9; wore the number 8 jersey for Gaelic football's most celebrated county, stoking the fires in Kerry's engine room. With six All Ireland medals, he is the most decorated footballer of the modern era.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Darragh's name is synonymous with his county's unrelenting appetite for success, but throughout his illustrious career he has held his counsel, allowing his football to do the talking. Until now.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;This is the story of a modern Kerry icon. Uncompromising, passionate and possessing a savage wit, Darragh talks openly for the first time about his life in the green and gold, and about his constant drive to succeed.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Elsewhere in the book, he details his setbacks, reflects on a family tragedy and reveals how his upbringing on the fringe of west Kerry helped shape his character, steeling him for a career in the toughest position in Gaelic football. &lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;This is the story of Darragh &#xD3; S&#xE9; - the life of a legend.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;&lt;b&gt;Darragh &#xD3; S&#xE9;&lt;/b&gt; played in midfield for Kerry from 1994 to 2009, during which time he made a record-breaking 176 championship appearances. &lt;b&gt;Ewan MacKenna&lt;/b&gt; is an acclaimed Irish sportswriter and co-author of T&lt;i&gt;he Gambler: Ois&#xED;n McConville's Story, &lt;/i&gt;as well as Kenneth Egan's autobiography.&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;Longlisted for the 2010 William Hill Sports Book of the Year Award&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Mainstream Publishing</name>
+    <username>randomhouse_uk</username>
+    <imprint>Mainstream Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>6.66</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>7.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>11.24</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>9.37</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>9.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>10.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>16.45</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>16.45</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>9.26</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>10.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>49.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>59.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>54.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>65.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>13.03</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>14.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>57.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>69.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>10.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>9.38</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.58</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.49</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">BIO016000</subject>
+    <subject type="BISAC">SPO040000</subject>
+    <subject type="BIC">WSJA</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-03-11</publishedOn>
+  <modifiedAt>2014-08-12 10:48:19 UTC</modifiedAt>
+  <regions>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AQ</region>
+    <region>DZ</region>
+    <region>AS</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AR</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BH</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BT</region>
+    <region>BO</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BV</region>
+    <region>BR</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>KH</region>
+    <region>CM</region>
+    <region>CA</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>TW</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>CO</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>CR</region>
+    <region>HR</region>
+    <region>CU</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>EC</region>
+    <region>SV</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>GF</region>
+    <region>PF</region>
+    <region>TF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>PS</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GL</region>
+    <region>GD</region>
+    <region>GP</region>
+    <region>GU</region>
+    <region>GT</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>HT</region>
+    <region>HM</region>
+    <region>VA</region>
+    <region>HN</region>
+    <region>HK</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>ID</region>
+    <region>IR</region>
+    <region>IQ</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>JP</region>
+    <region>KZ</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KG</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LY</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MX</region>
+    <region>MC</region>
+    <region>MN</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MA</region>
+    <region>MZ</region>
+    <region>OM</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>CW</region>
+    <region>AW</region>
+    <region>SX</region>
+    <region>BQ</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NI</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MP</region>
+    <region>UM</region>
+    <region>FM</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PA</region>
+    <region>PG</region>
+    <region>PY</region>
+    <region>PE</region>
+    <region>PH</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>PR</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>BL</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>MF</region>
+    <region>PM</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SA</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SG</region>
+    <region>SK</region>
+    <region>VN</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>EH</region>
+    <region>SD</region>
+    <region>SR</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>SY</region>
+    <region>TJ</region>
+    <region>TH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>AE</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TM</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>EG</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>US</region>
+    <region>VI</region>
+    <region>BF</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VE</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/845/969/318/7bb8400edefa24648d12b5f9709d7027.png</cover>
+    <epub default="true" type="full" size="262830">http://media.blinkboxbooks.com/9781/845/969/318/f98a9e968d6b021c432b3469a15f152f.epub</epub>
+    <epub default="true" type="sample" size="97116">http://media.blinkboxbooks.com/9781/845/969/318/5a62af56a2b528d9b0b181524d1cd029.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/RH%202011/March%202011/RH%2025th%20March/9781845969318.epub</epub>
+  </media>
+</book>
