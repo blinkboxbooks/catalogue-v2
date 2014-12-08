@@ -17,7 +17,7 @@ case class BookList(books: List[Book], total: Int)
 trait BookDao {
   def getBookByIsbn(isbn: String): Future[Option[Book]]
   def getBooks(isbns: List[String]): Future[List[Book]]
-  def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList]
+  def getBooksByContributor(id: String, minDate: Option[DateTime], maxDate: Option[DateTime], offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList]
   def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[BookList]
 }
 
@@ -121,7 +121,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
       dateQueryParam(BookService.minPubDateParam, minPubDate),
       dateQueryParam(BookService.maxPubDateParam, maxPubDate)
     )
-    val res = dao.getBooksByContributor(id, page.offset, page.count, order.field, order.desc)
+    val res = dao.getBooksByContributor(id, minPubDate, maxPubDate, page.offset, page.count, order.field, order.desc)
     res map { bookList => toListPage(bookList.books, bookList.total, page, linkHelper.contributorPath, Some(params.flatten ++ order.asQueryParams)) }      
   }
   
