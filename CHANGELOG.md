@@ -1,5 +1,20 @@
 
 
+## 0.1.18 ([#28](https://git.mobcastdev.com/Agora/catalogue-v2/pull/28) 2014-12-08 11:11:20)
+
+Cat 16
+
+### Patch
+- Added pagination and sorting
+- Added all v1 links to responses
+- Completed DAO for v1 end-points
+- Reinstated health check end-point
+- Improved code-coverage for service unit-tests
+- Added adapter for creating `linkHelper`
+- Moved all constants into service layer
+- Removed all redundant code
+- General code tarting up
+
 ## 0.1.17 ([#26](https://git.mobcastdev.com/Agora/catalogue-v2/pull/26) 2014-12-02 14:44:21)
 
 CAT-24 - More tests on pagination
