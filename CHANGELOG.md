@@ -1,5 +1,15 @@
 
 
+## 0.1.19 ([#27](https://git.mobcastdev.com/Agora/catalogue-v2/pull/27) 2014-12-08 14:51:29)
+
+Migrate catalogue-service cucumber tests to V2 repository
+
+#### Test improvement
+From https://git.mobcastdev.com/Agora/catalogue-service
+* Migrate features folder (contains features, step_defs, and support code)
+* Migrate config folder (contains data dependencies, environment addresses, cucumber profiles)
+* Migrate Gemfile, Gemfile.lock and Rakefile
+
 ## 0.1.18 ([#28](https://git.mobcastdev.com/Agora/catalogue-v2/pull/28) 2014-12-08 11:11:20)
 
 Cat 16
