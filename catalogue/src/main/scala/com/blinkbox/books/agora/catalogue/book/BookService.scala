@@ -122,7 +122,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
       dateQueryParam(BookService.maxPubDateParam, maxPubDate)
     )
     val res = dao.getBooksByContributor(id, minPubDate, maxPubDate, page.offset, page.count, order.field, order.desc)
-    res map { bookList => toListPage(bookList.books, bookList.total, page, linkHelper.contributorPath, Some(params.flatten ++ order.asQueryParams)) }      
+    res map { bookList => toListPage(bookList.books, bookList.total, page, linkHelper.bookPath, Some(params.flatten ++ order.asQueryParams)) }      
   }
   
   override def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]] = {

@@ -14,9 +14,6 @@ import org.scalatest.FlatSpecLike
 import org.scalatest.Matchers
 import com.blinkbox.books.spray.v1.{Image => SprayImage, Link}
 import com.blinkbox.books.spray.{Page, SortOrder}
-import java.net.URL
-import java.net.URI
-import spray.http.HttpRequest
 
 @RunWith(classOf[JUnitRunner])
 class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyrup with ScalaFutures {
@@ -147,6 +144,31 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     }
   }
   
+  private def checkLinks(links: Option[List[Link]], expected: Map[String, String]) = {
+    // Order actual links by name
+    val map = links.getOrElse(fail("No links")).map(link => (link.rel, link.href)).toMap
+    
+    expected.foreach { expectedLink =>
+      // Convert to URI
+      val actualUri = spray.http.Uri(map.getOrElse(expectedLink._1, fail(s"Expected link: ${expectedLink._1}")))
+      val expectedUri = spray.http.Uri(expectedLink._2)
+      
+      // Check path
+      assert(expectedUri.path == actualUri.path)
+
+      // Check query parameters (note there can be multiple parameters with the same key)
+      expectedUri.query.toSeq.foreach { param =>
+        assert(actualUri.query.getAll(param._1).contains(param._2), s"Expected query param: ${param._1}")
+      }
+
+      // Check correct number of query parameters
+      assert(actualUri.query.toSeq.size == expectedUri.query.toSeq.size, s"Mis-matched number of query parameters: ${actualUri}")
+    }
+    
+    // Check correct number of links
+    assert(map.size == expected.size, s"Mis-matched number of links:${map}")
+  }
+  
   it should "return bulk books" in {
     val isbns = List.fill(7)("isbn")
     when(dao.getBooks(isbns)).thenReturn(Future.successful(List.fill(7)(book)))
@@ -158,7 +180,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(None == listPage.links)
     }
   }
-  
+
   it should "return paginated bulk books results" in {
     when(dao.getBooks(List("2"))).thenReturn(Future.successful(List(book)))
     whenReady(service.getBooks(List("1", "2", "3"), Page(1, 1))) { listPage =>
@@ -167,10 +189,10 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(1 == listPage.count)
       assert(1 == listPage.items.size, "Page size")
       assert(List(expected) == listPage.items)
-      // TODO - verify links
-      //val prev = Link("prev", "catalogue/books?id=1&id=2&id=3&count=1&offset=0", None, None)
-      //val next = Link("next", "catalogue/books?id=1&id=2&id=3&count=1&offset=2", None, None)
-      //assert(Some(Set(prev, next)) == listPage.links.map(_.toSet))
+      checkLinks(listPage.links,Map(
+        "prev" -> "catalogue/books?id=1&id=2&id=3&count=1&offset=0",
+        "next"-> "catalogue/books?id=1&id=2&id=3&count=1&offset=2"
+      ))
     }
   }
 
@@ -184,8 +206,9 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(1 == listPage.count)
       assert(1 == listPage.items.size, "Page size")
       assert(List(expected) == listPage.items)
-      // TODO - verify links
-      //assert(Some(Set(Link("next", "catalogue/contributor?contributor=id&order=title&"))) == listPages.links.map(_.toSet))
+      checkLinks(listPage.links,Map(
+        "next"-> "catalogue/books?contributor=id&order=title&desc=true&count=1&offset=1"
+      ))
     }
   }
   
@@ -198,8 +221,9 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(1 == listPage.count)
       assert(1 == listPage.items.size, "Page size")
       assert(List(expected) == listPage.items)
-      // TODO - verify links
-      //assert(Some(Set("")) == listPages.links.map(_.toSet))
+      checkLinks(listPage.links,Map(
+        "next"-> "catalogue/isbn/related?count=1&offset=1"
+      ))
     }
   }
 }

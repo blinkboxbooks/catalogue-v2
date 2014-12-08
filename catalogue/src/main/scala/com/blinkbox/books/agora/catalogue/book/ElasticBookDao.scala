@@ -57,13 +57,13 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
 
   private def mapSortField(field: String): String = sortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
 
-  private def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): RangeFilter = {
+  private def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): Option[RangeFilter] = {
     val range = rangeFilter("dates.publish")
     (minDate, maxDate) match {
-      case (None, None) => null
-      case (Some(start), None) => range.from(minDate)
-      case (None, Some(end)) => range.to(end)
-      case (Some(start), Some(end)) => range.from(start).to(end)
+      case (None, None) => Option.empty
+      case (Some(start), None) => Some(range.from(minDate))
+      case (None, Some(end)) => Some(range.to(end))
+      case (Some(start), Some(end)) => Some(range.from(start).to(end))
     }
   }
 
@@ -82,7 +82,7 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
     val f = dateFilter(minDate, maxDate)
     
     client.execute {
-      if(f == null) query else query.filter(f)
+      dateFilter(minDate, maxDate).map(f => query.filter(f)).getOrElse(query)
     } map toBookList
   }
 
