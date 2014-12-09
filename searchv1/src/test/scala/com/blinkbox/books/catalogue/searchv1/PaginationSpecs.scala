@@ -107,7 +107,10 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
   "More Like This pagination" should "return 10 elements if no count is provided" in {
     Get("/catalogue/search/books/0000000000001/similar") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      responseAs[BookSimilarResponse].books.size should equal(10)
+
+      val resp = responseAs[BookSimilarResponse]
+      resp.numberOfResults should equal(99)
+      resp.books.size should equal(10)
     }
   }
 
@@ -115,6 +118,9 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
   it should "return the specified number of elements if a count is provided" in {
     Get("/catalogue/search/books/0000000000001/similar?count=5") ~> routes ~> check {
       status should equal(StatusCodes.OK)
+
+      val resp = responseAs[BookSimilarResponse]
+      resp.numberOfResults should equal(99)
       responseAs[BookSimilarResponse].books.size should equal(5)
     }
   }
@@ -122,14 +128,20 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
   it should "observe the offset parameter when provided" in {
     Get("/catalogue/search/books/0000000000001/similar?offset=94") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      responseAs[BookSimilarResponse].books.size should equal(5)
+
+      val resp = responseAs[BookSimilarResponse]
+      resp.numberOfResults should equal(99)
+      resp.books.size should equal(5)
     }
   }
 
   it should "observe offset and count parameters if both are provided" in {
     Get("/catalogue/search/books/0000000000001/similar?offset=79&count=25") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      responseAs[BookSimilarResponse].books.size should equal(20)
+
+      val resp = responseAs[BookSimilarResponse]
+      resp.numberOfResults should equal(99)
+      resp.books.size should equal(20)
     }
   }
 
