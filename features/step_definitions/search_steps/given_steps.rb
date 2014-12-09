@@ -23,12 +23,9 @@ Given(/^the search query is "([^"]*)"$/) do |term|
 end
 
 Given(/^the search queries are$/) do |table|
+  @search_query = table.raw.flatten.first
   @responses = []
-  table.hashes.each do |term|
-    @search_query = term
-    @responses.push(search_for_books(term))
-  end
-  @response = search_for_books(table.hashes.first)
+  table.raw.flatten.each { |term| @responses.push(search_for_books(term)) }
 end
 
 Given(/^I have entered the query "([^"]*)"$/) do |term|
