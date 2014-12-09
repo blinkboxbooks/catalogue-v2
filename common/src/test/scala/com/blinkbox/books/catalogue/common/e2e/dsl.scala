@@ -8,7 +8,8 @@ import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse
 import org.scalatest.concurrent.ScalaFutures
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 
 object Blank
 case class E2EContext[+T](client: ElasticClient, indexer: EsIndexer, state: T)
@@ -36,6 +37,8 @@ trait E2EDsl
 
   implicit class FutureOps[T](context: E2EContext[Future[T]])(implicit ec: ExecutionContext) {
     def andAfter(block: T => Unit): Unit = whenReady(context.state) { res => block(res) }
+    
+    def andAwaitFor(atMost: Duration): Unit = Await.ready(context.state, atMost)
 
     def should[Out](o: Outcome[Out]): Out = o match {
       case Outcome.Succeed => context andAfter(_ => ())
