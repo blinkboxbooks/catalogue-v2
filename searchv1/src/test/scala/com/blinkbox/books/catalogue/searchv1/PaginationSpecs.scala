@@ -2,6 +2,9 @@ package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse, BookSimilarResponse, BookSuggestionResponse}
+import com.blinkbox.books.spray.v1.Link
+import org.json4s.Extraction
+import org.json4s.JsonAST._
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
 
@@ -13,7 +16,17 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
-    populateIndex(100) andAwaitFor(10.seconds)
+    populateIndex(100) andAwaitFor (10.seconds)
+  }
+
+  def checkLinks(response: JObject, hasPrev: Boolean = false, hasNext: Boolean = false): Unit = {
+    val links = responseAs[JObject] \ "links"
+    links shouldBe a [JArray]
+
+    val deserialisedLinks = Extraction.extract[Seq[Link]](links)
+    deserialisedLinks.find(_.rel == "this") shouldBe defined
+    if (hasNext) deserialisedLinks.find(_.rel == "next") shouldBe defined
+    if (hasPrev) deserialisedLinks.find(_.rel == "prev") shouldBe defined
   }
 
   "Search pagination" should "provide 50 books per page if no parameter is specified" in {
@@ -24,6 +37,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
       resp.numberOfResults should equal(100)
       resp.books.size should equal(50)
+
+      checkLinks(responseAs[JObject], hasNext = true)
     }
   }
 
@@ -35,6 +50,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
       resp.numberOfResults should equal(100)
       resp.books.size should equal(10)
+
+      checkLinks(responseAs[JObject], hasPrev = true)
     }
   }
 
@@ -46,6 +63,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
       resp.numberOfResults should equal(100)
       resp.books.size should equal(5)
+
+      checkLinks(responseAs[JObject], hasNext = true)
     }
   }
 
@@ -57,6 +76,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
       resp.numberOfResults should equal(100)
       resp.books.size should equal(5)
+
+      checkLinks(responseAs[JObject], hasPrev = true)
     }
   }
 
@@ -111,6 +132,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
       val resp = responseAs[BookSimilarResponse]
       resp.numberOfResults should equal(99)
       resp.books.size should equal(10)
+
+      checkLinks(responseAs[JObject], hasNext = true)
     }
   }
 
@@ -122,6 +145,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
       val resp = responseAs[BookSimilarResponse]
       resp.numberOfResults should equal(99)
       responseAs[BookSimilarResponse].books.size should equal(5)
+
+      checkLinks(responseAs[JObject], hasNext = true)
     }
   }
 
@@ -132,6 +157,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
       val resp = responseAs[BookSimilarResponse]
       resp.numberOfResults should equal(99)
       resp.books.size should equal(5)
+
+      checkLinks(responseAs[JObject], hasPrev = true)
     }
   }
 
@@ -142,6 +169,8 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
       val resp = responseAs[BookSimilarResponse]
       resp.numberOfResults should equal(99)
       resp.books.size should equal(20)
+
+      checkLinks(responseAs[JObject], hasPrev = true)
     }
   }
 

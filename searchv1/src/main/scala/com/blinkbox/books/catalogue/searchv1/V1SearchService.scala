@@ -24,8 +24,20 @@ object V1SearchService {
   case class Book(id: String, title: String, authors: List[String])
   case class Suggestion(id: String, title: String, `type`: String, authors: Option[List[String]])
 
-  case class BookSearchResponse(id: String, books: Seq[Book], numberOfResults: Long, `type`: String = bookSearchResponseType)
-  case class BookSimilarResponse(books: Seq[Book], numberOfResults: Long, `type`: String = bookSimilarResponseType)
+  /*
+   * TODO: Try using ExplicitTypeHints rather than the `type` parameter as in
+   * https://git.mobcastdev.com/Agora/library-service/blob/master/src/main/scala/com/blinkbox/books/agora/LibraryApi.scala
+   */
+  trait PaginableResponse { def numberOfResults: Long }
+  case class BookSearchResponse(
+      id: String,
+      books: Seq[Book],
+      numberOfResults: Long,
+      `type`: String = bookSearchResponseType) extends PaginableResponse
+  case class BookSimilarResponse(
+      books: Seq[Book],
+      numberOfResults: Long,
+      `type`: String = bookSimilarResponseType) extends PaginableResponse
   case class BookSuggestionResponse(items: Seq[Suggestion], `type`: String = bookSuggestionResponseType)
 }
 
