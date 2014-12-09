@@ -1,5 +1,13 @@
 
 
+## 0.1.20 ([#29](https://git.mobcastdev.com/Agora/catalogue-v2/pull/29) 2014-12-09 10:22:32)
+
+Cat 16
+
+### Patch
+- Implemented date-range filtering
+- Minor changes following previous review
+
 ## 0.1.19 ([#27](https://git.mobcastdev.com/Agora/catalogue-v2/pull/27) 2014-12-08 14:51:29)
 
 Migrate catalogue-service cucumber tests to V2 repository
