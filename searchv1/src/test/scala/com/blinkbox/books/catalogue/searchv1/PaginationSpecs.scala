@@ -1,183 +1,153 @@
 package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.BookFixtures
-import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSimilarResponse, BookSuggestionResponse, BookSearchResponse}
-import com.sksamuel.elastic4s.{CompletionSuggestionDefinition, GetDefinition}
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse, BookSimilarResponse, BookSuggestionResponse}
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
+
+import scala.concurrent.duration._
 
 class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   def populateIndex(howManyBooks: Int) = catalogueIndex indexAndCheck(BookFixtures.dummyBooks(howManyBooks).toSeq: _*)
 
+  override def beforeAll(): Unit = {
+    super.beforeAll()
+    populateIndex(100) andAwaitFor(10.seconds)
+  }
+
   "Search pagination" should "provide 50 books per page if no parameter is specified" in {
-    populateIndex(60) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
+    Get("/catalogue/search/books?q=dummy") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
 
-        val resp = responseAs[BookSearchResponse]
+      val resp = responseAs[BookSearchResponse]
 
-        resp.numberOfResults should equal(60)
-        resp.books.size should equal(50)
-      }
+      resp.numberOfResults should equal(100)
+      resp.books.size should equal(50)
     }
   }
 
   it should "allow access to the second page of results if only the offset parameter is provided" in {
-    populateIndex(60) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&offset=50") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
+    Get("/catalogue/search/books?q=dummy&offset=90") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
 
-        val resp = responseAs[BookSearchResponse]
+      val resp = responseAs[BookSearchResponse]
 
-        resp.numberOfResults should equal(60)
-        resp.books.size should equal(10)
-      }
+      resp.numberOfResults should equal(100)
+      resp.books.size should equal(10)
     }
   }
 
   it should "allow selecting the page size" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&count=5") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
+    Get("/catalogue/search/books?q=dummy&count=5") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
 
-        val resp = responseAs[BookSearchResponse]
+      val resp = responseAs[BookSearchResponse]
 
-        resp.numberOfResults should equal(10)
-        resp.books.size should equal(5)
-      }
+      resp.numberOfResults should equal(100)
+      resp.books.size should equal(5)
     }
   }
 
   it should "allow selecting the page size and the offset at the same time" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&count=5&offset=7") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
+    Get("/catalogue/search/books?q=dummy&count=10&offset=95") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
 
-        val resp = responseAs[BookSearchResponse]
+      val resp = responseAs[BookSearchResponse]
 
-        resp.numberOfResults should equal(10)
-        resp.books.size should equal(3)
-      }
+      resp.numberOfResults should equal(100)
+      resp.books.size should equal(5)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a negative count is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&count=-1") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books?q=dummy&count=-1") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a 0 count is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&count=0") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books?q=dummy&count=0") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a negative offset is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books?q=dummy&offset=-1") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books?q=dummy&offset=-1") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   "Suggestions pagination" should "return 10 results if no limit is provided" in {
-    populateIndex(15) andAfter { _ =>
-      Get("/catalogue/search/suggestions?q=dum") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSuggestionResponse].items.size should equal(10)
-      }
+    Get("/catalogue/search/suggestions?q=dum") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSuggestionResponse].items.size should equal(10)
     }
   }
 
   it should "return a specified number of result if limit is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/suggestions?q=dummy&limit=5") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSuggestionResponse].items.size should equal(5)
-      }
+    Get("/catalogue/search/suggestions?q=dummy&limit=5") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSuggestionResponse].items.size should equal(5)
     }
   }
 
   it should "return a 400 (Bad Request) if a 0 limit is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/suggestions?q=dummy&limit=0") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/suggestions?q=dummy&limit=0") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   it should "return a 400 (Bad Request) if a negative limit is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/suggestions?q=dummy&limit=-1") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/suggestions?q=dummy&limit=-1") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   "More Like This pagination" should "return 10 elements if no count is provided" in {
-    populateIndex(20) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSimilarResponse].books.size should equal(10)
-      }
+    Get("/catalogue/search/books/0000000000001/similar") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSimilarResponse].books.size should equal(10)
     }
   }
 
 
   it should "return the specified number of elements if a count is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?count=5") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSimilarResponse].books.size should equal(5)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?count=5") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSimilarResponse].books.size should equal(5)
     }
   }
 
   it should "observe the offset parameter when provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?offset=4") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSimilarResponse].books.size should equal(5)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?offset=94") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSimilarResponse].books.size should equal(5)
     }
   }
 
   it should "observe offset and count parameters if both are provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?offset=5&count=3") ~> routes ~> check {
-        status should equal(StatusCodes.OK)
-        responseAs[BookSimilarResponse].books.size should equal(3)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?offset=79&count=25") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSimilarResponse].books.size should equal(20)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a negative count is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?count=-1") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?count=-1") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a 0 count is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?count=0") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?count=0") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 
   it should "fail with a 400 (Bad Request) if a negative offset is provided" in {
-    populateIndex(10) andAfter { _ =>
-      Get("/catalogue/search/books/0000000000001/similar?offset=-1") ~> routes ~> check {
-        status should equal(StatusCodes.BadRequest)
-      }
+    Get("/catalogue/search/books/0000000000001/similar?offset=-1") ~> routes ~> check {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 }
