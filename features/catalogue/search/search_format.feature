@@ -8,11 +8,11 @@ Feature: The results returned from the search service are well formatted
   Scenario: Searches include book results
     Given there is at least one book which can be searched for
     When I perform a search for that book
-    Then the response is a list containing at least one book
+    Then the search response is a list containing at least one book
     And the response has the following attributes:
       | attribute       | type    | description                    |
       | numberOfResults | Integer | Number of search results found |
-    And each book has the following attributes:
+    And the search results display the following attributes for each book:
       | attribute | type   | description                             |
       | title     | String | The title of the book                   |
       | id        | String | The ISBN of the book                    |
@@ -26,24 +26,24 @@ Feature: The results returned from the search service are well formatted
     Given there are at least four books which can be searched for
     And I want a maximum of two results
     When I perform a search for a book
-    Then the response is a list containing two books
+    Then the search response is a list containing two books
     
   Scenario: Listing a maximum number of search results, at an offset
     Given there are at least six books which can be searched for
     And I want a maximum of three results at offset two
     When I perform a search for a book
-    Then the response is a list containing three books at offset two
+    Then the search response is a list containing three books at offset two
 
   Scenario: Listing search results with default offset
     Given there are at least two books which can be searched for
     And I want a maximum of one result
     When I perform a search for a book
-    Then the response is a list containing one book at offset zero
+    Then the search response is a list containing one book at offset zero
 
   Scenario: Search responses are cacheable
     Given there is at least one book which can be searched for
     When I perform a search for that book
-    Then the response is a list containing at least one book
+    Then the search response is a list containing at least one book
 
   # We are unable to automatically verify sorting as the information is not returned by the service.
   @manual
@@ -51,7 +51,7 @@ Feature: The results returned from the search service are well formatted
     Given there are at least two books which can be searched for
     And I have specified a sort order of <ordered_by>, <direction>
     When I perform a search for a book
-    Then the response is a list containing at least two book search results ordered by <direction> <ordered_by>
+    Then the search response is a list containing at least two book search results ordered by <direction> <ordered_by>
 
     Examples: Metadata available on request
       | ordered_by       | direction  |
@@ -70,4 +70,4 @@ Feature: The results returned from the search service are well formatted
     Given there are at least two books which can be searched for
     And I have not specified a sort order
     When I perform a search for a book
-    Then the response is a list containing at least two book search results ordered by descending relevance
+    Then the search response is a list containing at least two book search results ordered by descending relevance

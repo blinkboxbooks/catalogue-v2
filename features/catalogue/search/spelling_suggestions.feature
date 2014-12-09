@@ -1,3 +1,4 @@
+@search
 Feature: Spelling Suggestions
   As an application
   I want to suggest spelling corrections to users searches

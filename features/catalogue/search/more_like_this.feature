@@ -8,7 +8,7 @@ Feature: More Like This
   Scenario: Similar Books for a book
     Given there is at least one book which has many similar books
     When I request similar books
-    Then the response is a list containing 10 books
+    Then the search response is a list containing 10 books
 
   Scenario: Similar Books for a prolific author
     Given there is at least one book whose author has written others in the catalogue
@@ -19,13 +19,13 @@ Feature: More Like This
     Given I want a maximum of 5 results
     And there is at least one book which can be searched for
     When I request similar books
-    Then the response is a list containing 5 books
+    Then the search response is a list containing 5 books
 
   Scenario: Offset similar book results
     Given I want a maximum of 5 results at offset 12
     And there is at least one book which has many similar books
     When I request similar books
-    Then the response is a list containing 5 books at offset 12
+    Then the search response is a list containing 5 books at offset 12
 
   Scenario Outline: Bad Isbn provided
     Given an invalid isbn "<bad_data>"

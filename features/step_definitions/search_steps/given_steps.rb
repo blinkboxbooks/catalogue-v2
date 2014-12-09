@@ -39,7 +39,7 @@ Given(/^the search query is invalid$/) do
   subject(:search_term, data_for_a(:search_term, which: "is invalid"))
 end
 
-And(/^the search query will return many results$/) do
+And(/^(?:the|a) search query (?:that )?will return many results$/) do
   subject(:search_term, data_for_a(:search_term, which: "will return many results"))
   @search_query = subject(:search_term)["query"]
 end

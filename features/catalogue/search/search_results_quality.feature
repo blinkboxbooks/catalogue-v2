@@ -1,5 +1,6 @@
 @data_dependent
 @search_quality
+@search
 
 Feature: Search results quality
   As an application
@@ -14,14 +15,14 @@ Feature: Search results quality
       | Charles dickens |
       | cHaRleS DicKenS |
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And all the returned books are the same
 
   Scenario Outline: Search for books with valid author name in different order
     Given the search query is "<author_name>"
     And I want a maximum of ten results
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And all books authors contains "david" or "ovason"
   Examples:
     | author_name   |
@@ -31,7 +32,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with valid author name containing special characters
     Given the search query is "<author_name>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's author is "<author_name>"
   Examples:
     | author_name   |
@@ -42,7 +43,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with valid title in different cases
     Given the search query is "<book_title>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's title is "Great Expectations"
   Examples:
     | book_title         |
@@ -56,7 +57,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with valid title containing special characters
     Given the search query is "<book_title>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's title is "<book_title>"
   Examples:
     | book_title                                   |
@@ -68,7 +69,7 @@ Feature: Search results quality
   Scenario Outline: Searching for free books with different cases
     Given the search query is "<search_word>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
   Examples:
     | search_word  |
     | free         |
@@ -81,7 +82,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with valid title and author name
     Given the search query is "<search_word>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's content contains "<search_word>"
   Examples:
     | search_word                   |
@@ -91,7 +92,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with valid author name and title
     Given the search query is "<search_word>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's content contains "<search_word>"
   Examples:
     | search_word                   |
@@ -101,7 +102,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with fragmented author name and title
     Given the search query is "<search_query>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's title is "<book_title>"
     And the first book's author is "<author_name>"
   Examples:
@@ -111,7 +112,7 @@ Feature: Search results quality
   Scenario Outline: Search for books with fragmented title and author name
     Given the search query is "<search_query>"
     When I search for the query
-    Then the response is a list containing at least ten books
+    Then the search response is a list containing at least ten books
     And the first book's title is "<book_title>"
     And the first book's author is "<author_name>"
   Examples:

@@ -1,4 +1,5 @@
 @search_suggestions
+@search
 
 Feature: Search suggestions
   As an application
@@ -8,7 +9,7 @@ Feature: Search suggestions
   Scenario Outline: Return list of suggested search terms based on the initial query provided, starting from a single character terms
     Given I have entered the query "<search_query>"
     When I request search suggestions for the query
-    Then the response is a list containing 10 search suggestions
+    Then the search response is a list containing 10 search suggestions
     And each suggestion contains "<search_query>"
 
     Examples:

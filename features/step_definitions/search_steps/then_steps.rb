@@ -1,4 +1,4 @@
-Then(/^the response is a list containing (at least|only) (#{CAPTURE_INTEGER}) (?:books?|suggestions?)$/) do |minimum, count|
+Then(/^the search response is a list containing (at least|only) (#{CAPTURE_INTEGER}) (?:books?|suggestions?)$/) do |minimum, count|
   if minimum == "at least"
     validate_book_search_results(@response, min_count: count)
   else
@@ -12,7 +12,7 @@ And(/^the response has the following attributes:$/) do |table|
   end
 end
 
-And(/^each book has the following attributes:$/) do |table|
+And(/^the search results display the following attributes for each book:$/) do |table|
   @response["books"].each do |book|
     table.hashes.each do |row|
       validate_attribute(book, row['attribute'], type: row['type'])
@@ -20,15 +20,15 @@ And(/^each book has the following attributes:$/) do |table|
   end
 end
 
-Then(/^the response is a list containing (#{CAPTURE_INTEGER}) book(?:s?)$/) do |count|
+Then(/^the search response is a list containing (#{CAPTURE_INTEGER}) book(?:s?)$/) do |count|
   validate_book_search_results(@response, count: count)
 end
 
-Then(/^the response is a list containing (#{CAPTURE_INTEGER}) book(?:s?) at offset (#{CAPTURE_INTEGER})$/) do |count, offset|
+Then(/^the search response is a list containing (#{CAPTURE_INTEGER}) book(?:s?) at offset (#{CAPTURE_INTEGER})$/) do |count, offset|
   validate_book_search_results(@response, count: count, offset: offset)
 end
 
-Then(/^the response is a list containing at least (#{CAPTURE_INTEGER}) book search results ordered by (.*) (.*)$/) do |min_count, direction, ordered_by|
+Then(/^the search response is a list containing at least (#{CAPTURE_INTEGER}) book search results ordered by (.*) (.*)$/) do |min_count, direction, ordered_by|
   # Unable to automatically validate #{direction + " " + ordered_by} sort order
   validate_book_search_results(@response, min_count: min_count)
 end
@@ -79,7 +79,7 @@ And(/^the first book's content contains "([^"]*)"$/) do |expected_contents|
   end
 end
 
-Then(/^the response is a list containing (#{CAPTURE_INTEGER}) search suggestions$/) do |count|
+Then(/^the search response is a list containing (#{CAPTURE_INTEGER}) search suggestions$/) do |count|
   expect(@response["items"].size).to eq(count)
 end
 
