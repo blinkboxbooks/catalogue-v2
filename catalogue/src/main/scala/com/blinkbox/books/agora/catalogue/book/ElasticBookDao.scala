@@ -11,6 +11,8 @@ import com.blinkbox.books.json.DefaultFormats
 import org.elasticsearch.search.sort.SortOrder
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.action.get.GetResponse
+import com.sksamuel.elastic4s.RangeFilter
+import org.joda.time.DateTime
 
 class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
@@ -52,21 +54,35 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
     "sequential" -> "_score",
     "author" -> "contributors.sortName"
   )
-  
+
   private def mapSortField(field: String): String = sortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
-  
-  override def getBooksByContributor(id: String, offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList] = {
+
+  private def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): Option[RangeFilter] = {
+    val range = rangeFilter("dates.publish")
+    (minDate, maxDate) match {
+      case (None, None) => Option.empty
+      case (Some(start), None) => Some(range.from(minDate))
+      case (None, Some(end)) => Some(range.to(end))
+      case (Some(start), Some(end)) => Some(range.from(start).to(end))
+    }
+  }
+
+  override def getBooksByContributor(id: String, minDate: Option[DateTime], maxDate: Option[DateTime], offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList] = {
     require(offset >= 0, "Offset must be zero-or-more")
     require(count > 0, "Count must be one-or-more")
+
+    val query = search in index query {
+      nestedQuery("contributors") query {
+        termQuery("contributors.id", id)
+      }
+    } limit count from offset sort {
+      by field mapSortField(sortField) order mapSortOrder(sortDescending)
+    }
+      
+    val f = dateFilter(minDate, maxDate)
     
     client.execute {
-      search in index query {
-        nestedQuery("contributors") query {
-          termQuery("contributors.id", id)
-        }
-      } limit count from offset sort {
-        by field mapSortField(sortField) order mapSortOrder(sortDescending)
-      }
+      dateFilter(minDate, maxDate).map(f => query.filter(f)).getOrElse(query)
     } map toBookList
   }
 
