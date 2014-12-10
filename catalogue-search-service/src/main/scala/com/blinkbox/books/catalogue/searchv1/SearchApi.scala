@@ -2,14 +2,13 @@ package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.ActorRefFactory
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.PaginableResponse
-import com.blinkbox.books.config.ApiConfig
+import com.blinkbox.books.config.{ApiConfig, RichConfig}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{Directives, _}
 import org.slf4j.LoggerFactory
 import spray.http.{StatusCodes, Uri}
 import spray.routing._
 import scala.concurrent.duration.FiniteDuration
-
 import scala.util.control.NonFatal
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
@@ -27,14 +26,12 @@ case class SearchApiConfig(
 
 object SearchApiConfig {
   import com.typesafe.config.Config
-  import java.util.concurrent.TimeUnit
-  import scala.concurrent.duration._
   
   def apply(config: Config): SearchApiConfig = SearchApiConfig(
     config.getInt("searchDefaultCount"),
     config.getInt("similarDefaultCount"),
     config.getInt("suggestionsDefaultCount"),
-    config.getDuration("maxAge", TimeUnit.MILLISECONDS).millis
+    config.getFiniteDuration("maxAge")
   )
 }
 

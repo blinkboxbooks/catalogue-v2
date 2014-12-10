@@ -81,4 +81,8 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       }
     }
   }
+  
+  it should "return caching directives" in {
+    // TODO
+  }
 }
