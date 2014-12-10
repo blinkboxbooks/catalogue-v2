@@ -1,5 +1,15 @@
 
 
+## 0.1.27 ([#35](https://git.mobcastdev.com/Agora/catalogue-v2/pull/35) 2014-12-10 14:17:44)
+
+CAT-32: Modules renaming
+
+Patch:
+
+- ingesterv1 -> catalogue-ingester-marvin1
+- ingesterv2 -> catalogue-ingester-marvin2
+- searchv1 -> catalogue-search-service
+
 ## 0.1.26 ([#37](https://git.mobcastdev.com/Agora/catalogue-v2/pull/37) 2014-12-10 13:48:03)
 
 CAT-116 Introduce validation for ISBN in similar books endpoint
