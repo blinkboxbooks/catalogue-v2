@@ -1,5 +1,12 @@
 
 
+## 0.1.23 ([#32](https://git.mobcastdev.com/Agora/catalogue-v2/pull/32) 2014-12-10 09:58:21)
+
+Added health check end-point
+
+### Patch
+- Added health check end-point
+
 ## 0.1.22 ([#31](https://git.mobcastdev.com/Agora/catalogue-v2/pull/31) 2014-12-09 16:38:46)
 
 CAT-113 Introduce number of results in similar books
