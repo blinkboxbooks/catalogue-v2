@@ -60,11 +60,11 @@ object Events {
                   series: Option[Series],
                   related: List[Related],
                   media: Option[Media],
-                  distributionStatus: DistributionStatus,
                   source: Source) extends DistributeContent
 
   case class Undistribute(isbn: String,
                           sequenceNumber: Long,
+                          usable: Boolean,
                           reasons: List[String]) extends DistributeContent
 
   case class BookPrice(isbn: String, price: Double, currency: String) extends DistributeContent
@@ -74,7 +74,7 @@ object Events {
       sequenceNumber = 1,
       `$schema` = None,
       classification = List.empty,
-      isbn = "",
+      isbn = "1234",
       format = None,
       title = "",
       subtitle = Option.empty,
@@ -95,7 +95,6 @@ object Events {
       series = None,
       related = List.empty,
       media = None,
-      distributionStatus = DistributionStatus(usable = true, List.empty),
       source = Source(
         deliveredAt = Option.empty,
         uri = Option.empty,

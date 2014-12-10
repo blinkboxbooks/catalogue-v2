@@ -46,7 +46,6 @@ object BookFixtures {
     series = None,
     related = Nil,
     media = None,
-    distributionStatus = DistributionStatus(true, Nil),
     source = Source(deliveredAt = Option.empty,
       uri = Option.empty,
       fileName = Option.empty,
@@ -83,7 +82,6 @@ object BookFixtures {
   )
 
   val titlePermutationsBook = simpleBook.copy(
-    isbn = "",
     title = "A apple an banana the pear",
     contributors = Contributor("author", "ctrb", "Testy McTesterson", "Testy McTesterson") :: Nil
   )

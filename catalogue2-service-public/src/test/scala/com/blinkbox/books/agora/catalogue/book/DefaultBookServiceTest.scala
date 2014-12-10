@@ -65,7 +65,6 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     series = None,
     related = List.empty[Related],
     media = Some(Media(List(sample), List(image))),
-    distributionStatus = DistributionStatus(usable = true, List.empty[String]),
     source = Source(deliveredAt = Option.empty,
       uri = Option.empty,
       fileName = Option.empty,

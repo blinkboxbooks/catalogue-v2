@@ -1,6 +1,7 @@
 package com.blinkbox.books.catalogue.common.e2e
 
 import java.util.NoSuchElementException
+import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, EsIndexer, Successful}
 import com.blinkbox.books.test.FailHelper
@@ -56,7 +57,7 @@ trait E2EDsl
   }
 
   implicit class WithDefinitionOps(context: E2EContext[Future[CreateIndexResponse]])(implicit ec: ExecutionContext) {
-    def index(content: Book*): E2EContext[Future[Iterable[BulkItemResponse]]] =
+    def index(content: DistributeContent*): E2EContext[Future[Iterable[BulkItemResponse]]] =
       context advance { state =>
         (for {
           resp    <- state if (resp.isAcknowledged)
@@ -68,7 +69,7 @@ trait E2EDsl
         }
       }
 
-    def indexAndCheck(content: Book*): E2EContext[Future[Iterable[BulkItemResponse]]] = index(content: _*) ensure allSucceded
+    def indexAndCheck(content: DistributeContent*): E2EContext[Future[Iterable[BulkItemResponse]]] = index(content: _*) ensure allSucceded
   }
 
   implicit class WithContentOps(context: E2EContext[Future[Iterable[BulkItemResponse]]])(implicit ec: ExecutionContext) {

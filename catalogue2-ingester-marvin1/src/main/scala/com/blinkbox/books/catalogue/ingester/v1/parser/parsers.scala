@@ -68,6 +68,7 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
         .trimText.opt[DateTime]
         .getOrElse(throw MissingFieldException("effectiveTimestamp"))
         .getMillis,
+      usable = false,
       reasons = toReasons(undistributeXml)
     )
   }

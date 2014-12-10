@@ -40,7 +40,6 @@ object IndexEntities {
                   series: Option[Series],
                   related: List[Related],
                   media: Option[Media],
-                  distributionStatus: DistributionStatus,
                   source: Source,
                   autoComplete: List[SuggestionField],
                   descriptionContents: List[String])
@@ -103,21 +102,18 @@ object IndexEntities {
       series = msg.series,
       related = msg.related,
       media = msg.media,
-      distributionStatus = msg.distributionStatus,
       source = msg.source,
       autoComplete = buildSuggestions(msg),
       descriptionContents = buildMoreLikeThis(msg))
   }
 
-  case class Undistribute(isbn: String, distributionStatus: DistributionStatus, sequenceNumber: Long)
+  case class Undistribute(isbn: String, usable: Boolean, reasons: List[String], sequenceNumber: Long)
 
   object Undistribute {
     def fromMessage(msg: Events.Undistribute): Undistribute = Undistribute(
       isbn = msg.isbn,
-      distributionStatus = DistributionStatus(
-        usable = false,
-        reasons = msg.reasons
-      ),
+      usable = msg.usable,
+      reasons = msg.reasons,
       sequenceNumber = msg.sequenceNumber
     )
   }

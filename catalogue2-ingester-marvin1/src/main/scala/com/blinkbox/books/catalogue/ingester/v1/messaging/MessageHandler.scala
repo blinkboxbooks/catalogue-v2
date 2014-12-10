@@ -1,8 +1,9 @@
 package com.blinkbox.books.catalogue.ingester.v1.messaging
 
+import java.io.IOException
 import java.net.ConnectException
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.search.Indexer
+import com.blinkbox.books.catalogue.common.search.{CommunicationException, Indexer}
 import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
 import com.blinkbox.books.messaging.{ReliableEventHandler, ErrorHandler, Event}
@@ -19,7 +20,12 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
     Future.fromTry(messageParser.parse(new String(event.body.content, "UTF-8"))).flatMap(index)
 
   override protected[this] def isTemporaryFailure(e: Throwable): Boolean =
-    e.isInstanceOf[ConnectException]
+    e match {
+      case (_:ConnectException
+           |_:IOException
+           |_:CommunicationException) => true
+      case _ => false
+    }
 
   private def index(content: DistributeContent): Future[Unit] = {
     val indexing = indexer.index(content)
