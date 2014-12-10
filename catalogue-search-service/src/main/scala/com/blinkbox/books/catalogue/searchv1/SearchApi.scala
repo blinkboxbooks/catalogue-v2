@@ -37,8 +37,9 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
       pathPrefix("books") {
         pathEnd {
           get {
-            parameter('q.?) { query =>
-              query.fold[Route](complete(StatusCodes.BadRequest)) { query =>
+            parameter('q ? "") { q =>
+              val query = q.trim
+              validate(!query.isEmpty, "Missing search query term") {
                 paged(searchDefaultCount) { page =>
                   onSuccess(searchService.search(query, page)) { res =>
                     completePaged(page)(res)

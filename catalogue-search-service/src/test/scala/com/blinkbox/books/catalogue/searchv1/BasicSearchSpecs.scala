@@ -68,6 +68,16 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex andAfter { _ =>
       Get("/catalogue/search/books") ~> routes ~> check {
         status should equal(StatusCodes.BadRequest)
+        responseAs[String] should equal("Missing search query term")
+      }
+    }
+  }
+
+  it should "fail with a 400 (Bad Request) if the 'q' parameter is empty" in {
+    catalogueIndex andAfter { _ =>
+      Get("/catalogue/search/books?q=") ~> routes ~> check {
+        status should equal(StatusCodes.BadRequest)
+        responseAs[String] should equal("Missing search query term")
       }
     }
   }
