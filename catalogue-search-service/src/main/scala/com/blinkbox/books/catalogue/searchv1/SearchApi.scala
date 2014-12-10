@@ -7,9 +7,10 @@ import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{Directives, _}
 import org.slf4j.LoggerFactory
 import spray.http.{StatusCodes, Uri}
-import spray.httpx.marshalling.ToResponseMarshallable
 import spray.routing._
 import scala.concurrent.duration.FiniteDuration
+
+import scala.util.control.NonFatal
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
 
@@ -56,8 +57,9 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
       pathPrefix("books") {
         pathEnd {
           get {
-            parameter('q.?) { query =>
-              query.fold[Route](complete(StatusCodes.BadRequest)) { query =>
+            parameter('q ? "") { q =>
+              val query = q.trim
+              validate(!query.isEmpty, "Missing search query term") {
                 paged(searchConfig.searchDefaultCount) { page =>
                   onSuccess(searchService.search(query, page)) { res =>
                     cacheable(searchConfig.maxAge) {
@@ -69,12 +71,14 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
             }
           }
         } ~
-        path(BookIdSegment / "similar") { bookId =>
-          get {
-            paged(searchConfig.similarDefaultCount) { page =>
-              onSuccess(searchService.similar(bookId, page)) { res =>
-                cacheable(searchConfig.maxAge) {
-                  completePaged(page)(res)
+        path(Segment / "similar") { rawBookId =>
+          validate(rawBookId.forall(_.isDigit) && rawBookId.length == 13, s"Invalid ID: $rawBookId") {
+            get {
+              paged(searchConfig.similarDefaultCount) { page =>
+                onSuccess(searchService.similar(BookId(rawBookId), page)) { res =>
+                  cacheable(searchConfig.maxAge) {
+                    completePaged(page)(res)
+                  }
                 }
               }
             }
@@ -95,9 +99,21 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
     }
   }
 
+  val rejectionHandler = RejectionHandler {
+    case ValidationRejection(message, _) :: _ => complete(StatusCodes.BadRequest, message)
+  }
+
+  val exceptionHandler = ExceptionHandler {
+    case NonFatal(ex) => uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
+  }
+
   def routes: Route = rootPath(apiConfig.localUrl.path) {
-    monitor() {
-      serviceRoutes
+    monitor(log) {
+      handleExceptions(exceptionHandler) {
+        handleRejections(rejectionHandler) {
+          serviceRoutes
+        }
+      }
     }
   }
 }

@@ -1,5 +1,47 @@
 
 
+## 0.1.29 ([#39](https://git.mobcastdev.com/Agora/catalogue-v2/pull/39) 2014-12-10 15:10:09)
+
+Move some leftover tests from the old structure to the new one.
+
+Patch
+
+- there was a leftover test which needed to be moved to the new folder.
+
+## 0.1.28 ([#38](https://git.mobcastdev.com/Agora/catalogue-v2/pull/38) 2014-12-10 14:58:41)
+
+CAT-107 Ensure empty searches result in the correct 400 response
+
+### Bugfix
+
+* Introduce missing akka log configuration (not really part of the ticket)
+* Ensures the correct responses are returned in case of an empty search query
+
+## 0.1.27 ([#35](https://git.mobcastdev.com/Agora/catalogue-v2/pull/35) 2014-12-10 14:17:44)
+
+CAT-32: Modules renaming
+
+Patch:
+
+- ingesterv1 -> catalogue-ingester-marvin1
+- ingesterv2 -> catalogue-ingester-marvin2
+- searchv1 -> catalogue-search-service
+
+## 0.1.26 ([#37](https://git.mobcastdev.com/Agora/catalogue-v2/pull/37) 2014-12-10 13:48:03)
+
+CAT-116 Introduce validation for ISBN in similar books endpoint
+
+### Improvements
+
+Fixes missing validation checks on the ISBN part of a similar-books URL.
+
+## 0.1.25 ([#36](https://git.mobcastdev.com/Agora/catalogue-v2/pull/36) 2014-12-10 13:28:46)
+
+Cat 16
+
+### Patch
+- Refactored unit-test to create index once
+
 ## 0.1.24 ([#34](https://git.mobcastdev.com/Agora/catalogue-v2/pull/34) 2014-12-10 11:24:14)
 
 CAT-114 Implement pagination links in search and similar responses

@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse, BookSimilarResponse, BookSuggestionResponse}
 import com.blinkbox.books.spray.v1.Link
 import org.json4s.Extraction
@@ -12,11 +11,9 @@ import scala.concurrent.duration._
 
 class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
-  def populateIndex(howManyBooks: Int) = catalogueIndex indexAndCheck(BookFixtures.dummyBooks(howManyBooks).toSeq: _*)
-
   override def beforeAll(): Unit = {
     super.beforeAll()
-    populateIndex(100) andAwaitFor (10.seconds)
+    populateDummyIndex(100) andAwaitFor (10.seconds)
   }
 
   def checkLinks(response: JObject, hasPrev: Boolean = false, hasNext: Boolean = false): Unit = {
