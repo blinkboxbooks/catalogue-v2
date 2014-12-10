@@ -7,8 +7,9 @@ import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{Directives, _}
 import org.slf4j.LoggerFactory
 import spray.http.{StatusCodes, Uri}
-import spray.httpx.marshalling.ToResponseMarshallable
 import spray.routing._
+
+import scala.util.control.NonFatal
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
 object Paged {
@@ -26,8 +27,6 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
   val searchDefaultCount = 50
   val similarDefaultCount = 10
   val suggestionsDefaultCount = 10
-
-  val BookIdSegment = Segment.map(BookId.apply _)
 
   val completePaged: Page => PaginableResponse => StandardRoute = page => content => new StandardRoute {
     override def apply(ctx: RequestContext): Unit = ctx.complete(Paged(page, ctx.request.uri, content))
@@ -49,11 +48,13 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
             }
           }
         } ~
-        path(BookIdSegment / "similar") { bookId =>
-          get {
-            paged(similarDefaultCount) { page =>
-              onSuccess(searchService.similar(bookId, page)) { res =>
-                completePaged(page)(res)
+        path(Segment / "similar") { rawBookId =>
+          validate(rawBookId.forall(_.isDigit) && rawBookId.length == 13, s"Invalid ID: $rawBookId") {
+            get {
+              paged(similarDefaultCount) { page =>
+                onSuccess(searchService.similar(BookId(rawBookId), page)) { res =>
+                  completePaged(page)(res)
+                }
               }
             }
           }
@@ -71,9 +72,21 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
     }
   }
 
+  val rejectionHandler = RejectionHandler {
+    case ValidationRejection(message, _) :: _ => complete(StatusCodes.BadRequest, message)
+  }
+
+  val exceptionHandler = ExceptionHandler {
+    case NonFatal(ex) => uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
+  }
+
   def routes: Route = rootPath(apiConfig.localUrl.path) {
-    monitor() {
-      serviceRoutes
+    monitor(log) {
+      handleExceptions(exceptionHandler) {
+        handleRejections(rejectionHandler) {
+          serviceRoutes
+        }
+      }
     }
   }
 }

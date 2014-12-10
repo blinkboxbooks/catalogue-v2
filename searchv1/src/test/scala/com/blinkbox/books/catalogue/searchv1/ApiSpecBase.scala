@@ -2,6 +2,7 @@ package com.blinkbox.books.catalogue.searchv1
 
 import java.net.URL
 
+import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.spray.v1.Version1JsonSupport
@@ -26,4 +27,5 @@ trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSuppo
   lazy val routes = apiService.routes
 
   def catalogueIndex = e2e createIndex catalogue
+  def populateDummyIndex(howManyBooks: Int) = catalogueIndex indexAndCheck(BookFixtures.dummyBooks(howManyBooks).toSeq: _*)
 }
