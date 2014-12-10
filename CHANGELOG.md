@@ -1,5 +1,13 @@
 
 
+## 0.1.24 ([#34](https://git.mobcastdev.com/Agora/catalogue-v2/pull/34) 2014-12-10 11:24:14)
+
+CAT-114 Implement pagination links in search and similar responses
+
+### Improvement
+
+* Implement the pagination links for search and similar responses.
+
 ## 0.1.23 ([#32](https://git.mobcastdev.com/Agora/catalogue-v2/pull/32) 2014-12-10 09:58:21)
 
 Added health check end-point
