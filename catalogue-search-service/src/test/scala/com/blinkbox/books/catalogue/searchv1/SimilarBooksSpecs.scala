@@ -1,8 +1,9 @@
 package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSimilarResponse
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
+
 import scala.concurrent.duration._
 
 class SimilarBooksSpecs extends FlatSpec with Matchers with ApiSpecBase {
