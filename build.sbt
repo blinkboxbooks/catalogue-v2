@@ -16,21 +16,21 @@ lazy val artifactSettings = addArtifact(artifact in (Compile, assembly), assembl
 lazy val common = (project in file("common")).
   settings(buildSettings: _*)
 
-lazy val ingesterv1 = (project in file("ingesterv1")).
+lazy val `catalogue-ingester-marvin1` = (project in file("catalogue-ingester-marvin1")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
-lazy val ingesterv2 = (project in file("ingesterv2")).
+lazy val `catalogue-ingester-marvin2` = (project in file("catalogue-ingester-marvin2")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
-lazy val searchv1 = (project in file("searchv1")).
+lazy val `catalogue-search-service` = (project in file("catalogue-search-service")).
   dependsOn(common % "compile->compile;test->test").aggregate(common).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
@@ -45,7 +45,7 @@ lazy val catalogue = (project in file("catalogue")).
   settings(artifactSettings: _*)
 
 lazy val root = (project in file(".")).
-  dependsOn(ingesterv1, ingesterv2, searchv1, catalogue).
-  aggregate(ingesterv1, ingesterv2, searchv1, catalogue).
+  dependsOn(`catalogue-ingester-marvin1`, `catalogue-ingester-marvin2`, `catalogue-search-service`, catalogue).
+  aggregate(`catalogue-ingester-marvin1`, `catalogue-ingester-marvin2`, `catalogue-search-service`, catalogue).
   settings(buildSettings: _*).
   settings(publish := {})
