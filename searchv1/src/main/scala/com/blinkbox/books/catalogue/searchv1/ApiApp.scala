@@ -5,15 +5,21 @@ import akka.util.Timeout
 import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig}
 import com.blinkbox.books.config.{ApiConfig, Configuration}
 import com.blinkbox.books.logging.Loggers
-import com.blinkbox.books.spray.{HttpServer, url2uri}
+import com.blinkbox.books.spray.{HttpServer, url2uri, HealthCheckHttpService}
 import com.typesafe.scalalogging.slf4j.StrictLogging
 import spray.can.Http
+import spray.http.Uri.Path
 import spray.routing.HttpServiceActor
-
 import scala.util.control.ControlThrowable
 
 class RestApi(v1Api: SearchApi) extends HttpServiceActor {
-  override def receive: Receive = runRoute(v1Api.routes)
+  private val that = this
+  val healthService = new HealthCheckHttpService {
+    override implicit def actorRefFactory = that.actorRefFactory
+    override val basePath = Path("/")
+  }
+
+  override def receive: Receive = runRoute(healthService.routes ~ v1Api.routes)
 }
 
 object ApiApp extends App with Configuration with Loggers with StrictLogging {

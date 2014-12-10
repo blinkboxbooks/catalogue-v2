@@ -1,4 +1,4 @@
-name := "catalogue-browser"
+name := "catalogue-searchv1"
 
 libraryDependencies ++= Seq(
   "com.blinkbox.books"        %% "common-spray"       % "0.17.1",

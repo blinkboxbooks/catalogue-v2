@@ -1,0 +1,80 @@
+# This file details information for data-dependent tests
+book:
+  is currently available for purchase:
+    - id:               "9780748109951"
+      title:            The Wasp Factory
+      publicationDate:  "2008-09-04"
+      sampleEligible:   true
+    - id:               "9780230760653"
+      title:            Dead Man's Time
+      publicationDate:  "2013-06-06"
+      sampleEligible:   true
+    - id:               "9780857868985"
+      title:            Jacob's Folly
+      publicationDate:  "2013-06-06"
+      sampleEligible:   true
+  has related books:
+    - id:               "9781409092285"
+  has a discount:
+    - id:               "9780230760653"
+  does not exist:
+    - id:               "9999999999998"
+    - id:               "9999999999999"
+  is free:
+    - id:               "9780007531721"
+
+category:
+  is currently active:
+    - id:               "58"
+      displayName:      top-free
+      slug:             top-free
+      sequence:         9
+  is a genre category:
+    - id:               "43"
+      displayName:      Fiction & Literature
+      slug:             fiction-literature
+      sequence:         9
+  is not recommended:
+    - id:               "5"
+      displayName:      Art & Photography
+      slug:             art-photography
+      sequence:         1
+  has been curated:
+    - id:               "5"
+  does not exist:
+    - id:               "6873823"
+      location:         99999
+  is used on the front page:
+    - id:               "62"
+      slug:             highlights
+      location:         1
+contributor:
+  is an author:
+    - id: 5add98cdb25af0c4cf9b20fb152494b166057732
+      displayName:      Dan Brown
+      bookCount:        6
+    - id: f825fc2c829577580008bed3fd79bb9d27a6803a
+      displayName:      Ian Rankin
+      bookCount:        29
+  does not exist:
+    - id: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzy
+    - id: zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+contributor group:
+  is currently active:
+    - name:             featured
+      id:               "3"
+  does not exist:
+    - name:             nonexistent-name
+      id:               "99999"
+promotion:
+  is currently active:
+    - id:               "3"
+  does not exist:
+    - id:               "99999999"
+publisher:
+  has books available for purchase:
+    - id:               "1"
+    - id:               "479"
+  does not exist:
+    - id:               "6873823"
+    - id:               "48573647"

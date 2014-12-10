@@ -1,0 +1,12 @@
+# This file details the various servers in each environment which tests for this service require.
+qa:
+  servers:
+    api: http://qa.mobcastdev.com/service/catalogue/
+
+dev_int:
+  servers:
+    api: https://api.dev.bbbtest2.com/service/catalogue/
+
+local:
+  servers:
+    api: http://localhost:9128/catalogue/
