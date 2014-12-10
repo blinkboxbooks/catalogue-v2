@@ -7,7 +7,7 @@ import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
 import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
-import org.json4s.jackson.Serialization
+import org.json4s.jackson.{Serialization => Json}
 
 import scala.collection.convert.Wrappers.{JIteratorWrapper, JListWrapper}
 import scala.concurrent.{ExecutionContext, Future}
@@ -55,7 +55,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
   private def toBookSeq(resp: SearchResponse): Seq[Book] =
     resp.getHits.hits().map { hit =>
-      val book = Serialization.read[idx.Book](hit.getSourceAsString)
+      val book = Json.read[idx.Book](hit.getSourceAsString)
       Book(book.isbn, book.title, book.contributors.map(_.displayName))
     }.toSeq
 
@@ -80,7 +80,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
     (for {
       autoComplete <- JIteratorWrapper(resp.getSuggest.getSuggestion[Suggest.Suggestion[Entry]]("autoComplete").iterator)
       option <- JListWrapper(autoComplete.getOptions)
-      payload = Serialization.read[SuggestionPayload](option.getPayloadAsString)
+      payload = Json.read[SuggestionPayload](option.getPayloadAsString)
     } yield toSuggestion(payload)).toSeq
 
   private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
