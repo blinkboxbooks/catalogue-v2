@@ -1,5 +1,14 @@
 
 
+## 0.1.28 ([#38](https://git.mobcastdev.com/Agora/catalogue-v2/pull/38) 2014-12-10 14:58:41)
+
+CAT-107 Ensure empty searches result in the correct 400 response
+
+### Bugfix
+
+* Introduce missing akka log configuration (not really part of the ticket)
+* Ensures the correct responses are returned in case of an empty search query
+
 ## 0.1.27 ([#35](https://git.mobcastdev.com/Agora/catalogue-v2/pull/35) 2014-12-10 14:17:44)
 
 CAT-32: Modules renaming
