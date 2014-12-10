@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="b6c56b704dcfd3227a0434e28aa273f6:4-a23a798e50a9268fe9948161c7cbf6d0" r:version="0.14.3">
+  <isbn>9781118123645</isbn>
+  <title>CliffsNotes on Fitzgerald's The Great Gatsby</title>
+  <contributors>
+    <contributor role="Author" id="eb0ee9e95ea9d6f66251c31006b46a7d1a2c2468">
+      <displayName>Kate Maurer</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">The original CliffsNotes study guides offer a look into key elements and ideas within classic works of literature. The latest generation of titles in this series also features glossaries and visual elements that complement the familiar format.&lt;p&gt;&lt;i&gt;CliffsNotes on The Great Gatsby&lt;/i&gt; explores F. Scott Fitzgerald's novel of triumph, tragedy, and a classic love triangle in the 1920s.&lt;/p&gt;&lt;p&gt;Following the story of a young Midwesterner who's fascinated by the mysterious past and opulent lifestyle of his landlord, this study guide provides summaries and critical commentaries for each chapter within the novel. Other features that help you figure out this important work include&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;Personal background on the author&lt;/li&gt;
+&lt;li&gt;Introduction to and synopsis of the book&lt;/li&gt;
+&lt;li&gt;In-depth character analyses&lt;/li&gt;
+&lt;li&gt;Critical essays on topics of interest&lt;/li&gt;
+&lt;li&gt;Review section that features interactive questions and suggested essay topics and practice projects&lt;/li&gt;
+&lt;li&gt;Resource Center with books, videos, and Web sites that can help round out your knowledge&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;Classic literature or modern-day treasure &#x2014; you'll understand it all with expert information and insight from CliffsNotes study guides.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;b&gt;Kate Maurer&lt;/b&gt; received her Ph.D. in English from Marquette University and is currently an Assistant Professor of Composition and English at the University of Minnesota Duluth.</description>
+    <description format="html" source="Back cover copy">39 New and Revised Titles. The Best Just Got Better! Plus Glossary from Webster's New World&#x99; Dictionary Anthem Atlas Shrugged Beowulf Brave New World The Canterbury Tales The Catcher in the Rye The Contender The Crucible The Fountainhead Frankenstein The Grapes of Wrath Great Expectations The Great Gatsby Hamlet Heart of Darkness &amp;amp; The Secret Sharer Huckleberry Finn The Iliad Incidents in the Life of a Slave Girl Inherit the Wind Jane Eyre Julius Caesar The Killer Angels King Lear The Lord of the Flies Macbeth 1984 The Odyssey The Oedipus Trilogy The Once and Future King Othello The Outsiders Pride and Prejudice The Red Badge of Courage Romeo and Juliet The Scarlet Letter A Separate Peace A Tale of Two Cities To Kill a Mockingbird Wuthering Heights See inside for the complete line-up of available CliffsNotes! Check Out the All-New CliffsNotes Guides To AOL&#xAE;, iMacs&#x99;, eBay&#xAE;, Windows&#xAE; 98, Investing, Creating Web Pages, and more! More Than Notes! CliffsComplete&#x99; CliffsTestPrep&#x99; CliffsQuickReview&#x99; CliffsAP&#x99; Over 300 CliffsNotes Available @ cliffsnotes.com Downloadable 24 hours a day Free daily e-mail newsletters Free tips, tricks, and trivia Free online CliffsNotes catalog Free self-assessment tools Freeware and shareware downloads</description>
+  </descriptions>
+  <publisher>
+    <name>John Wiley &amp; Sons</name>
+    <username>wiley</username>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>5.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>5.3</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>4.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>6.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>2.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>6.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>3.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>3.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SGD" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">LIT004020</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-05-18</publishedOn>
+  <modifiedAt>2014-06-27 15:30:17 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/118/123/645/59bbef30a84e10fc4d846b4e22801227.png</cover>
+    <epub default="true" type="full" size="653692">http://media.blinkboxbooks.com/9781/118/123/645/9a1683931be7f55d307913a58c06ec78.epub</epub>
+    <epub default="true" type="sample" size="545482">http://media.blinkboxbooks.com/9781/118/123/645/015d9cf1f7e9ea97d46d32a3d2312384.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/wiley/9781118123645/9781118123645.epub</epub>
+  </media>
+</book>

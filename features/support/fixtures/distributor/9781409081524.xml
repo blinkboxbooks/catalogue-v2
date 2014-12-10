@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="d54f108dfc17b8018ab6c84cb62ddad9:1-d4411619e888db091d3086e0f9219c45" r:version="0.14.3">
+  <isbn>9781409081524</isbn>
+  <title>The Grand Design</title>
+  <contributors>
+    <contributor role="Author" id="ef5bbc51bef76ced4e801ee05aa9bf121a8c0369">
+      <displayName>Stephen Hawking</displayName>
+    </contributor>
+    <contributor role="Author" id="0be67109cdbea9464489b9be5878ecc70c6de2a9">
+      <displayName>Leonard Mlodinow</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;When and how did the universe begin? Why are we here? Is the apparent 'grand design' of our universe evidence for a benevolent creator who set things in motion? Or does science offer another explanation? In &lt;i&gt;The Grand Design&lt;/i&gt;, the most recent scientific thinking about the mysteries of the universe is presented in language marked by both brilliance and simplicity. Model dependent realism, the multiverse, the top-down theory of cosmology, and the unified M-theory - all are revealed here.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;This is the first major work in nearly a decade by one of the world's greatest thinkers. A succinct, startling and lavishly illustrated guide to discoveries that are altering our understanding and threatening some of our most cherished belief systems, &lt;i&gt;The Grand Design&lt;/i&gt; is a book that will inform - and provoke - like no other.&lt;/p&gt;</description>
+    <description format="html" source="Back cover copy">&lt;p&gt;&lt;/p&gt;&lt;p&gt;When and how did the universe begin? Why are we here? Is the apparent 'grand design' of our universe evidence for a benevolent creator who set things in motion? Or does science offer another explanation? In The Grand Design, the most recent scientific thinking about the mysteries of the universe is presented in language marked by both brilliance and simplicity. Model dependent realism, the multiverse, the top-down theory of cosmology, and the unified M-theory - all are revealed here.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;This is the first major work in nearly a decade by one of the world's greatest thinkers. A succinct, startling and lavishly illustrated guide to discoveries that are altering our understanding and threatening some of our most cherished belief systems, The Grand Design is a book that will inform - and provoke - like no other.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;STEPHEN HAWKING&lt;/b&gt; held the position of Lucasian Professor of Mathematics at the University of Cambridge for thirty years. He is the author of &lt;i&gt;A Brief History of Time&lt;/i&gt; which was an international bestseller. His other books for the general reader include &lt;i&gt;A Briefer History of Time,&lt;/i&gt; the essay collection &lt;i&gt;Black Holes and Baby Universe &lt;/i&gt;and &lt;i&gt;The Universe in a Nutshell. &lt;/i&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Physicist &lt;b&gt;LEONARD MLODINOW&lt;/b&gt; has taught at Cal Tech, written for &lt;i&gt;Star Trek: The Next Generation,&lt;/i&gt; and is the author of &lt;i&gt;Euclid's Window, Feynman's Rainbow&lt;/i&gt; and &lt;i&gt;Some Time with Feynman.&lt;/i&gt;&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;New answers to the ultimate questions of life from the world's most famous living scientist.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Transworld</name>
+    <username>randomhouse_uk</username>
+    <imprint>Transworld Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>6.66</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>7.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>11.24</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>9.37</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>9.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>9.26</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>10.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>49.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>59.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>54.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>65.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>13.03</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>14.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>57.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>69.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>9.38</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.58</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.49</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">SCI000000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2010-09-09</publishedOn>
+  <modifiedAt>2014-08-12 11:02:54 UTC</modifiedAt>
+  <regions>
+    <region>AL</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>CM</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>HR</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>PF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>VA</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>IE</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>KE</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>AW</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PG</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>SD</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/409/081/524/dad32d171a7f2888f033fb91d89d6a81.png</cover>
+    <epub default="true" type="full" size="7268813">http://media.blinkboxbooks.com/9781/409/081/524/d5ca6a39bc0f92cce8d7bdfcd4f028db.epub</epub>
+    <epub default="true" type="sample" size="1245549">http://media.blinkboxbooks.com/9781/409/081/524/741c60fd57ed49a35a132f396d96a65b.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/RH%202010/August/RH%2027th%20August/9781409081524.epub</epub>
+  </media>
+</book>

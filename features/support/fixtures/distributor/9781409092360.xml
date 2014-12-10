@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="f5602a07947bb2deddde9e46536daea2:1-701e90a333bc89f7e1e2be3823e18a94" r:version="0.14.3">
+  <isbn>9781409092360</isbn>
+  <title>A Brief History Of Time</title>
+  <contributors>
+    <oneLine>Stephen Hawking</oneLine>
+    <contributor role="Author" id="ef5bbc51bef76ced4e801ee05aa9bf121a8c0369">
+      <displayName>Stephen Hawking</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;Was there a beginning of time?  Could time run backwards?  Is the universe infinite or does it have boundaries?  These are just some of the questions considered in an internationally acclaimed masterpiece by one of the world's greatest thinkers. It begins by reviewing the great theories of the cosmos from Newton to Einstein, before delving into the secrets which still lie at the heart of space and time, from the Big Bang to black holes, via spiral galaxies and strong theory. To this day &lt;i&gt;A Brief History of Time &lt;/i&gt;remains a staple of the scientific canon, and its succinct and clear language continues to introduce millions to the universe and its wonders.&lt;/p&gt;</description>
+    <description format="html" source="Back cover copy">&lt;p&gt;Was there a beginning of time?  Could time run backwards?  Is the universe infinite or does it have boundaries?  These are just some of the questions considered in an internationally acclaimed masterpiece by one of the world's greatest thinkers. It begins by reviewing the great theories of the cosmos from Newton to Einstein, before delving into the secrets which still lie at the heart of space and time, from the Big Bang to black holes, via spiral galaxies and strong theory. To this day A Brief History of Time remains a staple of the scientific canon, and its succinct and clear language continues to introduce millions to the universe and its wonders.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;&lt;b&gt;Stephen Hawking&lt;/b&gt; held the post of Lucasian Professor of Mathematics and Theoretical Physics at Cambridge, the chair held by Isaac Newton in 1663, for thirty years. Professor Hawking is now Director of Research for the Centre for Theoretical Cosmology at the University of Cambridge. He has over a dozen honorary degrees, and was awarded the Companion of Honour in 1989. He is a fellow of the Royal Society and a Member of the US National Academy of Science. His books include the bestselling &lt;i&gt;Black Holes and Baby Universes and Other Essays&lt;/i&gt;, &lt;i&gt;The Universe in a Nutshell&lt;/i&gt;, and &lt;i&gt;A Briefer History of Time&lt;/i&gt;. His most recent book, &lt;i&gt;The Grand Design, &lt;/i&gt;was a Sunday Times bestseller. Stephen Hawking is regarded as one of the most brilliant theoretical physicists since Einstein. He lives in Cambridge.&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;Stunningly repackaged edition of the international bestseller&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Transworld</name>
+    <username>randomhouse_uk</username>
+    <imprint>Transworld Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>15.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>6.66</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>7.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>11.24</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>9.37</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>9.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>9.26</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>10.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>49.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>59.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>54.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>65.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>13.03</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>14.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>57.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>69.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>9.38</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">SCI015000</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2009-11-10</publishedOn>
+  <modifiedAt>2014-07-18 02:20:31 UTC</modifiedAt>
+  <regions>
+    <region>AL</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>CM</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>HR</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>PF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GD</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>VA</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>IE</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>KE</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>AW</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PG</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>SD</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/409/092/360/021f73d00d8c1de62cfa5e5180a5d4d7.png</cover>
+    <epub default="true" type="full" size="1322719">http://media.blinkboxbooks.com/9781/409/092/360/5a33c75a1796654bae1c0320e6e58287.epub</epub>
+    <epub default="true" type="sample" size="448367">http://media.blinkboxbooks.com/9781/409/092/360/14881e5faf2e4b703442d05eb1dc33c4.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/9781409092360.epub</epub>
+  </media>
+</book>

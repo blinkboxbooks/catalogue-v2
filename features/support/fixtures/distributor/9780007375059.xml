@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="1530ea1ffc6c6da0c8c28ed3a82831b4:21-751bc036ccf8bf52126b4f9799b7b797" r:version="0.14.3">
+  <isbn>9780007375059</isbn>
+  <title>The Hunt for Red October</title>
+  <contributors>
+    <oneLine>By Tom Clancy</oneLine>
+    <contributor role="Author" id="e1a2a3318069462288a1deba4b3dd986f8622be5">
+      <displayName>Tom Clancy</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Long description">&lt;p&gt;The runaway international No 1 bestseller that launched Tom Clancy&#x2019;s spectacular career and introduced his acclaimed hero, Jack Ryan, in the ultimate submarine adventure.&lt;/p&gt;
+        &lt;p&gt;Silently, beneath the chill Atlantic waters, Russia&#x2019;s ultra-secret missile submarine, the Red October, is heading west. The Americans want her. The Russians want her back. With all-out war only seconds away, the superpowers race across the ocean on the most desperate mission of a lifetime. The most incredible chase in history is on&#x2026; The Hunt for Red October&#x2026; the classic story of a spellbinding battle of nerves, above and below the waves, unrivalled in its authenticity and breath-stopping suspense.&lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;The runaway international No 1 bestseller that launched Tom Clancy&#x2019;s spectacular career and introduced his acclaimed hero, Jack Ryan, in the ultimate submarine adventure.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;Since the publication of The Hunt for Red October, Tom Clancy has established an unrivalled position as the world&#x2019;s leading thriller writer, with a string of million-selling novels and three major Hollywood films to his name. He is also the author of SSN and the non-fiction books Submarine, Armoured Warfare, Fighter Wing and Marine, and the co-creator of the Op-Centre series.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>HarperCollins Publishers</name>
+    <username>harpercollins_uk</username>
+    <imprint>HarperCollins</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>6.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.54</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>9.75</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BIC" main="true">FJM</subject>
+    <subject type="BISAC" main="true">FIC032000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2010-06-24</publishedOn>
+  <announcedOn>2010-03-17</announcedOn>
+  <modifiedAt>2014-08-11 10:37:20 UTC</modifiedAt>
+  <regions>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AU</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BS</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>CM</region>
+    <region>CY</region>
+    <region>DM</region>
+    <region>EG</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GM</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KI</region>
+    <region>KN</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>LC</region>
+    <region>LK</region>
+    <region>LS</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NG</region>
+    <region>NR</region>
+    <region>NZ</region>
+    <region>PG</region>
+    <region>PK</region>
+    <region>PN</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SL</region>
+    <region>SO</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TZ</region>
+    <region>UG</region>
+    <region>VC</region>
+    <region>VG</region>
+    <region>VU</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AN</region>
+    <region>AO</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AW</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BT</region>
+    <region>BY</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GL</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IM</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JP</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KM</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LI</region>
+    <region>LR</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MX</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NU</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SE</region>
+    <region>SI</region>
+    <region>SK</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TW</region>
+    <region>UA</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VE</region>
+    <region>VN</region>
+    <region>WF</region>
+    <region>YT</region>
+    <region>RS</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/007/375/059/58ccbea8cadeb719ce66d1079911dc55.png</cover>
+    <epub default="true" type="full" size="563232">http://media.blinkboxbooks.com/9780/007/375/059/f3c4af5bd7c3ebf90531e4ca008c65c1.epub</epub>
+    <epub default="true" type="sample" size="104641">http://media.blinkboxbooks.com/9780/007/375/059/7354dc987307a20ab716c0ed567ec76a.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/harpercollins_uk/ebooks/9780007375059.epub</epub>
+  </media>
+</book>

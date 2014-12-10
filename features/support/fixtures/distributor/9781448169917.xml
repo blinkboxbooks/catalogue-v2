@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="043d58ed476ec089e88b03014394c081:1-9c1d2047acb2ae8bfea63b777f8ecf1d" r:version="0.14.3">
+  <isbn>9781448169917</isbn>
+  <title>My Brief History</title>
+  <contributors>
+    <contributor role="Author" id="ef5bbc51bef76ced4e801ee05aa9bf121a8c0369">
+      <displayName>Stephen Hawking</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;Stephen Hawking has dazzled readers worldwide with a string of bestsellers exploring the mysteries of the universe. Now, for the first time, the most brilliant cosmologist of our age turns his gaze inwards for a revealing look at his own life and intellectual evolution.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;i&gt;&lt;/i&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;i&gt;My Brief History &lt;/i&gt;recounts Stephen Hawking's improbable journey, from his post-war London boyhood to his years of international acclaim and celebrity. Lavishly illustrated with rarely seen photographs, this concise, witty and candid account introduces readers to a Hawking rarely glimpsed in previous books: the inquisitive schoolboy whose classmates nicknamed him 'Einstein'; the jokester who once placed a bet with a colleague over the existence of a black hole; and the young husband and father struggling to gain a foothold in the world of academia.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Writing with characteristic humility and humour, Hawking opens up about the challenges that confronted him following his diagnosis of motor neurone disease aged twenty-one. Tracing his development as a thinker, he explains how the prospect of an early death urged him onwards through numerous intellectual breakthroughs, and talks about the genesis of his masterpiece &lt;i&gt;A Brief History of Time &lt;/i&gt;- one of the iconic books of the twentieth century.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Clear-eyed, intimate and wise, &lt;i&gt;My Brief History&lt;/i&gt; opens a window for the rest of us into Hawking's personal cosmos.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;STEPHEN HAWKING is regarded as one of the most brilliant theoretical physicists since Einstein. He held the position of Lucasian Professor of Mathematics at the University of Cambridge for thirty years and is the author of &lt;i&gt;A Brief History of Time&lt;/i&gt; which was an international bestseller and stayed on the &lt;i&gt;Sunday Times&lt;/i&gt; bestseller list for 237 weeks. His other books for the general reader include &lt;i&gt;Black Holes and Baby Universes and Other Essays, T&lt;/i&gt;&lt;i&gt;he Universe in a Nutshell&lt;/i&gt;, &lt;i&gt;A Briefer History of Time &lt;/i&gt;and &lt;i&gt;The Grand Design&lt;/i&gt;.&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;The extraordinary personal autobiography of the world's most famous scientist, written solely and exclusively by Stephen Hawking.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Transworld</name>
+    <username>randomhouse_uk</username>
+    <imprint>Transworld Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>22.08</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>22.08</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>9.16</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>10.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>16.24</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>13.53</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>11.81</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>12.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>12.96</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>14.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>65.83</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>79.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>74.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>89.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>15.64</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>17.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>82.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>99.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>13.56</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>11.3</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">BIO000000</subject>
+    <subject type="BISAC">SOC022000</subject>
+    <subject type="BIC">PDZ</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-09-12</publishedOn>
+  <modifiedAt>2014-07-15 16:37:23 UTC</modifiedAt>
+  <regions>
+    <region>AL</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>CM</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>HR</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>PF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>VA</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>IE</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>KE</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>AW</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PG</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>SD</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/448/169/917/024998703f5683abd69ed9f169ff3f44.png</cover>
+    <epub default="true" type="full" size="5222374">http://media.blinkboxbooks.com/9781/448/169/917/134d4bf689ade70d64558cd98cec8090.epub</epub>
+    <epub default="true" type="sample" size="1975400">http://media.blinkboxbooks.com/9781/448/169/917/3f38d643e75e98a7b4f25a7624a62837.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/20131207/9781448169917.epub</epub>
+  </media>
+</book>

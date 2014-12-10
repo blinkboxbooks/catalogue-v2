@@ -1,0 +1,388 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="36b2479cc78064b3f7d340fc43ed1675:1-45c5da006246697c83e8499561a5e19b" r:version="0.14.3">
+  <isbn>9781409014317</isbn>
+  <title>George and the Big Bang</title>
+  <series>
+    <title>George's Secret Key to the Universe</title>
+    <number>3</number>
+  </series>
+  <contributors>
+    <contributor role="Author" id="942d7f60c9fbdc591c4927a225552996ea9469b3">
+      <displayName>Lucy Hawking</displayName>
+    </contributor>
+    <contributor role="Author" id="ef5bbc51bef76ced4e801ee05aa9bf121a8c0369">
+      <displayName>Stephen Hawking</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;Meet George. He's an ordinary boy with an incredible secret - the power to go on intergalactic adventures!&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Join him as he battles a sinister rebel-scientist, who's hell bent on sabotaging the most exciting - and dangerous - experiment of the century.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;A deadly bomb is ticking. The whole world is watching. Can George stop the second &lt;b&gt;big bang&lt;/b&gt;?&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Featuring the latest scientific theories - plus all-new content about the Higgs boson!&lt;i&gt;&lt;/i&gt;&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;&lt;/p&gt;&lt;p&gt;STEPHEN HAWKING is Director of Research at the Institute of Theoretical Cosmology at the University of Cambridge; he held the post of Lucasian Professor of Mathematics at the University of Cambridge for thirty years. He is widely regarded as one of the most brilliant theoretical physicists since Einstein. In 2009 he was awarded the Medal of Freedom, America's highest civilian honour, by President Obama and has also recently been awarded the Cosmos Award for Outstanding Public Presentation of Science. His adult book &lt;i&gt;A Brief History of Time&lt;/i&gt; has been a phenomenal bestseller worldwide and is now available in more than 30 languages.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;LUCY HAWKING is the author of two adult novels, and has written for the &lt;i&gt;Daily Mail&lt;/i&gt;, the &lt;i&gt;Telegraph&lt;/i&gt;, &lt;i&gt;The Times&lt;/i&gt; and the &lt;i&gt;Evening Standard&lt;/i&gt; and has been a guest presenter and regular contributor on radio.&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;The third out-of-this-world adventure from Lucy Hawking and Professor Stephen Hawking - the most famous science genius in the Universe! Now in paperback.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>RHCP</name>
+    <username>randomhouse_uk</username>
+    <imprint>RHCP Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>11.88</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>4.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>8.74</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>7.28</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>8.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>7.41</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>8.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>37.5</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>45.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>40.83</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>49.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>11.3</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>12.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>45.83</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>55.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.3</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>6.08</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>3.74</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>4.49</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">JNF037020</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2014-02-28</publishedOn>
+  <modifiedAt>2014-07-15 16:38:54 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AG</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BD</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BT</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>KY</region>
+    <region>LK</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>CK</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>FR</region>
+    <region>GF</region>
+    <region>GM</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GD</region>
+    <region>GP</region>
+    <region>GY</region>
+    <region>HM</region>
+    <region>VA</region>
+    <region>HK</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>IE</region>
+    <region>IT</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>MT</region>
+    <region>MQ</region>
+    <region>MU</region>
+    <region>MC</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>PK</region>
+    <region>PG</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SG</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>SD</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AQ</region>
+    <region>DZ</region>
+    <region>AO</region>
+    <region>AZ</region>
+    <region>AR</region>
+    <region>BH</region>
+    <region>AM</region>
+    <region>BO</region>
+    <region>BA</region>
+    <region>BV</region>
+    <region>BR</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>KH</region>
+    <region>CM</region>
+    <region>CV</region>
+    <region>CF</region>
+    <region>TD</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>TW</region>
+    <region>CO</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CR</region>
+    <region>HR</region>
+    <region>CU</region>
+    <region>BJ</region>
+    <region>DO</region>
+    <region>EC</region>
+    <region>SV</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>GS</region>
+    <region>AX</region>
+    <region>PF</region>
+    <region>TF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>PS</region>
+    <region>GL</region>
+    <region>GU</region>
+    <region>GT</region>
+    <region>GN</region>
+    <region>HT</region>
+    <region>HN</region>
+    <region>ID</region>
+    <region>IR</region>
+    <region>IQ</region>
+    <region>IL</region>
+    <region>CI</region>
+    <region>JP</region>
+    <region>KZ</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KG</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LR</region>
+    <region>LY</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>ML</region>
+    <region>MR</region>
+    <region>MX</region>
+    <region>MN</region>
+    <region>MD</region>
+    <region>MA</region>
+    <region>MZ</region>
+    <region>OM</region>
+    <region>CW</region>
+    <region>AW</region>
+    <region>SX</region>
+    <region>BQ</region>
+    <region>NC</region>
+    <region>NI</region>
+    <region>NE</region>
+    <region>MP</region>
+    <region>FM</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PA</region>
+    <region>PY</region>
+    <region>PE</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>QA</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>MF</region>
+    <region>ST</region>
+    <region>SA</region>
+    <region>SN</region>
+    <region>VN</region>
+    <region>EH</region>
+    <region>SR</region>
+    <region>SY</region>
+    <region>TJ</region>
+    <region>TH</region>
+    <region>TG</region>
+    <region>AE</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TM</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>EG</region>
+    <region>BF</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VE</region>
+    <region>WF</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/409/014/317/62f73e4325c17548296dda2e75a909f1.png</cover>
+    <epub default="true" type="full" size="20042968">http://media.blinkboxbooks.com/9781/409/014/317/73b9184d2803075645fb7dce30617662.epub</epub>
+    <epub default="true" type="sample" size="2419386">http://media.blinkboxbooks.com/9781/409/014/317/5bde3ad744d2a4a0cbbbea493667c7f4.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/20140221/9781409014317.epub</epub>
+  </media>
+</book>
