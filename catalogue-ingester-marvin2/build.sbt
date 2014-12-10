@@ -1,4 +1,4 @@
-name := "catalogue-ingesterv2"
+name := "catalogue-ingester-marvin2"
 
 val AkkaVersion = "2.3.3"
 
