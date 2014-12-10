@@ -7,8 +7,7 @@ import spray.http.StatusCodes
 
 class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
-  def simpleBookResponse(q: String) = BookSearchResponse(q, Book("1234567890123", "A simple book", "Foo C. Bar" :: Nil) :: Nil, 1)
-  def emptyBookResponse(q: String) = BookSearchResponse(q, Nil, 0)
+  import ResponseFixtures._
 
   "The search API" should "retrieve empty result-sets from an empty index" in {
     catalogueIndex andAfter { _ =>

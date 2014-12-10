@@ -32,17 +32,23 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
     override def apply(ctx: RequestContext): Unit = ctx.complete(Paged(page, ctx.request.uri, content))
   }
 
+  val validSpecialChars = "-,.';!"
+  def preProcess(q: String): String = q.filter(c => c.isLetterOrDigit || validSpecialChars.contains(c) || c.isWhitespace).trim
+
   val serviceRoutes: Route = get {
     pathPrefix("catalogue" / "search") {
       pathPrefix("books") {
         pathEnd {
           get {
             parameter('q ? "") { q =>
-              val query = q.trim
-              validate(!query.isEmpty, "Missing search query term") {
-                paged(searchDefaultCount) { page =>
-                  onSuccess(searchService.search(query, page)) { res =>
-                    completePaged(page)(res)
+              validate(!q.trim.isEmpty, "Missing search query term") {
+                val query = preProcess(q)
+
+                validate(!query.isEmpty, "Invalid or empty search term") {
+                  paged(searchDefaultCount) { page =>
+                    onSuccess(searchService.search(query, page)) { res =>
+                      completePaged(page)(res.copy(id = q))
+                    }
                   }
                 }
               }
