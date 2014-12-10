@@ -22,6 +22,90 @@ book:
     - id:               "9999999999999"
   is free:
     - id:               "9780007531721"
+  can be searched for:
+    - id: "9781118079386"
+      title: "Pragmatic Software Testing"
+      authors: ["Rex Black"]
+    - id: "9781409092360"
+      title: "A Brief History Of Time"
+      authors: ["Stephen Hawking"]
+    - id: "9780007375059"
+      title: "The Hunt for Red October"
+      authors: ["Tom Clancy"]
+    - id: "9781446403815"
+      title: "Lost Symbols?"
+      authors: ["David Ovason"]
+    - id: "9781446409459"
+      title: "The Nostradamus Code"
+      authors: ["David Ovason"]
+    - id: "9781448164653"
+      title: "The Book Of The Eclipse"
+      authors: ["David Ovason"]
+    - id: "9781448106899"
+      title: "The Godfather"
+      authors: ["Mario Puzo"]
+    - id: "9780141349183"
+      title: "Let It Snow"
+      authors: ["John Green", "Maureen Johnson", "Lauren Myracle"]
+
+  exists within search indices:
+    - id: "9780593072493"
+      title: "Inferno"
+      authors: ["Dan Brown"]
+    - id: "9781304132512"
+      title: "Great Expectations"
+      authors: ["Charles Dickens"]
+    - id: "9781847085863"
+      title: "The Myth Of Wu Tao-tzu"
+      authors: ["Sven Lindqvist"]
+    - id: "9781847677129"
+      title: "Näive Super"
+      authors: ["Erlend Loe"]
+    - id: "9781442446090"
+      title: "Neil Flambé and the Aztec Abduction"
+      authors: ["Kevin Sylvester"]
+    - id: "9780007431595"
+      title: "Eats, Shoots & Leaves"
+      authors: ["Lynne Truss"]
+
+  author has written others in the catalogue:
+    - id: "9781446409459"
+      title: "The Nostradamus Code"
+      authors: ["David Ovason"]
+
+  author has special characters in their name:
+    - id: "9781844569151"
+      title: "Our Game"
+      authors: ["John le Carré"]
+    - id: "9781845969318"
+      title: "Darragh"
+      authors: ["Darragh Ó Sé"]
+    - id: "9781400834341"
+      title: "Angina Days"
+      authors: ["Günter Eich"]
+
+  has multiple authors:
+    - id: "9780141349183"
+      title: "Let It Snow"
+      authors: ["John Green", "Maureen Johnson", "Lauren Myracle"]
+
+  has many similar books:
+    - id: "9781409092360"
+      title: "A Brief History Of Time"
+      authors: ["Stephen Hawking"]
+      similar: ["9781400834747","9781448169917","9781407066790","9781407047843","9781409081524","9780486152318","9780307594259","9780007563500","9780007413379","9780486165486","9780191648779","9781409014317","9781780225296","9781448100811","9780307817099","9781848167193","9781101624296","9780141924014","9789814449380","9789814390606"]
+
+  match the same word stem:
+    - word: "Gatsby"
+    - ids: ["9781446418536", "9780989020039", "9781848669956", "9781101190173", "9781118123645", "9788074844904", "9780007477364", "9781434446527", "9781782122715", "9780743246392"]
+
+search_term:
+  will return many results:
+    - query: "the"
+  is one word that is misspelt:
+    - query: "tiem"
+  is multiple words of which one is misspelt:
+    - query: "tiem space"
 
 category:
   is currently active:

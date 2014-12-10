@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="4eb9419ef1a6e74b8b8fabe45ecd9040:5-b6b1e60a0cf83e761d088cd38576b13d" r:version="0.14.3">
+  <isbn>9780593072493</isbn>
+  <title>Inferno</title>
+  <contributors>
+    <contributor role="Author" id="5add98cdb25af0c4cf9b20fb152494b166057732">
+      <displayName>Dan Brown</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;
+&lt;i&gt;'Seek and ye shall find.'&lt;/i&gt;
+&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;With these words echoing in his head, eminent Harvard symbologist Robert Langdon awakes in a hospital bed with no recollection of where he is or how he got there. Nor can he explain the origin of the macabre object that is found hidden in his belongings.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;A threat to his life will propel him and a young doctor, Sienna Brooks, into a breakneck chase across the city of Florence. Only Langdon's knowledge of hidden passageways and ancient secrets that lie behind its historic facade can save them from the clutches of their unknown pursuers.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;   &lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;  With only a few lines from Dante's dark and epic masterpiece, &lt;i&gt;The Inferno&lt;/i&gt;, to guide them, they must decipher a sequence of codes buried deep within some of the most celebrated artefacts of the Renaissance - sculptures, paintings, buildings - to find the answers to a puzzle which may, or may not, help them save the world from a terrifying threat.&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Set against an extraordinary landscape inspired by one of history's most ominous literary classics,&lt;i&gt; Inferno&lt;/i&gt; is Dan Brown's most compelling and thought-provoking novel yet, a breathless race-against-time thriller that will grab you from page one and not let you go until you close the book.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Transworld</name>
+    <username>randomhouse_uk</username>
+    <imprint>Transworld Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="AUD" agency="true">
+      <amount>12.72</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>13.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>12.61</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>12.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>23.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>23.29</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>14.77</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>16.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>20.87</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>17.39</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>7.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>8.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC002000</subject>
+    <subject type="BISAC">FIC031000</subject>
+    <subject type="BIC">FH</subject>
+    <subject type="BIC">FF</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-05-14</publishedOn>
+  <modifiedAt>2014-07-14 11:13:40 UTC</modifiedAt>
+  <regions>
+    <region>AL</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>CM</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>HR</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>PF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>VA</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>IE</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>KE</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>AW</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PG</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>SD</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+    <region>AN</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/593/072/493/3cc1ea2cd66ca0c381a4f439b7217c1c.png</cover>
+    <epub default="true" type="full" size="1788864">http://media.blinkboxbooks.com/9780/593/072/493/81965becfc7cbd1fdecc2858fc5ed193.epub</epub>
+    <epub default="true" type="sample" size="959094">http://media.blinkboxbooks.com/9780/593/072/493/9cba3b6328ea09f6bab8a6761e1c4700.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/9780593072493.epub</epub>
+  </media>
+</book>

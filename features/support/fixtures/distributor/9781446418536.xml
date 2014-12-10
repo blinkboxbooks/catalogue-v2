@@ -1,0 +1,412 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="044504318a4b070346ae17953aaac1a8:1-d6809f315f2987fc50995faf01398fae" r:version="0.14.3">
+  <isbn>9781446418536</isbn>
+  <title>The Great Gatsby</title>
+  <contributors/>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;&lt;/p&gt;&lt;p&gt;WITH A NEW INTRODUCTION BY GEOFF DYER&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;The world and his mistress are at Jay Gatsby's party.  But Gatsby stands apart from the crowd, isolated by a secret longing. In between sips of champagne his guests speculate about their mysterious host. Some say he's a bootlegger. Others swear he was a German spy during the war. They lean in and whisper 'he killed a man once'. Just where is Gatsby from and what is the obsession that drives him?&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;This edition of &lt;i&gt;The Great Gatsby &lt;/i&gt;is the result  of a unique collaboration between Tiffany &amp;amp; Co. and Vintage Classics. It is based on designs in the Tiffany &amp;amp;Co. archives from the twenties when F. Scott Fitzgerald's talent, beauty and notorious lifestyle made him one of best known writers of the Jazz Age.&lt;/p&gt;</description>
+    <description format="html" source="Back cover copy">&lt;p&gt;&lt;/p&gt;&lt;p&gt;'One of the greatest works of American literature...a timeless evocation of the allure, corruption and carelessness of wealth' &lt;i&gt;The Times&lt;/i&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;Jay Gatsby is a self-made man famed for his decadent, champagne-drenched parties. Despite being surrounded by Long Island's bright and beautiful, he longs only for Daisy Buchanan. In shimmering prose, Fitzgerald shows Gatsby pursue his dream to its tragic conclusion. &lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;'A stunning illumination of the world...not only a miracle of talent but a triumph of technique' Richard Yates&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;i&gt;&lt;/i&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;/p&gt;&amp;#13;
+&lt;p&gt;&lt;i&gt;See also: The Beautiful and the Damned&lt;/i&gt;&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;F. Scott Fitzgerald (1896 -1940) is widely considered the poet laureate of the Jazz Age. He wrote many short stories and four novels, &lt;i&gt;This Side of Paradise, The Beautiful and the Damned, Tender is the Night &lt;/i&gt;and &lt;i&gt;The Great Gatsby. &lt;/i&gt;An unfinished novel, &lt;i&gt;The Last Tycoon, &lt;/i&gt;was published posthumously.&lt;i&gt; &lt;/i&gt;&lt;/p&gt;</description>
+    <description format="html" source="Promotional &quot;headline&quot;">&lt;p&gt;Fitzgerald's glittering Jazz Age masterpiece&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Random House</name>
+    <username>randomhouse_uk</username>
+    <imprint>Vintage Digital</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>3.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>3.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>2.91</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>3.49</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>2.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>2.49</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>5.45</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>5.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>3.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>3.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>4.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>4.5</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>24.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="true">
+      <amount>29.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>24.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="true">
+      <amount>29.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>6.08</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>6.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>29.17</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="true">
+      <amount>35.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>4.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>4.16</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>3.32</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>3.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC000000</subject>
+    <subject type="BISAC">FIC004000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-03-30</publishedOn>
+  <modifiedAt>2014-07-18 01:59:48 UTC</modifiedAt>
+  <regions>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AQ</region>
+    <region>DZ</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AR</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BH</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BT</region>
+    <region>BO</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BV</region>
+    <region>BR</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>KH</region>
+    <region>CM</region>
+    <region>CA</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>TW</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>CO</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>CR</region>
+    <region>HR</region>
+    <region>CU</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>EC</region>
+    <region>SV</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>GF</region>
+    <region>PF</region>
+    <region>TF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>PS</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GL</region>
+    <region>GD</region>
+    <region>GP</region>
+    <region>GU</region>
+    <region>GT</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>HT</region>
+    <region>HM</region>
+    <region>VA</region>
+    <region>HN</region>
+    <region>HK</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>ID</region>
+    <region>IR</region>
+    <region>IQ</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>JP</region>
+    <region>KZ</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KG</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LY</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MX</region>
+    <region>MC</region>
+    <region>MN</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MA</region>
+    <region>MZ</region>
+    <region>OM</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>CW</region>
+    <region>AW</region>
+    <region>SX</region>
+    <region>BQ</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NI</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MP</region>
+    <region>FM</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PA</region>
+    <region>PG</region>
+    <region>PY</region>
+    <region>PE</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>BL</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>MF</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SA</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SG</region>
+    <region>SK</region>
+    <region>VN</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>EH</region>
+    <region>SD</region>
+    <region>SR</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>SY</region>
+    <region>TJ</region>
+    <region>TH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>AE</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TM</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>EG</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VE</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/446/418/536/87da32a40c56fe2db762cfb0d142365e.png</cover>
+    <epub default="true" type="full" size="804647">http://media.blinkboxbooks.com/9781/446/418/536/392724838e4eff73cba039e41921e6f8.epub</epub>
+    <epub default="true" type="sample" size="651765">http://media.blinkboxbooks.com/9781/446/418/536/d7da38a3f274d97ef126a97fe25c6f50.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_uk/9781446418536.epub</epub>
+  </media>
+</book>

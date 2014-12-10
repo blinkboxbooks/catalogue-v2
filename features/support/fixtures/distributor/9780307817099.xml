@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="2c764d24aad24b81617f261e34f516eb:1-4fd9a753305ad79e315da578e4e85216" r:version="0.14.3">
+  <isbn>9780307817099</isbn>
+  <title>Discovery of Our Galaxy</title>
+  <contributors>
+    <contributor role="Author" id="1932ee40fd475ba2027894e60af60cba198d5b27">
+      <displayName>Charles A. Whitney</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">This is a book about the mystery and the passion, the imagination, religion, and poetry, the philosophy, the intellectual flights&#x2014;and, above all, the people&#x2014;that have created the science of astronomy, from Thales of Miletus predicting eclipses in the sixth century B.C. to today&#x2019;s scientists probing the cosmic significance of the mysterious &#x201C;black holes&#x201D; discovered in 1970.&#xA0; With authority and charm, the distinguished Harvard astronomer Charles A. Whitney here re-creates the lives and temperaments of the great astronomers and retraces the ingenious arguments, the feats of observation and deduction, and the leaps of intuition by which they have gradually unveiled a picture of the universe and have brought us to an understanding of our own planet&#x2019;s place in it.&#xA0; Among them:&lt;br /&gt;&#xA0;&lt;br /&gt;KEPLER, searching the solar system for visible evidence of the transcendent order he believed in&lt;br /&gt;GALILEO, constructing the first telescope and proposing the concept of universal gravitation&lt;br /&gt;NEWTON, paragon of logic, paradoxically driven by an unshakable belief in himself as God&#x2019;s appointed prophet to create a world of mathematical certainty and thus expose the wonder of his Father in Heaven&lt;br /&gt;WILLIAM HERSCHEL, the nineteenth-century German who may well be considered the father of modern astronomy, first man to chart the nebulae&lt;br /&gt;EDWIN HUBBLE, in the present century, discovering and exploring galaxies beyond our own&lt;br /&gt;&#xA0;&lt;br /&gt;Finally, Professor Whitney makes clear for the layman the fascinating problems astronomers wrestle with today: the mysterious nature of quasars, strange cosmic bodies discovered in 1963; the unknown forces behind cataclysmic explosions recently glimpsed in other galaxies; the elusive nature of &#x201C;interstellar dust&#x201D;; the eternal question of how it all began.</description>
+    <description format="html" source="Biographical note">Charles Allen Whitney was born in Milwaukee, Wisconsin, in 1929.&#xA0; After receiving an S.B. in physics from the Massachusetts Institute of Technology, Whitney completed his A.M. and Ph.D. in astronomy at Harvard University.&#xA0; He has been a physicist at the Smithsonian Astrophysical Observatory since 1956, and is also a professor of astronomy at Harvard.&#xA0; No less a writer than a scientist, Whitney has been at work on several projects in addition to &lt;i&gt;The Discovery of Our Galaxy&lt;/i&gt;.&#xA0; He has received a Guggenheim Fellowship in order to write a biography on Edwin Hubble.&#xA0; He is married, the father of five children, and lives in Weston, Massachusetts.&#xA0;</description>
+  </descriptions>
+  <publisher>
+    <name>Knopf Doubleday Publishing Group</name>
+    <username>randomhouse_usa</username>
+    <imprint>Knopf</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="true">
+      <amount>28.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>32.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>19.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>19.99</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">SCI015000</subject>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2012-06-06</publishedOn>
+  <modifiedAt>2014-07-02 14:50:59 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/307/817/099/9c4c222638c8858e65458be2375ea782.png</cover>
+    <epub default="true" type="full" size="12896659">http://media.blinkboxbooks.com/9780/307/817/099/f6addc43e49acea35fe6eb29c713ac59.epub</epub>
+    <epub default="true" type="sample" size="2960849">http://media.blinkboxbooks.com/9780/307/817/099/13ab63cc4dc64c72334da76a7aaec1cd.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/randomhouse_usa/20130904/9780307817099.epub</epub>
+  </media>
+</book>

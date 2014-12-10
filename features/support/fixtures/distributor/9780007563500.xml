@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="e1ca7c5f19db29dd84181ab7bfa11d94:1-e69a0c3931289df0feddbe9d839ce216" r:version="0.14.3">
+  <isbn>9780007563500</isbn>
+  <title>Universe: The story of the Universe, from earliest times to our continuing discoveries (Collins Need to Know?)</title>
+  <contributors>
+    <oneLine>By Peter Grego</oneLine>
+    <contributor role="Author" id="b6bfdb6ffb32f365b407a51151cb6e7621b1c4f8">
+      <displayName>Peter Grego</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Long description">&lt;p&gt;An introduction to the universe covering everything from the big bang and our understanding of the universe over time, to the earth's formation, the Sun and how it affects us, the Moon and planets, black holes and galaxies.&lt;/p&gt;
+        &lt;p&gt;The companion volume to &#x2018;Need to Know? Stargazing&#x2019; and by the same author, this book focuses on the basic history and science of the universe, rather than on the practical skywatching aspects. It includes information on:&lt;/p&gt;
+        &lt;p&gt;&#x2022; Outrageous philosophy: weird notions and early ideas about the Universe including ancient Egyptian and Greek cosmology&lt;br /&gt;&#x2022; How the universe began: creation theories and the expanding Universe, from the Big Bang to the formation of the Sun and the appearance of life and humans&lt;br /&gt;&#x2022; The Earth's formation and the origin of the Moon&lt;br /&gt;&#x2022; The structure and composition of planet and the atmosphere, volcanoes, mountain formation and geological catastrophes; past, present and future&lt;br /&gt;&#x2022; The Solar System&lt;br /&gt;&#x2022; Star types and their formation, development and demise&lt;br /&gt;&#x2022; Types of galaxy&lt;br /&gt;&#x2022; Professional instruments, research and space observatories&lt;/p&gt;
+        &lt;p&gt;In particular, &#x2018;Collins Need to Know? Universe&#x2019; also asks what we know about the future: the future of man, and space travel. Will we be able to colonize planets? Will the universe expand or crunch, and could there be alternative universes out there?&lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;An introduction to the universe covering everything from the big bang and our understanding of the universe over time, to the earth's formation, the Sun and how it affects us, the Moon and planets, black holes and galaxies.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;Peter Grego has been a key watcher of the night sky for almost thirty years. Director of the Lunar Section of Britain's Society of Popular Astronomy since 1984, he is also Editor of three astronomy magazines. He is a fellow of the Royal Astronomical Society. He is author of &#x2018;Need to Know? Stargazing&#x2019;.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>HarperCollins Publishers</name>
+    <username>harpercollins_uk</username>
+    <imprint>Collins</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>7.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>5.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>11.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>11.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>13.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>12.62</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BIC" main="true">WNX</subject>
+    <subject type="BISAC" main="true">SCI015000</subject>
+    <subject type="BIC">PGK</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2014-04-24</publishedOn>
+  <announcedOn>2014-03-21</announcedOn>
+  <modifiedAt>2014-05-30 11:42:35 UTC</modifiedAt>
+  <regions>
+    <region>GB</region>
+    <region>IE</region>
+    <region>AU</region>
+    <region>NZ</region>
+    <region>CA</region>
+    <region>ZA</region>
+    <region>IN</region>
+    <region>US</region>
+    <region>AT</region>
+    <region>BE</region>
+    <region>BG</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DK</region>
+    <region>EE</region>
+    <region>FI</region>
+    <region>FR</region>
+    <region>DE</region>
+    <region>GR</region>
+    <region>HU</region>
+    <region>IT</region>
+    <region>LV</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MT</region>
+    <region>NL</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>RO</region>
+    <region>SK</region>
+    <region>SI</region>
+    <region>ES</region>
+    <region>SE</region>
+    <region>IS</region>
+    <region>LI</region>
+    <region>NO</region>
+    <region>HR</region>
+    <region>CH</region>
+    <region>RU</region>
+    <region>TR</region>
+    <region>SG</region>
+    <region>AE</region>
+    <region>HK</region>
+    <region>JP</region>
+    <region>MY</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/007/563/500/2d0e753ec5b8fc0ded30da6f599b6554.png</cover>
+    <epub default="true" type="full" size="12214050">http://media.blinkboxbooks.com/9780/007/563/500/0ceda6d8c6336bd7ace6e73ab8f0105c.epub</epub>
+    <epub default="true" type="sample" size="4084511">http://media.blinkboxbooks.com/9780/007/563/500/53f845b006ebf28d6a4901f1524972b4.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/harpercollins_uk/harpercollins_uk/ebooks/20140401/9780007563500.epub</epub>
+  </media>
+</book>

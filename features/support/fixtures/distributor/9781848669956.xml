@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="186fb04b7b969c80a03a57143c48d464:1-996a1da041339b40e9dd73bbc5b2a792" r:version="0.14.3">
+  <isbn>9781848669956</isbn>
+  <title>Falling for Gatsby</title>
+  <contributors>
+    <contributor role="Author" id="aeef190963145704307c17565704dfd568e0d121">
+      <displayName>Claire Dyer</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;When&#xA0;Lucas saves&#xA0;Martha from falling down the steps of the cinema after a screening of&#xA0;&lt;i&gt;The Great Gatsby&lt;/i&gt;,&#xA0;it ignites an attraction between them that is as compelling as it is forbidden. &lt;/p&gt;&lt;p&gt;Throughout their subsequent affair the lovers become entranced by the classic story that first brought them together and, during their rare and precious afternoons together, Lucas reads Martha extracts from the book. &lt;/p&gt;&lt;p&gt;However, as with Gatsby and Daisy's relationship, Martha and Lucas' meetings are fraught with danger and uncertainty. Is their love affair destined to mirror the course of the novel, or is there another way for this story to end? &lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;When&#xA0;Lucas saves&#xA0;Martha from falling down the steps of the cinema after a screening of&#xA0;&lt;i&gt;The Great Gatsby&lt;/i&gt;,&#xA0;it ignites an attraction between them that is as compelling as it is forbidden. Is their love affair destined to mirror the course of the novel, or is there another way for this story to end? &lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;Claire Dyer is a published, prize-winning poet. She is Chairperson of Reading Writers and gives solo and group poetry readings around the UK. She lives outside Reading. &lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Quercus Publishing</name>
+    <username>quercus_uk</username>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>0.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>0.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>0.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>0.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>0.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>0.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="INR" agency="false">
+      <amount>0.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="INR" agency="false">
+      <amount>0.0</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="AUD" agency="false">
+      <amount>0.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="false">
+      <amount>0.0</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC027020</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2014-01-15</publishedOn>
+  <modifiedAt>2014-08-01 15:30:38 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AN</region>
+    <region>AO</region>
+    <region>AQ</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AU</region>
+    <region>AW</region>
+    <region>AX</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BV</region>
+    <region>BW</region>
+    <region>BY</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CM</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EG</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GL</region>
+    <region>GM</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GS</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>HM</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>JP</region>
+    <region>KE</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KI</region>
+    <region>KM</region>
+    <region>KN</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LC</region>
+    <region>LI</region>
+    <region>LK</region>
+    <region>LR</region>
+    <region>LS</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MG</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MX</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NG</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>NZ</region>
+    <region>OM</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PK</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PN</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RS</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SE</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SI</region>
+    <region>SK</region>
+    <region>SL</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SO</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TO</region>
+    <region>TR</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TW</region>
+    <region>TZ</region>
+    <region>UA</region>
+    <region>UG</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VC</region>
+    <region>VE</region>
+    <region>VG</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>YT</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/848/669/956/a377d8631d31f67d15066556ecc03ec5.png</cover>
+    <epub default="true" type="full" size="743216">http://media.blinkboxbooks.com/9781/848/669/956/9063770812c32c4aab0b788a646f917c.epub</epub>
+    <epub default="true" type="sample" size="684131">http://media.blinkboxbooks.com/9781/848/669/956/fdffab7872b3fce3e3ae65254ddd2a45.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/quercus_uk/9781848669956/ePub/9781848669956.epub</epub>
+  </media>
+</book>

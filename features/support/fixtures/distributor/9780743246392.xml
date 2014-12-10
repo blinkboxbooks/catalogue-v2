@@ -1,0 +1,318 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="4aeb4232a0ee6f326a932e3be35f2e44:1-5680d4a3dc3c4671f20f15e344e942e3" r:version="0.14.3">
+  <isbn>9780743246392</isbn>
+  <title>The Great Gatsby</title>
+  <contributors>
+    <oneLine>F. Scott Fitzgerald</oneLine>
+    <contributor role="Author" id="711aaeb5d17539131237200dd87af3f3e5c06b0c">
+      <displayName>F. Scott Fitzgerald</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">The exemplary novel of the Jazz Age, F. Scott Fitzgeralds' third book, &lt;i&gt;The Great Gatsby&lt;/i&gt; (1925), stands as the supreme achievement of his career. T. S. Eliot read it three times and saw it as the "first step" American fiction had taken since Henry James; H. L. Mencken praised "the charm and beauty of the writing," as well as Fitzgerald's sharp social sense; and Thomas Wolfe hailed it as Fitzgerald's "best work" thus far. The story of the fabulously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan, of lavish parties on Long Island at a time when, &lt;i&gt;The New York Times&lt;/i&gt; remarked, "gin was the national drink and sex the national obsession," it is an exquisitely crafted tale of America in the 1920s that resonates with the power of myth. A novel of lyrical beauty yet brutal realism, of magic, romance, and mysticism, &lt;i&gt;The Great Gatsby&lt;/i&gt; is one of the great classics of twentieth-century literature.</description>
+  </descriptions>
+  <publisher>
+    <name>Scribner</name>
+    <username>simonnschuster</username>
+    <imprint>Scribner</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="true">
+      <amount>5.82</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>6.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>1.8</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC000000</subject>
+    <subject type="BISAC">FIC004000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2003-05-27</publishedOn>
+  <modifiedAt>2014-08-04 14:02:48 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AO</region>
+    <region>AQ</region>
+    <region>AR</region>
+    <region>AS</region>
+    <region>AT</region>
+    <region>AU</region>
+    <region>AW</region>
+    <region>AX</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BL</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BO</region>
+    <region>BQ</region>
+    <region>BR</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BV</region>
+    <region>BW</region>
+    <region>BY</region>
+    <region>BZ</region>
+    <region>CA</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CM</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CW</region>
+    <region>CX</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EG</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GL</region>
+    <region>GM</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GS</region>
+    <region>GT</region>
+    <region>GU</region>
+    <region>GW</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>HM</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>JP</region>
+    <region>KE</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KI</region>
+    <region>KM</region>
+    <region>KN</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LC</region>
+    <region>LI</region>
+    <region>LK</region>
+    <region>LR</region>
+    <region>LS</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MF</region>
+    <region>MG</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MP</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MX</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NG</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>NZ</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PH</region>
+    <region>PK</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PN</region>
+    <region>PR</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RS</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SE</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SI</region>
+    <region>SJ</region>
+    <region>SK</region>
+    <region>SL</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SO</region>
+    <region>SR</region>
+    <region>SS</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SX</region>
+    <region>SY</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TO</region>
+    <region>TR</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TW</region>
+    <region>TZ</region>
+    <region>UA</region>
+    <region>UG</region>
+    <region>UM</region>
+    <region>US</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VC</region>
+    <region>VE</region>
+    <region>VG</region>
+    <region>VI</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>YT</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/743/246/392/7b97f626548f044a90fb8600d3dbdbf1.png</cover>
+    <epub default="true" type="full" size="1860771">http://media.blinkboxbooks.com/9780/743/246/392/cc4156247e0cbe94aac6762867fc029f.epub</epub>
+    <epub default="true" type="sample" size="1077721">http://media.blinkboxbooks.com/9780/743/246/392/5225d73a72d8f63ea24e706f8454cd73.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/simonnschuster/SimonSchuster/eBooks/20140804/ePub/9780743246392.epub</epub>
+  </media>
+</book>

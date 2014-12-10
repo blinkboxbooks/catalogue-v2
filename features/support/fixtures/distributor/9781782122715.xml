@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="0a4942d05f17c76d1f2bc207ebd4b079:4-ee428cd7b87c75550a0ef4fea4764b8f" r:version="0.14.3">
+  <isbn>9781782122715</isbn>
+  <title>The Great Gatsby</title>
+  <contributors>
+    <contributor role="Author" id="711aaeb5d17539131237200dd87af3f3e5c06b0c">
+      <displayName>F. Scott Fitzgerald</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;One of the books that 'everybody should read', this was named the '2nd greatest novel of the 20th century' by the Modern Library and it has now been filmed six times, including the latest version directed by Baz Luhrmann and starring Leonardo DiCaprio.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Arcturus Digital Limited</name>
+    <username>epubdirect</username>
+    <imprint>Arcturus</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="AUD" agency="false">
+      <amount>1.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="AUD" agency="false">
+      <amount>1.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="BRL" agency="false">
+      <amount>2.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="BRL" agency="false">
+      <amount>2.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>1.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>1.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>1.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>1.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="DKK" agency="false">
+      <amount>10</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="DKK" agency="false">
+      <amount>10</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="INR" agency="false">
+      <amount>100</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="INR" agency="false">
+      <amount>100</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="JPY" agency="false">
+      <amount>150</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="JPY" agency="false">
+      <amount>150</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NOK" agency="false">
+      <amount>10</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NOK" agency="false">
+      <amount>10</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="PHP" agency="false">
+      <amount>35</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="PHP" agency="false">
+      <amount>35</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SEK" agency="false">
+      <amount>10</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SEK" agency="false">
+      <amount>10</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>0.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>0.82</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">FIC004000</subject>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-06-01</publishedOn>
+  <modifiedAt>2014-06-27 14:12:59 UTC</modifiedAt>
+  <regions>
+    <region>AF</region>
+    <region>AL</region>
+    <region>AQ</region>
+    <region>DZ</region>
+    <region>AS</region>
+    <region>AD</region>
+    <region>AO</region>
+    <region>AG</region>
+    <region>AZ</region>
+    <region>AR</region>
+    <region>AU</region>
+    <region>AT</region>
+    <region>BS</region>
+    <region>BH</region>
+    <region>BD</region>
+    <region>AM</region>
+    <region>BB</region>
+    <region>BE</region>
+    <region>BM</region>
+    <region>BT</region>
+    <region>BO</region>
+    <region>BA</region>
+    <region>BW</region>
+    <region>BV</region>
+    <region>BR</region>
+    <region>BZ</region>
+    <region>IO</region>
+    <region>SB</region>
+    <region>VG</region>
+    <region>BN</region>
+    <region>BG</region>
+    <region>MM</region>
+    <region>BI</region>
+    <region>BY</region>
+    <region>KH</region>
+    <region>CM</region>
+    <region>CA</region>
+    <region>CV</region>
+    <region>KY</region>
+    <region>CF</region>
+    <region>LK</region>
+    <region>TD</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>TW</region>
+    <region>CX</region>
+    <region>CC</region>
+    <region>CO</region>
+    <region>KM</region>
+    <region>YT</region>
+    <region>CG</region>
+    <region>CD</region>
+    <region>CK</region>
+    <region>CR</region>
+    <region>HR</region>
+    <region>CU</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>BJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>EC</region>
+    <region>SV</region>
+    <region>GQ</region>
+    <region>ET</region>
+    <region>ER</region>
+    <region>EE</region>
+    <region>FO</region>
+    <region>FK</region>
+    <region>GS</region>
+    <region>FJ</region>
+    <region>FI</region>
+    <region>AX</region>
+    <region>FR</region>
+    <region>GF</region>
+    <region>PF</region>
+    <region>TF</region>
+    <region>DJ</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GM</region>
+    <region>PS</region>
+    <region>DE</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>KI</region>
+    <region>GR</region>
+    <region>GL</region>
+    <region>GD</region>
+    <region>GP</region>
+    <region>GU</region>
+    <region>GT</region>
+    <region>GN</region>
+    <region>GY</region>
+    <region>HT</region>
+    <region>HM</region>
+    <region>VA</region>
+    <region>HN</region>
+    <region>HK</region>
+    <region>HU</region>
+    <region>IS</region>
+    <region>IN</region>
+    <region>ID</region>
+    <region>IR</region>
+    <region>IQ</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IT</region>
+    <region>CI</region>
+    <region>JM</region>
+    <region>JP</region>
+    <region>KZ</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KG</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LS</region>
+    <region>LV</region>
+    <region>LR</region>
+    <region>LY</region>
+    <region>LI</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>MO</region>
+    <region>MG</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>MV</region>
+    <region>ML</region>
+    <region>MT</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MU</region>
+    <region>MX</region>
+    <region>MC</region>
+    <region>MN</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MS</region>
+    <region>MA</region>
+    <region>MZ</region>
+    <region>OM</region>
+    <region>NA</region>
+    <region>NR</region>
+    <region>NP</region>
+    <region>NL</region>
+    <region>CW</region>
+    <region>AW</region>
+    <region>SX</region>
+    <region>BQ</region>
+    <region>NC</region>
+    <region>VU</region>
+    <region>NZ</region>
+    <region>NI</region>
+    <region>NE</region>
+    <region>NG</region>
+    <region>NU</region>
+    <region>NF</region>
+    <region>NO</region>
+    <region>MP</region>
+    <region>FM</region>
+    <region>MH</region>
+    <region>PW</region>
+    <region>PK</region>
+    <region>PA</region>
+    <region>PG</region>
+    <region>PY</region>
+    <region>PE</region>
+    <region>PH</region>
+    <region>PN</region>
+    <region>PL</region>
+    <region>PT</region>
+    <region>GW</region>
+    <region>TL</region>
+    <region>PR</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>BL</region>
+    <region>SH</region>
+    <region>KN</region>
+    <region>AI</region>
+    <region>LC</region>
+    <region>MF</region>
+    <region>PM</region>
+    <region>VC</region>
+    <region>SM</region>
+    <region>ST</region>
+    <region>SA</region>
+    <region>SN</region>
+    <region>RS</region>
+    <region>SC</region>
+    <region>SL</region>
+    <region>SG</region>
+    <region>SK</region>
+    <region>VN</region>
+    <region>SI</region>
+    <region>SO</region>
+    <region>ZA</region>
+    <region>ZW</region>
+    <region>ES</region>
+    <region>SS</region>
+    <region>EH</region>
+    <region>SD</region>
+    <region>SR</region>
+    <region>SJ</region>
+    <region>SZ</region>
+    <region>SE</region>
+    <region>CH</region>
+    <region>SY</region>
+    <region>TJ</region>
+    <region>TH</region>
+    <region>TG</region>
+    <region>TK</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>AE</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TM</region>
+    <region>TC</region>
+    <region>TV</region>
+    <region>UG</region>
+    <region>UA</region>
+    <region>MK</region>
+    <region>EG</region>
+    <region>GB</region>
+    <region>GG</region>
+    <region>JE</region>
+    <region>IM</region>
+    <region>TZ</region>
+    <region>BF</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VE</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZM</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/782/122/715/1396b02db567e0b8544a95db988e6aae.png</cover>
+    <epub default="true" type="full" size="702690">http://media.blinkboxbooks.com/9781/782/122/715/744d363cda6904e97632ed366dc8f02c.epub</epub>
+    <epub default="true" type="sample" size="574111">http://media.blinkboxbooks.com/9781/782/122/715/70e5f4d7ca9cb9ec590aaa6e466a7955.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/epubdirect/20131217/9781782122715.epub</epub>
+  </media>
+</book>

@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="cc5621911653282c2cbb80b50334ba22:3-3e9d68fb138f184c6e86af3797a7b5e1" r:version="0.14.3">
+  <isbn>9780141349183</isbn>
+  <title>Let It Snow</title>
+  <contributors>
+    <oneLine>John Green, Maureen Johnson, Lauren Myracle</oneLine>
+    <contributor role="Author" id="a36a8aa92b68678ed78f8b33ed9a6843870b3ef4">
+      <displayName>John Green</displayName>
+    </contributor>
+    <contributor role="Author" id="9d3e36e2735beb11563b9474b1a33a7febb2acfd">
+      <displayName>Maureen Johnson</displayName>
+    </contributor>
+    <contributor role="Author" id="bc9dfa42ff6f7887a2d991e7ac7face689875a41">
+      <displayName>Lauren Myracle</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">&lt;p&gt;Three wonderful holiday romances by three of America's bestselling authors, including John Green - author of the multi-million bestseller &lt;i&gt;The Fault in Our Stars&lt;/i&gt;.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+An ill-timed storm on Christmas Eve buries the residents of Gracetown under multiple feet of snow and causes quite a bit of chaos. One brave soul ventures out into the storm from her stranded train and sets off a chain of events that will change quite a few lives. Over the next three days one girl takes a risky shortcut with an adorable stranger, three friends set out to win a race to the Waffle House (and the hash brown spoils), and the fate of a teacup pig falls into the hands of a lovesick barista.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+A trio of today's bestselling authors - John Green, Maureen Johnson, and Lauren Myracle - brings all the magic of holidays to life in three hilarious and charming interconnected tales of love, romance, and kisses that will steal your breath away.&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+'A comedy as DELICIOUS as any whipped up by the Bard.' - &lt;i&gt;Washington Post Book World&lt;/i&gt;&lt;/p&gt;&lt;p&gt;
+&lt;i&gt;&lt;/i&gt;&lt;/p&gt;&lt;p&gt;
+&lt;i&gt;John Green is a Printz Award-winning and #1 New York Times bestselling author. His books include The Fault in Our Stars, Looking for Alaska, An Abundance of Katherines, Paper Towns, and Will Grayson, Will Grayson. Visit John online at www.johngreenbooks.com &lt;/i&gt;&lt;/p&gt;&lt;p&gt;&lt;i&gt;
+&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&lt;i&gt;
+Maureen Johnson is the best-selling author of 13 Little Blue Envelopes, Devilish, Girl at Sea, The Name of the Star, and Suite Scarlett. Visit Maureen online at www.maureenjohnsonbooks.com&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&lt;i&gt;
+&lt;/i&gt;&lt;/p&gt;&lt;p&gt;&lt;i&gt;
+Lauren Myracle is the author of many books for teens and tweens, including Shine; Kissing Kate; Peace, Love, and Baby Ducks; and The Winnie Years series. Visit Lauren online at www.laurenmyracle.com.&lt;/i&gt;&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;John Green is a Printz Award-winning and #1 &lt;i&gt;New York Times&lt;/i&gt; bestselling author. His books include &lt;i&gt;The Fault in Our Stars&lt;/i&gt;, &lt;i&gt;Looking for Alaska&lt;/i&gt;, &lt;i&gt;An Abundance of Katherines&lt;/i&gt;, &lt;i&gt;Paper Towns&lt;/i&gt;, and &lt;i&gt;Will Grayson, Will Grayson&lt;/i&gt;. Visit John online at www.johngreenbooks.com &lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+Maureen Johnson is the best-selling author of &lt;i&gt;13 Little Blue Envelopes&lt;/i&gt;,&lt;i&gt; Devilish&lt;/i&gt;, &lt;i&gt;Girl at Sea&lt;/i&gt;, &lt;i&gt;The Name of the Star&lt;/i&gt;, and &lt;i&gt;Suite Scarlett&lt;/i&gt;. Visit Maureen online at www.maureenjohnsonbooks.com&lt;/p&gt;&lt;p&gt;
+&lt;/p&gt;&lt;p&gt;
+Lauren Myracle is the author of many books for teens and tweens, including &lt;i&gt;Shine&lt;/i&gt;; &lt;i&gt;Kissing Kate&lt;/i&gt;; &lt;i&gt;Peace, Love, and Baby Ducks&lt;/i&gt;; and The Winnie Years series. Visit Lauren online at www.laurenmyracle.com.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>Penguin Books Ltd</name>
+    <username>Penguin_UK</username>
+    <imprint>Penguin</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="true">
+      <amount>4.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>5.49</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>6.66</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>7.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+    <subject type="Keyword"/>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2013-09-05</publishedOn>
+  <modifiedAt>2014-06-27 14:55:52 UTC</modifiedAt>
+  <regions>
+    <region>AG</region>
+    <region>AQ</region>
+    <region>AU</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BW</region>
+    <region>BZ</region>
+    <region>CM</region>
+    <region>CY</region>
+    <region>DM</region>
+    <region>EG</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GM</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IQ</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>KE</region>
+    <region>KI</region>
+    <region>KN</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>LC</region>
+    <region>LK</region>
+    <region>LS</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MW</region>
+    <region>MY</region>
+    <region>NA</region>
+    <region>NG</region>
+    <region>NP</region>
+    <region>NZ</region>
+    <region>PK</region>
+    <region>PN</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SL</region>
+    <region>SO</region>
+    <region>SZ</region>
+    <region>TO</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TZ</region>
+    <region>UG</region>
+    <region>VC</region>
+    <region>VG</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AO</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AW</region>
+    <region>AX</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BL</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BV</region>
+    <region>BY</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GL</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GS</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>HM</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IO</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JP</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KM</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LI</region>
+    <region>LR</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>ME</region>
+    <region>MF</region>
+    <region>MG</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MP</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MV</region>
+    <region>MX</region>
+    <region>MZ</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RS</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SE</region>
+    <region>SI</region>
+    <region>SJ</region>
+    <region>SK</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TR</region>
+    <region>TW</region>
+    <region>UA</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VE</region>
+    <region>VI</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>YT</region>
+    <region>BQ</region>
+    <region>CW</region>
+    <region>SS</region>
+    <region>SX</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/141/349/183/f4e7450776cbe4c9a57d0fb54006a8ff.png</cover>
+    <epub default="true" type="full" size="1388023">http://media.blinkboxbooks.com/9780/141/349/183/fc5a49d35a603da21f3da2a2615268ab.epub</epub>
+    <epub default="true" type="sample" size="656142">http://media.blinkboxbooks.com/9780/141/349/183/213e52f0a886834338994d3623f5e10d.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/Penguin_UK/Penguin/20130815/9780141349183.epub</epub>
+  </media>
+</book>

@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="6478e816acac3f3204b9fdfa14e5b2e5:5-c52e8576a85886fb464472a867733d1a" r:version="0.14.3">
+  <isbn>9781118079386</isbn>
+  <title>Pragmatic Software Testing</title>
+  <contributors>
+    <contributor role="Author" id="c35390c0c4350844d85d26d9bb3295670d45b3af">
+      <displayName>Rex Black</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">A hands-on guide to testing techniques that deliver reliable software and systems&lt;br /&gt;&lt;br /&gt; Testing even a simple system can quickly turn into a potentially infinite task. Faced with tight costs and schedules, testers need to have a toolkit of practical techniques combined with hands-on experience and the right strategies in order to complete a successful project. World-renowned testing expert Rex Black provides you with the proven methods and concepts that test professionals must know. He presents you with the fundamental techniques for testing and clearly shows you how to select and apply successful strategies to test a system with budget and time constraints.&lt;br /&gt;&lt;br /&gt; Black begins by discussing the goals and tactics of effective and efficient testing. Next, he lays the foundation of his technique for risk-based testing, explaining how to analyze, prioritize, and document risks to the quality of the system using both informal and formal techniques. He then clearly describes how to design, develop, and, ultimately, document various kinds of tests. Because this is a hands-on activity, Black includes realistic, life-sized exercises that illustrate all of the major test techniques with detailed solutions.&lt;br /&gt;&lt;br /&gt;</description>
+    <description format="html" source="Back cover copy">&lt;b&gt;A hands-on guide to testing techniques that deliver reliable software and systems&lt;/b&gt;&lt;p&gt;&lt;/p&gt;&lt;p&gt;Testing even a simple system can quickly turn into a potentially infinite task. Faced with tight costs and schedules, testers need to have a toolkit of practical techniques combined with hands-on experience and the right strategies in order to complete a successful project. World-renowned testing expert Rex Black provides you with the proven methods and concepts that test professionals must know. He presents you with the fundamental techniques for testing and clearly shows you how to select and apply successful strategies to test a system with budget and time constraints.&lt;/p&gt;&lt;p&gt;Black begins by discussing the goals and tactics of effective and efficient testing. Next, he lays the foundation of his technique for risk-based testing, explaining how to analyze, prioritize, and document risks to the quality of the system using both informal and formal techniques. He then clearly describes how to design, develop, and, ultimately, document various kinds of tests. Because this is a hands-on activity, Black includes realistic, life-sized exercises that illustrate all of the major test techniques with detailed solutions.&lt;/p&gt;&lt;p&gt;By the end of this book, you'll know more about the nuts and bolts of testing than most testers learn in an entire career, and you'll be ready to put those ideas into action on your next test project.&lt;/p&gt;&lt;p&gt;With the help of real-world examples integrated throughout the chapters, you'll discover how to:&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;Analyze the risks to system quality&lt;/li&gt;
+&lt;li&gt;Allocate your testing effort appropriately based on the level of risk&lt;/li&gt;
+&lt;li&gt;Choose the right testing strategies every time&lt;/li&gt;
+&lt;li&gt;Design tests based on a system's expected behavior (black box) or internal structure (white box)&lt;/li&gt;
+&lt;li&gt;Plan and perform integration testing&lt;/li&gt;
+&lt;li&gt;Explore and attack the system&lt;/li&gt;
+&lt;li&gt;Focus your hard work to serve the needs of the project&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;The author's companion Web site provides exercises, tips, and techniques that can be used to gain valuable experience and effectively test software and systems.&lt;/p&gt;&lt;p&gt;
+&lt;b&gt;Wiley Technology Publishing Timely. Practical. Reliable.&lt;/b&gt;
+&lt;/p&gt;&lt;p&gt;Visit the author's Web site at http://www.rexblackconsulting.com/&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;b&gt;Rex Black&lt;/b&gt; is a 20-plus-year software and systems engineering veteran, and President and Principal Consultant of RBCS, Inc., a leader in software, hardware, and systems testing. He is the author of &lt;i&gt;Managing the Testing Process&lt;/i&gt; as well as numerous articles. Black is also President of both the International Software Testing Qualifications Board and the American Software Testing Qualifications Board.</description>
+  </descriptions>
+  <publisher>
+    <name>Wiley</name>
+    <username>wiley</username>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>50</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="false">
+      <amount>40</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>33.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="false">
+      <amount>55</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="false">
+      <amount>63.95</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="NZD" agency="false">
+      <amount>73.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="BRL" agency="false">
+      <amount>98.2</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="HKD" agency="false">
+      <amount>390</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="INR" agency="false">
+      <amount>2689</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="JPY" agency="false">
+      <amount>4630</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="MXN" agency="false">
+      <amount>635</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CHF" agency="false">
+      <amount>49.2</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="EUR" agency="true">
+      <amount>28.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="BRL" agency="true">
+      <amount>71.2</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="HKD" agency="true">
+      <amount>281</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="JPY" agency="true">
+      <amount>3333</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="INR" agency="true">
+      <amount>1935</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="CHF" agency="true">
+      <amount>35.65</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="NZD" agency="true">
+      <amount>51.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="USD" agency="true">
+      <amount>35.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>23.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="SGD" agency="true">
+      <amount>44.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="MXN" agency="true">
+      <amount>457</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="CAD" agency="true">
+      <amount>38.99</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>44.99</amount>
+      <tax included="true"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC" main="true">COM051230</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-04-06</publishedOn>
+  <modifiedAt>2014-06-27 15:29:46 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/118/079/386/22ee318cf01f77a32bb8967896763b45.png</cover>
+    <epub default="true" type="full" size="3995817">http://media.blinkboxbooks.com/9781/118/079/386/92549eaf91715da9b4c365919ae12978.epub</epub>
+    <epub default="true" type="sample" size="584297">http://media.blinkboxbooks.com/9781/118/079/386/7c63d1e231ae8c29e555637cdd9c838f.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/wiley/9781118079386/9781118079386.epub</epub>
+  </media>
+</book>

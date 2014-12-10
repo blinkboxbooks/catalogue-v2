@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="c2edc34117de40b8fba4fa1e6ac21baa:1-4f998c3fc2760e2d69842eb34aa6c90a" r:version="0.14.3">
+  <isbn>9781848167193</isbn>
+  <title>TIME, SPACE, STARS AND MAN: THE STORY OF THE BIG BANG</title>
+  <contributors>
+    <contributor role="Author" id="f875097663093dd659bd900671c3e07448f35ec8">
+      <displayName>Michael M Woolfson</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Main description">Most well-read, but non-scientific, people will have heard of the term &#x201C;Big Bang&#x201D; as a description of the origin of the Universe. They will recognize that DNA identifies individuals and will know that the origin of life is one of the great unsolved scientific mysteries. This book brings together all of that material. Starting with the creation of space and time &#x2014; known as the Big Bang &#x2014; the book traces causally related steps through the formation of matter, of stars and planets, the Earth itself, the evolution of the Earth's surface and atmosphere, and then through to the beginnings of life and the evolution of man. The material is presented in such a way that a non-scientist can comprehend it, without using formulae or equations but still preserving the integrity of the involved science. This book does not solve the mysteries of what initiated the Big Bang or how life evolved from inanimate matter, but it does make clear the nature of those problems. The reader will be left with a sense of wonderment that he or she actually exists!&lt;b&gt;Contents:&lt;/b&gt; 
+&lt;ul&gt;
+&lt;li&gt;The Universe&lt;/li&gt;
+&lt;li&gt;Matter and the Universe&lt;/li&gt;
+&lt;li&gt;Stars, Stellar Clusters and Galaxies&lt;/li&gt;
+&lt;li&gt;The Solar System&lt;/li&gt;
+&lt;li&gt;Forming the Solar System&lt;/li&gt;
+&lt;li&gt;Life on Earth&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;br /&gt;
+&lt;b&gt;Readership:&lt;/b&gt; Primary readership for those interested in popular science. May be used as a textbook for undergraduates or even high school students at the sixth-form level, or for non-science students taking science as a subsidiary level.</description>
+  </descriptions>
+  <publisher>
+    <name>Imperial College Press</name>
+    <username>IngramsCoreSource</username>
+    <imprint>ICP</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="USD" agency="false">
+      <amount>64.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="false">
+      <amount>42.0</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="SGD" agency="false">
+      <amount>54.0</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BISAC">SCI005000</subject>
+    <subject type="BISAC">SCI015000</subject>
+    <subject type="BISAC">SCI027000</subject>
+    <subject type="BIC">PGK</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2009-01-19</publishedOn>
+  <modifiedAt>2014-07-09 18:21:17 UTC</modifiedAt>
+  <regions>
+    <region>WORLD</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9781/848/167/193/609ae7d8f8530a94ea9cdb79ac6da2c6.png</cover>
+    <epub default="true" type="full" size="5335138">http://media.blinkboxbooks.com/9781/848/167/193/e88a5ab1eca72a75045dbe2b1bdb1857.epub</epub>
+    <epub default="true" type="sample" size="936277">http://media.blinkboxbooks.com/9781/848/167/193/34c73689620c0587cda20a94974854f5.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/IngramsCoreSource/9781848167193.epub</epub>
+  </media>
+</book>

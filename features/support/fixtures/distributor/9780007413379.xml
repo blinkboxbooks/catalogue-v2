@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<book xmlns="http://schemas.blinkbox.com/books/distribution" xmlns:r="http://schemas.blinkbox.com/books/routing" r:originator="" r:instance="" r:messageId="ab4c10c92fe1bba57d890cebc7ee17a4:1-4f5010424a2109d7bef90bab464b448d" r:version="0.14.3">
+  <isbn>9780007413379</isbn>
+  <title>Wonders of the Universe</title>
+  <contributors>
+    <oneLine>By Professor Brian Cox and Andrew Cohen</oneLine>
+    <contributor role="Author" id="3da56825e931b3beef91c040fb377f8832cac14e">
+      <displayName>Professor Brian Cox</displayName>
+    </contributor>
+    <contributor role="Author" id="9e55448eb3045bb10fab2169aef580c502950495">
+      <displayName>Andrew Cohen</displayName>
+    </contributor>
+  </contributors>
+  <descriptions>
+    <description format="html" source="Long description">&lt;p&gt;Professor Brian Cox is back with another insightful and mind-blowing exploration of space. This time he shows us our universe as we've never seen it before.&lt;/p&gt;
+        &lt;p&gt;13.7 billion years old. 93 billion light years wide. It contains over 100 billion galaxies, each containing hundreds of billions of stars. This infinite, vast and complex Universe has been the subject of human fascination and scientific exploration for thousands of years. The wonders of the Universe might seem alien to us and impossible to understand, but away from the telescopes, the labs and the white coats, Professor Brian Cox uses the evidence found in the natural world around us to explain its simple truths.&lt;/p&gt;
+        &lt;p&gt;The same laws of light, gravity, time, matter and energy that govern us here on Earth are the same as those applied in the Universe. Using his expert knowledge and his infectious enthusiasm, Professor Cox shows us that if we can understand the impact of these governing laws on Earth it will bring us a step closer to an understanding of our Universe.&lt;/p&gt;</description>
+    <description format="html" source="Short description/annotation">&lt;p&gt;Professor Brian Cox is back with another insightful and mind-blowing exploration of space. This time he shows us our universe as we've never seen it before.&lt;/p&gt;</description>
+    <description format="html" source="Biographical note">&lt;p&gt;Professor Brian Cox, OBE is a particle physicist, a Royal Society research fellow, and a professor at the University of Manchester as well as researcher on one of the most ambitious experiments on Earth, the ATLAS experiment on the Large Hadron Collider in Switzerland. He is best known to the public as a science broadcaster and presenter of the highly popular BBC2 series &#x2018;Wonders of the Solar System&#x2019;. He was also the keyboard player in the UK pop band D:Ream in the 1990s.&lt;/p&gt;</description>
+  </descriptions>
+  <publisher>
+    <name>HarperCollins Publishers</name>
+    <username>harpercollins_uk</username>
+    <imprint>Collins</imprint>
+    <discountRate/>
+  </publisher>
+  <prices>
+    <price currency="GBP" agency="false">
+      <amount>16.39</amount>
+      <tax included="false"/>
+    </price>
+    <price currency="GBP" agency="true">
+      <amount>13.45</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="AUD" agency="true">
+      <amount>18.99</amount>
+      <tax included="true"/>
+    </price>
+    <price currency="USD" agency="false">
+      <amount>25.9</amount>
+      <tax included="false"/>
+    </price>
+  </prices>
+  <subjects>
+    <subject type="BIC" main="true">PGK</subject>
+    <subject type="BISAC" main="true">SCI005000</subject>
+    <subject type="BIC">TTD</subject>
+  </subjects>
+  <language>eng</language>
+  <publishedOn>2011-03-03</publishedOn>
+  <announcedOn>2010-09-02</announcedOn>
+  <modifiedAt>2014-06-23 01:57:57 UTC</modifiedAt>
+  <regions>
+    <region>AD</region>
+    <region>AE</region>
+    <region>AF</region>
+    <region>AG</region>
+    <region>AI</region>
+    <region>AL</region>
+    <region>AM</region>
+    <region>AN</region>
+    <region>AO</region>
+    <region>AR</region>
+    <region>AT</region>
+    <region>AU</region>
+    <region>AW</region>
+    <region>AZ</region>
+    <region>BA</region>
+    <region>BB</region>
+    <region>BD</region>
+    <region>BE</region>
+    <region>BF</region>
+    <region>BG</region>
+    <region>BH</region>
+    <region>BI</region>
+    <region>BJ</region>
+    <region>BM</region>
+    <region>BN</region>
+    <region>BO</region>
+    <region>BR</region>
+    <region>BS</region>
+    <region>BT</region>
+    <region>BW</region>
+    <region>BY</region>
+    <region>BZ</region>
+    <region>CC</region>
+    <region>CD</region>
+    <region>CF</region>
+    <region>CG</region>
+    <region>CH</region>
+    <region>CI</region>
+    <region>CK</region>
+    <region>CL</region>
+    <region>CM</region>
+    <region>CN</region>
+    <region>CO</region>
+    <region>CR</region>
+    <region>CU</region>
+    <region>CV</region>
+    <region>CX</region>
+    <region>CY</region>
+    <region>CZ</region>
+    <region>DE</region>
+    <region>DJ</region>
+    <region>DK</region>
+    <region>DM</region>
+    <region>DO</region>
+    <region>DZ</region>
+    <region>EC</region>
+    <region>EE</region>
+    <region>EG</region>
+    <region>EH</region>
+    <region>ER</region>
+    <region>ES</region>
+    <region>ET</region>
+    <region>FI</region>
+    <region>FJ</region>
+    <region>FK</region>
+    <region>FM</region>
+    <region>FO</region>
+    <region>FR</region>
+    <region>GA</region>
+    <region>GB</region>
+    <region>GD</region>
+    <region>GE</region>
+    <region>GF</region>
+    <region>GG</region>
+    <region>GH</region>
+    <region>GI</region>
+    <region>GL</region>
+    <region>GM</region>
+    <region>GN</region>
+    <region>GP</region>
+    <region>GQ</region>
+    <region>GR</region>
+    <region>GT</region>
+    <region>GW</region>
+    <region>GY</region>
+    <region>HK</region>
+    <region>HN</region>
+    <region>HR</region>
+    <region>HT</region>
+    <region>HU</region>
+    <region>ID</region>
+    <region>IE</region>
+    <region>IL</region>
+    <region>IM</region>
+    <region>IN</region>
+    <region>IO</region>
+    <region>IQ</region>
+    <region>IR</region>
+    <region>IS</region>
+    <region>IT</region>
+    <region>JE</region>
+    <region>JM</region>
+    <region>JO</region>
+    <region>JP</region>
+    <region>KE</region>
+    <region>KG</region>
+    <region>KH</region>
+    <region>KI</region>
+    <region>KM</region>
+    <region>KN</region>
+    <region>KP</region>
+    <region>KR</region>
+    <region>KW</region>
+    <region>KY</region>
+    <region>KZ</region>
+    <region>LA</region>
+    <region>LB</region>
+    <region>LC</region>
+    <region>LI</region>
+    <region>LK</region>
+    <region>LR</region>
+    <region>LS</region>
+    <region>LT</region>
+    <region>LU</region>
+    <region>LV</region>
+    <region>LY</region>
+    <region>MA</region>
+    <region>MC</region>
+    <region>MD</region>
+    <region>MH</region>
+    <region>MK</region>
+    <region>ML</region>
+    <region>MM</region>
+    <region>MN</region>
+    <region>MO</region>
+    <region>MQ</region>
+    <region>MR</region>
+    <region>MS</region>
+    <region>MT</region>
+    <region>MU</region>
+    <region>MV</region>
+    <region>MW</region>
+    <region>MX</region>
+    <region>MY</region>
+    <region>MZ</region>
+    <region>NA</region>
+    <region>NC</region>
+    <region>NE</region>
+    <region>NF</region>
+    <region>NG</region>
+    <region>NI</region>
+    <region>NL</region>
+    <region>NO</region>
+    <region>NP</region>
+    <region>NR</region>
+    <region>NU</region>
+    <region>NZ</region>
+    <region>OM</region>
+    <region>PA</region>
+    <region>PE</region>
+    <region>PF</region>
+    <region>PG</region>
+    <region>PK</region>
+    <region>PL</region>
+    <region>PM</region>
+    <region>PN</region>
+    <region>PS</region>
+    <region>PT</region>
+    <region>PW</region>
+    <region>PY</region>
+    <region>QA</region>
+    <region>RE</region>
+    <region>RO</region>
+    <region>RU</region>
+    <region>RW</region>
+    <region>SA</region>
+    <region>SB</region>
+    <region>SC</region>
+    <region>SD</region>
+    <region>SE</region>
+    <region>SG</region>
+    <region>SH</region>
+    <region>SI</region>
+    <region>SK</region>
+    <region>SL</region>
+    <region>SM</region>
+    <region>SN</region>
+    <region>SO</region>
+    <region>SR</region>
+    <region>ST</region>
+    <region>SV</region>
+    <region>SY</region>
+    <region>SZ</region>
+    <region>TC</region>
+    <region>TD</region>
+    <region>TF</region>
+    <region>TG</region>
+    <region>TH</region>
+    <region>TJ</region>
+    <region>TK</region>
+    <region>TL</region>
+    <region>TM</region>
+    <region>TN</region>
+    <region>TO</region>
+    <region>TR</region>
+    <region>TT</region>
+    <region>TV</region>
+    <region>TW</region>
+    <region>TZ</region>
+    <region>UA</region>
+    <region>UG</region>
+    <region>UY</region>
+    <region>UZ</region>
+    <region>VA</region>
+    <region>VC</region>
+    <region>VE</region>
+    <region>VG</region>
+    <region>VN</region>
+    <region>VU</region>
+    <region>WF</region>
+    <region>WS</region>
+    <region>YE</region>
+    <region>YT</region>
+    <region>RS</region>
+    <region>ME</region>
+    <region>ZA</region>
+    <region>ZM</region>
+    <region>ZW</region>
+  </regions>
+  <media>
+    <cover default="true" size="">http://media.blinkboxbooks.com/9780/007/413/379/22a70bb630d38ac3fef233f5051792ff.png</cover>
+    <epub default="true" type="full" size="45533076">http://media.blinkboxbooks.com/9780/007/413/379/24739fadc04ebb73b76e1cf46a66a5d6.epub</epub>
+    <epub default="true" type="sample" size="14416684">http://media.blinkboxbooks.com/9780/007/413/379/77a2fa1bde903ee258f5c51ed0d01248.sample.epub</epub>
+    <epub default="true" type="source" size="0">file:///mnt/publishers/harpercollins_uk/ebooks/9780007413379.epub</epub>
+  </media>
+</book>
