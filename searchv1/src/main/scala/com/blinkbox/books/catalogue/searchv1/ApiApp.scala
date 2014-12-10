@@ -35,7 +35,8 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging {
     val client = ElasticFactory.remote(searchConfig)
     val searchService: V1SearchService = new EsV1SearchService(searchConfig, client)
 
-    val v1Api = new SearchApi(apiConfig, searchService)
+    val searchApiConfig = SearchApiConfig(config.getConfig("service.catalog-browser.api.public"))
+    val v1Api = new SearchApi(apiConfig, searchApiConfig, searchService)
 
     val service = actorSystem.actorOf(Props(classOf[RestApi], v1Api), "catalog-browser-actor")
     val localUrl = apiConfig.localUrl

@@ -9,23 +9,41 @@ import org.slf4j.LoggerFactory
 import spray.http.{StatusCodes, Uri}
 import spray.httpx.marshalling.ToResponseMarshallable
 import spray.routing._
+import scala.concurrent.duration.FiniteDuration
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
+
 object Paged {
   def apply(page: Page, uri: Uri, response: PaginableResponse) = new Paged(page, uri, response.numberOfResults, response)
 }
 
-class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit val actorRefFactory: ActorRefFactory)
+case class SearchApiConfig(
+  searchDefaultCount: Int,
+  similarDefaultCount: Int,
+  suggestionsDefaultCount: Int,
+  maxAge: FiniteDuration
+)
+
+object SearchApiConfig {
+  import com.typesafe.config.Config
+  import java.util.concurrent.TimeUnit
+  import scala.concurrent.duration._
+  
+  def apply(config: Config): SearchApiConfig = SearchApiConfig(
+    config.getInt("searchDefaultCount"),
+    config.getInt("similarDefaultCount"),
+    config.getInt("suggestionsDefaultCount"),
+    config.getDuration("maxAge", TimeUnit.MILLISECONDS).millis
+  )
+}
+
+class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchService: V1SearchService)(implicit val actorRefFactory: ActorRefFactory)
     extends HttpService
     with Directives
     with Serialization {
 
   implicit val log = LoggerFactory.getLogger(classOf[SearchApi])
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
-
-  val searchDefaultCount = 50
-  val similarDefaultCount = 10
-  val suggestionsDefaultCount = 10
 
   val BookIdSegment = Segment.map(BookId.apply _)
 
@@ -40,9 +58,11 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
           get {
             parameter('q.?) { query =>
               query.fold[Route](complete(StatusCodes.BadRequest)) { query =>
-                paged(searchDefaultCount) { page =>
+                paged(searchConfig.searchDefaultCount) { page =>
                   onSuccess(searchService.search(query, page)) { res =>
-                    completePaged(page)(res)
+                    cacheable(searchConfig.maxAge) {
+                      completePaged(page)(res)
+                    }
                   }
                 }
               }
@@ -51,9 +71,11 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
         } ~
         path(BookIdSegment / "similar") { bookId =>
           get {
-            paged(similarDefaultCount) { page =>
+            paged(searchConfig.similarDefaultCount) { page =>
               onSuccess(searchService.similar(bookId, page)) { res =>
-                completePaged(page)(res)
+                cacheable(searchConfig.maxAge) {
+                  completePaged(page)(res)
+                }
               }
             }
           }
@@ -63,7 +85,9 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
         get {
           parameter('q, 'limit.as[Int].?) { (q, limit) =>
             validate(limit.fold(true)(_ > 0), "The limit parameter must be greater than 0 if provided") {
-              complete(searchService.suggestions(q, limit getOrElse suggestionsDefaultCount))
+              cacheable(searchConfig.maxAge) {
+                complete(searchService.suggestions(q, limit getOrElse searchConfig.suggestionsDefaultCount))
+              }
             }
           }
         }
