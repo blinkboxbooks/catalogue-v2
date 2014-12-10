@@ -1,5 +1,13 @@
 
 
+## 0.1.26 ([#37](https://git.mobcastdev.com/Agora/catalogue-v2/pull/37) 2014-12-10 13:48:03)
+
+CAT-116 Introduce validation for ISBN in similar books endpoint
+
+### Improvements
+
+Fixes missing validation checks on the ISBN part of a similar-books URL.
+
 ## 0.1.25 ([#36](https://git.mobcastdev.com/Agora/catalogue-v2/pull/36) 2014-12-10 13:28:46)
 
 Cat 16
