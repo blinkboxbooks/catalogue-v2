@@ -1,5 +1,13 @@
 
 
+## 0.1.29 ([#39](https://git.mobcastdev.com/Agora/catalogue-v2/pull/39) 2014-12-10 15:10:09)
+
+Move some leftover tests from the old structure to the new one.
+
+Patch
+
+- there was a leftover test which needed to be moved to the new folder.
+
 ## 0.1.28 ([#38](https://git.mobcastdev.com/Agora/catalogue-v2/pull/38) 2014-12-10 14:58:41)
 
 CAT-107 Ensure empty searches result in the correct 400 response
