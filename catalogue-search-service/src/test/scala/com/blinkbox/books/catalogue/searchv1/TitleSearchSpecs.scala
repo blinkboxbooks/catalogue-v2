@@ -12,9 +12,13 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   private def queryAndCheck[T](q: String)(f: => T) = Get(s"/catalogue/search/books?q=$q") ~> routes ~> check(f)
 
-  private def toBookResponse(q: String, total: Int, books: BookMessage*): BookSearchResponse = BookSearchResponse(q, books.map { b =>
+  private def toBookResponse(q: String, total: Int, books: BookMessage*): BookSearchResponse = {
+    val booksList = if (books.size == 0) None else Some(books.map { b =>
       BookResponse(b.isbn, b.title, b.contributors.filter(_.role.toLowerCase == "author").map(_.displayName))
-    }.toList, total)
+    }.toList)
+
+    BookSearchResponse(q, booksList, total)
+  }
 
   "Matching a document" should "ignore stop-words in the document title" in {
     catalogueIndex indexAndCheck(f.theUniverse, f.universe, f.theUniverseAndOtherThings) andAfter { _ =>
