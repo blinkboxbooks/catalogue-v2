@@ -19,7 +19,7 @@ class RestApi(v1Api: SearchApi) extends HttpServiceActor {
     override val basePath = Path("/")
   }
 
-  override def receive: Receive = runRoute(v1Api.routes ~ healthService.routes)
+  override def receive: Receive = runRoute(healthService.routes ~ v1Api.routes)
 }
 
 object ApiApp extends App with Configuration with Loggers with StrictLogging {
