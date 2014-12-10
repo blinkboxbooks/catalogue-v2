@@ -25,7 +25,7 @@ object V1SearchService {
   case class Suggestion(id: String, title: String, `type`: String, authors: Option[List[String]])
 
   case class BookSearchResponse(id: String, books: Seq[Book], numberOfResults: Long, `type`: String = bookSearchResponseType)
-  case class BookSimilarResponse(books: Seq[Book], `type`: String = bookSimilarResponseType)
+  case class BookSimilarResponse(books: Seq[Book], numberOfResults: Long, `type`: String = bookSimilarResponseType)
   case class BookSuggestionResponse(items: Seq[Suggestion], `type`: String = bookSuggestionResponseType)
 }
 
@@ -51,7 +51,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
     BookSearchResponse(q, toBookSeq(resp), resp.getHits.getTotalHits)
 
   private def toBookSimilarResponse(resp: SearchResponse): BookSimilarResponse =
-    BookSimilarResponse(toBookSeq(resp))
+    BookSimilarResponse(toBookSeq(resp), resp.getHits.getTotalHits)
 
   private def toSuggestionResponse(resp: SearchResponse): BookSuggestionResponse = BookSuggestionResponse(toSuggestionSeq(resp))
 

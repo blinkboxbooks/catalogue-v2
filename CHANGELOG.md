@@ -1,5 +1,22 @@
 
 
+## 0.1.22 ([#31](https://git.mobcastdev.com/Agora/catalogue-v2/pull/31) 2014-12-09 16:38:46)
+
+CAT-113 Introduce number of results in similar books
+
+### Bugfix
+
+* Add the missing `numberOfResults` field in the response for the similar books endpoint
+* Introduce helper to write end-to-end tests creating the index only once per test-suite
+
+## 0.1.21 ([#30](https://git.mobcastdev.com/Agora/catalogue-v2/pull/30) 2014-12-09 13:49:59)
+
+Fix name of searchv1 project name in build.sbt
+
+### Improvements
+
+Fix name of searchv1 project in sbt build.
+
 ## 0.1.20 ([#29](https://git.mobcastdev.com/Agora/catalogue-v2/pull/29) 2014-12-09 10:22:32)
 
 Cat 16
