@@ -4,6 +4,7 @@ import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse
 import com.blinkbox.books.catalogue.common.BookFixtures
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
+import spray.httpx.unmarshalling.BasicUnmarshallers
 
 class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
@@ -67,7 +68,7 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex andAfter { _ =>
       Get("/catalogue/search/books") ~> routes ~> check {
         status should equal(StatusCodes.BadRequest)
-        responseAs[String] should equal("Missing search query term")
+        checkInvalidResponse("Missing search query term")
       }
     }
   }
@@ -76,7 +77,7 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex andAfter { _ =>
       Get("/catalogue/search/books?q=") ~> routes ~> check {
         status should equal(StatusCodes.BadRequest)
-        responseAs[String] should equal("Missing search query term")
+        checkInvalidResponse("Missing search query term")
       }
     }
   }

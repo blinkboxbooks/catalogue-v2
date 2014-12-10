@@ -6,7 +6,8 @@ import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{Directives, _}
 import org.slf4j.LoggerFactory
-import spray.http.{StatusCodes, Uri}
+import spray.http.{MediaTypes, StatusCodes, Uri}
+import spray.httpx.marshalling.BasicMarshallers
 import spray.routing._
 
 import scala.util.control.NonFatal
@@ -80,7 +81,12 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
   }
 
   val rejectionHandler = RejectionHandler {
-    case ValidationRejection(message, _) :: _ => complete(StatusCodes.BadRequest, message)
+    case ValidationRejection(message, _) :: _ =>
+      implicit val marshaller = BasicMarshallers.StringMarshaller
+
+      respondWithMediaType(MediaTypes.`text/plain`) {
+        complete(StatusCodes.BadRequest, message)
+      }
   }
 
   val exceptionHandler = ExceptionHandler {

@@ -15,7 +15,7 @@ class SpecialCharactersSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex indexAndCheck(BookFixtures.simpleBook) andAwaitFor(20.seconds)
   }
 
-  def checkInvalidResponse() = responseAs[String] should equal("Invalid or empty search term")
+  def checkInvalidResponse() = super.checkInvalidResponse("Invalid or empty search term")
 
   "The search API" should "retrieve a simple book if given a query that matches the ISBN removing special characters" in {
     Get("/catalogue/search/books?q=1234567890123%2F") ~> routes ~> check {
