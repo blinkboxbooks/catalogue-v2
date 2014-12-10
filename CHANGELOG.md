@@ -1,5 +1,12 @@
 
 
+## 0.1.25 ([#36](https://git.mobcastdev.com/Agora/catalogue-v2/pull/36) 2014-12-10 13:28:46)
+
+Cat 16
+
+### Patch
+- Refactored unit-test to create index once
+
 ## 0.1.24 ([#34](https://git.mobcastdev.com/Agora/catalogue-v2/pull/34) 2014-12-10 11:24:14)
 
 CAT-114 Implement pagination links in search and similar responses
