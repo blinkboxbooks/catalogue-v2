@@ -9,7 +9,7 @@ module KnowsAboutSearchServiceResponseValidation
       validate_book_result(book)
     end if data["books"]
     expect(actual_count).to eq(count) if count != 50
-    expect(actual_count).to be >= min_count
+    expect(actual_count).to be >= min_count unless count == 0
     validate_offset(data, offset) if offset != 0
   end
 
