@@ -1,5 +1,21 @@
 
 
+## 0.1.30 ([#33](https://git.mobcastdev.com/Agora/catalogue-v2/pull/33) 2014-12-10 16:49:57)
+
+Migrate search service cucumber tests
+
+#### Test improvement
+ Tests have been migrated from: https://git.mobcastdev.com/Platform/search-services
+* Migrate search-service tests
+* Migrate distributor messages which act as test fixtures
+* Migrate data.yml
+
+* Re-word steps so they don't clash with catalogue tests
+* Include zero in transforms
+* Updated environment config
+* Add instructions for running tests locally
+* Fixed a search step which was searching for a hash of the search term
+
 ## 0.1.29 ([#39](https://git.mobcastdev.com/Agora/catalogue-v2/pull/39) 2014-12-10 15:10:09)
 
 Move some leftover tests from the old structure to the new one.
