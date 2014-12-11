@@ -25,21 +25,21 @@ class SimilarBooksSpecs extends FlatSpec with Matchers with ApiSpecBase {
   it should "return a 400 signaling an invalid ID if the isbn is not numeric" in {
     Get("/catalogue/search/books/abcdefghijklm/similar") ~> routes ~> check {
       status should equal(StatusCodes.BadRequest)
-      responseAs[String] should equal("Invalid ID: abcdefghijklm")
+      checkInvalidResponse("Invalid ID: abcdefghijklm")
     }
   }
 
   it should "return a 400 signaling an invalid ID if the isbn is shorter than 13 digits" in {
     Get("/catalogue/search/books/123456789012/similar") ~> routes ~> check {
       status should equal(StatusCodes.BadRequest)
-      responseAs[String] should equal("Invalid ID: 123456789012")
+      checkInvalidResponse("Invalid ID: 123456789012")
     }
   }
 
   it should "return a 400 signaling an invalid ID if the isbn is longer than 13 digits" in {
     Get("/catalogue/search/books/12345678901234/similar") ~> routes ~> check {
       status should equal(StatusCodes.BadRequest)
-      responseAs[String] should equal("Invalid ID: 12345678901234")
+      checkInvalidResponse("Invalid ID: 12345678901234")
     }
   }
 }

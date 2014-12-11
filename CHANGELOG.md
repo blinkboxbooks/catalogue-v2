@@ -1,5 +1,16 @@
 
 
+## 0.1.31 ([#42](https://git.mobcastdev.com/Agora/catalogue-v2/pull/42) 2014-12-11 10:47:39)
+
+CAT-108 - Fix query special character handling
+
+### Improvement
+
+For V1 compliance:
+
+* Introduce more checks in terms of query validation and pre-processing
+* Make responses for validation errors not JSON-encoded
+
 ## 0.1.30 ([#33](https://git.mobcastdev.com/Agora/catalogue-v2/pull/33) 2014-12-10 16:49:57)
 
 Migrate search service cucumber tests

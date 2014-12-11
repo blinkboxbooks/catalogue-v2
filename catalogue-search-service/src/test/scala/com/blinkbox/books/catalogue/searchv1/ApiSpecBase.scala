@@ -29,4 +29,10 @@ trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSuppo
 
   def catalogueIndex = e2e createIndex catalogue
   def populateDummyIndex(howManyBooks: Int) = catalogueIndex indexAndCheck(BookFixtures.dummyBooks(howManyBooks).toSeq: _*)
+
+  def checkInvalidResponse(msg: String) = {
+    import spray.httpx.unmarshalling.BasicUnmarshallers.StringUnmarshaller
+    import org.scalatest.Matchers._
+    responseAs[String] should equal(msg)
+  }
 }
