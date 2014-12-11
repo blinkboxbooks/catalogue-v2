@@ -21,7 +21,7 @@ import spray.http.Uri
 class WebService(config: AppConfig) extends HttpServiceActor {
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
-  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic), config.elastic.indexName)
+  val dao = new ElasticBookDao(ElasticFactory.remote(config.elastic), config.elastic.indexName + "/book")
 
   val linkHelper = LinkHelper(config)
   val bookApi = new BookApi(config.service, config.book, new DefaultBookService(dao, linkHelper))

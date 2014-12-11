@@ -60,10 +60,10 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
   private def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): Option[RangeFilter] = {
     val range = rangeFilter("dates.publish")
     (minDate, maxDate) match {
-      case (None, None) => Option.empty
-      case (Some(start), None) => Some(range.from(minDate))
-      case (None, Some(end)) => Some(range.to(end))
-      case (Some(start), Some(end)) => Some(range.from(start).to(end))
+      case (None, None)				=> Option.empty
+      case (Some(start), None)		=> Some(range.from(minDate))
+      case (None, Some(end))		=> Some(range.to(end))
+      case (Some(start), Some(end))	=> Some(range.from(start).to(end))
     }
   }
 
