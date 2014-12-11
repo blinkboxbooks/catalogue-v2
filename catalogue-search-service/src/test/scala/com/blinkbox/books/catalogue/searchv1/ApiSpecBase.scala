@@ -18,7 +18,7 @@ trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSuppo
   override implicit def patienceConfig = PatienceConfig(timeout = Span(60000, Millis), interval = Span(250, Millis))
   override def e2eExecutionContext = executor
 
-  implicit val routeTestTimeout = RouteTestTimeout(5.seconds)
+  implicit val routeTestTimeout = RouteTestTimeout(15.seconds)
 
   lazy val searchService = new EsV1SearchService(searchConfig, esClient)
   lazy val apiUrl = new URL("http://localhost:9595")

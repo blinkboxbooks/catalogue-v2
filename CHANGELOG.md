@@ -1,5 +1,29 @@
 
 
+## 0.1.34 ([#44](https://git.mobcastdev.com/Agora/catalogue-v2/pull/44) 2014-12-11 13:56:07)
+
+Add more cache checks for search api
+
+#### Test improvement
+* Add cache checks for suggestions, spelling and similar endpoint
+
+## 0.1.33 ([#41](https://git.mobcastdev.com/Agora/catalogue-v2/pull/41) 2014-12-11 11:55:18)
+
+CAT-111 Ensure no `books` array is returned if no book is matched
+
+### Improvements
+
+This patch makes the response of *search* and *similar* APIs more compliant with v1 removing the `books` array when no books are matched.
+
+## 0.1.32 ([#40](https://git.mobcastdev.com/Agora/catalogue-v2/pull/40) 2014-12-11 11:48:02)
+
+Cat 46
+
+### Patch
+- Caching directives to all end-point methods to match existing v1 search service
+- Configuration class and factored out existing properties
+- Support for console logging
+
 ## 0.1.31 ([#42](https://git.mobcastdev.com/Agora/catalogue-v2/pull/42) 2014-12-11 10:47:39)
 
 CAT-108 - Fix query special character handling

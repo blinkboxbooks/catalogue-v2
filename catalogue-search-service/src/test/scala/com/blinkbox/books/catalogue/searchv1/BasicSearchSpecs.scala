@@ -1,13 +1,13 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse, Book}
 import com.blinkbox.books.catalogue.common.BookFixtures
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSearchResponse
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
 
 class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
-  import ResponseFixtures._
+  import com.blinkbox.books.catalogue.searchv1.ResponseFixtures._
 
   "The search API" should "retrieve empty result-sets from an empty index" in {
     catalogueIndex andAfter { _ =>

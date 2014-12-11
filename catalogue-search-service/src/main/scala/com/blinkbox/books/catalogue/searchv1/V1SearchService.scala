@@ -31,11 +31,11 @@ object V1SearchService {
   trait PaginableResponse { def numberOfResults: Long }
   case class BookSearchResponse(
       id: String,
-      books: Seq[Book],
+      books: Option[Seq[Book]],
       numberOfResults: Long,
       `type`: String = bookSearchResponseType) extends PaginableResponse
   case class BookSimilarResponse(
-      books: Seq[Book],
+      books: Option[Seq[Book]],
       numberOfResults: Long,
       `type`: String = bookSimilarResponseType) extends PaginableResponse
   case class BookSuggestionResponse(items: Seq[Suggestion], `type`: String = bookSuggestionResponseType)
@@ -53,11 +53,14 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
-  private def toBookSeq(resp: SearchResponse): Seq[Book] =
-    resp.getHits.hits().map { hit =>
+  private def toBookSeq(resp: SearchResponse): Option[Seq[Book]] = {
+    val respSeq = resp.getHits.hits().map { hit =>
       val book = Json.read[idx.Book](hit.getSourceAsString)
       Book(book.isbn, book.title, book.contributors.map(_.displayName))
     }.toSeq
+
+    if (respSeq.isEmpty) None else Some(respSeq)
+  }
 
   private def toBookSearchResponse(q: String)(resp: SearchResponse): BookSearchResponse =
     BookSearchResponse(q, toBookSeq(resp), resp.getHits.getTotalHits)

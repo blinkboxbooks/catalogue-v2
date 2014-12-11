@@ -11,6 +11,7 @@ Feature: Search suggestions
     When I request search suggestions for the query
     Then the search response is a list containing 10 search suggestions
     And each suggestion contains "<search_query>"
+    And it is publicly cacheable
 
     Examples:
       |    search_query   |
