@@ -15,6 +15,8 @@ Feature: Spelling Suggestions
     When I search for the query
     Then the response contains one spelling suggestion
     And the suggestion is "<correctly_spelled_query>"
+    And it is publicly cacheable
+
   Examples:
     | misspelt_multiword_query | correctly_spelled_query |
     | tiem space               | time space              |

@@ -9,6 +9,7 @@ Feature: More Like This
     Given there is at least one book which has many similar books
     When I request similar books
     Then the search response is a list containing 10 books
+    And it is publicly cacheable
 
   Scenario: Similar Books for a prolific author
     Given there is at least one book whose author has written others in the catalogue
