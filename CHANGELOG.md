@@ -1,5 +1,14 @@
 
 
+## 0.1.32 ([#40](https://git.mobcastdev.com/Agora/catalogue-v2/pull/40) 2014-12-11 11:48:02)
+
+Cat 46
+
+### Patch
+- Caching directives to all end-point methods to match existing v1 search service
+- Configuration class and factored out existing properties
+- Support for console logging
+
 ## 0.1.31 ([#42](https://git.mobcastdev.com/Agora/catalogue-v2/pull/42) 2014-12-11 10:47:39)
 
 CAT-108 - Fix query special character handling
