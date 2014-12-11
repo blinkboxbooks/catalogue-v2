@@ -4,7 +4,6 @@ import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSearchResponse
 import com.blinkbox.books.catalogue.common.BookFixtures
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
-import spray.httpx.unmarshalling.BasicUnmarshallers
 
 class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
@@ -78,6 +77,16 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       Get("/catalogue/search/books?q=") ~> routes ~> check {
         status should equal(StatusCodes.BadRequest)
         checkInvalidResponse("Missing search query term")
+      }
+    }
+  }
+  
+  it should "return caching directive" in {
+    catalogueIndex andAfter { _ =>
+      Get("/catalogue/search/books?q=whatever") ~> routes ~> check {
+        val cacheHeader = header("Cache-Control").getOrElse(fail("Missing caching directive"))
+        assert(cacheHeader.value.startsWith("public, max-age=60"))
+        assert(header("Expires").isDefined)
       }
     }
   }

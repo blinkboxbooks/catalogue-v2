@@ -23,7 +23,8 @@ trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSuppo
   lazy val searchService = new EsV1SearchService(searchConfig, esClient)
   lazy val apiUrl = new URL("http://localhost:9595")
   lazy val apiConfig = ApiConfig(apiUrl, apiUrl, 2.seconds)
-  lazy val apiService = new SearchApi(apiConfig, searchService)
+  lazy val searchApiConfig = SearchApiConfig(50, 10, 10, 60.seconds)
+  lazy val apiService = new SearchApi(apiConfig, searchApiConfig, searchService)
   lazy val routes = apiService.routes
 
   def catalogueIndex = e2e createIndex catalogue

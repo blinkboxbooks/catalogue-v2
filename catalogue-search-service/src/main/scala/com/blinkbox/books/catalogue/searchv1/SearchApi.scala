@@ -2,22 +2,41 @@ package com.blinkbox.books.catalogue.searchv1
 
 import akka.actor.ActorRefFactory
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.PaginableResponse
-import com.blinkbox.books.config.ApiConfig
+import com.blinkbox.books.config.{ApiConfig, RichConfig}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{Directives, _}
 import org.slf4j.LoggerFactory
 import spray.http.{MediaTypes, StatusCodes, Uri}
 import spray.httpx.marshalling.BasicMarshallers
 import spray.routing._
-
+import scala.concurrent.duration.FiniteDuration
 import scala.util.control.NonFatal
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
+
 object Paged {
   def apply(page: Page, uri: Uri, response: PaginableResponse) = new Paged(page, uri, response.numberOfResults, response)
 }
 
-class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit val actorRefFactory: ActorRefFactory)
+case class SearchApiConfig(
+  searchDefaultCount: Int,
+  similarDefaultCount: Int,
+  suggestionsDefaultCount: Int,
+  maxAge: FiniteDuration
+)
+
+object SearchApiConfig {
+  import com.typesafe.config.Config
+  
+  def apply(config: Config): SearchApiConfig = SearchApiConfig(
+    config.getInt("searchDefaultCount"),
+    config.getInt("similarDefaultCount"),
+    config.getInt("suggestionsDefaultCount"),
+    config.getFiniteDuration("maxAge")
+  )
+}
+
+class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchService: V1SearchService)(implicit val actorRefFactory: ActorRefFactory)
     extends HttpService
     with Directives
     with Serialization {
@@ -25,9 +44,7 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
   implicit val log = LoggerFactory.getLogger(classOf[SearchApi])
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
 
-  val searchDefaultCount = 50
-  val similarDefaultCount = 10
-  val suggestionsDefaultCount = 10
+  val BookIdSegment = Segment.map(BookId.apply _)
 
   val completePaged: Page => PaginableResponse => StandardRoute = page => content => new StandardRoute {
     override def apply(ctx: RequestContext): Unit = ctx.complete(Paged(page, ctx.request.uri, content))
@@ -44,11 +61,12 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
             parameter('q ? "") { q =>
               validate(!q.trim.isEmpty, "Missing search query term") {
                 val query = preProcess(q)
-
                 validate(!query.isEmpty, "Invalid or empty search term") {
-                  paged(searchDefaultCount) { page =>
+                  paged(searchConfig.searchDefaultCount) { page =>
                     onSuccess(searchService.search(query, page)) { res =>
-                      completePaged(page)(res.copy(id = q))
+                      cacheable(searchConfig.maxAge) {
+                        completePaged(page)(res.copy(id = q))
+                      }
                     }
                   }
                 }
@@ -59,9 +77,11 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
         path(Segment / "similar") { rawBookId =>
           validate(rawBookId.forall(_.isDigit) && rawBookId.length == 13, s"Invalid ID: $rawBookId") {
             get {
-              paged(similarDefaultCount) { page =>
+              paged(searchConfig.similarDefaultCount) { page =>
                 onSuccess(searchService.similar(BookId(rawBookId), page)) { res =>
-                  completePaged(page)(res)
+                  cacheable(searchConfig.maxAge) {
+                    completePaged(page)(res)
+                  }
                 }
               }
             }
@@ -72,7 +92,9 @@ class SearchApi(apiConfig: ApiConfig, searchService: V1SearchService)(implicit v
         get {
           parameter('q, 'limit.as[Int].?) { (q, limit) =>
             validate(limit.fold(true)(_ > 0), "The limit parameter must be greater than 0 if provided") {
-              complete(searchService.suggestions(q, limit getOrElse suggestionsDefaultCount))
+              cacheable(searchConfig.maxAge) {
+                complete(searchService.suggestions(q, limit getOrElse searchConfig.suggestionsDefaultCount))
+              }
             }
           }
         }
