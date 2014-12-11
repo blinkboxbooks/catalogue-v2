@@ -1,5 +1,13 @@
 
 
+## 0.1.35 ([#46](https://git.mobcastdev.com/Agora/catalogue-v2/pull/46) 2014-12-11 16:57:08)
+
+CAT-123 Improve similar authors to use similar logic as the search-service
+
+### Improvements
+
+Take inspiration from [the old search-service](https://git.mobcastdev.com/Labs/spray-search-service/blob/master/src/main/resources/solr/books/conf/solrconfig.xml#L115) to provide a more-like-this relevance which is similar to the existing one.
+
 ## 0.1.34 ([#44](https://git.mobcastdev.com/Agora/catalogue-v2/pull/44) 2014-12-11 13:56:07)
 
 Add more cache checks for search api
