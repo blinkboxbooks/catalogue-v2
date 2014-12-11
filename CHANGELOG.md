@@ -1,5 +1,14 @@
 
 
+## 0.1.36 ([#47](https://git.mobcastdev.com/Agora/catalogue-v2/pull/47) 2014-12-11 17:14:08)
+
+Project modules renaming
+
+Patch
+
+Quite a big renaming
+- rename modules in order to differentiate from the older catalogue service(s)
+
 ## 0.1.35 ([#46](https://git.mobcastdev.com/Agora/catalogue-v2/pull/46) 2014-12-11 16:57:08)
 
 CAT-123 Improve similar authors to use similar logic as the search-service
