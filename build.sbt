@@ -13,39 +13,39 @@ lazy val buildSettings = Seq(
 lazy val artifactSettings = addArtifact(artifact in (Compile, assembly), assembly).
   settings
 
-lazy val common = (project in file("common")).
+lazy val `catalogue2-common` = (project in file("catalogue2-common")).
   settings(buildSettings: _*)
 
-lazy val `catalogue-ingester-marvin1` = (project in file("catalogue-ingester-marvin1")).
-  dependsOn(common % "compile->compile;test->test").aggregate(common).
+lazy val `catalogue2-ingester-marvin1` = (project in file("catalogue2-ingester-marvin1")).
+  dependsOn(`catalogue2-common` % "compile->compile;test->test").aggregate(`catalogue2-common`).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
-lazy val `catalogue-ingester-marvin2` = (project in file("catalogue-ingester-marvin2")).
-  dependsOn(common % "compile->compile;test->test").aggregate(common).
+lazy val `catalogue2-ingester-marvin2` = (project in file("catalogue2-ingester-marvin2")).
+  dependsOn(`catalogue2-common` % "compile->compile;test->test").aggregate(`catalogue2-common`).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
-lazy val `catalogue-search-service` = (project in file("catalogue-search-service")).
-  dependsOn(common % "compile->compile;test->test").aggregate(common).
+lazy val `catalogue2-search-public` = (project in file("catalogue2-search-public")).
+  dependsOn(`catalogue2-common` % "compile->compile;test->test").aggregate(`catalogue2-common`).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
-lazy val catalogue = (project in file("catalogue")).
-  dependsOn(common % "compile->compile;test->test").aggregate(common).
+lazy val `catalogue2-service-public` = (project in file("catalogue2-service-public")).
+  dependsOn(`catalogue2-common` % "compile->compile;test->test").aggregate(`catalogue2-common`).
   settings(aggregate in publish := false).
   settings(buildSettings: _*).
   settings(rpmPrepSettings: _*).
   settings(artifactSettings: _*)
 
 lazy val root = (project in file(".")).
-  dependsOn(`catalogue-ingester-marvin1`, `catalogue-ingester-marvin2`, `catalogue-search-service`, catalogue).
-  aggregate(`catalogue-ingester-marvin1`, `catalogue-ingester-marvin2`, `catalogue-search-service`, catalogue).
+  dependsOn(`catalogue2-ingester-marvin1`, `catalogue2-ingester-marvin2`, `catalogue2-search-public`, `catalogue2-service-public`).
+  aggregate(`catalogue2-ingester-marvin1`, `catalogue2-ingester-marvin2`, `catalogue2-search-public`, `catalogue2-service-public`).
   settings(buildSettings: _*).
   settings(publish := {})
