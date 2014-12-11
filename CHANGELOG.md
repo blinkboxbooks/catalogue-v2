@@ -1,5 +1,12 @@
 
 
+## 0.1.34 ([#44](https://git.mobcastdev.com/Agora/catalogue-v2/pull/44) 2014-12-11 13:56:07)
+
+Add more cache checks for search api
+
+#### Test improvement
+* Add cache checks for suggestions, spelling and similar endpoint
+
 ## 0.1.33 ([#41](https://git.mobcastdev.com/Agora/catalogue-v2/pull/41) 2014-12-11 11:55:18)
 
 CAT-111 Ensure no `books` array is returned if no book is matched
