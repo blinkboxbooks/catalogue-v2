@@ -3,6 +3,7 @@ package com.blinkbox.books.catalogue.searchv1
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
 import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.spray.Page
+import com.sksamuel.elastic4s.MoreLikeThisQueryDefinition
 import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E}
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
@@ -112,10 +113,18 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       } limit page.count from page.offset
     } map toBookSearchResponse(q)
 
+  private def defaultMltField(field: String, id: BookId): MoreLikeThisQueryDefinition =
+    E.morelikeThisQuery(field) minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids id.value
+
   override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
     client execute {
       searchIn("book") query {
-        E.morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids bookId.value
+        E.dismax query (
+          defaultMltField("title", bookId),
+          E.nestedQuery("descriptions") query(defaultMltField("descriptions.content", bookId)) boost 3,
+          E.nestedQuery("contributors") query(defaultMltField("contributors.displayName", bookId)) boost 10,
+          E.nestedQuery("subjects") query(defaultMltField("subjects.code", bookId)) boost 3
+        )
       } filter {
         E.termFilter("distributionStatus.usable", true)
       } limit page.count from page.offset
