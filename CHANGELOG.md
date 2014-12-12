@@ -1,5 +1,13 @@
 
 
+## 0.1.42 ([#54](https://git.mobcastdev.com/Agora/catalogue-v2/pull/54) 2014-12-12 15:48:08)
+
+Improve search tests
+
+#### Test improvement
+* Make search tests use set_query_param from cucumber-blinkbox instead of setting @params
+* remove "I have specified a sort order of " step_def from search step defs as the same step exists in catalogue step_defs
+
 ## 0.1.41 ([#53](https://git.mobcastdev.com/Agora/catalogue-v2/pull/53) 2014-12-12 15:36:27)
 
 Enable graylog logging for marvin1 ingester.
