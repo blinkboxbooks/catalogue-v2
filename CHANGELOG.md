@@ -1,5 +1,14 @@
 
 
+## 0.1.39 ([#51](https://git.mobcastdev.com/Agora/catalogue-v2/pull/51) 2014-12-12 14:44:06)
+
+CAT-124 Switched links to be relative in line with v1 api
+
+#### Patch
+
+* Switched links to be relative in line with v1 api
+
+
 ## 0.1.38 ([#49](https://git.mobcastdev.com/Agora/catalogue-v2/pull/49) 2014-12-12 11:34:47)
 
 Fix the internal (rpm) names.
