@@ -1,5 +1,13 @@
 
 
+## 0.1.38 ([#49](https://git.mobcastdev.com/Agora/catalogue-v2/pull/49) 2014-12-12 11:34:47)
+
+Fix the internal (rpm) names.
+
+Patch
+
+- change the rpm name of the submodules.
+
 ## 0.1.37 ([#48](https://git.mobcastdev.com/Agora/catalogue-v2/pull/48) 2014-12-12 10:36:30)
 
 Graylog configuration
