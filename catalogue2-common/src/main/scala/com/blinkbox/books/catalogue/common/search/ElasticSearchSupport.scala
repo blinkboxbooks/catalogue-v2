@@ -2,19 +2,20 @@ package com.blinkbox.books.catalogue.common.search
 
 import org.joda.time.DateTime
 import com.sksamuel.elastic4s.ElasticDsl._
+import com.sksamuel.elastic4s.RangeFilter
 import org.elasticsearch.search.sort.SortOrder
 
 trait ElasticSearchSupport {
+  def dateRangeFilter = rangeFilter("dates.publish")
+      
   /** Adds an optional start/end date filter to the given search query. */
-  def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime])(query: SearchDefinition): SearchDefinition = {
-    def filter = rangeFilter("dates.publish")
-    val dateFilter = (minDate, maxDate) match {
+  def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): Option[RangeFilter] = {
+    (minDate, maxDate) match {
       case (None, None) => Option.empty
-      case (Some(start), None) => Some(filter.from(start))
-      case (None, Some(end)) => Some(filter.to(end))
-      case (Some(start), Some(end)) => Some(filter.from(start).to(end))
+      case (Some(start), None) => Some(dateRangeFilter.from(start))
+      case (None, Some(end)) => Some(dateRangeFilter.to(end))
+      case (Some(start), Some(end)) => Some(dateRangeFilter.from(start).to(end))
     }
-    dateFilter.map(f => query.filter(f)).getOrElse(query)
   }
   
   /** Adds pagination filtering to the given query. */

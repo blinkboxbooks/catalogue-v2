@@ -9,34 +9,31 @@ import org.elasticsearch.search.sort.SortOrder
 
 @RunWith(classOf[JUnitRunner])
 class ElasticSearchSupportTest extends FlatSpec {
-  val start = Some(new DateTime(1))
-  val end = Some(new DateTime(2))
+  val start = new DateTime(1)
+  val end = new DateTime(2)
   
   class QueryFixture extends ElasticSearchSupport {
     val query = new SearchDefinition("field")
-    val filter = rangeFilter("dates.publish")
+    override val dateRangeFilter = rangeFilter("dates.publish")
   }
 
-  it should "not apply a filter if no date-range parameters are provided" in new QueryFixture {
-    assert(query == dateFilter(None, None)(query))
+  "The ES support helper" should "not apply a filter if no date-range parameters are provided" in new QueryFixture {
+    assert(None == dateFilter(None, None))
   }
 
   it should "filter by start date" in new QueryFixture {
-    val result = dateFilter(start, None)(query)
-    val expected = query.filter(filter.from(start))
-    assert(result == expected)
+    val result = dateFilter(Some(start), None)
+    assert(result == Some(dateRangeFilter.from(start)))
   }
 
   it should "filter by end date" in new QueryFixture {
-    val result = dateFilter(start, end)(query)
-    val expected = query.filter(filter.from(start).to(end))
-    assert(result == expected)
+    val result = dateFilter(None, Some(end))
+    assert(result == Some(dateRangeFilter.to(end)))
   }
 
   it should "filter by both start and end dates" in new QueryFixture {
-    val result = dateFilter(start, None)(query)
-    val expected = query.filter(filter.to(end))
-    assert(result == expected)
+    val result = dateFilter(Some(start), Some(end))
+    assert(result == Some(dateRangeFilter.from(start).to(end)))
   }
   
   it should "apply pagination" in new QueryFixture {
