@@ -1,4 +1,4 @@
-name := "catalogue-search-service"
+name := "catalogue2-search-public"
 
 libraryDependencies ++= Seq(
   "com.blinkbox.books"        %% "common-spray"       % "0.17.1",

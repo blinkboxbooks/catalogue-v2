@@ -1,4 +1,4 @@
-name := "catalogue-common"
+name := "catalogue2-common"
 
 libraryDependencies ++= Seq(
   "com.blinkbox.books"     %% "common-config"       % "1.4.1",

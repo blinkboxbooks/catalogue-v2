@@ -1,4 +1,4 @@
-name := "catalogue"
+name := "catalogue2-service-public"
 
 val AkkaVersion = "2.3.6"
 
