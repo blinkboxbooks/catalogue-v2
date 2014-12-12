@@ -11,11 +11,6 @@ And(/^I want a maximum of (#{CAPTURE_INTEGER}) results at offset (#{CAPTURE_INTE
   set_query_param("offset", expected_offset)
 end
 
-And(/^I have specified a sort order of (.*), (.*)$/) do |ordered_by, direction|
-  desc = (direction == "descending") ? false : true
-  @params = { :order => ordered_by.snake_case.upcase, :desc => desc }
-end
-
 And(/^I have not specified a sort order$/) do
 end
 
