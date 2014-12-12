@@ -18,9 +18,7 @@ trait ElasticSearchSupport {
   }
   
   /** Adds pagination filtering to the given query. */
-  def paginate(offset: Int, count: Int)(query: SearchDefinition): SearchDefinition = {
-    query limit count from offset
-  }
+  def paginate(offset: Int, count: Int)(query: SearchDefinition): SearchDefinition = query limit count from offset
 
   /** Adds sorting and ordering to the given query. */
   def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
@@ -47,10 +45,9 @@ object ElasticSearchSupport {
   )
 
   /** Validates a sort-order query parameter as part of spray routing. */
-  def validateSortOrder(field: String) = {
+  def validateSortOrder(field: String) =
     spray.routing.Directives.validate(
       SortFieldMapping.contains(field.toLowerCase),
       s"Permitted values for order: ${SortFieldMapping.mkString(", ")}"
     )
-  }
 }
