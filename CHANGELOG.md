@@ -1,5 +1,14 @@
 
 
+## 0.1.40 ([#50](https://git.mobcastdev.com/Agora/catalogue-v2/pull/50) 2014-12-12 15:22:32)
+
+Cat 45 - v1 search sorting and ordering
+
+### Patch
+- search service matches existing v1 sorting and ordering
+- added common sorting, pagination, validation to `common` package
+
+
 ## 0.1.39 ([#51](https://git.mobcastdev.com/Agora/catalogue-v2/pull/51) 2014-12-12 14:44:06)
 
 CAT-124 Switched links to be relative in line with v1 api
