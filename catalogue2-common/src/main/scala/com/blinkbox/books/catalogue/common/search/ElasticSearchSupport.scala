@@ -6,29 +6,29 @@ import org.elasticsearch.search.sort.SortOrder
 
 trait ElasticSearchSupport {
   /**
-   * Adds an optional start/end date filter to the given search query.
-   */
+* Adds an optional start/end date filter to the given search query.
+*/
   def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime])(query: SearchDefinition): SearchDefinition = {
     def filter = rangeFilter("dates.publish")
     val dateFilter = (minDate, maxDate) match {
-      case (None, None)             => Option.empty
-      case (Some(start), None)      => Some(filter.from(start))
-      case (None, Some(end))        => Some(filter.to(end))
+      case (None, None) => Option.empty
+      case (Some(start), None) => Some(filter.from(start))
+      case (None, Some(end)) => Some(filter.to(end))
       case (Some(start), Some(end)) => Some(filter.from(start).to(end))
     }
     dateFilter.map(f => query.filter(f)).getOrElse(query)
   }
   
   /**
-   * Adds pagination filtering to the given query.
-   */
+* Adds pagination filtering to the given query.
+*/
   def paginate(offset: Int, count: Int)(query: SearchDefinition): SearchDefinition = {
     query limit count from offset
   }
 
   /**
-   * Adds sorting and ordering to the given query.
-   */
+* Adds sorting and ordering to the given query.
+*/
   def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
     import ElasticSearchSupport._
     
@@ -43,17 +43,17 @@ trait ElasticSearchSupport {
 
 object ElasticSearchSupport {
   val SortFieldMapping = Map(
-    "title" ->              "title",
-    "sales_rank" ->         "title", 						// TODO - not yet implemented
-    "publication_date" ->   "dates.publish",
-    "price" ->              "prices.amount",
-    "sequential" ->         "_score",
-    "author" ->             "contributors.sortName"
+    "title" -> "title",
+    "sales_rank" -> "title", // TODO - not yet implemented
+    "publication_date" -> "dates.publish",
+    "price" -> "prices.amount",
+    "sequential" -> "_score",
+    "author" -> "contributors.sortName"
   )
 
   /**
-   * Validates a sort-order query parameter.
-   */
+* Validates a sort-order query parameter.
+*/
   def validateSortOrder(field: String) = {
     spray.routing.Directives.validate(
       SortFieldMapping.contains(field.toLowerCase),

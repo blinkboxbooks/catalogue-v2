@@ -40,8 +40,6 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     classOf[BookSynopsis] -> "urn:blinkboxbooks:schema:synopsis")
   )
 
-//  val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
-  
   implicit val DateTimeDeserializer = new FromStringDeserializer[DateTime] {
     def apply(value: String) =
       try Right(ISODateTimeFormat.date().parseDateTime(value))
@@ -107,10 +105,6 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
     }
   }
-
-//  private def validateOrderParameters(order: SortOrder) = validate(
-  //  PermittedOrderVals.contains(order.field.toLowerCase),
-    //s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}")
 
   private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = {
     println("validating min="+minDate+" max="+maxDate);
