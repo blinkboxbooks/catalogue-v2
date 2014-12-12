@@ -1,5 +1,13 @@
 
 
+## 0.1.41 ([#53](https://git.mobcastdev.com/Agora/catalogue-v2/pull/53) 2014-12-12 15:36:27)
+
+Enable graylog logging for marvin1 ingester.
+
+Patch
+
+- send logs to graylog by mixing 'Loggers'
+
 ## 0.1.40 ([#50](https://git.mobcastdev.com/Agora/catalogue-v2/pull/50) 2014-12-12 15:22:32)
 
 Cat 45 - v1 search sorting and ordering
