@@ -26,6 +26,22 @@ trait ElasticSearchSupport {
     query limit count from offset
   }
 
+  /**
+   * Adds sorting and ordering to the given query.
+   */
+  def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
+    import ElasticSearchSupport._
+    
+    val sortField = SortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
+    val sortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
+
+    query sort {
+      by field sortField order sortOrder
+    }
+  }
+}
+
+object ElasticSearchSupport {
   val SortFieldMapping = Map(
     "title" ->              "title",
     "sales_rank" ->         "title", 						// TODO - not yet implemented
@@ -36,13 +52,12 @@ trait ElasticSearchSupport {
   )
 
   /**
-   * Adds sorting and ordering to the given query.
+   * Validates a sort-order query parameter.
    */
-  def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
-    val sortField = SortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
-    val sortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
-    query sort {
-      by field sortField order sortOrder
-    }
+  def validateSortOrder(field: String) = {
+    spray.routing.Directives.validate(
+      SortFieldMapping.contains(field.toLowerCase),
+      s"Permitted values for order: ${SortFieldMapping.mkString(", ")}"
+    )
   }
 }

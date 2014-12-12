@@ -15,6 +15,7 @@ import spray.routing._
 import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.{ExecutionContext, Future}
+import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport.validateSortOrder
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
@@ -39,7 +40,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     classOf[BookSynopsis] -> "urn:blinkboxbooks:schema:synopsis")
   )
 
-  val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
+//  val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
   
   implicit val DateTimeDeserializer = new FromStringDeserializer[DateTime] {
     def apply(value: String) =
@@ -72,7 +73,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
   val getBooks = pathEndOrSingleSlash {
     get {
       orderedAndPaged(defaultOrder = SortOrder("title", desc = false), defaultCount = 50) { (order, page) =>
-        validateOrderParameters(order) {
+        validateSortOrder(order.field) {
           parameter(BookService.minPubDateParam.as[DateTime].?, BookService.maxPubDateParam.as[DateTime].?) { (minPubDate, maxPubDate) =>
             validateDateParameters(minPubDate, maxPubDate) {
               cancelRejection(MissingQueryParamRejection(BookService.contributorParam)) {
@@ -107,9 +108,9 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
 
-  private def validateOrderParameters(order: SortOrder) = validate(
-    PermittedOrderVals.contains(order.field.toLowerCase),
-    s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}")
+//  private def validateOrderParameters(order: SortOrder) = validate(
+  //  PermittedOrderVals.contains(order.field.toLowerCase),
+    //s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}")
 
   private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = {
     println("validating min="+minDate+" max="+maxDate);

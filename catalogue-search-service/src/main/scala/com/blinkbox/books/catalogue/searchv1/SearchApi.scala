@@ -11,6 +11,7 @@ import spray.httpx.marshalling.BasicMarshallers
 import spray.routing._
 import scala.concurrent.duration.FiniteDuration
 import scala.util.control.NonFatal
+import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport.validateSortOrder
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
 
@@ -58,14 +59,16 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
       pathPrefix("books") {
         pathEnd {
           get {
-            parameter('q ? "") { q =>
-              validate(!q.trim.isEmpty, "Missing search query term") {
-                val query = preProcess(q)
-                validate(!query.isEmpty, "Invalid or empty search term") {
-                  paged(searchConfig.searchDefaultCount) { page =>
-                    onSuccess(searchService.search(query, page)) { res =>
-                      cacheable(searchConfig.maxAge) {
-                        completePaged(page)(res.copy(id = q))
+            orderedAndPaged(defaultOrder = SortOrder("title", desc=true), defaultCount = 50) { (order, page) =>
+              validateSortOrder(order.field) {
+                parameter('q ? "") { q =>
+                  validate(!q.trim.isEmpty, "Missing search query term") {
+                    val query = preProcess(q)
+                    validate(!query.isEmpty, "Invalid or empty search term") {
+                      onSuccess(searchService.search(query, page, order)) { res =>
+                        cacheable(searchConfig.maxAge) {
+                          completePaged(page)(res.copy(id = q))
+                        }
                       }
                     }
                   }
