@@ -48,7 +48,7 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
   val BookIdSegment = Segment.map(BookId.apply _)
 
   val completePaged: Page => PaginableResponse => StandardRoute = page => content => new StandardRoute {
-    override def apply(ctx: RequestContext): Unit = ctx.complete(Paged(page, ctx.request.uri, content))
+    override def apply(ctx: RequestContext): Unit = ctx.complete(Paged(page, ctx.request.uri.toRelative, content))
   }
 
   val validSpecialChars = "-,.';!"
