@@ -3,11 +3,12 @@ Given(/^there (?:is|are) at least (?:\w+) book(?:s?) (?:which|whose) (.+)$/) do 
 end
 
 And(/^I want a maximum of (#{CAPTURE_INTEGER}) result(?:s?)$/) do |max_count|
-  @params = { :count => max_count }
+  set_query_param("count", max_count)
 end
 
 And(/^I want a maximum of (#{CAPTURE_INTEGER}) results at offset (#{CAPTURE_INTEGER})$/) do |max_count, expected_offset|
-  @params = { :count => max_count, :offset => expected_offset }
+  set_query_param("count", max_count)
+  set_query_param("offset", expected_offset)
 end
 
 And(/^I have specified a sort order of (.*), (.*)$/) do |ordered_by, direction|
