@@ -1,5 +1,14 @@
 
 
+## 0.1.37 ([#48](https://git.mobcastdev.com/Agora/catalogue-v2/pull/48) 2014-12-12 10:36:30)
+
+Graylog configuration
+
+Patch
+
+- change logging config in order to send the logs to Graylog
+- remove swagger config from catalogue2-service-public (as not being used)
+
 ## 0.1.36 ([#47](https://git.mobcastdev.com/Agora/catalogue-v2/pull/47) 2014-12-11 17:14:08)
 
 Project modules renaming
