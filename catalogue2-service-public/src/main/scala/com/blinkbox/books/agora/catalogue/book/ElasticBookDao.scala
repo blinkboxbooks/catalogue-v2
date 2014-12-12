@@ -8,13 +8,13 @@ import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.json4s.jackson.Serialization
 import com.blinkbox.books.json.DefaultFormats
-import org.elasticsearch.search.sort.SortOrder
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.action.get.GetResponse
-import com.sksamuel.elastic4s.RangeFilter
 import org.joda.time.DateTime
+import org.elasticsearch.search.sort.SortOrder
+import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport
 
-class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
+class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with ElasticSearchSupport {
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
   
@@ -44,45 +44,22 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
     }
   }
   
-  private def mapSortOrder(descending: Boolean): SortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
-  
-  private val sortFieldMapping = Map(
-    "title" -> "title",
-    "sales_rank" -> "title", 						// TODO - not yet implemented
-    "publication_date" -> "dates.publish",
-    "price" -> "prices.amount",
-    "sequential" -> "_score",
-    "author" -> "contributors.sortName"
-  )
-
-  private def mapSortField(field: String): String = sortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
-
-  private def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime]): Option[RangeFilter] = {
-    val range = rangeFilter("dates.publish")
-    (minDate, maxDate) match {
-      case (None, None) => Option.empty
-      case (Some(start), None) => Some(range.from(minDate))
-      case (None, Some(end)) => Some(range.to(end))
-      case (Some(start), Some(end)) => Some(range.from(start).to(end))
-    }
-  }
-
   override def getBooksByContributor(id: String, minDate: Option[DateTime], maxDate: Option[DateTime], offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList] = {
     require(offset >= 0, "Offset must be zero-or-more")
     require(count > 0, "Count must be one-or-more")
-
-    val query = search in index query {
-      nestedQuery("contributors") query {
-        termQuery("contributors.id", id)
-      }
-    } limit count from offset sort {
-      by field mapSortField(sortField) order mapSortOrder(sortDescending)
-    }
-      
-    val f = dateFilter(minDate, maxDate)
     
     client.execute {
-      dateFilter(minDate, maxDate).map(f => query.filter(f)).getOrElse(query)
+      dateFilter(minDate, maxDate) {
+        paginate(offset, count) {
+          sortBy(sortField, sortDescending) {
+            search in index query {
+              nestedQuery("contributors") query {
+                termQuery("contributors.id", id)
+              }
+            }
+          }
+        }
+      }
     } map toBookList
   }
 
@@ -91,9 +68,11 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao {
     require(count > 0, "Count must be one-or-more")
     
     client.execute {
-      search in index query {
-        morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
-      } limit count from offset
+      paginate(offset, count) {
+        search in index query {
+          morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
+        }
+      }
     } map toBookList
   }
 }

@@ -9,9 +9,10 @@ import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
 import org.elasticsearch.search.suggest.completion.CompletionSuggestion.Entry
 import org.json4s.jackson.{Serialization => Json}
-
 import scala.collection.convert.Wrappers.{JIteratorWrapper, JListWrapper}
 import scala.concurrent.{ExecutionContext, Future}
+import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport
+import com.blinkbox.books.spray.SortOrder
 
 case class BookId(value: String) extends AnyVal
 
@@ -45,12 +46,12 @@ object V1SearchService {
 trait V1SearchService {
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
-  def search(q: String, page: Page): Future[BookSearchResponse]
+  def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse]
   def similar(bookId: BookId, page: Page): Future[BookSimilarResponse]
   def suggestions(q: String, count: Int): Future[BookSuggestionResponse]
 }
 
-class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService {
+class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService with ElasticSearchSupport {
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
@@ -89,28 +90,32 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
   private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
 
-  override def search(q: String, page: Page): Future[BookSearchResponse] =
+  override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] =
     client execute {
-      searchIn("book") query {
-        E.filteredQuery query {
-          E.dismax query(
-            E.termQuery("isbn", q) boost 4,
-            // Query for the title - give precedence to title that match including stop-words
-            E.dismax query(
-              E.matchPhrase("title", q) boost 1 slop 10,
-              E.matchPhrase("titleWithStopwords", q) boost 2 slop 10
-            ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
-            E.nestedQuery("contributors") query (
-              E.matchPhrase("contributors.displayName", q) slop 10
-            ) boost 2,
-            E.nestedQuery("descriptions") query (
-              E.matchPhrase("descriptions.content", q) slop 100
-            ) boost 1
-          ) tieBreaker 0.2
-        } filter {
-          E.termFilter("distributionStatus.usable", true)
+      paginate(page.offset, page.count) {
+        sortBy(order.field, order.desc) {
+	      searchIn("book") query {
+	        E.filteredQuery query {
+	          E.dismax query(
+	            E.termQuery("isbn", q) boost 4,
+	            // Query for the title - give precedence to title that match including stop-words
+	            E.dismax query(
+	              E.matchPhrase("title", q) boost 1 slop 10,
+	              E.matchPhrase("titleWithStopwords", q) boost 2 slop 10
+	            ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
+	            E.nestedQuery("contributors") query (
+	              E.matchPhrase("contributors.displayName", q) slop 10
+	            ) boost 2,
+	            E.nestedQuery("descriptions") query (
+	              E.matchPhrase("descriptions.content", q) slop 100
+	            ) boost 1
+	          ) tieBreaker 0.2
+	        } filter {
+	          E.termFilter("distributionStatus.usable", true)
+	        }
+	      }
         }
-      } limit page.count from page.offset
+      }
     } map toBookSearchResponse(q)
 
   private def defaultMltField(field: String, id: BookId): MoreLikeThisQueryDefinition =
