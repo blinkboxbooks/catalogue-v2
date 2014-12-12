@@ -59,7 +59,7 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
       pathPrefix("books") {
         pathEnd {
           get {
-            orderedAndPaged(defaultOrder = SortOrder("title", desc=true), defaultCount = 50) { (order, page) =>
+            orderedAndPaged(defaultOrder = SortOrder(field="relevance", desc=true), defaultCount = searchConfig.searchDefaultCount) { (order, page) =>
               validateSortOrder(order.field) {
                 parameter('q ? "") { q =>
                   validate(!q.trim.isEmpty, "Missing search query term") {

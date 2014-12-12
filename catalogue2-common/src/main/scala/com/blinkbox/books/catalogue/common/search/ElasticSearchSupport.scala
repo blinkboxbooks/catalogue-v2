@@ -5,9 +5,7 @@ import com.sksamuel.elastic4s.ElasticDsl._
 import org.elasticsearch.search.sort.SortOrder
 
 trait ElasticSearchSupport {
-  /**
-* Adds an optional start/end date filter to the given search query.
-*/
+  /** Adds an optional start/end date filter to the given search query. */
   def dateFilter(minDate: Option[DateTime], maxDate: Option[DateTime])(query: SearchDefinition): SearchDefinition = {
     def filter = rangeFilter("dates.publish")
     val dateFilter = (minDate, maxDate) match {
@@ -19,20 +17,16 @@ trait ElasticSearchSupport {
     dateFilter.map(f => query.filter(f)).getOrElse(query)
   }
   
-  /**
-* Adds pagination filtering to the given query.
-*/
+  /** Adds pagination filtering to the given query. */
   def paginate(offset: Int, count: Int)(query: SearchDefinition): SearchDefinition = {
     query limit count from offset
   }
 
-  /**
-* Adds sorting and ordering to the given query.
-*/
+  /** Adds sorting and ordering to the given query. */
   def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
     import ElasticSearchSupport._
     
-    val sortField = SortFieldMapping.getOrElse(field, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
+    val sortField = SortFieldMapping.getOrElse(field.toLowerCase, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
     val sortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
 
     query sort {
@@ -43,17 +37,16 @@ trait ElasticSearchSupport {
 
 object ElasticSearchSupport {
   val SortFieldMapping = Map(
+    "relevance" -> "_score",
+    "sequential" -> "_score",
     "title" -> "title",
-    "sales_rank" -> "title", // TODO - not yet implemented
+    "author" -> "contributors.sortName",
     "publication_date" -> "dates.publish",
     "price" -> "prices.amount",
-    "sequential" -> "_score",
-    "author" -> "contributors.sortName"
+    "sales_rank" -> "title" // TODO - not yet implemented
   )
 
-  /**
-* Validates a sort-order query parameter.
-*/
+  /** Validates a sort-order query parameter as part of spray routing. */
   def validateSortOrder(field: String) = {
     spray.routing.Directives.validate(
       SortFieldMapping.contains(field.toLowerCase),

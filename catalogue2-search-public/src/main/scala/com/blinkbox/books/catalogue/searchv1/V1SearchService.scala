@@ -93,7 +93,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] =
     client execute {
       paginate(page.offset, page.count) {
-//        sortBy(order.field, order.desc) {
+        sortBy(order.field, order.desc) {
 	      searchIn("book") query {
 	        E.filteredQuery query {
 	          E.dismax query(
@@ -114,7 +114,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 	          E.termFilter("distributionStatus.usable", true)
 	        }
 	      }
-//        }
+        }
       }
     } map toBookSearchResponse(q)
 
