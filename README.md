@@ -11,17 +11,17 @@ The new blinkbox-books catalogue
 ### Test fixtures
 Test data required to run these tests lives in: [fixtures](features/support/fixtures/)
 
-Start the ingester
+Start the ingester (for Marvin1 messages)
 ```
-$ sbt 'project ingesterv1' run
+$ sbt 'project catalogue2-ingester-marvin1' run
 ```
-Feed the messages into the input queue configured: [reference.conf](ingesterv1/src/main/resources/reference.conf)
+Feed the messages into the input queue configured: [reference.conf](catalogue2-ingester-marvin1/src/main/resources/reference.conf)
 
 ### Starting the apps and running the tests
 First start the services:
 ```
-$ sbt 'project searchv1' clean run
-$ sbt 'project catalogue' clean run
+$ sbt 'project catalogue2-search-public' clean run
+$ sbt 'project catalogue2-service-public' clean run
 ```
 
 Then run the tests:
