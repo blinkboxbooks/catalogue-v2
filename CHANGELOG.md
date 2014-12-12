@@ -1,5 +1,11 @@
 
 
+## 0.1.43 ([#56](https://git.mobcastdev.com/Agora/catalogue-v2/pull/56) 2014-12-12 17:42:56)
+
+Fix README in order to use the new module names.
+
+Patch
+
 ## 0.1.42 ([#54](https://git.mobcastdev.com/Agora/catalogue-v2/pull/54) 2014-12-12 15:48:08)
 
 Improve search tests
