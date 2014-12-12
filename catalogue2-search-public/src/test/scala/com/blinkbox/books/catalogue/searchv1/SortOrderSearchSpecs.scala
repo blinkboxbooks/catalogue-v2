@@ -28,8 +28,6 @@ class SortOrderSearchSpecs extends FlatSpec with Matchers with ApiSpecBase with 
   "Search" should "order books by title" in {
     query("title", true) {
       status should equal(StatusCodes.OK)
-      println(expected)
-      println(responseAs[BookSearchResponse].books)
       responseAs[BookSearchResponse].books should equal(Some(expected))
     }
   }
@@ -38,6 +36,26 @@ class SortOrderSearchSpecs extends FlatSpec with Matchers with ApiSpecBase with 
     query("title", false) {
       status should equal(StatusCodes.OK)
       responseAs[BookSearchResponse].books should equal(Some(expected.reverse))
+    }
+  }
+  
+  it should "order books by relevance" in {
+    query("relevance", true) {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSearchResponse].books should equal(Some(expected))
+    }
+  }
+  
+  it should "order books by relevance ascending" in {
+    query("relevance", false) {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSearchResponse].books should equal(Some(expected.reverse))
+    }
+  }
+  
+  it should "return bad request for an invalid sort order" in {
+    query("cobblers", true) {
+      status should equal(StatusCodes.BadRequest)
     }
   }
 }
