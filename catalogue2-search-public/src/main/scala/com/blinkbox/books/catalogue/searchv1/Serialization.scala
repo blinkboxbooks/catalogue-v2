@@ -17,7 +17,7 @@ object PageLinker {
   private def someLink(href: String, uri: Uri, count: Int, offset: Int): Option[Link] = Some(Link(href, updateOffset(uri, count, offset).toString, None, None))
 
   private def buildLink(uri: Uri, page: Page, numberOfResults: Long)(href: HRef): Option[Link] = href match {
-    case Prev => if (page.offset == 0) None else someLink("prev", uri, page.count, page.offset - page.count)
+    case Prev => if (page.offset == 0) None else someLink("prev", uri, page.count, (page.offset - page.count).max(0))
     case This => someLink("this", uri.toString, page.count, page.offset)
     case Next => if (page.offset + page.count >= numberOfResults) None else someLink("next", uri, page.count, page.offset + page.count)
   }
