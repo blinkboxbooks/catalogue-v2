@@ -3,13 +3,7 @@ $: << __dir__
 require "httpclient/capture"
 require "cucumber/rest"
 require "cucumber/helpers"
-require "cucumber/blinkbox/data_dependencies"
-require "cucumber/blinkbox/environment"
-require "cucumber/blinkbox/subjects"
-require "cucumber/blinkbox/requests"
-require "cucumber/blinkbox/responses"
-require "cucumber/blinkbox/response_validation"
-require "cucumber/blinkbox/formatter/html"
+require "cucumber/blinkbox"
 
 TEST_CONFIG["server"] = ENV["SERVER"] || "local"
 TEST_CONFIG["proxy"] = ENV["PROXY_SERVER"]
