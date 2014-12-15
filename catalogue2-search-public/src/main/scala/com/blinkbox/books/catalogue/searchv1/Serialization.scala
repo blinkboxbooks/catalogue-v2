@@ -11,14 +11,15 @@ object PageLinker {
   case object This extends HRef
   case object Next extends HRef
 
-  private def updateOffset(uri: Uri, offset: Int) = uri.withQuery(uri.query.toMap.updated("offset", offset.toString))
+  private def updateOffset(uri: Uri, count: Int, offset: Int) =
+    uri.withQuery(uri.query.toMap.updated("count", count.toString).updated("offset", offset.toString))
 
-  private def someLink(href: String, uri: Uri, offset: Int): Option[Link] = Some(Link(href, updateOffset(uri, offset).toString, None, None))
+  private def someLink(href: String, uri: Uri, count: Int, offset: Int): Option[Link] = Some(Link(href, updateOffset(uri, count, offset).toString, None, None))
 
   private def buildLink(uri: Uri, page: Page, numberOfResults: Long)(href: HRef): Option[Link] = href match {
-    case Prev => if (page.offset == 0) None else someLink("prev", uri, page.offset - page.count)
-    case This => Some(Link("this", uri.toString, None, None))
-    case Next => if (page.offset + page.count >= numberOfResults) None else someLink("next", uri, page.offset + page.count)
+    case Prev => if (page.offset == 0) None else someLink("prev", uri, page.count, (page.offset - page.count).max(0))
+    case This => someLink("this", uri.toString, page.count, page.offset)
+    case Next => if (page.offset + page.count >= numberOfResults) None else someLink("next", uri, page.count, page.offset + page.count)
   }
 
   def links(uri: Uri, page: Page, numberOfResults: Long): Seq[Link] =
