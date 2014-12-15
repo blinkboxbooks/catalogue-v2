@@ -68,7 +68,7 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
     client.execute {
       paginate(offset, count) {
         search in index query {
-          morelikeThisQuery("title", "descriptionContents") minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
+          similarBooksQuery(isbn)
         }
       }
     } map toBookList

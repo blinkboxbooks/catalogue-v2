@@ -4,6 +4,7 @@ import org.joda.time.DateTime
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.RangeFilter
 import org.elasticsearch.search.sort.SortOrder
+import com.sksamuel.elastic4s.MoreLikeThisQueryDefinition
 
 trait ElasticSearchSupport {
   def dateRangeFilter = rangeFilter("dates.publish")
@@ -32,6 +33,16 @@ trait ElasticSearchSupport {
       by field sortField order sortOrder
     }
   }
+  
+  private def defaultMltField(field: String, isbn: String): MoreLikeThisQueryDefinition =
+    morelikeThisQuery(field) minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
+
+  def similarBooksQuery(isbn: String) = dismax query (
+    defaultMltField("title", isbn),
+    nestedQuery("descriptions") query(defaultMltField("descriptions.content", isbn)) boost 3,
+    nestedQuery("contributors") query(defaultMltField("contributors.displayName", isbn)) boost 10,
+    nestedQuery("subjects") query(defaultMltField("subjects.code", isbn)) boost 3
+  )
 }
 
 object ElasticSearchSupport {

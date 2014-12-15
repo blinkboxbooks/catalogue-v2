@@ -53,4 +53,13 @@ class ElasticSearchSupportTest extends FlatSpec {
       sortBy("cobblers", true)(query)
     }
   }
+  
+  it should "build a similar books query" in new QueryFixture {
+    val similarQuery = similarBooksQuery("isbn")
+    val json = similarQuery.builder.toString
+    assert(json contains "title")
+    assert(json contains "descriptions.content")
+    assert(json contains "contributors.displayName")
+    assert(json contains "subjects.code")
+  }
 }
