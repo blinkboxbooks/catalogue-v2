@@ -1,5 +1,13 @@
 
 
+## 0.1.48 ([#60](https://git.mobcastdev.com/Agora/catalogue-v2/pull/60) 2014-12-15 16:44:54)
+
+CAT-122 Implement spelling suggestions
+
+### Improvements
+
+Implement spellcheck suggestions for the search endpoint
+
 ## 0.1.47 ([#59](https://git.mobcastdev.com/Agora/catalogue-v2/pull/59) 2014-12-15 16:21:40)
 
 Fixed path prefix in links for related books
