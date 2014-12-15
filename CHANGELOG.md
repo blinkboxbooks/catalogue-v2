@@ -1,5 +1,12 @@
 
 
+## 0.1.46 ([#58](https://git.mobcastdev.com/Agora/catalogue-v2/pull/58) 2014-12-15 14:51:26)
+
+CAT-125: Links in search results always contain count and offset
+
+### Patch
+
+
 ## 0.1.45 ([#55](https://git.mobcastdev.com/Agora/catalogue-v2/pull/55) 2014-12-15 11:59:05)
 
 Cat 45 - relaxed dateFilter() usage
