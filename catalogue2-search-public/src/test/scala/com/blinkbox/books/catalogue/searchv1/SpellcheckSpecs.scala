@@ -14,7 +14,7 @@ class SpellcheckSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex indexAndCheck (f.universe, f.everything, f.simpleBook) andAwaitFor 10.seconds
   }
 
-  "Providing a query to the search service" should "result in a query suggestion if it only comprieses a mis-spelled word" in {
+  "Providing a query to the search service" should "result in a query suggestion if it only contains a mis-spelled word" in {
     Get("/catalogue/search/books?q=uvinerse") ~> routes ~> check {
       status should equal(StatusCodes.OK)
       responseAs[BookSearchResponse].suggestions should contain theSameElementsAs ("universe" :: Nil)
@@ -26,14 +26,14 @@ class SpellcheckSpecs extends FlatSpec with Matchers with ApiSpecBase {
     }
   }
 
-  it should "result in a query suggestion if it comprises a mis-spelled word and a non-misspelled word" in {
+  it should "result in a query suggestion if it contains a mis-spelled word and a non-misspelled word" in {
     Get("/catalogue/search/books?q=uvinerse%20everything") ~> routes ~> check {
       status should equal(StatusCodes.OK)
       responseAs[BookSearchResponse].suggestions should contain theSameElementsAs ("universe everything" :: Nil)
     }
   }
 
-  it should "result in a query suggestion if it comprises multiple mis-spelled words" in {
+  it should "result in a query suggestion if it contains multiple mis-spelled words" in {
     Get("/catalogue/search/books?q=uvinerse%20eveyrthing%20simple") ~> routes ~> check {
       status should equal(StatusCodes.OK)
       responseAs[BookSearchResponse].suggestions should contain theSameElementsAs ("universe everything simple" :: Nil)
