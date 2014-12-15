@@ -1,5 +1,13 @@
 
 
+## 0.1.44 ([#57](https://git.mobcastdev.com/Agora/catalogue-v2/pull/57) 2014-12-15 11:19:14)
+
+Update dependencies
+
+#### Test improvements
+* Update dependencies
+* Require all from cucumber/blinkbox instead of individual modules
+
 ## 0.1.43 ([#56](https://git.mobcastdev.com/Agora/catalogue-v2/pull/56) 2014-12-12 17:42:56)
 
 Fix README in order to use the new module names.
