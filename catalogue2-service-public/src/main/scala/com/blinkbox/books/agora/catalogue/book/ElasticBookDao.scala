@@ -49,15 +49,13 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
     require(count > 0, "Count must be one-or-more")
     
     client.execute {
-      dateFilter(minDate, maxDate) {
-        paginate(offset, count) {
-          sortBy(sortField, sortDescending) {
-            search in index query {
-              nestedQuery("contributors") query {
-                termQuery("contributors.id", id)
-              }
+      paginate(offset, count) {
+        sortBy(sortField, sortDescending) {
+          search in index query {
+            nestedQuery("contributors") query {
+              termQuery("contributors.id", id)
             }
-          }
+          } filter dateFilter(minDate, maxDate).getOrElse(matchAllFilter)
         }
       }
     } map toBookList
