@@ -1,19 +1,18 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.common.IndexEntities.{ SuggestionItem, SuggestionPayload, SuggestionType }
-import com.blinkbox.books.catalogue.common.{ ElasticsearchConfig, IndexEntities => idx }
-import com.blinkbox.books.spray.Page
-import com.sksamuel.elastic4s.MoreLikeThisQueryDefinition
-import com.sksamuel.elastic4s.{ ElasticClient, ElasticDsl => E }
+import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
+import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
+import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport
+import com.blinkbox.books.spray.{Page, SortOrder}
+import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E, MoreLikeThisQueryDefinition}
 import org.elasticsearch.action.search.SearchResponse
 import org.elasticsearch.search.suggest.Suggest
-import org.elasticsearch.search.suggest.completion.CompletionSuggestion.{ Entry => CompletionEntry }
-import org.elasticsearch.search.suggest.phrase.PhraseSuggestion.{ Entry => PhraseEntry }
-import org.json4s.jackson.{ Serialization => Json }
-import scala.collection.convert.Wrappers.{ JIteratorWrapper, JListWrapper }
-import scala.concurrent.{ ExecutionContext, Future }
-import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport
-import com.blinkbox.books.spray.SortOrder
+import org.elasticsearch.search.suggest.Suggest.Suggestion
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion.{Entry => CompletionEntry}
+import org.elasticsearch.search.suggest.phrase.PhraseSuggestion.{Entry => PhraseEntry}
+import org.json4s.jackson.{Serialization => Json}
+import scala.collection.convert.Wrappers.{JIteratorWrapper, JListWrapper}
+import scala.concurrent.{ExecutionContext, Future}
 
 case class BookId(value: String) extends AnyVal
 
@@ -71,9 +70,17 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
     if (respSeq.isEmpty) None else Some(respSeq)
   }
 
+  // Define some types trying to alleviate the Java recursive-variant-existential-types insanity of ES
+  private type OptionType = Suggestion.Entry.Option
+  private type EntryType[O <: OptionType] = Suggestion.Entry[O]
+  private type SuggestionType[E <: EntryType[_]] = Suggestion[E]
+
+  private def getSuggestionIterator[E <: EntryType[_]](resp: SearchResponse, name: String): Iterator[E] =
+    Option(resp.getSuggest.getSuggestion[SuggestionType[E]](name)).fold[Iterator[E]](Iterator.empty)(es => JIteratorWrapper(es.iterator))
+
   private def toSpellcheckCompletions(resp: SearchResponse): Seq[String] =
     (for {
-      spellcheck <- JIteratorWrapper(resp.getSuggest.getSuggestion[Suggest.Suggestion[PhraseEntry]]("spellcheck").iterator)
+      spellcheck <- getSuggestionIterator[PhraseEntry](resp, "spellcheck")
       option <- JListWrapper(spellcheck.getOptions)
     } yield option.getText.string).toSeq
 
@@ -96,7 +103,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
   private def toCompletionSeq(resp: SearchResponse): Seq[Completion] =
     (for {
-      autoComplete <- JIteratorWrapper(resp.getSuggest.getSuggestion[Suggest.Suggestion[CompletionEntry]]("autoComplete").iterator)
+      autoComplete <- getSuggestionIterator[CompletionEntry](resp, "autoComplete")
       option <- JListWrapper(autoComplete.getOptions)
       payload = Json.read[SuggestionPayload](option.getPayloadAsString)
     } yield toCompletion(payload)).toSeq
