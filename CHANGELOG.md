@@ -1,5 +1,12 @@
 
 
+## 0.1.47 ([#59](https://git.mobcastdev.com/Agora/catalogue-v2/pull/59) 2014-12-15 16:21:40)
+
+Fixed path prefix in links for related books
+
+### bugfix
+
+
 ## 0.1.46 ([#58](https://git.mobcastdev.com/Agora/catalogue-v2/pull/58) 2014-12-15 14:51:26)
 
 CAT-125: Links in search results always contain count and offset
