@@ -22,7 +22,7 @@ object V1SearchService {
   val contributorSuggestionType = "urn:blinkbox:schema:suggestion:contributor"
   val bookSearchResponseType = "urn:blinkbox:schema:search"
   val bookSimilarResponseType = "urn:blinkbox:schema:search:similar"
-  val bookSuggestionResponseType = "urn:blinkbox:schema:list"
+  val bookCompletionResponseType = "urn:blinkbox:schema:list"
 
   case class Book(id: String, title: String, authors: List[String])
   case class Completion(id: String, title: String, `type`: String, authors: Option[List[String]])
@@ -47,7 +47,7 @@ object V1SearchService {
     `type`: String = bookSimilarResponseType
   ) extends PaginableResponse
 
-  case class BookCompletionResponse(items: Seq[Completion], `type`: String = bookSuggestionResponseType)
+  case class BookCompletionResponse(items: Seq[Completion], `type`: String = bookCompletionResponseType)
 }
 
 trait V1SearchService {
