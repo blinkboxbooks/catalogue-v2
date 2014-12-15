@@ -28,7 +28,7 @@ case class SearchApiConfig(
 
 object SearchApiConfig {
   import com.typesafe.config.Config
-  
+
   def apply(config: Config): SearchApiConfig = SearchApiConfig(
     config.getInt("searchDefaultCount"),
     config.getInt("similarDefaultCount"),
@@ -115,7 +115,9 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
   }
 
   val exceptionHandler = ExceptionHandler {
-    case NonFatal(ex) => uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
+    case NonFatal(ex) =>
+      log.error(s"Unknown error: ${ex.getMessage}", ex)
+      uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
   }
 
   def routes: Route = rootPath(apiConfig.localUrl.path) {
