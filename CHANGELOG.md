@@ -1,5 +1,12 @@
 
 
+## 0.1.45 ([#55](https://git.mobcastdev.com/Agora/catalogue-v2/pull/55) 2014-12-15 11:59:05)
+
+Cat 45 - relaxed dateFilter() usage
+
+### Patch
+- Modified `dateFilter` helper so we can use it in combination with other filters.
+
 ## 0.1.44 ([#57](https://git.mobcastdev.com/Agora/catalogue-v2/pull/57) 2014-12-15 11:19:14)
 
 Update dependencies
