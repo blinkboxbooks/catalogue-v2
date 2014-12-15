@@ -127,8 +127,8 @@ case class Schema(config: ElasticsearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType copyTo("titleWithStopwords") analyzer SnowballAnalyzer,
-      "titleWithStopwords" typed StringType analyzer SimpleAnalyzer,
+      "title" typed StringType copyTo("titleSimple") analyzer SnowballAnalyzer,
+      "titleSimple" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
         "role" typed StringType analyzer KeywordAnalyzer,
