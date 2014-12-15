@@ -222,7 +222,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(1 == listPage.items.size, "Page size")
       assert(List(expected) == listPage.items)
       checkLinks(listPage.links,Map(
-        "next"-> "catalogue/isbn/related?count=1&offset=1"
+        "next"-> "catalogue/books/isbn/related?count=1&offset=1"
       ))
     }
   }
