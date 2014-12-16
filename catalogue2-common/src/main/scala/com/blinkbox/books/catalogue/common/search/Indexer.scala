@@ -126,8 +126,7 @@ case class Schema(config: ElasticsearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType copyTo("titleSimple", "titleRaw") analyzer SnowballAnalyzer,
-      "titleRaw" typed StringType,
+      "title" typed StringType copyTo("titleSimple") analyzer SnowballAnalyzer,
       "titleSimple" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
