@@ -47,17 +47,17 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
   override def getBooksByContributor(id: String, minDate: Option[DateTime], maxDate: Option[DateTime], offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList] = {
     require(offset >= 0, "Offset must be zero-or-more")
     require(count > 0, "Count must be one-or-more")
-    
+
     client.execute {
-      paginate(offset, count) {
-        sortBy(sortField, sortDescending) {
+      //paginate(offset, count) {
+        //sortBy(sortField, sortDescending) {
           search in index query {
             nestedQuery("contributors") query {
               termQuery("contributors.id", id)
             }
-          } filter dateFilter(minDate, maxDate).getOrElse(matchAllFilter)
-        }
-      }
+          } /* filter dateFilter(minDate, maxDate).getOrElse(matchAllFilter) */ sort { by field "title" order SortOrder.DESC }
+        //}
+      //}
     } map toBookList
   }
 
