@@ -106,13 +106,10 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
 
-  private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = {
-    println("validating min="+minDate+" max="+maxDate);
-    validate(
+  private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = validate(
     (minDate, maxDate) match {
-      case (Some(min), Some(max)) => println("min="+min+" max="+max+" "+min.isAfter(max)); !min.isAfter(max)
+      case (Some(min), Some(max)) => !min.isAfter(max)
       case _ => true
     },
     s"$service.minPubDateParam cannot be after $service.maxPubDateParam")
-  }
 }

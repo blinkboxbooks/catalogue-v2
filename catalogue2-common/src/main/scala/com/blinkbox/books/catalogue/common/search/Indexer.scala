@@ -8,7 +8,6 @@ import com.sksamuel.elastic4s.mappings.FieldType._
 import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
-
 import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait BulkItemResponse

@@ -138,18 +138,10 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "titleSimple" size 1)
     } map toBookSearchResponse(q)
 
-  private def defaultMltField(field: String, id: BookId): MoreLikeThisQueryDefinition =
-    E.morelikeThisQuery(field) minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids id.value
-
   override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
     client execute {
       searchIn("book") query {
-        E.dismax query (
-          defaultMltField("title", bookId),
-          E.nestedQuery("descriptions") query (defaultMltField("descriptions.content", bookId)) boost 3,
-          E.nestedQuery("contributors") query (defaultMltField("contributors.displayName", bookId)) boost 10,
-          E.nestedQuery("subjects") query (defaultMltField("subjects.code", bookId)) boost 3
-        )
+        similarBooksQuery(bookId.value)
       } filter {
         E.termFilter("distributionStatus.usable", true)
       } limit page.count from page.offset
