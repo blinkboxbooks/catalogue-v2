@@ -1,5 +1,14 @@
 
 
+## 0.1.51 ([#64](https://git.mobcastdev.com/Agora/catalogue-v2/pull/64) 2014-12-16 17:35:41)
+
+Use defs instead of vals for exception and rejection handlers.
+
+Patch
+
+Use defs instead of vals for exception and rejection handlers.
+
+
 ## 0.1.50 ([#63](https://git.mobcastdev.com/Agora/catalogue-v2/pull/63) 2014-12-16 14:52:46)
 
 Cat 134
