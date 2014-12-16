@@ -12,6 +12,7 @@ object ElasticFactory {
       ImmutableSettings.
         builder().
         put("cluster.name", config.clusterName).
+        put("transport.tcp.connect_timeout", s"${config.timeout.toSeconds}s")
         build(),
       config.host -> config.port)
   }

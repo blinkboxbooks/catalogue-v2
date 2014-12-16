@@ -1,5 +1,29 @@
 
 
+## 0.1.49 ([#62](https://git.mobcastdev.com/Agora/catalogue-v2/pull/62) 2014-12-15 17:54:45)
+
+Introduce timeout for ES client and log unhandled failures
+
+### Improvements
+
+* Introduce a more reasonable, configurable timeout when connecting to ES
+* Log un-handled failures at the API level
+
+## 0.1.48 ([#60](https://git.mobcastdev.com/Agora/catalogue-v2/pull/60) 2014-12-15 16:44:54)
+
+CAT-122 Implement spelling suggestions
+
+### Improvements
+
+Implement spellcheck suggestions for the search endpoint
+
+## 0.1.47 ([#59](https://git.mobcastdev.com/Agora/catalogue-v2/pull/59) 2014-12-15 16:21:40)
+
+Fixed path prefix in links for related books
+
+### bugfix
+
+
 ## 0.1.46 ([#58](https://git.mobcastdev.com/Agora/catalogue-v2/pull/58) 2014-12-15 14:51:26)
 
 CAT-125: Links in search results always contain count and offset

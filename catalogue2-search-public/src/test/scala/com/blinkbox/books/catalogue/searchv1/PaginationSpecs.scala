@@ -1,6 +1,6 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.searchv1.V1SearchService.{Book, BookSearchResponse, BookSimilarResponse, BookSuggestionResponse}
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.{Book, BookSearchResponse, BookSimilarResponse, BookCompletionResponse}
 import com.blinkbox.books.spray.v1.Link
 import org.json4s.Extraction
 import org.json4s.JsonAST._
@@ -104,14 +104,14 @@ class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
   "Suggestions pagination" should "return 10 results if no limit is provided" in {
     Get("/catalogue/search/suggestions?q=dum") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      responseAs[BookSuggestionResponse].items.size should equal(10)
+      responseAs[BookCompletionResponse].items.size should equal(10)
     }
   }
 
   it should "return a specified number of result if limit is provided" in {
     Get("/catalogue/search/suggestions?q=dummy&limit=5") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      responseAs[BookSuggestionResponse].items.size should equal(5)
+      responseAs[BookCompletionResponse].items.size should equal(5)
     }
   }
 
