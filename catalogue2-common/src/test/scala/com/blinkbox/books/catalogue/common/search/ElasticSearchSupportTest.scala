@@ -44,7 +44,7 @@ class ElasticSearchSupportTest extends FlatSpec {
 
   it should "apply sorting" in new QueryFixture {
     val result = sortBy("title", true)(query)
-    val expected = query sort { by field "title" order SortOrder.DESC }
+    val expected = query sort { by field "titleSimple" order SortOrder.DESC }
     assert(result == expected)
   }
   

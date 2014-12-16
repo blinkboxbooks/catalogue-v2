@@ -49,7 +49,7 @@ object ElasticSearchSupport {
   val SortFieldMapping = Map(
     "relevance" -> "_score",
     "sequential" -> "_score",
-    "title" -> "title",
+    "title" -> "titleSimple",
     "author" -> "contributors.sortName",
     "publication_date" -> "dates.publish",
     "price" -> "prices.amount",
