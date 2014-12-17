@@ -47,19 +47,19 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
   }
 
-  lazy val getBookByIsbn = path(Segment) { isbn =>
+  val getBookByIsbn = path(Segment) { isbn =>
     get {
       onSuccess(service.getBookByIsbn(isbn))(cacheable(config.maxAge, _))
     }
   }
 
-  lazy val getBookSynopsis = path(Segment / "synopsis") { id =>
+  val getBookSynopsis = path(Segment / "synopsis") { id =>
     get {
       onSuccess(service.getBookSynopsis(id))(cacheable(config.maxAge, _))
     }
   }
 
-  lazy val getRelatedBooks = path(Segment / "related") { id =>
+  val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
         onSuccess(service.getRelatedBooks(id, page))(cacheable(config.maxAge, _))
@@ -97,7 +97,7 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
   
-  lazy val routes = rootPath(api.localUrl.path + config.path) {
+  val routes = rootPath(api.localUrl.path + config.path) {
     monitor() {
       respondWithHeader(RawHeader("Vary", "Accept, Accept-Encoding")) {
         getBookByIsbn ~ getBookSynopsis ~ getBooks ~ getRelatedBooks
