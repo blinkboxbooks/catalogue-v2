@@ -104,7 +104,7 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
     }
   }
 
-  val rejectionHandler = RejectionHandler {
+  def rejectionHandler = RejectionHandler {
     case ValidationRejection(message, _) :: _ =>
       implicit val marshaller = BasicMarshallers.StringMarshaller
 
@@ -113,14 +113,14 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
       }
   }
 
-  val exceptionHandler = ExceptionHandler {
+  def exceptionHandler = ExceptionHandler {
     case NonFatal(ex) =>
       log.error(s"Unknown error: ${ex.getMessage}", ex)
       uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
   }
 
   def routes: Route = rootPath(apiConfig.localUrl.path) {
-    monitor(log) {
+    monitor() {
       handleExceptions(exceptionHandler) {
         handleRejections(rejectionHandler) {
           serviceRoutes
