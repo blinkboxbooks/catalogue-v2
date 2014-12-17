@@ -15,7 +15,6 @@ import spray.routing._
 import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.{ExecutionContext, Future}
-import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport.validateSortOrder
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
@@ -48,19 +47,19 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
   }
 
-  val getBookByIsbn = path(Segment) { isbn =>
+  lazy val getBookByIsbn = path(Segment) { isbn =>
     get {
       onSuccess(service.getBookByIsbn(isbn))(cacheable(config.maxAge, _))
     }
   }
 
-  val getBookSynopsis = path(Segment / "synopsis") { id =>
+  lazy val getBookSynopsis = path(Segment / "synopsis") { id =>
     get {
       onSuccess(service.getBookSynopsis(id))(cacheable(config.maxAge, _))
     }
   }
 
-  val getRelatedBooks = path(Segment / "related") { id =>
+  lazy val getRelatedBooks = path(Segment / "related") { id =>
     get {
       paged(defaultCount = 50) { page =>
         onSuccess(service.getRelatedBooks(id, page))(cacheable(config.maxAge, _))
@@ -98,17 +97,24 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
     }
   }
   
-  val routes = rootPath(api.localUrl.path + config.path) {
+  lazy val routes = rootPath(api.localUrl.path + config.path) {
     monitor() {
       respondWithHeader(RawHeader("Vary", "Accept, Accept-Encoding")) {
         getBookByIsbn ~ getBookSynopsis ~ getBooks ~ getRelatedBooks
       }
     }
   }
+  
+  private val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
+
+  private def validateSortOrder(order: String) = validate(
+    PermittedOrderVals.contains(order.toLowerCase),
+    s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}"
+  )
 
   private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = validate(
     (minDate, maxDate) match {
-      case (Some(min), Some(max)) => !min.isAfter(max)
+      case (Some(min), Some(max)) => min.isBefore(max) || ( min == max)
       case _ => true
     },
     s"$service.minPubDateParam cannot be after $service.maxPubDateParam")

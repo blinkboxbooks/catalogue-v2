@@ -69,6 +69,14 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
     if (respSeq.isEmpty) None else Some(respSeq)
   }
+  
+  override val SortFieldMapping = Map(
+    "relevance" -> "_score",
+    "author" -> "contributors.sortName",
+    "popularity" -> "_score", // TODO - not yet implemented    
+    "price" -> "prices.amount",
+    "publication_date" -> "dates.publish"
+  )
 
   // Define some types trying to alleviate the Java recursive-variant-existential-types insanity of ES
   private type OptionType = Suggestion.Entry.Option

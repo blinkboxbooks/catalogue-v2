@@ -18,6 +18,15 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
   implicit val executionContext = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
   implicit val formats = DefaultFormats
   
+  override val SortFieldMapping = Map(
+    "title" -> "titleSimple",
+    "sales_rank" -> "title", // TODO - not yet implemented
+    "publication_date" -> "dates.publish",
+    "price" -> "prices.amount",
+    "author" -> "contributors.sortName",
+    "sequential" -> "_score" // TODO - PK of category/promotion
+  )
+
   private def toBook(book: String): Book = Serialization.read[Book](book)
 
   private def toBook(res: GetResponse): Book = toBook(res.getSourceAsString)

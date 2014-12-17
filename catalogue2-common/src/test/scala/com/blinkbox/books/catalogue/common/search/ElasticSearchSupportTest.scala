@@ -13,6 +13,7 @@ class ElasticSearchSupportTest extends FlatSpec {
   val end = new DateTime(2)
   
   class QueryFixture extends ElasticSearchSupport {
+    override val SortFieldMapping = Map("title" -> "title")
     val query = new SearchDefinition("field")
     override val dateRangeFilter = rangeFilter("dates.publish")
   }

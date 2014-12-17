@@ -11,7 +11,6 @@ import spray.httpx.marshalling.BasicMarshallers
 import spray.routing._
 import scala.concurrent.duration.FiniteDuration
 import scala.util.control.NonFatal
-import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport.validateSortOrder
 
 class Paged[T](val page: Page, val uri: Uri, val numberOfResults: Long, val content: T)
 
@@ -129,4 +128,11 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
       }
     }
   }
+  
+  private val PermittedOrderVals = Seq("relevance", "author", "popularity", "price", "publication_date")
+
+  private def validateSortOrder(order: String) = validate(
+    PermittedOrderVals.contains(order.toLowerCase),
+    s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}"
+  )
 }

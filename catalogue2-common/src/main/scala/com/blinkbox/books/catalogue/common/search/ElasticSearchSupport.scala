@@ -22,10 +22,10 @@ trait ElasticSearchSupport {
   /** Adds pagination filtering to the given query. */
   def paginate(offset: Int, count: Int)(query: SearchDefinition): SearchDefinition = query limit count from offset
 
+  val SortFieldMapping: Map[String, String]
+
   /** Adds sorting and ordering to the given query. */
   def sortBy(field: String, descending: Boolean)(query: SearchDefinition) = {
-    import ElasticSearchSupport._
-    
     val sortField = SortFieldMapping.getOrElse(field.toLowerCase, throw new IllegalArgumentException(s"Invalid sort order: ${field}"))
     val sortOrder = if(descending) SortOrder.DESC else SortOrder.ASC
 
@@ -37,29 +37,11 @@ trait ElasticSearchSupport {
   private def defaultMltField(field: String, isbn: String): MoreLikeThisQueryDefinition =
     morelikeThisQuery(field) minTermFreq 1 minDocFreq 1 minWordLength 3 maxQueryTerms 12 ids isbn
 
+  /** Builds a more-like-this query. */
   def similarBooksQuery(isbn: String) = dismax query (
     defaultMltField("title", isbn),
     nestedQuery("descriptions") query(defaultMltField("descriptions.content", isbn)) boost 3,
     nestedQuery("contributors") query(defaultMltField("contributors.displayName", isbn)) boost 10,
     nestedQuery("subjects") query(defaultMltField("subjects.code", isbn)) boost 3
   )
-}
-
-object ElasticSearchSupport {
-  val SortFieldMapping = Map(
-    "relevance" -> "_score",
-    "sequential" -> "_score",
-    "title" -> "titleSimple",
-    "author" -> "contributors.sortName",
-    "publication_date" -> "dates.publish",
-    "price" -> "prices.amount",
-    "sales_rank" -> "title" // TODO - not yet implemented
-  )
-
-  /** Validates a sort-order query parameter as part of spray routing. */
-  def validateSortOrder(field: String) =
-    spray.routing.Directives.validate(
-      SortFieldMapping.contains(field.toLowerCase),
-      s"Permitted values for order: ${SortFieldMapping.mkString(", ")}"
-    )
 }
