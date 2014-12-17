@@ -10,7 +10,7 @@ puts "Connecting to RabbitMQ..."
 connection = Bunny.new
 connection.start
 channel = connection.create_channel
-exchange = channel.headers("DistributionV1.Book", :auto_delete => false, :durable => true)
+exchange = channel.fanout("Distribution.Book.Search.Exchange", :auto_delete => false, :durable => true)
 puts "Read files from disk..."
 xmls = Dir["#{XMLS_FOLDER}/*.xml"].sort_by{|file|
   File.basename(file, ".xml").to_i
