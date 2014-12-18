@@ -213,17 +213,15 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   }
   
   it should "return related books for a given ISBN" in {
-    when(dao.getRelatedBooks("isbn", 0, 1)).thenReturn(Future.successful(BookList(List(book), 2)))
-    val page = Page(0, 1)
+    when(dao.getRelatedBooks("isbn", 2, 3)).thenReturn(Future.successful(BookList(List.fill(3)(book), 7)))
+    val page = Page(2, 3)
     whenReady(service.getRelatedBooks("isbn", page)) { listPage =>
-      assert(2 == listPage.numberOfResults, "Total number of books")
-      assert(0 == listPage.offset)
-      assert(1 == listPage.count)
-      assert(1 == listPage.items.size, "Page size")
-      assert(List(expected) == listPage.items)
-      checkLinks(listPage.links,Map(
-        "next"-> "catalogue/books/isbn/related?count=1&offset=1"
-      ))
+      assert(7 == listPage.numberOfResults, "Total number of books")
+      assert(2 == listPage.offset)
+      assert(3 == listPage.count)
+      assert(3 == listPage.items.size, "Page size")
+      assert(List.fill(3)(expected) == listPage.items)
+      assert(None == listPage.links)
     }
   }
 }

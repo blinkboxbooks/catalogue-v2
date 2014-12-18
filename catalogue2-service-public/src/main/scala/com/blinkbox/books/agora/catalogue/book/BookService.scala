@@ -127,6 +127,6 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   
   override def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]] = {
     val res = dao.getRelatedBooks(isbn, page.offset, page.count)
-    res map { bookList => toListPage(bookList.books, bookList.total, page, s"${linkHelper.bookPath}/${isbn}/related", None) }
+    res map { bookList => ListPage(bookList.total, page.offset, page.count, bookList.books.map(toBookRepresentation), None) }
   }
 }
