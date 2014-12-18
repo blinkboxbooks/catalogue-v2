@@ -33,6 +33,10 @@ Then(/^the search response is a list containing at least (#{CAPTURE_INTEGER}) bo
   validate_book_search_results(@response, min_count: min_count)
 end
 
+Then(/^the search response contains a link to (previous and )?more results$/) do |previous|
+    validate_paging_links(@response, previous_link = previous)
+end
+
 And(/^all books authors contains "([^"]*)" or "([^"]*)"$/) do |arg1, arg2|
   @response["books"].each do |book|
     matching_authors = book["authors"].select do |author|
