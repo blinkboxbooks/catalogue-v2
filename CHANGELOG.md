@@ -1,5 +1,13 @@
 
 
+## 0.1.57 ([#73](https://git.mobcastdev.com/Agora/catalogue-v2/pull/73) 2014-12-18 17:55:54)
+
+CAT-137 Remove suggestions from the response when no suggestions are provided
+
+### Improvements
+
+Fix search responses by removing the `suggestions` element when no suggestions are returned by the index.
+
 ## 0.1.56 ([#69](https://git.mobcastdev.com/Agora/catalogue-v2/pull/69) 2014-12-18 17:42:18)
 
 CAT-103: Keep book metadata when undistributing.
