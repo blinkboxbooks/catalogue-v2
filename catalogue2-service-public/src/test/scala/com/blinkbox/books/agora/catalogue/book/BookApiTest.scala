@@ -46,7 +46,7 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   val expectedListPage = ListPage(1, 0, 1, List(book), None)
   val emptyListPage = ListPage(0, 0, 0, List.empty[BookRepresentation], None)
 
-  it should "return the book if it exists" in {
+  "The service" should "return the book if it exists" in {
     when(service.getBookByIsbn(anyString)).thenReturn(Future.successful(Option(book)))
     Get("/book/isbn") ~> routes ~> check {
       verify(service).getBookByIsbn("isbn")

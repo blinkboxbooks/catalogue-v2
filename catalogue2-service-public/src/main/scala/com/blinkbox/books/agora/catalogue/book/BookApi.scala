@@ -15,7 +15,6 @@ import spray.routing._
 import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.{ExecutionContext, Future}
-import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport.validateSortOrder
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
@@ -105,10 +104,17 @@ class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
       }
     }
   }
+  
+  private val PermittedOrderVals = Seq("title", "sales_rank", "publication_date", "price", "sequential", "author")
+
+  private def validateSortOrder(order: String) = validate(
+    PermittedOrderVals.contains(order.toLowerCase),
+    s"Permitted values for order: ${PermittedOrderVals.mkString(", ")}"
+  )
 
   private def validateDateParameters(minDate: Option[DateTime], maxDate: Option[DateTime]) = validate(
     (minDate, maxDate) match {
-      case (Some(min), Some(max)) => !min.isAfter(max)
+      case (Some(min), Some(max)) => min.isBefore(max) || ( min == max)
       case _ => true
     },
     s"$service.minPubDateParam cannot be after $service.maxPubDateParam")

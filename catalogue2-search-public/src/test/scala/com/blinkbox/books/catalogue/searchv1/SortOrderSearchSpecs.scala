@@ -25,21 +25,7 @@ class SortOrderSearchSpecs extends FlatSpec with Matchers with ApiSpecBase with 
 
   private def query[T](order: String, desc: Boolean)(f: => T) = Get(s"/catalogue/search/books?q=universe&order=${order}&desc=${desc}") ~> routes ~> check(f)
   
-  "Search" should "order books by title" in {
-    query("title", true) {
-      status should equal(StatusCodes.OK)
-      responseAs[BookSearchResponse].books should equal(Some(expected))
-    }
-  }
-  
-  it should "order books by title ascending" in {
-    query("title", false) {
-      status should equal(StatusCodes.OK)
-      responseAs[BookSearchResponse].books should equal(Some(expected.reverse))
-    }
-  }
-  
-  it should "order books by relevance" in {
+  "Search" should "order books by relevance" in {
     query("relevance", true) {
       status should equal(StatusCodes.OK)
       responseAs[BookSearchResponse].books should equal(Some(expected))
