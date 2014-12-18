@@ -20,7 +20,7 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
   
   override val SortFieldMapping = Map(
     "title" -> "titleSimple",
-    "sales_rank" -> "title", // TODO - not yet implemented
+    "sales_rank" -> "titleSimple", // TODO - not yet implemented
     "publication_date" -> "dates.publish",
     "price" -> "prices.amount",
     "author" -> "contributors.sortName",
