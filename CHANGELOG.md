@@ -1,5 +1,14 @@
 
 
+## 0.1.55 ([#65](https://git.mobcastdev.com/Agora/catalogue-v2/pull/65) 2014-12-18 11:43:34)
+
+Cat 134 - search and catalogue have separate sort-order mappings
+
+### bugfix
+- Search and Catalogue components have separate sort-order mappings.
+- Removed superfluous sort-by-title in search.
+- Duplicated permitted values in API and ES layers (not pretty but works).
+
 ## 0.1.54 ([#67](https://git.mobcastdev.com/Agora/catalogue-v2/pull/67) 2014-12-18 11:08:50)
 
 CAT-131: Removed links from related books end-point inline with v1
