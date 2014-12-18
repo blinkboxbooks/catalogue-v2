@@ -224,4 +224,16 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       assert(None == listPage.links)
     }
   }
+  
+  it should "return an empty results set for an ISBN with no related books" in {
+    when(dao.getRelatedBooks("isbn", 0, 999)).thenReturn(Future.successful(BookList(List(), 0)))
+    whenReady(service.getRelatedBooks("isbn", Page(0, 999))) { listPage =>
+      assert(0 == listPage.numberOfResults, "Total number of books")
+      assert(0 == listPage.offset)
+      assert(999 == listPage.count)
+      assert(0 == listPage.items.size, "Page size")
+      assert(listPage.items.isEmpty)
+      assert(None == listPage.links)
+    }    
+  }
 }
