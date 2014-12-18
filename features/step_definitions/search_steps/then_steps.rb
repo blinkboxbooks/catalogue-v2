@@ -92,12 +92,12 @@ Then(/^the first book's author is the same as the original book$/) do
   expect(@response["books"].first["authors"]).to include(author)
 end
 
-Then(/^the response contains one spelling suggestion$/) do
-  expect(@response["suggestions"]).to be_true
+Then(/^the response contains spelling suggestions$/) do
+  expect(@response["suggestions"]).not_to be_empty
 end
 
 Then(/^the response contains no spelling suggestions$/) do
-  expect(@response["suggestions"]).not_to be_true
+  expect(@response["suggestions"]).to be_nil
 end
 
 And(/^the suggestion is more than one word$/) do
