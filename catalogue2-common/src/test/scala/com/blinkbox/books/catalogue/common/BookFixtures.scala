@@ -12,7 +12,7 @@ object BookFixtures {
     format = None,
     title = "A simple book",
     subtitle = Some("How to be a very simple book"),
-    contributors = Contributor("author", "abc123", "Foo C. Bar", "Bar Foo") :: Nil,
+    contributors = Contributor("author", "abc123", "Kilgore Trout", "Kilgore Trout") :: Nil,
     availability = Some(
       BookAvailability(
         notificationType = None,

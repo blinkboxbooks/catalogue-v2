@@ -29,9 +29,9 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   it should "retrieve a simple book if given a query that match in the author" in {
     catalogueIndex indexAndCheck BookFixtures.simpleBook andAfter { _ =>
-      Get("/catalogue/search/books?q=foo") ~> routes ~> check {
+      Get("/catalogue/search/books?q=kilgore") ~> routes ~> check {
         status should equal(StatusCodes.OK)
-        responseAs[BookSearchResponse] should equal(simpleBookResponse("foo"))
+        responseAs[BookSearchResponse] should equal(simpleBookResponse("kilgore"))
       }
     }
   }
@@ -80,7 +80,7 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
       }
     }
   }
-  
+
   it should "return caching directive" in {
     catalogueIndex andAfter { _ =>
       Get("/catalogue/search/books?q=whatever") ~> routes ~> check {

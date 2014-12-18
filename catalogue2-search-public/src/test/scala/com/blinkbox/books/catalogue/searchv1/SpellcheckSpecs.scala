@@ -67,4 +67,18 @@ class SpellcheckSpecs extends FlatSpec with Matchers with ApiSpecBase {
       responseAs[BookSearchResponse].suggestions should equal(None)
     }
   }
+
+  it should "result in a query suggestion for a misspelled author" in {
+    Get("/catalogue/search/books?q=Kilgore%20Trut") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      suggestions(responseAs[BookSearchResponse]) should contain theSameElementsAs ("kilgore trout" :: Nil)
+    }
+  }
+
+  it should "not result in any query suggestions for a correctly spelled author" in {
+    Get("/catalogue/search/books?q=Kilgore%20Trout") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      responseAs[BookSearchResponse].suggestions should equal(None)
+    }
+  }
 }

@@ -150,7 +150,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
             }
           }
         }
-      } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "titleSimple" size 1 maxErrors 3)
+      } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "spellcheck" size 1 maxErrors 3)
     }.recoverException.map(toBookSearchResponse(q))
 
   override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
