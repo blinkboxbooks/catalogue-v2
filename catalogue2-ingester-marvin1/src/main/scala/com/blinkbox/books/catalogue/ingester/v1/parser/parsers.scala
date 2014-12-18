@@ -41,23 +41,22 @@ class BookXmlV1IngestionParser extends XmlV1IngestionParser {
   def toBook(xml: Elem): Book = {
     val xmlBook = xml \\ "book"
     val contributors = toContributors(xmlBook)
-    Book.empty.copy(
+    Book(
       sequenceNumber = toModifiedAt(xmlBook).getMillis,
       isbn = (xmlBook \ "isbn").trimText,
       title = (xmlBook \ "title").trimText,
       subtitle = (xmlBook \ "subtitle").trimText.opt[String],
-      series = toSeries(xmlBook),
       contributors = contributors,
+      dates = toDates(xmlBook),
       descriptions = toDescriptions(xmlBook, contributors),
+      languages = List((xmlBook \ "language").trimText),
+      supplyRights = Option(toRegionalRights(xmlBook)),
       publisher = (xmlBook \ "publisher" \ "name").trimText.opt[String],
       prices = toPrices(xmlBook),
       subjects = toSubjects(xmlBook),
-      languages = List((xmlBook \ "language").trimText),
-      supplyRights = Option(toRegionalRights(xmlBook)),
-      dates = toDates(xmlBook),
+      series = toSeries(xmlBook),
       media = Option(toMedia(xmlBook)),
-      source = toSource(xmlBook)
-    )
+      source = toSource(xmlBook))
   }
 
   def toUndistribute(xml: Elem): Undistribute = {

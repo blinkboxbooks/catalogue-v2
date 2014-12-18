@@ -5,7 +5,7 @@ import java.net.ConnectException
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
 import com.blinkbox.books.catalogue.common.Events.Book
-import com.blinkbox.books.catalogue.common.DistributeContent
+import com.blinkbox.books.catalogue.common.{BookFixtures, DistributeContent}
 import com.blinkbox.books.catalogue.common.search.{CommunicationException, SingleResponse, Indexer}
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
 import com.blinkbox.books.messaging._
@@ -25,7 +25,7 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
 
   it should "notify error handler when not able to index the incoming message" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
-    val book = Book.empty
+    val book = BookFixtures.simpleBook
     when(indexer.index(book)).thenReturn(Future.failed(new RuntimeException("test exception")))
     when(messageParser.parse(bookContent)).thenReturn(Success(book))
 
@@ -38,7 +38,7 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
 
   it should "not notify error handler when ConnectException is raised" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
-    val book = Book.empty
+    val book = BookFixtures.simpleBook
     when(indexer.index(book))
       .thenReturn(Future.failed(new ConnectException))
       .thenReturn(Future.successful(SingleResponse(docId = "")))
@@ -54,7 +54,7 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
 
   it should "not notify error handler when IOException is raised" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
-    val book = Book.empty
+    val book = BookFixtures.simpleBook
     when(indexer.index(book))
       .thenReturn(Future.failed(new IOException))
       .thenReturn(Future.successful(SingleResponse(docId = "")))
@@ -70,7 +70,7 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
 
   it should "not notify error handler when CommunicationException is raised" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
-    val book = Book.empty
+    val book = BookFixtures.simpleBook
     when(indexer.index(book))
       .thenReturn(Future.failed(CommunicationException(new RuntimeException)))
       .thenReturn(Future.successful(SingleResponse(docId = "")))
@@ -86,7 +86,7 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
 
   it should "not notify error handler when able to index the incoming message" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
-    val book = Book.empty
+    val book = BookFixtures.simpleBook
     when(indexer.index(book)).thenReturn(Future.successful(SingleResponse(docId = "")))
     when(messageParser.parse(bookContent)).thenReturn(Success(book))
 

@@ -19,7 +19,7 @@ class MappingsSpec extends FlatSpec with E2ESpec with Matchers with ScalaFutures
   }
 
   it should "ingest an empty book document and allow its retrieval" in {
-    e2e createIndex catalogue indexAndCheck Book.empty andThen {
+    e2e createIndex catalogue indexAndCheck BookFixtures.simpleBook andThen {
       esClient execute {
         E.search in esType("book") query { E.matchall }
       }

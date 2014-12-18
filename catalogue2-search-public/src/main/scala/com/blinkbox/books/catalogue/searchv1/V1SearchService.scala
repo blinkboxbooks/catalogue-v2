@@ -63,6 +63,8 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
 
+  private val DistributionStatusDocType = "distribution-status"
+
   private def toBookSeq(resp: SearchResponse): Option[Seq[Book]] = {
     val respSeq = resp.getHits.hits().map { hit =>
       val book = Json.read[idx.Book](hit.getSourceAsString)
@@ -141,7 +143,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
                     ) boost 1
               ) tieBreaker 0.2
             } filter {
-              E.hasChildFilter("distribution-status") filter E.termFilter("usable", true)
+              E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
             }
           }
         }
@@ -153,7 +155,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       searchIn("book") query {
         similarBooksQuery(bookId.value)
       } filter {
-        E.hasChildFilter("distribution-status") filter E.termFilter("usable", true)
+        E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
       } limit page.count from page.offset
     }.recoverException.map(toBookSimilarResponse)
 
@@ -161,7 +163,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
     searchIn("catalogue") suggestions (
       E.suggest using (E.completion) as "autoComplete" on q from "autoComplete" size count
     ) filter {
-        E.hasChildFilter("distribution-status") filter E.termFilter("usable", true)
+        E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
       } limit 0 // We don't want search results, only suggestions
   }.recoverException.map(toCompletionResponse)
 }

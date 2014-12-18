@@ -37,30 +37,30 @@ case class Source(deliveredAt: Option[DateTime], uri: Option[String], fileName: 
 object Events {
 
   case class Book(sequenceNumber: Long,
-                  `$schema`: Option[String],
-                  classification: List[Classification],
                   isbn: String,
-                  format: Option[Format],
                   title: String,
                   subtitle: Option[String],
                   contributors: List[Contributor],
-                  availability: Option[BookAvailability],
                   dates: Option[Dates],
                   descriptions: List[OtherText],
-                  reviews: List[OtherText],
                   languages: List[String],
-                  originalLanguages: List[String],
                   supplyRights: Option[Regions],
-                  salesRights: Option[Regions],
                   publisher: Option[String],
-                  imprint: Option[String],
                   prices: List[Price],
-                  statistics: Option[Statistics],
                   subjects: List[Subject],
                   series: Option[Series],
-                  related: List[Related],
                   media: Option[Media],
-                  source: Source) extends DistributeContent
+                  source: Source,
+                  classification: List[Classification] = List.empty,
+                  `$schema`: Option[String] = Option.empty,
+                  format: Option[Format] = Option.empty,
+                  availability: Option[BookAvailability] = Option.empty,
+                  reviews: List[OtherText] = List.empty,
+                  originalLanguages: List[String] = List.empty,
+                  salesRights: Option[Regions] = Option.empty,
+                  imprint: Option[String] = Option.empty,
+                  statistics: Option[Statistics] = Option.empty,
+                  related: List[Related] = List.empty) extends DistributeContent
 
   case class Undistribute(isbn: String,
                           sequenceNumber: Long,
@@ -68,41 +68,4 @@ object Events {
                           reasons: List[String]) extends DistributeContent
 
   case class BookPrice(isbn: String, price: Double, currency: String) extends DistributeContent
-
-  object Book {
-    def empty = Book(
-      sequenceNumber = 1,
-      `$schema` = None,
-      classification = List.empty,
-      isbn = "1234",
-      format = None,
-      title = "",
-      subtitle = Option.empty,
-      contributors = List.empty,
-      availability = None,
-      dates = None,
-      descriptions = List.empty,
-      reviews = List.empty,
-      languages = List.empty,
-      originalLanguages = List.empty,
-      supplyRights = None,
-      salesRights = None,
-      publisher = None,
-      imprint = None,
-      prices = List.empty[Price],
-      statistics = None,
-      subjects = List.empty,
-      series = None,
-      related = List.empty,
-      media = None,
-      source = Source(
-        deliveredAt = Option.empty,
-        uri = Option.empty,
-        fileName = Option.empty,
-        contentType = Option.empty,
-        role = Option.empty,
-        username = "",
-        system = Option.empty,
-        processedAt = Option.empty))
-  }
 }
