@@ -13,7 +13,7 @@ class ElasticSearchSupportTest extends FlatSpec {
   val end = new DateTime(2)
   
   class QueryFixture extends ElasticSearchSupport {
-    override val SortFieldMapping = Map("title" -> "title")
+    override val SortFieldMapping = Map("title" -> "titleSorted")
     val query = new SearchDefinition("field")
     override val dateRangeFilter = rangeFilter("dates.publish")
   }
@@ -45,8 +45,8 @@ class ElasticSearchSupportTest extends FlatSpec {
 
   it should "apply sorting" in new QueryFixture {
     val result = sortBy("title", true)(query)
-    val expected = query sort { by field "titleSimple" order SortOrder.DESC }
-    assert(result == expected)
+    val expected = query sort { by field "titleSorted" order SortOrder.DESC }
+    assert(result._builder.toString == expected._builder.toString)
   }
   
   it should "fail on an invalid sort-order" in new QueryFixture {
