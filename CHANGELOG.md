@@ -1,5 +1,16 @@
 
 
+## 0.1.56 ([#69](https://git.mobcastdev.com/Agora/catalogue-v2/pull/69) 2014-12-18 17:42:18)
+
+CAT-103: Keep book metadata when undistributing.
+
+Patch
+
+- use a child document for undistribute messages, having the book as the
+  parent;
+- update the search service in order to use the child document;
+- retry indexing a message when some ES communication is happening;
+
 ## 0.1.55 ([#65](https://git.mobcastdev.com/Agora/catalogue-v2/pull/65) 2014-12-18 11:43:34)
 
 Cat 134 - search and catalogue have separate sort-order mappings
