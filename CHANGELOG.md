@@ -1,5 +1,14 @@
 
 
+## 0.1.53 ([#68](https://git.mobcastdev.com/Agora/catalogue-v2/pull/68) 2014-12-18 10:44:35)
+
+Spelling suggestion acceptance tests
+
+#### Test improvement
+* Add more misspelling scenarios
+* Slight rewording of steps
+* Change assertion to be_empty / be_nil
+
 ## 0.1.52 ([#66](https://git.mobcastdev.com/Agora/catalogue-v2/pull/66) 2014-12-17 16:30:56)
 
 Use fanout exchange type instead of headers.
