@@ -97,7 +97,7 @@ Then(/^the response contains spelling suggestions$/) do
 end
 
 Then(/^the response contains no spelling suggestions$/) do
-  expect(@response["suggestions"]).to be_empty
+  expect(@response["suggestions"]).to be_nil
 end
 
 And(/^the suggestion is more than one word$/) do
