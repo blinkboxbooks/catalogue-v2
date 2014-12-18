@@ -3,21 +3,15 @@ package com.blinkbox.books.agora.catalogue.book
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
-import org.mockito.Matchers._
-import org.mockito.Mockito._
-import com.sksamuel.elastic4s.ElasticClient
 import org.scalatest.time.{Millis, Span}
 import org.scalatest.concurrent.ScalaFutures
-import scala.concurrent.{Future, Await}
-import com.blinkbox.books.catalogue.common.Events.Book
+import scala.concurrent.Await
 import com.blinkbox.books.catalogue.common._
 import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.catalogue.common.BookFixtures.simpleBook
 import org.joda.time.DateTime
 import org.scalatest.BeforeAndAfterAll
 import scala.concurrent.duration._
-import org.scalatest.Suite
-import scala.concurrent.duration.Duration
 
 @RunWith(classOf[JUnitRunner])
 class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaFutures with BeforeAndAfterAll {
@@ -184,6 +178,19 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   it should "return an empty set of related books for an unknown ISBN" in {
     whenReady(dao.getRelatedBooks(cobblers, 0, count)) { result =>
       result should equal(BookList(List(), 0))
+    }
+  }
+
+  it should "return an undistributed book by ISBN" in {
+    val ISBN = "1234567890123"
+    val book = simpleBook.copy(isbn = ISBN)
+    val undistribute = UndistributeFixtures.simpleWith(ISBN).copy(usable = false)
+
+    catalogueIndex index (book, undistribute) andAfter { _ =>
+      whenReady(dao.getBookByIsbn(ISBN)) { result =>
+        val Some(book) = result
+        assert(book.isbn == ISBN)
+      }
     }
   }
 }

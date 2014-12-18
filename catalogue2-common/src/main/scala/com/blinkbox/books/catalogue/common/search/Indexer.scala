@@ -21,7 +21,9 @@ trait Indexer {
   def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
 }
 
-class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer {
+class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)
+  extends Indexer with ElasticSearchFutures{
+
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
 
   case class BookJsonSource(book: EventBook) extends DocumentSource {
@@ -39,50 +41,86 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
     def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
   }
 
+  trait IndexableContent[T <: DistributeContent] {
+    type Out <: BulkCompatibleDefinition
+    def definition(content: T): Out
+  }
+
+  implicit object BookIndexableContent extends IndexableContent[EventBook] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventBook): Out =
+      esIndex
+        .into(s"${config.indexName}/book")
+        .doc(BookJsonSource(content))
+        .id(content.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version(content.sequenceNumber)
+  }
+
+  implicit object UndistributeIndexableContent extends IndexableContent[EventUndistribute] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventUndistribute): Out =
+      esIndex
+        .into(s"${config.indexName}/distribution-status")
+        .doc(UndistributeJsonSource(content))
+        .id(content.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version(content.sequenceNumber)
+        .parent(content.isbn)
+  }
+
+  implicit object BookPriceIndexableContent extends IndexableContent[EventBookPrice] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventBookPrice): Out =
+      esIndex
+        .into(s"${config.indexName}/book-price")
+        .doc(BookPriceJsonSource(content))
+        .id(content.isbn)
+        .parent(content.isbn)
+  }
+
   override def index(content: DistributeContent): Future[SingleResponse] =
-    client
-      .execute(indexDefinition(content))
-      .map(resp => SingleResponse(resp.getId))
+    content match {
+      case c: EventBook =>
+        client.execute(indexDefinition(c))
+          .recoverException
+          .flatMap { _ =>
+            index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
+          }
+      case c: EventBookPrice =>
+        client.execute(indexDefinition(c))
+          .recoverException.map(resp => SingleResponse(resp.getId))
+      case c: EventUndistribute =>
+        client.execute(indexDefinition(c))
+          .recoverException.map(resp => SingleResponse(resp.getId))
+    }
 
   override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
-    client.execute{
+    client.execute {
       bulk(
-        contents.map(indexDefinition).toList: _*
+        contents.flatMap({
+          case c: EventBook => List(
+            indexDefinition(c),
+            indexDefinition(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
+          )
+          case c: EventBookPrice => List(indexDefinition(c))
+          case c: EventUndistribute => List(indexDefinition(c))
+        }).toList: _*
       )
-    } map { response =>
+    }.recoverException.map { response =>
       response.getItems.map { item =>
-        if(item.isFailed)
+        if (item.isFailed)
           Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))
         else
           Successful(item.getId)
       }
     }
 
-  private def indexDefinition(content: DistributeContent): IndexDefinition = {
-    content match {
-      case book: EventBook =>
-        esIndex
-          .into(s"${config.indexName}/book")
-          .doc(BookJsonSource(book))
-          .id(book.isbn)
-          .versionType(VersionType.EXTERNAL)
-          .version(book.sequenceNumber)
-      case undistribute: EventUndistribute =>
-        esIndex
-          .into(s"${config.indexName}/book")
-          .doc(UndistributeJsonSource(undistribute))
-          .id(undistribute.isbn)
-          .versionType(VersionType.EXTERNAL)
-          .version(undistribute.sequenceNumber)
-      case bookPrice: EventBookPrice =>
-        esIndex
-          .into(s"${config.indexName}/book-price")
-          .doc(BookPriceJsonSource(bookPrice))
-          .id(bookPrice.isbn)
-          .parent(bookPrice.isbn)
-    }
-  }
-
+  private def indexDefinition[T <: DistributeContent](content: T)(implicit ic: IndexableContent[T]): ic.Out =
+    ic.definition(content)
 }
 
 case class Schema(config: ElasticsearchConfig) {
@@ -126,7 +164,7 @@ case class Schema(config: ElasticsearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType copyTo("titleSimple") analyzer SnowballAnalyzer,
+      "title" typed StringType copyTo "titleSimple" analyzer SnowballAnalyzer,
       "titleSimple" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
@@ -209,10 +247,6 @@ case class Schema(config: ElasticsearchConfig) {
           "size" typed IntegerType
         )
       ),
-      "distributionStatus" inner(
-        "usable" typed BooleanType,
-        "reasons" typed StringType
-      ),
       "source" inner(
         "deliveredAt" typed DateType,
         "uri" typed StringType,
@@ -235,6 +269,12 @@ case class Schema(config: ElasticsearchConfig) {
       "isbn" typed StringType analyzer KeywordAnalyzer,
       "price" typed DoubleType,
       "currency" typed StringType analyzer KeywordAnalyzer
+    ) dynamic false parent "book",
+
+    "distribution-status" as(
+      "isbn" typed StringType analyzer KeywordAnalyzer,
+      "usable" typed BooleanType,
+      "reasons" typed StringType
     ) dynamic false parent "book"
 
   )).analysis(

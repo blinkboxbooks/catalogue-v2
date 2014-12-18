@@ -15,13 +15,14 @@ puts "Read files from disk..."
 xmls = Dir["#{XMLS_FOLDER}/*.xml"].sort_by{|file|
   File.basename(file, ".xml").to_i
 }
+puts "Finished reading #{xmls.size} files from disk"
 puts "Publish V1 messages..."
 xmls.each{|file|
   exchange.publish(File.read(file),
                   :content_type => "application/xml",
                   :headers => {'content-type' => "application/xml"})
 }
-puts "Completed to publish files within #{Time.now - t0} seconds."
+puts "Completed to publish #{xmls.size} files within #{Time.now - t0} seconds."
 sleep 3
 puts "Done"
 

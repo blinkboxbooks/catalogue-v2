@@ -12,7 +12,8 @@ class SpecialCharactersSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
-    catalogueIndex indexAndCheck(BookFixtures.simpleBook) andAwaitFor(20.seconds)
+    val book = BookFixtures.simpleBook
+    catalogueIndex indexAndCheck book andAwaitFor 20.seconds
   }
 
   def checkInvalidResponse() = super.checkInvalidResponse("Invalid or empty search term")

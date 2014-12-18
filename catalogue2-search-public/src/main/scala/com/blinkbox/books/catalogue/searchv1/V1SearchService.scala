@@ -2,7 +2,7 @@ package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
-import com.blinkbox.books.catalogue.common.search.ElasticSearchSupport
+import com.blinkbox.books.catalogue.common.search.{ElasticSearchFutures, ElasticSearchSupport}
 import com.blinkbox.books.spray.{Page, SortOrder}
 import com.sksamuel.elastic4s.{ElasticClient, ElasticDsl => E, MoreLikeThisQueryDefinition}
 import org.elasticsearch.action.search.SearchResponse
@@ -57,9 +57,13 @@ trait V1SearchService {
   def suggestions(q: String, count: Int): Future[BookCompletionResponse]
 }
 
-class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends V1SearchService with ElasticSearchSupport {
+class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)
+  extends V1SearchService with ElasticSearchSupport with ElasticSearchFutures{
+
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
+
+  private val DistributionStatusDocType = "distribution-status"
 
   private def toBookSeq(resp: SearchResponse): Option[Seq[Book]] = {
     val respSeq = resp.getHits.hits().map { hit =>
@@ -119,7 +123,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
 
   override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] =
-    client execute {
+    client.execute{
       paginate(page.offset, page.count) {
         sortBy(order.field, order.desc) {
           searchIn("book") query {
@@ -139,27 +143,27 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
                     ) boost 1
               ) tieBreaker 0.2
             } filter {
-              E.termFilter("distributionStatus.usable", true)
+              E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
             }
           }
         }
       } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "titleSimple" size 1)
-    } map toBookSearchResponse(q)
+    }.recoverException.map(toBookSearchResponse(q))
 
   override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =
-    client execute {
+    client.execute {
       searchIn("book") query {
         similarBooksQuery(bookId.value)
       } filter {
-        E.termFilter("distributionStatus.usable", true)
+        E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
       } limit page.count from page.offset
-    } map toBookSimilarResponse
+    }.recoverException.map(toBookSimilarResponse)
 
-  override def suggestions(q: String, count: Int): Future[BookCompletionResponse] = client execute {
+  override def suggestions(q: String, count: Int): Future[BookCompletionResponse] = client.execute {
     searchIn("catalogue") suggestions (
       E.suggest using (E.completion) as "autoComplete" on q from "autoComplete" size count
     ) filter {
-        E.termFilter("distributionStatus.usable", true)
+        E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
       } limit 0 // We don't want search results, only suggestions
-  } map toCompletionResponse
+  }.recoverException.map(toCompletionResponse)
 }
