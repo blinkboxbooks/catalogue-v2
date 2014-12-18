@@ -1,5 +1,12 @@
 
 
+## 0.1.54 ([#67](https://git.mobcastdev.com/Agora/catalogue-v2/pull/67) 2014-12-18 11:08:50)
+
+CAT-131: Removed links from related books end-point inline with v1
+
+### Patch
+
+
 ## 0.1.53 ([#68](https://git.mobcastdev.com/Agora/catalogue-v2/pull/68) 2014-12-18 10:44:35)
 
 Spelling suggestion acceptance tests
