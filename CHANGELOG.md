@@ -1,5 +1,13 @@
 
 
+## 0.1.58 ([#72](https://git.mobcastdev.com/Agora/catalogue-v2/pull/72) 2014-12-18 18:08:14)
+
+CAT-136 Fix spelling suggestions so that multiple words are supported
+
+### Improvements
+
+Support more mis-spelled words in a query
+
 ## 0.1.57 ([#73](https://git.mobcastdev.com/Agora/catalogue-v2/pull/73) 2014-12-18 17:55:54)
 
 CAT-137 Remove suggestions from the response when no suggestions are provided
