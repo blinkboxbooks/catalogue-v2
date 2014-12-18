@@ -35,6 +35,13 @@ class SpellcheckSpecs extends FlatSpec with Matchers with ApiSpecBase {
     }
   }
 
+  it should "result in a query suggestion if it contains two mis-spelled words" in {
+    Get("/catalogue/search/books?q=uninerse%20everythyng") ~> routes ~> check {
+      status should equal(StatusCodes.OK)
+      suggestions(responseAs[BookSearchResponse]) should contain theSameElementsAs ("universe everything" :: Nil)
+    }
+  }
+
   it should "result in a query suggestion if it contains multiple mis-spelled words" in {
     Get("/catalogue/search/books?q=uvinerse%20eveyrthing%20simple") ~> routes ~> check {
       status should equal(StatusCodes.OK)
