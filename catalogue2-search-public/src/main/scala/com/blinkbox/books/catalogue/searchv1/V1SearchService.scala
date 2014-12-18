@@ -36,7 +36,7 @@ object V1SearchService {
     id: String,
     books: Option[Seq[Book]],
     numberOfResults: Long,
-    suggestions: Seq[String] = Seq.empty,
+    suggestions: Option[Seq[String]] = None,
     `type`: String = bookSearchResponseType
   ) extends PaginableResponse
 
@@ -90,11 +90,14 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   private def getSuggestionIterator[E <: EntryType[_]](resp: SearchResponse, name: String): Iterator[E] =
     Option(resp.getSuggest.getSuggestion[SuggestionType[E]](name)).fold[Iterator[E]](Iterator.empty)(es => JIteratorWrapper(es.iterator))
 
-  private def toSpellcheckCompletions(resp: SearchResponse): Seq[String] =
-    (for {
+  private def toSpellcheckCompletions(resp: SearchResponse): Option[Seq[String]] = {
+    val suggestions = (for {
       spellcheck <- getSuggestionIterator[PhraseEntry](resp, "spellcheck")
       option <- JListWrapper(spellcheck.getOptions)
     } yield option.getText.string).toSeq
+
+    if (suggestions.isEmpty) None else Some(suggestions)
+  }
 
   private def toBookSearchResponse(q: String)(resp: SearchResponse): BookSearchResponse =
     BookSearchResponse(q, toBookSeq(resp), resp.getHits.getTotalHits, toSpellcheckCompletions(resp))
