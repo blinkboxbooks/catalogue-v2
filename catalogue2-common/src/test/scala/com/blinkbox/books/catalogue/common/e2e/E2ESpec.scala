@@ -20,6 +20,10 @@ trait E2ESpec
   val alphabet = "abcdefghijklmnopqrstuvwxyz01234567890"
   val randomName = (0 to 16).foldLeft("")((str, _) => str + alphabet.charAt(Random.nextInt(alphabet.length)))
 
+  // Lower ES log level in order to suppress all debugging exceptions
+  LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
+    .getLogger("org.elasticsearch").setLevel(esLogLevel)
+
   def e2eExecutionContext: ExecutionContext
   // The random cluster name is needed to avoid race conditions between different test-suites running in parallel
   lazy val searchConfig = ElasticsearchConfig(config).copy(clusterName = randomName)
@@ -35,9 +39,6 @@ trait E2ESpec
   def esType(`type`: String) = s"${searchConfig.indexName}/${`type`}"
 
   override protected def beforeAll() = {
-    val loggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
-    loggerContext.getLogger("org.elasticsearch").setLevel(esLogLevel)
-
     esServer.start()
   }
 
