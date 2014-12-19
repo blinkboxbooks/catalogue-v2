@@ -1,5 +1,29 @@
 
 
+## 0.1.61 ([#75](https://git.mobcastdev.com/Agora/catalogue-v2/pull/75) 2014-12-19 13:48:34)
+
+CAT-138 Support partial matches for the author field
+
+### Improvements
+
+Introduce partial match support for author names
+
+## 0.1.60 ([#70](https://git.mobcastdev.com/Agora/catalogue-v2/pull/70) 2014-12-19 11:33:51)
+
+CAT-139 Introduce spelling suggestions for mis-spelled authors
+
+### Improvements
+
+* Fix suggestions appearing for correctly spelled authors
+* Provide suggestions for mis-spelled authors
+
+## 0.1.59 ([#71](https://git.mobcastdev.com/Agora/catalogue-v2/pull/71) 2014-12-19 10:45:33)
+
+Acceptance tests
+
+#### Test improvement
+* Add tests for checking existence of this, next and prev links in a search results response
+
 ## 0.1.58 ([#72](https://git.mobcastdev.com/Agora/catalogue-v2/pull/72) 2014-12-18 18:08:14)
 
 CAT-136 Fix spelling suggestions so that multiple words are supported

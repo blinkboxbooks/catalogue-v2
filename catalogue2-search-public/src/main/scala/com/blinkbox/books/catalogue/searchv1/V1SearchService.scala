@@ -138,8 +138,11 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
                   E.matchPhrase("title", q) boost 1 slop 10,
                   E.matchPhrase("titleSimple", q) boost 2 slop 10
                 ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
-                  E.nestedQuery("contributors") query (
-                    E.matchPhrase("contributors.displayName", q) slop 10
+                E.nestedQuery("contributors") query (
+                    E.dismax query (
+                      E.matchPhrase("contributors.displayName", q) slop 10 boost 10,
+                      E.matches("contributors.displayName", q) operator "or" boost 5
+                    ) tieBreaker 0
                   ) boost 2,
                     E.nestedQuery("descriptions") query (
                       E.matchPhrase("descriptions.content", q) slop 100
@@ -150,7 +153,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
             }
           }
         }
-      } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "titleSimple" size 1 maxErrors 3)
+      } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "spellcheck" size 1 maxErrors 3)
     }.recoverException.map(toBookSearchResponse(q))
 
   override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] =

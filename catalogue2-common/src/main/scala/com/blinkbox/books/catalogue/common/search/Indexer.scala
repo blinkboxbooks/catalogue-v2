@@ -168,15 +168,16 @@ case class Schema(config: ElasticsearchConfig) {
         "productForm" typed StringType
       ),
       "title" multi(
-        "title" typed StringType copyTo("titleSimple") analyzer SnowballAnalyzer,
+        "title" typed StringType copyTo("titleSimple", "spellcheck") analyzer SnowballAnalyzer,
         "titleSort" typed StringType index "not_analyzed"
       ),
       "titleSimple" typed StringType analyzer SimpleAnalyzer,
+      "spellcheck" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,
       "contributors" nested (
         "role" typed StringType analyzer KeywordAnalyzer,
         "id" typed StringType analyzer KeywordAnalyzer,
-        "displayName" typed StringType analyzer SimpleAnalyzer,
+        "displayName" typed StringType analyzer SimpleAnalyzer copyTo("spellcheck"),
         "sortName" typed StringType analyzer KeywordAnalyzer
         ),
       "availability" inner(

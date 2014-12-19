@@ -40,6 +40,22 @@ Feature: The results returned from the search service are well formatted
     When I perform a search for a book
     Then the search response is a list containing one book at offset zero
 
+  Scenario: Search results contain links to the next page of results
+    Given a search query that will return many results
+    When I search for the query
+    Then the search response contains a link to more results
+
+  Scenario: Paginated search results contain a link to the previous page of results
+    Given a search query that will return many results
+    And I want a maximum of 10 results at offset one
+    When I search for the query
+    Then the search response contains a link to previous and more results
+
+  Scenario: No link to next page of results when there are no more results
+    Given the search query is "somesearchtermthatwillneverhit"
+    When I search for the query
+    Then the search response does not contain a link to more results
+
   Scenario: Search responses are cacheable
     Given there is at least one book which can be searched for
     When I perform a search for that book
