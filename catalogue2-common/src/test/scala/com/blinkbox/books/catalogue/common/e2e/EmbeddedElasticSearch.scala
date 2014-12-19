@@ -23,9 +23,7 @@ class EmbeddedElasticSearch(config: ElasticsearchConfig) {
   private lazy val node = nodeBuilder().local(true).settings(settings).build
   def client: Client = node.client
 
-  def start(): Unit = {
-    node.start()
-
+  def waitGreen(): Unit = {
     val actionGet = client.admin.cluster.health(
       Requests
         .clusterHealthRequest("_all")
@@ -37,14 +35,13 @@ class EmbeddedElasticSearch(config: ElasticsearchConfig) {
     if (actionGet.isTimedOut) sys.error("The ES cluster didn't go green within the extablished timeout")
   }
 
-  def stop(): Unit = {
-    node.close()
-
-    FileUtils.forceDelete(dataDir)
+  def start(): Unit = {
+    node.start()
+    waitGreen()
   }
 
-  def createAndWaitForIndex(index: String): Unit = {
-    client.admin.indices.prepareCreate(index).execute.actionGet()
-    client.admin.cluster.prepareHealth(index).setWaitForActiveShards(1).execute.actionGet()
+  def stop(): Unit = {
+    node.close()
+    FileUtils.forceDelete(dataDir)
   }
 }
