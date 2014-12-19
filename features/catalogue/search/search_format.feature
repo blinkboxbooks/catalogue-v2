@@ -51,6 +51,11 @@ Feature: The results returned from the search service are well formatted
     When I search for the query
     Then the search response contains a link to previous and more results
 
+  Scenario: No link to next page of results when there are no more results
+    Given the search query is "somesearchtermthatwillneverhit"
+    When I search for the query
+    Then the search response does not contain a link to more results
+
   Scenario: Search responses are cacheable
     Given there is at least one book which can be searched for
     When I perform a search for that book

@@ -37,6 +37,10 @@ Then(/^the search response contains a link to (previous and )?more results$/) do
     validate_paging_links(@response, previous_link = previous)
 end
 
+Then(/^the search response does not contain a link to more results$/) do
+  expect(@response["links"].select {|link| link["rel"] == "next"}).to be_empty
+end
+
 And(/^all books authors contains "([^"]*)" or "([^"]*)"$/) do |arg1, arg2|
   @response["books"].each do |book|
     matching_authors = book["authors"].select do |author|
