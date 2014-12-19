@@ -5,7 +5,10 @@ import java.nio.file.Files
 import com.blinkbox.books.catalogue.common.ElasticsearchConfig
 import org.apache.commons.io.FileUtils
 import org.elasticsearch.client.Client
+import org.elasticsearch.client.Requests
+import org.elasticsearch.common.Priority
 import org.elasticsearch.common.settings.ImmutableSettings
+import org.elasticsearch.common.unit.TimeValue
 import org.elasticsearch.node.NodeBuilder._
 
 class EmbeddedElasticSearch(config: ElasticsearchConfig) {
@@ -22,6 +25,16 @@ class EmbeddedElasticSearch(config: ElasticsearchConfig) {
 
   def start(): Unit = {
     node.start()
+
+    val actionGet = client.admin.cluster.health(
+      Requests
+        .clusterHealthRequest("_all")
+        .timeout(TimeValue.timeValueSeconds(300))
+        .waitForGreenStatus()
+        .waitForEvents(Priority.LANGUID)
+        .waitForRelocatingShards(0)).actionGet
+
+    if (actionGet.isTimedOut) sys.error("The ES cluster didn't go green within the extablished timeout")
   }
 
   def stop(): Unit = {
