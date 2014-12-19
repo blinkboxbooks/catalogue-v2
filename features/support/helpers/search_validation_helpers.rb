@@ -37,6 +37,16 @@ module KnowsAboutSearchServiceResponseValidation
     end
   end
 
+  def validate_paging_links(data, previous_link = true)
+    expect(data["links"].select {|link| link["rel"] == "this"}).to_not be_empty
+    expect(data["links"].select {|link| link["rel"] == "next"}).to_not be_empty
+    if previous_link
+      expect(data["links"].select {|link| link["rel"] == "prev"}).to_not be_empty
+    else
+      expect(data["links"].select {|link| link["rel"] == "prev"}).to be_empty
+    end
+  end
+
   def validate_contributor_suggestion(data)
     validate_attribute(data, "title", type: String)
     validate_attribute(data, "id", type: String)
