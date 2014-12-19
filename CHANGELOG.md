@@ -1,5 +1,12 @@
 
 
+## 0.1.59 ([#71](https://git.mobcastdev.com/Agora/catalogue-v2/pull/71) 2014-12-19 10:45:33)
+
+Acceptance tests
+
+#### Test improvement
+* Add tests for checking existence of this, next and prev links in a search results response
+
 ## 0.1.58 ([#72](https://git.mobcastdev.com/Agora/catalogue-v2/pull/72) 2014-12-18 18:08:14)
 
 CAT-136 Fix spelling suggestions so that multiple words are supported
