@@ -84,6 +84,7 @@ class BasicSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
   it should "return caching directive" in {
     catalogueIndex andAfter { _ =>
       Get("/catalogue/search/books?q=whatever") ~> routes ~> check {
+        status should equal(StatusCodes.OK)
         val cacheHeader = header("Cache-Control").getOrElse(fail("Missing caching directive"))
         assert(cacheHeader.value.startsWith("public, max-age=60"))
         assert(header("Expires").isDefined)

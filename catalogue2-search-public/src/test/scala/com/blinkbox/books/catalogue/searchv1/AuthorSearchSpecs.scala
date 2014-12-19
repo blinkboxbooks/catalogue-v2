@@ -1,4 +1,3 @@
-
 package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.Contributor
@@ -33,21 +32,25 @@ class AuthorSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     catalogueIndex indexAndCheck(b1, b2, b3, b4) andAwaitFor (10.seconds)
   }
 
-  def checkQuery(q: String, expected: Iterable[Events.Book]) =
+  def checkQuery(q: String)(f: Iterable[String] => Unit) =
     Get(s"/catalogue/search/books?q=$q") ~> routes ~> check {
       status should equal(StatusCodes.OK)
-      val books = responseAs[BookSearchResponse].books.getOrElse(Nil)
-
-      books.toList.map(_.id) should equal(expected.toList.map(_.isbn))
+      f(responseAs[BookSearchResponse].books.getOrElse(Nil).map(_.id))
     }
 
+  def shouldEqual(expected: Iterable[Events.Book]): Iterable[String] => Unit =
+    bs => bs should equal(expected.map(_.isbn))
+
   "Searching by author the API" should "return close matches after the exact ones" in {
-    checkQuery("Kilgore%20Trout", b1 :: b2 :: Nil)
-    checkQuery("Kilgore%20Vonnegut", b2 :: b1 :: b3 :: Nil)
-    checkQuery("Kurt%20Vonnegut", b3 :: b2 :: Nil)
+    checkQuery("Kilgore%20Trout")(shouldEqual(b1 :: b2 :: Nil))
+    checkQuery("Kilgore%20Vonnegut") { bs =>
+      bs.head should equal(b2.isbn)
+      bs.tail should contain theSameElementsAs((b1 :: b3 :: Nil).map(_.isbn))
+    }
+    checkQuery("Kurt%20Vonnegut")(shouldEqual(b3 :: b2 :: Nil))
   }
 
   it should "return only exact matches if there is nothing in common with other authors" in {
-    checkQuery("Charles%20Dickens", b4 :: Nil)
+    checkQuery("Charles%20Dickens")(shouldEqual(b4 :: Nil))
   }
 }
