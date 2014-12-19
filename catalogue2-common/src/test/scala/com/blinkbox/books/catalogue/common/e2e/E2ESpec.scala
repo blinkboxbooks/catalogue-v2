@@ -22,7 +22,7 @@ trait E2ESpec
 
   // Lower ES log level in order to suppress all debugging exceptions
   LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
-    .getLogger("org.elasticsearch").setLevel(esLogLevel)
+    .getLogger("org.elasticsearch").setLevel(Level.WARN)
 
   def e2eExecutionContext: ExecutionContext
   // The random cluster name is needed to avoid race conditions between different test-suites running in parallel
@@ -31,9 +31,7 @@ trait E2ESpec
   lazy val esClient = new ElasticClient(esServer.client, 2000)
   lazy val indexer = new EsIndexer(searchConfig, esClient)(e2eExecutionContext)
   lazy val catalogue = Schema(searchConfig).catalogue
-
-  lazy val esLogLevel = Level.WARN
-
+  
   lazy val e2e = using(esClient, indexer)
 
   def esType(`type`: String) = s"${searchConfig.indexName}/${`type`}"
