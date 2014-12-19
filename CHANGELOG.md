@@ -1,5 +1,13 @@
 
 
+## 0.1.62 ([#76](https://git.mobcastdev.com/Agora/catalogue-v2/pull/76) 2014-12-19 14:20:29)
+
+Cat 134 - sorting books by contributor by title
+
+### bugfix
+- Added multi-field for sorting by title
+
+
 ## 0.1.61 ([#75](https://git.mobcastdev.com/Agora/catalogue-v2/pull/75) 2014-12-19 13:48:34)
 
 CAT-138 Support partial matches for the author field
