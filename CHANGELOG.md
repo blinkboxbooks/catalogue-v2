@@ -1,5 +1,13 @@
 
 
+## 0.1.63 ([#77](https://git.mobcastdev.com/Agora/catalogue-v2/pull/77) 2014-12-19 15:11:01)
+
+Split specs to be more easier to digest for CI
+
+### Improvements
+
+Split the BasicSearchSpecs to be less resource-hungry and hopefully reduce transient failures on CI.
+
 ## 0.1.62 ([#76](https://git.mobcastdev.com/Agora/catalogue-v2/pull/76) 2014-12-19 14:20:29)
 
 Cat 134 - sorting books by contributor by title
