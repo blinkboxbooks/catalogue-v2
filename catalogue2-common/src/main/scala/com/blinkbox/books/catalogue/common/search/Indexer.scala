@@ -9,6 +9,9 @@ import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
+import com.sksamuel.elastic4s.mappings.MultiFieldDefinition
+import com.sksamuel.elastic4s.WhitespaceAnalyzer
+import com.sksamuel.elastic4s.WhitespaceAnalyzer
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -164,7 +167,10 @@ case class Schema(config: ElasticsearchConfig) {
         "epubType" typed StringType,
         "productForm" typed StringType
       ),
-      "title" typed StringType copyTo("titleSimple", "spellcheck") analyzer SnowballAnalyzer,
+      "title" multi(
+        "title" typed StringType copyTo("titleSimple", "spellcheck") analyzer SnowballAnalyzer,
+        "titleSort" typed StringType index "not_analyzed"
+      ),
       "titleSimple" typed StringType analyzer SimpleAnalyzer,
       "spellcheck" typed StringType analyzer SimpleAnalyzer,
       "subtitle" typed StringType analyzer SnowballAnalyzer,

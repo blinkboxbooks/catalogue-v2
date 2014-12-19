@@ -19,8 +19,8 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
   implicit val formats = DefaultFormats
   
   override val SortFieldMapping = Map(
-    "title" -> "titleSimple",
-    "sales_rank" -> "titleSimple", // TODO - not yet implemented
+    "title" -> "title.titleSort",
+    "sales_rank" -> "title.titleSort", // TODO - not yet implemented
     "publication_date" -> "dates.publish",
     "price" -> "prices.amount",
     "author" -> "contributors.sortName",
