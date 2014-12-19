@@ -1,5 +1,14 @@
 
 
+## 0.1.60 ([#70](https://git.mobcastdev.com/Agora/catalogue-v2/pull/70) 2014-12-19 11:33:51)
+
+CAT-139 Introduce spelling suggestions for mis-spelled authors
+
+### Improvements
+
+* Fix suggestions appearing for correctly spelled authors
+* Provide suggestions for mis-spelled authors
+
 ## 0.1.59 ([#71](https://git.mobcastdev.com/Agora/catalogue-v2/pull/71) 2014-12-19 10:45:33)
 
 Acceptance tests
