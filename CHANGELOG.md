@@ -1,5 +1,13 @@
 
 
+## 0.1.61 ([#75](https://git.mobcastdev.com/Agora/catalogue-v2/pull/75) 2014-12-19 13:48:34)
+
+CAT-138 Support partial matches for the author field
+
+### Improvements
+
+Introduce partial match support for author names
+
 ## 0.1.60 ([#70](https://git.mobcastdev.com/Agora/catalogue-v2/pull/70) 2014-12-19 11:33:51)
 
 CAT-139 Introduce spelling suggestions for mis-spelled authors
