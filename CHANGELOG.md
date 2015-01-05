@@ -1,5 +1,13 @@
 
 
+## 0.1.64 ([#78](https://git.mobcastdev.com/Agora/catalogue-v2/pull/78) 2015-01-05 10:57:24)
+
+Improve routes readability
+
+### Improvements
+
+Make routes a little more readable in the search-api  by factoring out the route from the URI matching and some complex validation.
+
 ## 0.1.63 ([#77](https://git.mobcastdev.com/Agora/catalogue-v2/pull/77) 2014-12-19 15:11:01)
 
 Split specs to be more easier to digest for CI
