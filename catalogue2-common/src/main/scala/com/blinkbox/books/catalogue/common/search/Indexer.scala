@@ -101,7 +101,26 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
     }
   }
 
-  override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] = ???
+  override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
+    client.execute {
+      bulk(
+        contents.flatMap({
+          case c: EventBook => List(
+            indexDefinition(c),
+            indexDefinition(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
+          )
+          case c: EventBookPrice => List(indexDefinition(c))
+          case c: EventUndistribute => List(indexDefinition(c))
+        }).toList: _*
+      )
+    }.recoverException.map { response =>
+      response.items.map { item =>
+        if (item.status.isFailure)
+          Failure(item._id, Some(new RuntimeException(item.error.getOrElse(item.status.value))))
+        else
+          Successful(item._id)
+      }
+    }
 
   private def indexDefinition[T <: DistributeContent](content: T)(implicit ic: IndexableContent[T]): ic.Out =
     ic.definition(content)
