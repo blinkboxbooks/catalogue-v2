@@ -7,6 +7,5 @@ libraryDependencies ++= Seq(
   "com.blinkbox.books"        %% "common-spray"        % "0.24.0",
   "io.spray"                  %% "spray-testkit"       % "1.3.2" % Test,
   "com.blinkbox.books"        %% "common-scala-test"   % "0.3.0" % Test,
-  "com.blinkbox.books.hermes" %% "message-schemas"     % "0.7.3",
-  "com.blinkbox.books"        %% "elastic-http"        % "0.0.4"
+  "com.blinkbox.books"        %% "elastic-http"        % "0.0.6"
 )
