@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSearchResponse
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes

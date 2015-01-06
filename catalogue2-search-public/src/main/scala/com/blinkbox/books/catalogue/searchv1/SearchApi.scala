@@ -5,7 +5,7 @@ import com.blinkbox.books.catalogue.searchv1.V1SearchService.PaginableResponse
 import com.blinkbox.books.config.{ ApiConfig, RichConfig }
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.{ Directives, _ }
-import org.slf4j.LoggerFactory
+import com.typesafe.scalalogging.StrictLogging
 import shapeless.HNil
 import spray.http.{ MediaTypes, StatusCodes, Uri }
 import spray.httpx.marshalling.BasicMarshallers
@@ -40,10 +40,11 @@ object SearchApiConfig {
 class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchService: V1SearchService)(implicit val actorRefFactory: ActorRefFactory)
   extends HttpService
   with Directives
-  with Serialization {
+  with Serialization
+  with StrictLogging{
 
-  implicit val log = LoggerFactory.getLogger(classOf[SearchApi])
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
+  implicit val log = logger
 
   val BookIdSegment = Segment.map(BookId.apply _)
 
@@ -116,7 +117,7 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
 
   def exceptionHandler = ExceptionHandler {
     case NonFatal(ex) =>
-      log.error(s"Unknown error: ${ex.getMessage}", ex)
+      logger.error(s"Unknown error: ${ex.getMessage}", ex)
       uncacheable(StatusCodes.InternalServerError, s"Unknown error: ${ex.getMessage}")
   }
 

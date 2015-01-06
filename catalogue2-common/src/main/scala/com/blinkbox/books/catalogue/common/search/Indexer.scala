@@ -2,6 +2,7 @@ package com.blinkbox.books.catalogue.common.search
 
 import com.blinkbox.books.catalogue.common.Events.{Book => EventBook, BookPrice => EventBookPrice, Undistribute => EventUndistribute}
 import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
+import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi, JsonSupport}
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.mappings.FieldType._
@@ -9,8 +10,6 @@ import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
-import com.sksamuel.elastic4s.mappings.MultiFieldDefinition
-import com.sksamuel.elastic4s.WhitespaceAnalyzer
 import com.sksamuel.elastic4s.WhitespaceAnalyzer
 
 sealed trait BulkItemResponse
@@ -22,6 +21,90 @@ case class SingleResponse(docId: String)
 trait Indexer {
   def index(content: DistributeContent): Future[SingleResponse]
   def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
+}
+
+class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(implicit ec: ExecutionContext) extends Indexer
+  with ElasticSearchFutures{
+
+  import ElasticClientApi._
+  import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
+  import JsonSupport.json4sUnmarshaller
+  import JsonSupport.json4sJacksonFormats
+
+  case class BookJsonSource(book: EventBook) extends DocumentSource {
+    def json = Serialization.write(idx.Book.fromMessage(book))
+  }
+
+  case class UndistributeJsonSource(undistribute: EventUndistribute) extends DocumentSource {
+    def json = Serialization.write(idx.Undistribute.fromMessage(undistribute))
+  }
+
+  case class BookPriceJsonSource(bookPrice: EventBookPrice) extends DocumentSource {
+    def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
+  }
+
+  trait IndexableContent[T <: DistributeContent] {
+    type Out <: BulkCompatibleDefinition
+    def definition(content: T): Out
+  }
+
+  implicit object BookIndexableContent extends IndexableContent[EventBook] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventBook): Out =
+      esIndex
+        .into(s"${config.indexName}/book")
+        .doc(BookJsonSource(content))
+        .id(content.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version(content.sequenceNumber)
+  }
+
+  implicit object UndistributeIndexableContent extends IndexableContent[EventUndistribute] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventUndistribute): Out =
+      esIndex
+        .into(s"${config.indexName}/distribution-status")
+        .doc(UndistributeJsonSource(content))
+        .id(content.isbn)
+        .versionType(VersionType.EXTERNAL)
+        .version(content.sequenceNumber)
+        .parent(content.isbn)
+  }
+
+  implicit object BookPriceIndexableContent extends IndexableContent[EventBookPrice] {
+    type Out = IndexDefinition
+
+    override def definition(content: EventBookPrice): Out =
+      esIndex
+        .into(s"${config.indexName}/book-price")
+        .doc(BookPriceJsonSource(content))
+        .id(content.isbn)
+        .parent(content.isbn)
+  }
+
+  override def index(content: DistributeContent): Future[SingleResponse] = {
+    content match {
+      case c: EventBook =>
+        client.execute(indexDefinition(c))
+          .recoverException
+          .flatMap { _ =>
+          index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
+        }
+      case c: EventBookPrice =>
+        client.execute(indexDefinition(c))
+          .recoverException.map(resp => SingleResponse(resp._id))
+      case c: EventUndistribute =>
+        client.execute(indexDefinition(c))
+          .recoverException.map(resp => SingleResponse(resp._id))
+    }
+  }
+
+  override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] = ???
+
+  private def indexDefinition[T <: DistributeContent](content: T)(implicit ic: IndexableContent[T]): ic.Out =
+    ic.definition(content)
 }
 
 class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)

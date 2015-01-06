@@ -6,9 +6,11 @@ import akka.actor.ActorRef
 import com.blinkbox.books.catalogue.common.search.{CommunicationException, Indexer}
 import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
+import com.blinkbox.books.elasticsearch.client.FailedRequest
 import com.blinkbox.books.messaging.{ReliableEventHandler, ErrorHandler, Event}
 import org.elasticsearch.index.engine.VersionConflictEngineException
 import org.elasticsearch.transport.RemoteTransportException
+import spray.http.StatusCodes
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
 
@@ -30,6 +32,8 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
   private def index(content: DistributeContent): Future[Unit] = {
     val indexing = indexer.index(content)
     indexing.onFailure{
+      case FailedRequest(StatusCodes.Conflict, msg) =>
+        log.error(s"CONFLICT: $msg")
       case e: VersionConflictEngineException =>
         log.error(s"CONFLICT: ${e.getMessage}")
       case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] =>
@@ -37,6 +41,7 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
     }
     indexing.recover{
       case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] => ()
+      case FailedRequest(StatusCodes.Conflict, _) => ()
     }.map(_ => ())
   }
 }
