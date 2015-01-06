@@ -17,7 +17,7 @@ import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfigura
 import com.blinkbox.books.rabbitmq.RabbitMqConsumer.QueueConfiguration
 import com.blinkbox.books.rabbitmq.{RabbitMq, RabbitMqConfig, RabbitMqConfirmedPublisher, RabbitMqConsumer}
 import com.sksamuel.elastic4s.ElasticClient
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
