@@ -1,5 +1,14 @@
 
 
+## 0.1.65 ([#79](https://git.mobcastdev.com/Agora/catalogue-v2/pull/79) 2015-01-06 16:16:10)
+
+Introduce ES HTTP Client
+
+Patch
+
+- update dependencies to the latest versions (where possible)
+- code cleanup (removing commented out code)
+
 ## 0.1.64 ([#78](https://git.mobcastdev.com/Agora/catalogue-v2/pull/78) 2015-01-05 10:57:24)
 
 Improve routes readability
