@@ -1,5 +1,13 @@
 
 
+## 0.1.66 ([#80](https://git.mobcastdev.com/Agora/catalogue-v2/pull/80) 2015-01-07 09:43:50)
+
+Bulk indexing using HTTP ES client.
+
+Patch
+
+- Bulk indexing implementation using the new HTTP ES client
+
 ## 0.1.65 ([#79](https://git.mobcastdev.com/Agora/catalogue-v2/pull/79) 2015-01-06 16:16:10)
 
 Introduce ES HTTP Client
