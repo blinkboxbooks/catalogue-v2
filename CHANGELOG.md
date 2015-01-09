@@ -1,5 +1,14 @@
 
 
+## 0.1.67 ([#81](https://git.mobcastdev.com/Agora/catalogue-v2/pull/81) 2015-01-09 09:48:41)
+
+ES HTTP client upgrade
+
+Patch
+
+- upgrade the elastic-http dependency to 0.0.7
+- update marvin2 ingester in order to use the ES HTTP client instead of the binary one
+
 ## 0.1.66 ([#80](https://git.mobcastdev.com/Agora/catalogue-v2/pull/80) 2015-01-07 09:43:50)
 
 Bulk indexing using HTTP ES client.
