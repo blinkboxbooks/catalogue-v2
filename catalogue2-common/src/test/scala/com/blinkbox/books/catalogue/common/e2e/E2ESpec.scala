@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.common.e2e
 
-import akka.actor.ActorSystem
 import ch.qos.logback.classic.{Level, LoggerContext}
 import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, Json}
 import com.blinkbox.books.catalogue.common.search.{EsIndexer, HttpEsIndexer, Schema}
@@ -11,7 +10,6 @@ import org.scalatest.time.Millis
 import org.scalatest.time.Span
 import org.scalatest.{BeforeAndAfterAll, Suite}
 import org.slf4j.LoggerFactory
-
 import scala.concurrent.ExecutionContext
 import scala.util.Random
 
@@ -29,9 +27,11 @@ trait E2ESpec
   LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     .getLogger("org.elasticsearch").setLevel(Level.WARN)
 
+  lazy val esHttpPort = 12000 + (Thread.currentThread.getId % 100).toInt
+
   def e2eExecutionContext: ExecutionContext
   // The random cluster name is needed to avoid race conditions between different test-suites running in parallel
-  lazy val searchConfig = ElasticsearchConfig(config).copy(clusterName = randomName)
+  lazy val searchConfig = ElasticsearchConfig(config).copy(clusterName = randomName, httpPort = esHttpPort)
   lazy val esServer = new EmbeddedElasticSearch(searchConfig)
   lazy val esClient = new ElasticClient(esServer.client, 2000)
   lazy val indexer = new EsIndexer(searchConfig, esClient)(e2eExecutionContext)
@@ -60,13 +60,10 @@ trait HttpEsSpec
 
   override implicit def patienceConfig = PatienceConfig(timeout = Span(30000, Millis), interval = Span(250, Millis))
 
-  import Json.json4sUnmarshaller
-
-  lazy val esPort = 12000 + (Thread.currentThread.getId % 100).toInt
-
-  lazy val searchConfig = ElasticsearchConfig(config).copy(httpPort = esPort)
+  lazy val esHttpPort = 12000 + (Thread.currentThread.getId % 100).toInt
+  lazy val searchConfig = ElasticsearchConfig(config).copy(httpPort = esHttpPort)
   lazy val esServer = new EmbeddedElasticSearch(searchConfig)
-  lazy val esClient = new SprayElasticClient("localhost", esPort)
+  lazy val esClient = new SprayElasticClient("localhost", esHttpPort)
   lazy val indexer = new HttpEsIndexer(searchConfig, esClient)
   lazy val catalogue = Schema(searchConfig).catalogue
 

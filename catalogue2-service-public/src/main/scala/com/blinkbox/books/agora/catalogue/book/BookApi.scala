@@ -7,14 +7,13 @@ import com.blinkbox.books.spray.v1.{Error, ListPage, Version1JsonSupport}
 import com.blinkbox.books.spray.{Directives => CommonDirectives, _}
 import com.typesafe.scalalogging.StrictLogging
 import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
+import org.joda.time.format.ISODateTimeFormat
 import spray.http.HttpHeaders.RawHeader
 import spray.http.StatusCodes._
 import spray.httpx.unmarshalling._
 import spray.routing._
 import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
-import scala.concurrent.{ExecutionContext, Future}
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
