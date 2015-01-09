@@ -1,5 +1,13 @@
 
 
+## 0.1.69 ([#83](https://git.mobcastdev.com/Agora/catalogue-v2/pull/83) 2015-01-09 17:09:34)
+
+Consider ConnectionAttemptFailedException as a temporary exception.
+
+Patch
+
+- consider the ES HTTP client exception in order to differentiate between temporary failure situations.
+
 ## 0.1.68 ([#82](https://git.mobcastdev.com/Agora/catalogue-v2/pull/82) 2015-01-09 14:32:45)
 
 PT-574 Migrate search APIs to use the Elastic HTTP client
