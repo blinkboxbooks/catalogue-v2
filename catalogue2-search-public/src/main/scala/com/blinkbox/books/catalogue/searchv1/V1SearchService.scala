@@ -1,12 +1,12 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.common.{ ElasticsearchConfig, IndexEntities => idx }
-import com.blinkbox.books.catalogue.common.search.{ ElasticSearchFutures, ElasticSearchSupport }
-import com.blinkbox.books.elasticsearch.client.{ ElasticClient, ElasticRequest, SearchResponse }
-import com.blinkbox.books.spray.{ Page, SortOrder }
-import com.sksamuel.elastic4s.{ ElasticDsl => E, MoreLikeThisQueryDefinition }
+import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
+import com.blinkbox.books.catalogue.common.search.{ElasticSearchFutures, ElasticSearchSupport}
+import com.blinkbox.books.elasticsearch.client.{ElasticClient, ElasticRequest, SearchResponse, SuggestionOption}
+import com.blinkbox.books.spray.{Page, SortOrder}
+import com.sksamuel.elastic4s.{ElasticDsl => E, MoreLikeThisQueryDefinition}
 import org.elasticsearch.search.suggest.Suggest.Suggestion
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 case class BookId(value: String) extends AnyVal
 
@@ -52,13 +52,13 @@ trait V1SearchService {
 }
 
 class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)
-  extends V1SearchService with ElasticSearchSupport with ElasticSearchFutures {
+  extends V1SearchService with ElasticSearchFutures {
 
   import com.blinkbox.books.catalogue.common.Json._
   import com.blinkbox.books.catalogue.searchv1.V1SearchService._
   import com.blinkbox.books.elasticsearch.client.ElasticClientApi._
 
-  private val DistributionStatusDocType = "distribution-status"
+  val queries = new Queries(searchConfig)
 
   type IndexResponse = SearchResponse[idx.Book, idx.SuggestionPayload]
 
@@ -69,14 +69,6 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
     if (respSeq.isEmpty) None else Some(respSeq)
   }
-
-  override val SortFieldMapping = Map(
-    "relevance" -> "_score",
-    "author" -> "contributors.sortName",
-    "popularity" -> "_score", // TODO - not yet implemented
-    "price" -> "prices.amount",
-    "publication_date" -> "dates.publish"
-  )
 
   private def toSpellcheckCompletions(resp: IndexResponse): Option[Seq[String]] = {
     val suggestions: Seq[String] = suggestionOptions(resp, "spellcheck").map(_.text)
@@ -89,7 +81,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   private def toBookSimilarResponse(resp: IndexResponse): BookSimilarResponse =
     BookSimilarResponse(toBookSeq(resp), resp.hits.total)
 
-  private def suggestionOptions(resp: IndexResponse, suggester: String) = resp.
+  private def suggestionOptions(resp: IndexResponse, suggester: String): Seq[SuggestionOption[idx.SuggestionPayload]] = resp.
     suggest.
     getOrElse(Map.empty).
     get(suggester).
@@ -109,51 +101,11 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
 
   private def searchIn(`type`: String) = E.search in s"${searchConfig.indexName}/${`type`}"
 
-  private def execute[Req, Resp](req: E.SearchDefinition): Future[IndexResponse] = client.execute(req.sourceIs[idx.Book].suggestionIs[idx.SuggestionPayload])
+  private def execute[Req, Resp](req: E.SearchDefinition): Future[IndexResponse] = client.execute(req.sourceIs[idx.Book].suggestionIs[idx.SuggestionPayload]).recoverException
 
-  override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] = execute {
-    (paginate(page.offset, page.count) {
-      sortBy(order.field, order.desc) {
-        searchIn("book") query {
-          E.filteredQuery query {
-            E.dismax query (
-              E.termQuery("isbn", q) boost 4,
-              // Query for the title - give precedence to title that match including stop-words
-              E.dismax query (
-                E.matchPhrase("title", q) boost 1 slop 10,
-                E.matchPhrase("titleSimple", q) boost 2 slop 10
-              ) tieBreaker 0 boost 3, // No tie breaker as it would be pointless in this case
-                E.nestedQuery("contributors") query (
-                  E.dismax query (
-                    E.matchPhrase("contributors.displayName", q) slop 10 boost 10,
-                    E.matches("contributors.displayName", q) operator "or" boost 5
-                  ) tieBreaker 0
-                ) boost 2,
-                    E.nestedQuery("descriptions") query (
-                      E.matchPhrase("descriptions.content", q) slop 100
-                    ) boost 1
-            ) tieBreaker 0.2
-          } filter {
-            E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
-          }
-        }
-      }
-    } suggestions (E.suggest using (E.phrase) as "spellcheck" on q from "spellcheck" size 1 maxErrors 3))
-  }.recoverException.map(toBookSearchResponse(q))
+  override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] = execute(queries.mainSearch(q, page, order)).map(toBookSearchResponse(q))
 
-  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] = execute {
-    (searchIn("book") query {
-      similarBooksQuery(bookId.value)
-    } filter {
-      E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
-    } limit page.count from page.offset)
-  }.recoverException.map(toBookSimilarResponse)
+  override def similar(bookId: BookId, page: Page): Future[BookSimilarResponse] = execute(queries.similarBooks(bookId, page)).map(toBookSimilarResponse)
 
-  override def suggestions(q: String, count: Int): Future[BookCompletionResponse] = execute {
-    (searchIn("catalogue") suggestions (
-      E.suggest using (E.completion) as "autoComplete" on q from "autoComplete" size count
-    ) filter {
-        E.hasChildFilter(DistributionStatusDocType) filter E.termFilter("usable", true)
-      } limit 0) // We don't want search results, only suggestions
-  }.recoverException.map(toCompletionResponse)
+  override def suggestions(q: String, count: Int): Future[BookCompletionResponse] = execute(queries.suggestions(q, count)).map(toCompletionResponse)
 }
