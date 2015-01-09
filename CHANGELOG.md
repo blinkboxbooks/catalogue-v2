@@ -1,5 +1,16 @@
 
 
+## 0.1.68 ([#82](https://git.mobcastdev.com/Agora/catalogue-v2/pull/82) 2015-01-09 14:32:45)
+
+PT-574 Migrate search APIs to use the Elastic HTTP client
+
+### Improvements
+
+* Update the ES HTTP client
+* Deprecate some components that rely on the ES Transport protocol
+* Introduce equivalent testing components for the ES HTTP client
+* Migrate catalogue search APIs to use the HTTP client
+
 ## 0.1.67 ([#81](https://git.mobcastdev.com/Agora/catalogue-v2/pull/81) 2015-01-09 09:48:41)
 
 ES HTTP client upgrade
