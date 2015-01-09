@@ -22,6 +22,8 @@ class EmbeddedElasticSearch(config: ElasticsearchConfig) {
     .put("index.number_of_shards", 1)
     .put("index.number_of_replicas", 0)
     .put("discovery.zen.ping.multicast.enabled", false)
+    .put("http.enabled", true)
+    .put("http.port", config.httpPort)
     .build
 
   private lazy val node = nodeBuilder().local(true).settings(settings).build

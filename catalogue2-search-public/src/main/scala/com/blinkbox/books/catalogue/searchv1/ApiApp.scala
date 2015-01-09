@@ -32,7 +32,7 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging {
     implicit val executionContext = actorSystem.dispatcher
     implicit val startTimeout = Timeout(apiConfig.timeout)
 
-    val client = ElasticFactory.remote(searchConfig)
+    val client = ElasticFactory.http(searchConfig)
     val searchService: V1SearchService = new EsV1SearchService(searchConfig, client)
 
     val searchApiConfig = SearchApiConfig(config.getConfig("service.catalog-browser.api.public"))

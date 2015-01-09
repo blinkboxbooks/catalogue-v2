@@ -14,7 +14,7 @@ class MappingsSpec extends FlatSpec with E2ESpec with Matchers with ScalaFutures
 
   "The mappings for the \"catalogue\" index" should "be valid for the \"book\" type" in {
     e2e createIndex catalogue andAfter { r =>
-      r.isAcknowledged shouldBe true
+      r.acknowledged shouldBe true
     }
   }
 
