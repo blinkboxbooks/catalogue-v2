@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'bunny'
 
-XMLS_FOLDER="/Users/alinp/work/blinkbox/zz.Distribution.Book"
+XMLS_FOLDER="/Users/aldos/Code/blinkbox/data/zz.Distribution.Book"
 
 abort("No such folder #{XMLS_FOLDER}!!!") unless File.exist?(XMLS_FOLDER)
 

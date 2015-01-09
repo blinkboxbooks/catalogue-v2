@@ -6,11 +6,11 @@ import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
 import com.blinkbox.books.catalogue.common.search.{HttpEsIndexer, Schema}
-import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig}
+import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig, Json}
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
 import com.blinkbox.books.catalogue.ingester.v1.parser.{BookXmlV1IngestionParser, PriceXmlV1IngestionParser}
-import com.blinkbox.books.elasticsearch.client.{JsonSupport, ElasticClientApi}
+import com.blinkbox.books.elasticsearch.client.{ElasticClientApi}
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration
@@ -65,7 +65,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
 
   private def startMessaging(): Unit = {
     import ElasticClientApi._
-    import JsonSupport.json4sUnmarshaller
+    import Json._
 
     implicit val msgExecutionCtx = DiagnosticExecutionContext(context.dispatcher)
     implicit val apiTimeout = Timeout(config.getDuration("messageListener.actorTimeout", TimeUnit.SECONDS).seconds)

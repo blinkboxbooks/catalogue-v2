@@ -1,9 +1,10 @@
 package com.blinkbox.books.catalogue.searchv1
 
+import com.blinkbox.books.elasticsearch.client.SprayElasticClient
 import java.net.URL
 
 import com.blinkbox.books.catalogue.common.BookFixtures
-import com.blinkbox.books.catalogue.common.e2e.E2ESpec
+import com.blinkbox.books.catalogue.common.e2e.HttpEsSpec
 import com.blinkbox.books.config.ApiConfig
 import com.blinkbox.books.spray.v1.Version1JsonSupport
 import org.scalatest.Suite
@@ -12,11 +13,10 @@ import spray.testkit.ScalatestRouteTest
 
 import scala.concurrent.duration._
 
-trait ApiSpecBase extends E2ESpec with ScalatestRouteTest with Version1JsonSupport {
+trait ApiSpecBase extends HttpEsSpec with ScalatestRouteTest with Version1JsonSupport {
   this: Suite =>
 
   override implicit def patienceConfig = PatienceConfig(timeout = Span(60000, Millis), interval = Span(250, Millis))
-  override def e2eExecutionContext = executor
 
   implicit val routeTestTimeout = RouteTestTimeout(15.seconds)
 

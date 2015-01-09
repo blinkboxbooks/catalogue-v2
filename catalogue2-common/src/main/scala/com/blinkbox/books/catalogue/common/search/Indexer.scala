@@ -1,6 +1,7 @@
 package com.blinkbox.books.catalogue.common.search
 
 import com.blinkbox.books.catalogue.common.Events.{Book => EventBook, BookPrice => EventBookPrice, Undistribute => EventUndistribute}
+import com.blinkbox.books.catalogue.common.Json
 import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi, JsonSupport}
 import com.sksamuel.elastic4s.ElasticDsl._
@@ -28,8 +29,7 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
 
   import ElasticClientApi._
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
-  import JsonSupport.json4sUnmarshaller
-  import JsonSupport.json4sJacksonFormats
+  import Json._
 
   case class BookJsonSource(book: EventBook) extends DocumentSource {
     def json = Serialization.write(idx.Book.fromMessage(book))
@@ -130,19 +130,17 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
   extends Indexer with ElasticSearchFutures{
 
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
+  import Json._
 
   case class BookJsonSource(book: EventBook) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.Book.fromMessage(book))
   }
 
   case class UndistributeJsonSource(undistribute: EventUndistribute) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.Undistribute.fromMessage(undistribute))
   }
 
   case class BookPriceJsonSource(bookPrice: EventBookPrice) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
   }
 
