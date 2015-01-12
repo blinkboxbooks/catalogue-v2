@@ -1,5 +1,6 @@
 package com.blinkbox.books.catalogue.common.search
 
+import com.sksamuel.elastic4s.SearchDefinition
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FlatSpec

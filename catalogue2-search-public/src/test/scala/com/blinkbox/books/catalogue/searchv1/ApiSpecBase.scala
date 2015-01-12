@@ -1,8 +1,6 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.elasticsearch.client.SprayElasticClient
 import java.net.URL
-
 import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.common.e2e.HttpEsSpec
 import com.blinkbox.books.config.ApiConfig
@@ -10,7 +8,6 @@ import com.blinkbox.books.spray.v1.Version1JsonSupport
 import org.scalatest.Suite
 import org.scalatest.time.{Millis, Span}
 import spray.testkit.ScalatestRouteTest
-
 import scala.concurrent.duration._
 
 trait ApiSpecBase extends HttpEsSpec with ScalatestRouteTest with Version1JsonSupport {

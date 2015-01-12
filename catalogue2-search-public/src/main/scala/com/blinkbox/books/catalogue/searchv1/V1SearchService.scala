@@ -3,7 +3,7 @@ package com.blinkbox.books.catalogue.searchv1
 import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.elasticsearch.client.{ElasticClient, SearchResponse, SuggestionOption}
 import com.blinkbox.books.spray.{Page, SortOrder}
-import com.sksamuel.elastic4s.{ElasticDsl => E}
+import com.sksamuel.elastic4s.{ElasticDsl => E, SearchDefinition}
 import scala.concurrent.{ExecutionContext, Future}
 
 case class BookId(value: String) extends AnyVal
@@ -97,7 +97,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
       }
   )
 
-  private def execute[Req, Resp](req: E.SearchDefinition): Future[IndexResponse] = client.execute(req.sourceIs[idx.Book].suggestionIs[idx.SuggestionPayload])
+  private def execute[Req, Resp](req: SearchDefinition): Future[IndexResponse] = client.execute(req.sourceIs[idx.Book].suggestionIs[idx.SuggestionPayload])
 
   override def search(q: String, page: Page, order: SortOrder): Future[BookSearchResponse] = execute(queries.mainSearch(q, page, order)).map(toBookSearchResponse(q))
 

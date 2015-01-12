@@ -2,9 +2,8 @@ package com.blinkbox.books.catalogue.common.search
 
 import org.joda.time.DateTime
 import com.sksamuel.elastic4s.ElasticDsl._
-import com.sksamuel.elastic4s.RangeFilter
+import com.sksamuel.elastic4s.{SearchDefinition, RangeFilter, MoreLikeThisQueryDefinition}
 import org.elasticsearch.search.sort.SortOrder
-import com.sksamuel.elastic4s.MoreLikeThisQueryDefinition
 
 trait ElasticSearchSupport {
   def dateRangeFilter = rangeFilter("dates.publish")

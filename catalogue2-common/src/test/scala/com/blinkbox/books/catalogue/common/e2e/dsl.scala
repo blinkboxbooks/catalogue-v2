@@ -1,20 +1,16 @@
 package com.blinkbox.books.catalogue.common.e2e
 
 import com.blinkbox.books.elasticsearch.client.AcknowledgedResponse
-import com.blinkbox.books.elasticsearch.client.{ElasticRequest, SprayElasticClient}
-import com.sksamuel.elastic4s.DeleteIndexDefinition
+import com.blinkbox.books.elasticsearch.client.SprayElasticClient
+import com.sksamuel.elastic4s.{CreateIndexDefinition, ElasticClient}
 import java.util.NoSuchElementException
 import com.blinkbox.books.catalogue.common.DistributeContent
-import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, Indexer, EsIndexer, HttpEsIndexer, Successful}
 import com.blinkbox.books.test.FailHelper
-import com.sksamuel.elastic4s.ElasticClient
 import com.sksamuel.elastic4s.ElasticDsl._
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse
 import org.scalatest.concurrent.ScalaFutures
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, ExecutionContext, Future}
-import spray.httpx.unmarshalling.FromResponseUnmarshaller
 
 object Blank
 trait E2EContext[+T] {
