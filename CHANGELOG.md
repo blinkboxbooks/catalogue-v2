@@ -1,5 +1,15 @@
 
 
+## 0.1.70 ([#84](https://git.mobcastdev.com/Agora/catalogue-v2/pull/84) 2015-01-12 10:01:44)
+
+Code cleanup
+
+Patch
+
+- use a generated http port for the e2e tests
+- delete unused imports
+- use extra warnings from scala compiler
+
 ## 0.1.69 ([#83](https://git.mobcastdev.com/Agora/catalogue-v2/pull/83) 2015-01-09 17:09:34)
 
 Consider ConnectionAttemptFailedException as a temporary exception.
