@@ -3,7 +3,7 @@ package com.blinkbox.books.catalogue.common.search
 import com.blinkbox.books.catalogue.common.Events.{Book => EventBook, BookPrice => EventBookPrice, Undistribute => EventUndistribute}
 import com.blinkbox.books.catalogue.common.Json
 import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
-import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi, JsonSupport}
+import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi}
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.mappings.FieldType._
@@ -24,8 +24,7 @@ trait Indexer {
   def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
 }
 
-class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(implicit ec: ExecutionContext) extends Indexer
-  with ElasticSearchFutures{
+class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(implicit ec: ExecutionContext) extends Indexer{
 
   import ElasticClientApi._
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
@@ -88,16 +87,15 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
     content match {
       case c: EventBook =>
         client.execute(indexDefinition(c))
-          .recoverException
           .flatMap { _ =>
-          index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
-        }
+            index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
+          }
       case c: EventBookPrice =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp._id))
+          .map(resp => SingleResponse(resp._id))
       case c: EventUndistribute =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp._id))
+          .map(resp => SingleResponse(resp._id))
     }
   }
 
@@ -113,7 +111,7 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
           case c: EventUndistribute => List(indexDefinition(c))
         }).toList: _*
       )
-    }.recoverException.map { response =>
+    }.map { response =>
       response.items.map { item =>
         if (item.status.isFailure)
           Failure(item._id, Some(new RuntimeException(item.error.getOrElse(item.status.value))))
@@ -126,8 +124,7 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
     ic.definition(content)
 }
 
-class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)
-  extends Indexer with ElasticSearchFutures{
+class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer{
 
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
   import Json._
@@ -189,16 +186,15 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
     content match {
       case c: EventBook =>
         client.execute(indexDefinition(c))
-          .recoverException
           .flatMap { _ =>
             index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
           }
       case c: EventBookPrice =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp.getId))
+          .map(resp => SingleResponse(resp.getId))
       case c: EventUndistribute =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp.getId))
+          .map(resp => SingleResponse(resp.getId))
     }
 
   override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
@@ -213,7 +209,7 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
           case c: EventUndistribute => List(indexDefinition(c))
         }).toList: _*
       )
-    }.recoverException.map { response =>
+    }.map { response =>
       response.getItems.map { item =>
         if (item.isFailed)
           Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))

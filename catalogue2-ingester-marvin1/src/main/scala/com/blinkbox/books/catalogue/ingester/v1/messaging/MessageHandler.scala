@@ -3,10 +3,10 @@ package com.blinkbox.books.catalogue.ingester.v1.messaging
 import java.io.IOException
 import java.net.ConnectException
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.search.{CommunicationException, Indexer}
+import com.blinkbox.books.catalogue.common.search.Indexer
 import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
-import com.blinkbox.books.elasticsearch.client.{RequestException, UnsuccessfulResponse, FailedRequest}
+import com.blinkbox.books.elasticsearch.client.{RequestException, UnsuccessfulResponse}
 import com.blinkbox.books.messaging.{ReliableEventHandler, ErrorHandler, Event}
 import org.elasticsearch.index.engine.VersionConflictEngineException
 import org.elasticsearch.transport.RemoteTransportException
