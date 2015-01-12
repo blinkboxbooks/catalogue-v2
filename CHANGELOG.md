@@ -1,5 +1,14 @@
 
 
+## 0.1.71 ([#86](https://git.mobcastdev.com/Agora/catalogue-v2/pull/86) 2015-01-12 17:55:14)
+
+PT-575: Modify catalogue endpoints to use ES HTTP client.
+
+Patch
+
+- modify the existing catalogue2 code in order to use the new ES http client instead of the binary one
+- code cleanup (removing old code that's not being used anymore)
+
 ## 0.1.70 ([#84](https://git.mobcastdev.com/Agora/catalogue-v2/pull/84) 2015-01-12 10:01:44)
 
 Code cleanup
