@@ -1,5 +1,15 @@
 
 
+## 0.1.72 ([#87](https://git.mobcastdev.com/Agora/catalogue-v2/pull/87) 2015-01-13 16:32:57)
+
+PT-582: Remove deprecated components
+
+Patch
+
+- remove components that are binary ES client dependent
+- code cleanup
+- very small refactoring bits
+
 ## 0.1.71 ([#86](https://git.mobcastdev.com/Agora/catalogue-v2/pull/86) 2015-01-12 17:55:14)
 
 PT-575: Modify catalogue endpoints to use ES HTTP client.
