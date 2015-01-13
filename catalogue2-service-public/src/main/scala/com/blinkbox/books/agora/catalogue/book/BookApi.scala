@@ -22,9 +22,6 @@ trait BookRoutes extends HttpService {
   def getRelatedBooks: Route
 }
 
-/**
- * Catalogue API for books.
- */
 class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
              (implicit val actorRefFactory: ActorRefFactory) extends BookRoutes
   with CommonDirectives

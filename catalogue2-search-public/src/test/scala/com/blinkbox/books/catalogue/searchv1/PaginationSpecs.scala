@@ -6,14 +6,13 @@ import org.json4s.Extraction
 import org.json4s.JsonAST._
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
-
 import scala.concurrent.duration._
 
 class PaginationSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
-    populateDummyIndex(100) andAwaitFor (10.seconds)
+    populateDummyIndex(100) andAwaitFor 10.seconds
   }
 
   def checkLinks(response: JObject, hasPrev: Boolean = false, hasNext: Boolean = false): Unit = {

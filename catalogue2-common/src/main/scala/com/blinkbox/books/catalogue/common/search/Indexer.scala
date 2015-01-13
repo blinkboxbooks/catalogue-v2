@@ -5,13 +5,12 @@ import com.blinkbox.books.catalogue.common.Json
 import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi}
 import com.sksamuel.elastic4s.ElasticDsl._
-import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.mappings.FieldType._
 import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
-import com.sksamuel.elastic4s.WhitespaceAnalyzer
+import com.sksamuel.elastic4s._
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -117,104 +116,6 @@ class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(impli
           Failure(item._id, Some(new RuntimeException(item.error.getOrElse(item.status.value))))
         else
           Successful(item._id)
-      }
-    }
-
-  private def indexDefinition[T <: DistributeContent](content: T)(implicit ic: IndexableContent[T]): ic.Out =
-    ic.definition(content)
-}
-
-class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext) extends Indexer{
-
-  import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
-  import Json._
-
-  case class BookJsonSource(book: EventBook) extends DocumentSource {
-    def json = Serialization.write(idx.Book.fromMessage(book))
-  }
-
-  case class UndistributeJsonSource(undistribute: EventUndistribute) extends DocumentSource {
-    def json = Serialization.write(idx.Undistribute.fromMessage(undistribute))
-  }
-
-  case class BookPriceJsonSource(bookPrice: EventBookPrice) extends DocumentSource {
-    def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
-  }
-
-  trait IndexableContent[T <: DistributeContent] {
-    type Out <: BulkCompatibleDefinition
-    def definition(content: T): Out
-  }
-
-  implicit object BookIndexableContent extends IndexableContent[EventBook] {
-    type Out = IndexDefinition
-
-    override def definition(content: EventBook): Out =
-      esIndex
-        .into(s"${config.indexName}/book")
-        .doc(BookJsonSource(content))
-        .id(content.isbn)
-        .versionType(VersionType.EXTERNAL)
-        .version(content.sequenceNumber)
-  }
-
-  implicit object UndistributeIndexableContent extends IndexableContent[EventUndistribute] {
-    type Out = IndexDefinition
-
-    override def definition(content: EventUndistribute): Out =
-      esIndex
-        .into(s"${config.indexName}/distribution-status")
-        .doc(UndistributeJsonSource(content))
-        .id(content.isbn)
-        .versionType(VersionType.EXTERNAL)
-        .version(content.sequenceNumber)
-        .parent(content.isbn)
-  }
-
-  implicit object BookPriceIndexableContent extends IndexableContent[EventBookPrice] {
-    type Out = IndexDefinition
-
-    override def definition(content: EventBookPrice): Out =
-      esIndex
-        .into(s"${config.indexName}/book-price")
-        .doc(BookPriceJsonSource(content))
-        .id(content.isbn)
-        .parent(content.isbn)
-  }
-
-  override def index(content: DistributeContent): Future[SingleResponse] =
-    content match {
-      case c: EventBook =>
-        client.execute(indexDefinition(c))
-          .flatMap { _ =>
-            index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
-          }
-      case c: EventBookPrice =>
-        client.execute(indexDefinition(c))
-          .map(resp => SingleResponse(resp.getId))
-      case c: EventUndistribute =>
-        client.execute(indexDefinition(c))
-          .map(resp => SingleResponse(resp.getId))
-    }
-
-  override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
-    client.execute {
-      bulk(
-        contents.flatMap({
-          case c: EventBook => List(
-            indexDefinition(c),
-            indexDefinition(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
-          )
-          case c: EventBookPrice => List(indexDefinition(c))
-          case c: EventUndistribute => List(indexDefinition(c))
-        }).toList: _*
-      )
-    }.map { response =>
-      response.getItems.map { item =>
-        if (item.isFailed)
-          Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))
-        else
-          Successful(item.getId)
       }
     }
 

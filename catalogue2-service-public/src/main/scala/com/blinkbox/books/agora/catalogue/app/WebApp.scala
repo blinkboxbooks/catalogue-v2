@@ -38,7 +38,7 @@ class WebService(config: AppConfig) extends HttpServiceActor {
 
 object WebApp extends App with Configuration with Loggers {
   val appConfig = AppConfig(config)
-  implicit val system = ActorSystem("akka-spray", config)
+  implicit val system = ActorSystem("catalogue-service-system", config)
   implicit val executionContext = DiagnosticExecutionContext(system.dispatcher)
   implicit val timeout = Timeout(appConfig.service.timeout)
   sys.addShutdownHook(system.shutdown())

@@ -1,7 +1,6 @@
 package com.blinkbox.books.catalogue.ingester.v2.messaging
 
 import java.net.ConnectException
-
 import akka.actor.ActorRef
 import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.search.Indexer

@@ -10,7 +10,7 @@ import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig,
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
 import com.blinkbox.books.catalogue.ingester.v1.parser.{BookXmlV1IngestionParser, PriceXmlV1IngestionParser}
-import com.blinkbox.books.elasticsearch.client.{ElasticClientApi}
+import com.blinkbox.books.elasticsearch.client.ElasticClientApi
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration

@@ -3,7 +3,7 @@ package com.blinkbox.books.catalogue.searchv1
 import com.blinkbox.books.catalogue.common.{ElasticsearchConfig, IndexEntities => idx}
 import com.blinkbox.books.elasticsearch.client.{ElasticClient, SearchResponse, SuggestionOption}
 import com.blinkbox.books.spray.{Page, SortOrder}
-import com.sksamuel.elastic4s.{ElasticDsl => E, SearchDefinition}
+import com.sksamuel.elastic4s.SearchDefinition
 import scala.concurrent.{ExecutionContext, Future}
 
 case class BookId(value: String) extends AnyVal
@@ -82,8 +82,7 @@ class EsV1SearchService(searchConfig: ElasticsearchConfig, client: ElasticClient
   private def suggestionOptions(resp: IndexResponse, suggester: String): Seq[SuggestionOption[idx.SuggestionPayload]] = resp.
     suggest.
     getOrElse(Map.empty).
-    get(suggester).
-    getOrElse(Seq.empty).
+    getOrElse(suggester, Seq.empty).
     flatMap(_.options)
 
   private def toCompletionResponse(resp: IndexResponse): BookCompletionResponse = BookCompletionResponse(

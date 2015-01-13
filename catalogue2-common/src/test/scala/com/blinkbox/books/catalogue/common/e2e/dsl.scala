@@ -2,10 +2,10 @@ package com.blinkbox.books.catalogue.common.e2e
 
 import com.blinkbox.books.elasticsearch.client.AcknowledgedResponse
 import com.blinkbox.books.elasticsearch.client.SprayElasticClient
-import com.sksamuel.elastic4s.{CreateIndexDefinition, ElasticClient}
+import com.sksamuel.elastic4s.CreateIndexDefinition
 import java.util.NoSuchElementException
 import com.blinkbox.books.catalogue.common.DistributeContent
-import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, Indexer, EsIndexer, HttpEsIndexer, Successful}
+import com.blinkbox.books.catalogue.common.search.{BulkItemResponse, Indexer, HttpEsIndexer, Successful}
 import com.blinkbox.books.test.FailHelper
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.scalatest.concurrent.ScalaFutures
@@ -20,15 +20,6 @@ trait E2EContext[+T] {
   def delete(idx: String): Future[Unit]
   def flush(idx: String = "_all"): Future[Unit]
   def create(d: CreateIndexDefinition): Future[AcknowledgedResponse]
-}
-
-case class E2ETransportContext[+T](client: ElasticClient, indexer: EsIndexer, state: T)(implicit ec: ExecutionContext) extends E2EContext[T] {
-  import com.sksamuel.elastic4s.{ ElasticDsl => E }
-
-  def withState[S](s: S): E2EContext[S] = copy(state = s)
-  def delete(idx: String): Future[Unit] = client execute { E.delete index "_all" } map (_ => ())
-  def flush(idx: String): Future[Unit] = client.flush() map(_ => ())
-  def create(d: CreateIndexDefinition) = client execute d map (r => AcknowledgedResponse(r.isAcknowledged))
 }
 
 case class E2EHttpContext[+T](client: SprayElasticClient, indexer: HttpEsIndexer, state: T)(
@@ -59,7 +50,6 @@ trait E2EDsl
     }
   }
 
-  def using(client: ElasticClient, indexer: EsIndexer)(implicit ec: ExecutionContext) = E2ETransportContext(client, indexer, Blank)
   def using(client: SprayElasticClient, indexer: HttpEsIndexer)(implicit ec: ExecutionContext) = E2EHttpContext(client, indexer, Blank)
 
   implicit class CommonOps[S](context: E2EContext[S])(implicit ec: ExecutionContext) {
