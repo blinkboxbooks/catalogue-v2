@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import scala.util.Try
 import scala.xml.{NodeSeq, XML, Elem}
+import OptionalConversions._
 
 trait IngestionParser[T, R] {
   def parse(content: T): Try[R]

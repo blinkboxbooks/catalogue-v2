@@ -15,9 +15,6 @@ import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.Future
 
 trait ContributorService {
-  // TODO
-  //def getContributorsById(ids: Iterable[String]): Future[ListPage[Contributor]]
-  //def getContributorsByGroupName(groupName: String, groupParam: String, page: Page): Future[ListPage[Contributor]]
   def getContributorById(id: String): Future[Option[Contributor]]
 }
 

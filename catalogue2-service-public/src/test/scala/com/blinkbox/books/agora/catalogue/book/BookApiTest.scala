@@ -12,14 +12,12 @@ import scala.concurrent.duration._
 import com.blinkbox.books.spray.v1.Version1JsonSupport
 import com.blinkbox.books.spray.JsonFormats
 import spray.http.StatusCodes._
-import com.blinkbox.books.agora.catalogue.app.AppConfig
 import com.blinkbox.books.config.ApiConfig
 import scala.concurrent.Future
 import java.net.URL
 import com.blinkbox.books.spray.Page
 import com.blinkbox.books.spray.v1.ListPage
 import com.blinkbox.books.spray.SortOrder
-import org.joda.time.format.DateTimeFormat
 
 @RunWith(classOf[JUnitRunner])
 class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService with Matchers with MockitoSyrup with Version1JsonSupport {
@@ -40,8 +38,8 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   val api = new BookApi(apiConfig, bookConfig, service)
   val routes = api.routes
   
-  val book = BookRepresentation("guid", "id", "title", "date", true, List(), None)
-  val defaultOrder = SortOrder("title", false)
+  val book = BookRepresentation("guid", "id", "title", "date", sampleEligible = true, List(), None)
+  val defaultOrder = SortOrder("title", desc = false)
   val defaultPage = Page(0, bookConfig.maxResults)
   val expectedListPage = ListPage(1, 0, 1, List(book), None)
   val emptyListPage = ListPage(0, 0, 0, List.empty[BookRepresentation], None)
@@ -130,8 +128,8 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   it should "return books by a given contributor with a specified publication date-range" in {
     val dateParam = "2014-01-01"
     val date = BookService.dateTimeFormat.parseDateTime(dateParam)
-    when(service.getBooksByContributor("42", Some(date), Some(date), Page(0, bookConfig.maxResults), SortOrder("title", false))).thenReturn(Future.successful(expectedListPage))
-    Get(s"/book/?contributor=42&minPublicationDate=${dateParam}&maxPublicationDate=${dateParam}") ~> routes ~> check {
+    when(service.getBooksByContributor("42", Some(date), Some(date), Page(0, bookConfig.maxResults), SortOrder("title", desc = false))).thenReturn(Future.successful(expectedListPage))
+    Get(s"/book/?contributor=42&minPublicationDate=$dateParam&maxPublicationDate=$dateParam") ~> routes ~> check {
       status shouldEqual OK
       responseAs[ListPage[BookRepresentation]] shouldEqual expectedListPage
     }
@@ -144,7 +142,7 @@ class BookApiTest extends FlatSpecLike with ScalatestRouteTest with HttpService 
   }
   
   it should "Return books by a given contributor with a specific sort order" in {
-    when(service.getBooksByContributor("42", None, None, Page(0, bookConfig.maxResults), SortOrder("author", true))).thenReturn(Future.successful(expectedListPage))
+    when(service.getBooksByContributor("42", None, None, Page(0, bookConfig.maxResults), SortOrder("author", desc = true))).thenReturn(Future.successful(expectedListPage))
     Get(s"/book/?contributor=42&order=author&desc=true") ~> routes ~> check {
       status shouldEqual OK
       responseAs[ListPage[BookRepresentation]] shouldEqual expectedListPage

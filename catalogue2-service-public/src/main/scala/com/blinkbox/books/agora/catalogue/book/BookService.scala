@@ -69,8 +69,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
     media.epubs
       .filter(epub => isRealm(epub.classification, id="sample"))
       .flatMap(epub => epub.uris)
-      .filter(isStatic)
-      .headOption
+      .find(isStatic)
   }
   
   private def generateLinks(book: Book, media: Media) : List[V1Link] = {

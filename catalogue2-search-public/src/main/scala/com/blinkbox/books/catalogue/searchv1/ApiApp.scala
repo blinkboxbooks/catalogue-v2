@@ -28,7 +28,7 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging {
     val apiConfig = ApiConfig(config, prefix)
     val searchConfig = ElasticsearchConfig(config)
 
-    implicit val actorSystem = ActorSystem("catalog-browser-system")
+    implicit val actorSystem = ActorSystem("catalogue-search-system", config)
     implicit val executionContext = actorSystem.dispatcher
     implicit val startTimeout = Timeout(apiConfig.timeout)
 

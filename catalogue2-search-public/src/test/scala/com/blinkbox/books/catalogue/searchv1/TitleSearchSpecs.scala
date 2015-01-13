@@ -91,7 +91,7 @@ class TitleSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
   }
 
   it should "work correctly with title permutations (see CAT-77)" in {
-    catalogueIndex indexAndCheck(f.titlePermutationsBook) andAfter { _ =>
+    catalogueIndex indexAndCheck f.titlePermutationsBook andAfter { _ =>
       queryAndCheck("apple%20banana") {
         status should equal(StatusCodes.OK)
         responseAs[BookSearchResponse].numberOfResults should equal(1)
