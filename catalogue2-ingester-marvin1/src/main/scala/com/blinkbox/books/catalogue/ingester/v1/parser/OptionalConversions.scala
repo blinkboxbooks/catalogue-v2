@@ -1,9 +1,10 @@
-package com.blinkbox.books.catalogue.ingester.v1
+package com.blinkbox.books.catalogue.ingester.v1.parser
 
 import org.joda.time.DateTime
+
 import scala.util.Try
 
-package object parser {
+object OptionalConversions {
   trait Optionable[T, R] {
     def toOption(value: T): Option[R]
   }

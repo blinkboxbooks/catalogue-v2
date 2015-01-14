@@ -4,7 +4,6 @@ import com.blinkbox.books.catalogue.common.{ BookFixtures, Contributor, OtherTex
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.{BookSimilarResponse, Book}
 import org.scalatest.{ FlatSpec, Matchers }
 import spray.http.StatusCodes
-
 import scala.concurrent.duration._
 import scala.util.Random
 

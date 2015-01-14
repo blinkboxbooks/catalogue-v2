@@ -77,7 +77,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   
   val expectedImage = SprayImage("urn:blinkboxbooks:image:cover", "image")
   val link = mock[Link]
-  val expected = BookRepresentation("isbn", "title", now, true, List(expectedImage), Some(List(link, link, link, link, link)))
+  val expected = BookRepresentation("isbn", "title", now, sampleEligible = true, List(expectedImage), Some(List(link, link, link, link, link)))
   
   val linkHelper = mock[LinkHelper]
   when(linkHelper.externalUrl).thenReturn(spray.http.Uri("catalogue"))
@@ -168,11 +168,11 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
       }
 
       // Check correct number of query parameters
-      assert(actualUri.query.toSeq.size == expectedUri.query.toSeq.size, s"Mis-matched number of query parameters: ${actualUri}")
+      assert(actualUri.query.toSeq.size == expectedUri.query.toSeq.size, s"Mis-matched number of query parameters: $actualUri")
     }
     
     // Check correct number of links
-    assert(map.size == expected.size, s"Mis-matched number of links:${map}")
+    assert(map.size == expected.size, s"Mis-matched number of links:$map")
   }
   
   it should "return bulk books" in {
@@ -203,9 +203,9 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   }
 
   it should "return books given a contributor" in {
-    when(dao.getBooksByContributor("id", None, None, 0, 1, "title", true)).thenReturn(Future.successful(BookList(List(book), 2)))
+    when(dao.getBooksByContributor("id", None, None, 0, 1, "title", sortDescending = true)).thenReturn(Future.successful(BookList(List(book), 2)))
     val page = Page(0, 1)
-    val order = SortOrder("title", true)
+    val order = SortOrder("title", desc = true)
     whenReady(service.getBooksByContributor("id", None, None, page, order)) { listPage =>
       assert(2 == listPage.numberOfResults, "Total number of books")
       assert(0 == listPage.offset)

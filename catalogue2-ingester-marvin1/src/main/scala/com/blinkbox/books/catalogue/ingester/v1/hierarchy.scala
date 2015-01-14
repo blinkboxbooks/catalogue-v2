@@ -1,23 +1,22 @@
 package com.blinkbox.books.catalogue.ingester.v1
 
 import java.util.concurrent.{Executors, TimeUnit}
-
 import akka.actor.Status.Success
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor._
 import akka.util.Timeout
-import com.blinkbox.books.catalogue.common.search.{EsIndexer, Schema}
-import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig}
+import com.blinkbox.books.catalogue.common.search.{HttpEsIndexer, Schema}
+import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig, Json}
 import com.blinkbox.books.catalogue.ingester.v1.Main._
 import com.blinkbox.books.catalogue.ingester.v1.messaging.MessageHandler
 import com.blinkbox.books.catalogue.ingester.v1.parser.{BookXmlV1IngestionParser, PriceXmlV1IngestionParser}
+import com.blinkbox.books.elasticsearch.client.ElasticClientApi
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.rabbitmq.RabbitMqConfirmedPublisher.PublisherConfiguration
 import com.blinkbox.books.rabbitmq.RabbitMqConsumer.QueueConfiguration
 import com.blinkbox.books.rabbitmq.{RabbitMq, RabbitMqConfig, RabbitMqConfirmedPublisher, RabbitMqConsumer}
-import com.typesafe.scalalogging.slf4j.StrictLogging
-
+import com.typesafe.scalalogging.StrictLogging
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
@@ -65,6 +64,9 @@ class MessagingSupervisor extends Actor with StrictLogging {
   }
 
   private def startMessaging(): Unit = {
+    import ElasticClientApi._
+    import Json._
+
     implicit val msgExecutionCtx = DiagnosticExecutionContext(context.dispatcher)
     implicit val apiTimeout = Timeout(config.getDuration("messageListener.actorTimeout", TimeUnit.SECONDS).seconds)
 
@@ -85,9 +87,9 @@ class MessagingSupervisor extends Actor with StrictLogging {
           config.getConfig("messageListener.distributor.price.errors")))))
 
     val searchConfig = ElasticsearchConfig(config)
-    val esClient = ElasticFactory.remote(searchConfig)
+    val httpEsClient = ElasticFactory.http(searchConfig)
     val indexingEc = DiagnosticExecutionContext(ExecutionContext.fromExecutor(Executors.newCachedThreadPool))
-    val indexer = new EsIndexer(searchConfig, esClient)(indexingEc)
+    val indexer = new HttpEsIndexer(searchConfig, httpEsClient)(indexingEc)
     val retryInterval = config.getDuration("messageListener.retryInterval", TimeUnit.SECONDS).seconds
 
     val bookMessageConsumer = context.actorOf(
@@ -116,7 +118,7 @@ class MessagingSupervisor extends Actor with StrictLogging {
         queueConfig = QueueConfiguration(
           config.getConfig("messageListener.distributor.price.input")))), name = "V1-Price-Message-Consumer")
 
-    esClient.execute(Schema(searchConfig).catalogue).onComplete {
+    httpEsClient.execute(Schema(searchConfig).catalogue).onComplete {
       case _ =>
         bookMessageConsumer ! RabbitMqConsumer.Init
         priceMessageConsumer ! RabbitMqConsumer.Init

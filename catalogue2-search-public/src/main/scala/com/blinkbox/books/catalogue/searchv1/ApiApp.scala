@@ -6,7 +6,7 @@ import com.blinkbox.books.catalogue.common.{ElasticFactory, ElasticsearchConfig}
 import com.blinkbox.books.config.{ApiConfig, Configuration}
 import com.blinkbox.books.logging.Loggers
 import com.blinkbox.books.spray.{HttpServer, url2uri, HealthCheckHttpService}
-import com.typesafe.scalalogging.slf4j.StrictLogging
+import com.typesafe.scalalogging.StrictLogging
 import spray.can.Http
 import spray.http.Uri.Path
 import spray.routing.HttpServiceActor
@@ -28,11 +28,11 @@ object ApiApp extends App with Configuration with Loggers with StrictLogging {
     val apiConfig = ApiConfig(config, prefix)
     val searchConfig = ElasticsearchConfig(config)
 
-    implicit val actorSystem = ActorSystem("catalog-browser-system")
+    implicit val actorSystem = ActorSystem("catalogue-search-system", config)
     implicit val executionContext = actorSystem.dispatcher
     implicit val startTimeout = Timeout(apiConfig.timeout)
 
-    val client = ElasticFactory.remote(searchConfig)
+    val client = ElasticFactory.http(searchConfig)
     val searchService: V1SearchService = new EsV1SearchService(searchConfig, client)
 
     val searchApiConfig = SearchApiConfig(config.getConfig("service.catalog-browser.api.public"))

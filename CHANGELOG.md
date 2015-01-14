@@ -1,5 +1,87 @@
 
 
+## 0.1.72 ([#87](https://git.mobcastdev.com/Agora/catalogue-v2/pull/87) 2015-01-13 16:32:57)
+
+PT-582: Remove deprecated components
+
+Patch
+
+- remove components that are binary ES client dependent
+- code cleanup
+- very small refactoring bits
+
+## 0.1.71 ([#86](https://git.mobcastdev.com/Agora/catalogue-v2/pull/86) 2015-01-12 17:55:14)
+
+PT-575: Modify catalogue endpoints to use ES HTTP client.
+
+Patch
+
+- modify the existing catalogue2 code in order to use the new ES http client instead of the binary one
+- code cleanup (removing old code that's not being used anymore)
+
+## 0.1.70 ([#84](https://git.mobcastdev.com/Agora/catalogue-v2/pull/84) 2015-01-12 10:01:44)
+
+Code cleanup
+
+Patch
+
+- use a generated http port for the e2e tests
+- delete unused imports
+- use extra warnings from scala compiler
+
+## 0.1.69 ([#83](https://git.mobcastdev.com/Agora/catalogue-v2/pull/83) 2015-01-09 17:09:34)
+
+Consider ConnectionAttemptFailedException as a temporary exception.
+
+Patch
+
+- consider the ES HTTP client exception in order to differentiate between temporary failure situations.
+
+## 0.1.68 ([#82](https://git.mobcastdev.com/Agora/catalogue-v2/pull/82) 2015-01-09 14:32:45)
+
+PT-574 Migrate search APIs to use the Elastic HTTP client
+
+### Improvements
+
+* Update the ES HTTP client
+* Deprecate some components that rely on the ES Transport protocol
+* Introduce equivalent testing components for the ES HTTP client
+* Migrate catalogue search APIs to use the HTTP client
+
+## 0.1.67 ([#81](https://git.mobcastdev.com/Agora/catalogue-v2/pull/81) 2015-01-09 09:48:41)
+
+ES HTTP client upgrade
+
+Patch
+
+- upgrade the elastic-http dependency to 0.0.7
+- update marvin2 ingester in order to use the ES HTTP client instead of the binary one
+
+## 0.1.66 ([#80](https://git.mobcastdev.com/Agora/catalogue-v2/pull/80) 2015-01-07 09:43:50)
+
+Bulk indexing using HTTP ES client.
+
+Patch
+
+- Bulk indexing implementation using the new HTTP ES client
+
+## 0.1.65 ([#79](https://git.mobcastdev.com/Agora/catalogue-v2/pull/79) 2015-01-06 16:16:10)
+
+Introduce ES HTTP Client
+
+Patch
+
+- update dependencies to the latest versions (where possible)
+- code cleanup (removing commented out code)
+
+## 0.1.64 ([#78](https://git.mobcastdev.com/Agora/catalogue-v2/pull/78) 2015-01-05 10:57:24)
+
+Improve routes readability
+
+### Improvements
+
+Make routes a little more readable in the search-api  by factoring out the route from the URI matching and some complex validation.
+
 ## 0.1.63 ([#77](https://git.mobcastdev.com/Agora/catalogue-v2/pull/77) 2014-12-19 15:11:01)
 
 Split specs to be more easier to digest for CI

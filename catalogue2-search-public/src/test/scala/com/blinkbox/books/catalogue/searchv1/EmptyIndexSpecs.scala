@@ -1,6 +1,5 @@
 package com.blinkbox.books.catalogue.searchv1
 
-import com.blinkbox.books.catalogue.common.BookFixtures
 import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSearchResponse
 import org.scalatest.{FlatSpec, Matchers}
 import spray.http.StatusCodes
@@ -12,7 +11,7 @@ class EmptyIndexSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   override def beforeAll() {
     super.beforeAll()
-    catalogueIndex andAwaitFor(15.seconds)
+    catalogueIndex andAwaitFor 15.seconds
   }
 
   "The search API" should "fail with a 400 (Bad Request) if the 'q' parameter is not provided" in {

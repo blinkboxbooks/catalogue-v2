@@ -1,21 +1,27 @@
 package com.blinkbox.books.agora.catalogue.book
 
+import com.blinkbox.books.catalogue.common.e2e.HttpEsSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatest.time.{Millis, Span}
 import org.scalatest.concurrent.ScalaFutures
+import spray.testkit.ScalatestRouteTest
 import scala.concurrent.Await
 import com.blinkbox.books.catalogue.common._
-import com.blinkbox.books.catalogue.common.e2e.E2ESpec
 import com.blinkbox.books.catalogue.common.BookFixtures.simpleBook
 import org.joda.time.DateTime
 import org.scalatest.BeforeAndAfterAll
 import scala.concurrent.duration._
 
 @RunWith(classOf[JUnitRunner])
-class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaFutures with BeforeAndAfterAll {
-  override implicit val e2eExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
+class ElasticBookDaoTest extends FlatSpec
+  with HttpEsSpec
+  with Matchers
+  with ScalaFutures
+  with BeforeAndAfterAll
+  with ScalatestRouteTest{
+
   override implicit def patienceConfig = PatienceConfig(timeout = Span(5000, Millis), interval = Span(500, Millis))
 
   val dao = new ElasticBookDao(esClient, "catalogue/book")
@@ -75,82 +81,83 @@ class ElasticBookDaoTest extends FlatSpec with E2ESpec with Matchers with ScalaF
   }
   
   it should "find books for a given contributor" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, sortField, true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, sortField, sortDescending = true)) { result =>
       result should equal(BookList(books.filter(_.isbn != "3"), 2))
     }
   }
   
   it should "return an empty results set for an unknown contributor" in {
-    whenReady(dao.getBooksByContributor("cobblers", None, None, 0, count, sortField, true)) { result =>
+    whenReady(dao.getBooksByContributor("cobblers", None, None, 0, count, sortField, sortDescending = true)) { result =>
       result should equal(BookList(List(), 0))
     }
   }
   
   it should "limit the number of results to the specified count" in {
-     whenReady(dao.getBooksByContributor(contributor, None, None, 0, 1, sortField, true)) { result =>
+     whenReady(dao.getBooksByContributor(contributor, None, None, 0, 1, sortField, sortDescending = true)) { result =>
        assert(result.books.size == 1)
        assert(result.total == 2)
     }
   }
   
   it should "start the results at the given offset" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 1, count, sortField, true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 1, count, sortField, sortDescending = true)) { result =>
        assert(result.books.size == 1)
        assert(result.total == 2)
     }
   }
   
   it should "sort books by title" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "title", false)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "title", sortDescending = false)) { result =>
       result should equal(BookList(contributorBooks.sortBy(_.title), 2))
     }
   }
 
   it should "sorts books in reverse order" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "title", true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "title", sortDescending = true)) { result =>
       result should equal(BookList(contributorBooks.sortBy(_.title).reverse, 2))
     }
   }
 
   it should "sort books by publication date" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "publication_date", false)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "publication_date", sortDescending = false)) { result =>
       result should equal(BookList(contributorBooks.sortBy(_.isbn), 2))
     }
   }
 
   it should "sort books by price" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "price", true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "price", sortDescending = true)) { result =>
       result should equal(BookList(contributorBooks.sortBy(_.isbn), 2))
     }
   }
 
   it should "sort books by contributor name" in {
-    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "author", true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, None, None, 0, count, "author", sortDescending = true)) { result =>
       result should equal(BookList(contributorBooks.sortBy(_.isbn), 2))
     }
   }
 
   it should "find books by a given contributor within the specified date-range" in {
-    whenReady(dao.getBooksByContributor(contributor, Some(new DateTime(2)), Some(new DateTime(2)), 0, count, "publication_date", true)) { result =>
+    whenReady(dao.getBooksByContributor(contributor, Some(new DateTime(2)),
+       Some(new DateTime(2)), 0, count, "publication_date", sortDescending = true)) { result =>
       result should equal(BookList(contributorBooks.filter(_.isbn == "2"), 1))
     }
   }
 
   it should "fail for an invalid page offset" in {
     intercept[IllegalArgumentException] {
-      dao.getBooksByContributor("contributor", None, None, -1, count, sortField, true)
+      dao.getBooksByContributor("contributor", None, None, -1, count, sortField, sortDescending = true)
     }
   }
 
   it should "fail for an invalid page size" in {
     intercept[IllegalArgumentException] {
-      dao.getBooksByContributor("contributor", None, None, 0, 0, sortField, true)
+      dao.getBooksByContributor("contributor", None, None, 0, 0, sortField, sortDescending = true)
     }
   }
   
   it should "fail for an invalid sort order" in {
     intercept[IllegalArgumentException] {
-      dao.getBooksByContributor("contributor", None, None, 0, count, cobblers, true)
+      dao.getBooksByContributor("contributor", None, None, 0, count, cobblers, sortDescending = true)
     }
   }
   

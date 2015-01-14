@@ -3,12 +3,15 @@ package com.blinkbox.books.catalogue.ingester.v1.messaging
 import java.io.IOException
 import java.net.ConnectException
 import akka.actor.ActorRef
-import com.blinkbox.books.catalogue.common.search.{CommunicationException, Indexer}
+import com.blinkbox.books.catalogue.common.search.Indexer
 import com.blinkbox.books.catalogue.common.DistributeContent
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
+import com.blinkbox.books.elasticsearch.client.{RequestException, UnsuccessfulResponse}
 import com.blinkbox.books.messaging.{ReliableEventHandler, ErrorHandler, Event}
 import org.elasticsearch.index.engine.VersionConflictEngineException
 import org.elasticsearch.transport.RemoteTransportException
+import spray.can.Http.ConnectionAttemptFailedException
+import spray.http.StatusCodes
 import scala.concurrent.Future
 import scala.concurrent.duration.FiniteDuration
 
@@ -23,13 +26,17 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
     e match {
       case (_:ConnectException
            |_:IOException
-           |_:CommunicationException) => true
-      case _ => false
+           |RequestException(_, _: ConnectionAttemptFailedException)) =>
+        true
+      case _ =>
+        false
     }
 
   private def index(content: DistributeContent): Future[Unit] = {
     val indexing = indexer.index(content)
     indexing.onFailure{
+      case UnsuccessfulResponse(StatusCodes.Conflict, msg) =>
+        log.error(s"CONFLICT: $msg")
       case e: VersionConflictEngineException =>
         log.error(s"CONFLICT: ${e.getMessage}")
       case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] =>
@@ -37,6 +44,7 @@ class MessageHandler(errorHandler: ErrorHandler, retryInterval: FiniteDuration,
     }
     indexing.recover{
       case e: RemoteTransportException if e.getCause.isInstanceOf[VersionConflictEngineException] => ()
+      case UnsuccessfulResponse(StatusCodes.Conflict, _) => ()
     }.map(_ => ())
   }
 }

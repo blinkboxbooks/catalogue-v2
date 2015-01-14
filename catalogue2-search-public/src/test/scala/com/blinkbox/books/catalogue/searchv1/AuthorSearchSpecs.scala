@@ -2,15 +2,10 @@ package com.blinkbox.books.catalogue.searchv1
 
 import com.blinkbox.books.catalogue.common.Contributor
 import com.blinkbox.books.catalogue.common.{BookFixtures, Events}
-import com.blinkbox.books.catalogue.searchv1.V1SearchService.{Book, BookSearchResponse, BookSimilarResponse, BookCompletionResponse}
-import com.blinkbox.books.spray.v1.Link
-import com.sksamuel.elastic4s.ElasticDsl
-import org.json4s.Extraction
-import org.json4s.JsonAST._
+import com.blinkbox.books.catalogue.searchv1.V1SearchService.BookSearchResponse
 import org.scalatest.{FlatSpec, Matchers}
 import scala.util.Random
 import spray.http.StatusCodes
-
 import scala.concurrent.duration._
 
 class AuthorSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
@@ -29,7 +24,7 @@ class AuthorSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
-    catalogueIndex indexAndCheck(b1, b2, b3, b4) andAwaitFor (10.seconds)
+    catalogueIndex indexAndCheck(b1, b2, b3, b4) andAwaitFor 10.seconds
   }
 
   def checkQuery(q: String)(f: Iterable[String] => Unit) =
@@ -45,7 +40,7 @@ class AuthorSearchSpecs extends FlatSpec with Matchers with ApiSpecBase {
     checkQuery("Kilgore%20Trout")(shouldEqual(b1 :: b2 :: Nil))
     checkQuery("Kilgore%20Vonnegut") { bs =>
       bs.head should equal(b2.isbn)
-      bs.tail should contain theSameElementsAs((b1 :: b3 :: Nil).map(_.isbn))
+      bs.tail should contain theSameElementsAs (b1 :: b3 :: Nil).map(_.isbn)
     }
     checkQuery("Kurt%20Vonnegut")(shouldEqual(b3 :: b2 :: Nil))
   }

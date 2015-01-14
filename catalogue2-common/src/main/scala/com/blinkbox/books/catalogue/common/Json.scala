@@ -3,10 +3,10 @@ package com.blinkbox.books.catalogue.common
 import com.blinkbox.books.catalogue.common.IndexEntities.{SuggestionItem, SuggestionPayload, SuggestionType}
 import org.json4s.{Extraction, CustomSerializer}
 import org.json4s.JsonAST.{JField, JObject, JString}
+import spray.httpx.Json4sJacksonSupport
 
-object Json {
-
-  private val suggestionPayloadSerializer = new CustomSerializer[SuggestionPayload](implicit format => ({
+trait Serializers {
+  protected val suggestionPayloadSerializer = new CustomSerializer[SuggestionPayload](implicit format => ({
     case JObject(JField("type", JString("book")) :: JField("item", i) :: Nil) =>
       SuggestionPayload(SuggestionType.Book, i.extract[SuggestionItem.Book])
     case JObject(JField("type", JString("contributor")) :: JField("item", i) :: Nil) =>
@@ -17,9 +17,12 @@ object Json {
     case SuggestionPayload(SuggestionType.Contributor, i) =>
       JObject(JField("type", JString("contributor")), JField("item", Extraction.decompose(i)))
   }))
+}
 
-  implicit val formats =
-    org.json4s.DefaultFormats ++
-    com.blinkbox.books.json.DefaultFormats.customSerializers +
+object Json extends Json4sJacksonSupport with Serializers {
+
+  override implicit val json4sJacksonFormats =
+    com.blinkbox.books.json.DefaultFormats ++
+    com.blinkbox.books.elasticsearch.client.Formats.all +
     suggestionPayloadSerializer
 }

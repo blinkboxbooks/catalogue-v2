@@ -2,14 +2,12 @@ package com.blinkbox.books.agora.catalogue.app
 
 import java.net.{MalformedURLException, URL}
 import java.util.concurrent.TimeUnit
-
 import com.blinkbox.books.agora.catalogue.book.BookConfig
 import com.blinkbox.books.agora.catalogue.contributor.ContributorConfig
 import com.blinkbox.books.catalogue.common.ElasticsearchConfig
 import com.blinkbox.books.config._
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException.BadValue
-
 import scala.concurrent.duration._
 
 case class AppConfig(service: ApiConfig,

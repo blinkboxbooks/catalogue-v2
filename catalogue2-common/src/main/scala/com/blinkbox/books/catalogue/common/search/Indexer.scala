@@ -1,17 +1,16 @@
 package com.blinkbox.books.catalogue.common.search
 
 import com.blinkbox.books.catalogue.common.Events.{Book => EventBook, BookPrice => EventBookPrice, Undistribute => EventUndistribute}
+import com.blinkbox.books.catalogue.common.Json
 import com.blinkbox.books.catalogue.common.{DistributeContent, ElasticsearchConfig, IndexEntities => idx}
+import com.blinkbox.books.elasticsearch.client.{ElasticClient => BBBElasticClient, ElasticClientApi}
 import com.sksamuel.elastic4s.ElasticDsl._
-import com.sksamuel.elastic4s._
 import com.sksamuel.elastic4s.mappings.FieldType._
 import com.sksamuel.elastic4s.source.DocumentSource
 import org.elasticsearch.index.VersionType
 import org.json4s.jackson.Serialization
 import scala.concurrent.{ExecutionContext, Future}
-import com.sksamuel.elastic4s.mappings.MultiFieldDefinition
-import com.sksamuel.elastic4s.WhitespaceAnalyzer
-import com.sksamuel.elastic4s.WhitespaceAnalyzer
+import com.sksamuel.elastic4s._
 
 sealed trait BulkItemResponse
 case class Successful(docId: String) extends BulkItemResponse
@@ -24,23 +23,21 @@ trait Indexer {
   def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]]
 }
 
-class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec: ExecutionContext)
-  extends Indexer with ElasticSearchFutures{
+class HttpEsIndexer(config: ElasticsearchConfig, client: BBBElasticClient)(implicit ec: ExecutionContext) extends Indexer{
 
+  import ElasticClientApi._
   import com.sksamuel.elastic4s.ElasticDsl.{bulk, index => esIndex}
+  import Json._
 
   case class BookJsonSource(book: EventBook) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.Book.fromMessage(book))
   }
 
   case class UndistributeJsonSource(undistribute: EventUndistribute) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.Undistribute.fromMessage(undistribute))
   }
 
   case class BookPriceJsonSource(bookPrice: EventBookPrice) extends DocumentSource {
-    import com.blinkbox.books.catalogue.common.Json.formats
     def json = Serialization.write(idx.BookPrice.fromMessage(bookPrice))
   }
 
@@ -85,21 +82,21 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
         .parent(content.isbn)
   }
 
-  override def index(content: DistributeContent): Future[SingleResponse] =
+  override def index(content: DistributeContent): Future[SingleResponse] = {
     content match {
       case c: EventBook =>
         client.execute(indexDefinition(c))
-          .recoverException
           .flatMap { _ =>
             index(EventUndistribute(c.isbn, c.sequenceNumber, usable = true, reasons = List.empty))
           }
       case c: EventBookPrice =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp.getId))
+          .map(resp => SingleResponse(resp._id))
       case c: EventUndistribute =>
         client.execute(indexDefinition(c))
-          .recoverException.map(resp => SingleResponse(resp.getId))
+          .map(resp => SingleResponse(resp._id))
     }
+  }
 
   override def index(contents: Iterable[DistributeContent]): Future[Iterable[BulkItemResponse]] =
     client.execute {
@@ -113,12 +110,12 @@ class EsIndexer(config: ElasticsearchConfig, client: ElasticClient)(implicit ec:
           case c: EventUndistribute => List(indexDefinition(c))
         }).toList: _*
       )
-    }.recoverException.map { response =>
-      response.getItems.map { item =>
-        if (item.isFailed)
-          Failure(item.getId, Some(new RuntimeException(item.getFailureMessage)))
+    }.map { response =>
+      response.items.map { item =>
+        if (item.status.isFailure)
+          Failure(item._id, Some(new RuntimeException(item.error.getOrElse(item.status.value))))
         else
-          Successful(item.getId)
+          Successful(item._id)
       }
     }
 

@@ -11,7 +11,7 @@ trait IngestionParser[T, R] {
 }
 
 class JsonV2IngestionParser extends IngestionParser[EventBody,Book] {
-  import Json.formats
+  import Json._
 
   override def parse(content: EventBody): Try[Book] =
     Try(Serialization.read[Book](new String(content.content, "UTF-8")))

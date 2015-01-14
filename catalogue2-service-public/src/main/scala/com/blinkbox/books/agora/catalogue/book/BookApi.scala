@@ -5,16 +5,15 @@ import com.blinkbox.books.json.ExplicitTypeHints
 import com.blinkbox.books.logging.DiagnosticExecutionContext
 import com.blinkbox.books.spray.v1.{Error, ListPage, Version1JsonSupport}
 import com.blinkbox.books.spray.{Directives => CommonDirectives, _}
+import com.typesafe.scalalogging.StrictLogging
 import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
-import org.slf4j.LoggerFactory
+import org.joda.time.format.ISODateTimeFormat
 import spray.http.HttpHeaders.RawHeader
 import spray.http.StatusCodes._
 import spray.httpx.unmarshalling._
 import spray.routing._
 import scala.util.control.NonFatal
 import com.blinkbox.books.config.ApiConfig
-import scala.concurrent.{ExecutionContext, Future}
 
 trait BookRoutes extends HttpService {
   def getBookByIsbn: Route
@@ -23,15 +22,15 @@ trait BookRoutes extends HttpService {
   def getRelatedBooks: Route
 }
 
-/**
- * Catalogue API for books.
- */
 class BookApi(api: ApiConfig, config: BookConfig, service: BookService)
-             (implicit val actorRefFactory: ActorRefFactory) extends BookRoutes with CommonDirectives with Version1JsonSupport {
+             (implicit val actorRefFactory: ActorRefFactory) extends BookRoutes
+  with CommonDirectives
+  with Version1JsonSupport
+  with StrictLogging {
   
   implicit val executionContext = DiagnosticExecutionContext(actorRefFactory.dispatcher)
   implicit val timeout = api.timeout
-  implicit val log = LoggerFactory.getLogger(classOf[BookApi])
+  implicit val log = logger
   
   override val responseTypeHints = ExplicitTypeHints(Map(
     classOf[ListPage[_]] -> "urn:blinkboxbooks:schema:list",

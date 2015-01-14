@@ -4,10 +4,10 @@ import java.io.IOException
 import java.net.ConnectException
 import akka.actor.{Status, Props, ActorSystem}
 import akka.testkit.{ImplicitSender, TestActorRef, TestKit}
-import com.blinkbox.books.catalogue.common.Events.Book
 import com.blinkbox.books.catalogue.common.{BookFixtures, DistributeContent}
-import com.blinkbox.books.catalogue.common.search.{CommunicationException, SingleResponse, Indexer}
+import com.blinkbox.books.catalogue.common.search.{SingleResponse, Indexer}
 import com.blinkbox.books.catalogue.ingester.v1.parser.IngestionParser
+import com.blinkbox.books.elasticsearch.client.RequestException
 import com.blinkbox.books.messaging._
 import com.blinkbox.books.test.MockitoSyrup
 import com.typesafe.config.ConfigFactory
@@ -15,6 +15,7 @@ import org.json4s.JsonAST.JValue
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.FlatSpecLike
+import spray.can.Http.ConnectionAttemptFailedException
 import scala.concurrent.Future
 import scala.util.Success
 
@@ -68,11 +69,11 @@ class MessageHandlerTest extends TestKit(ActorSystem("test-system", ConfigFactor
     }
   }
 
-  it should "not notify error handler when CommunicationException is raised" in new MessageHandlerFixture {
+  it should "not notify error handler when ConnectionAttemptFailedException is raised" in new MessageHandlerFixture {
     val event = createEvent(dummyJValue)
     val book = BookFixtures.simpleBook
     when(indexer.index(book))
-      .thenReturn(Future.failed(CommunicationException(new RuntimeException)))
+      .thenReturn(Future.failed(RequestException("test", new ConnectionAttemptFailedException("", 0))))
       .thenReturn(Future.successful(SingleResponse(docId = "")))
     when(messageParser.parse(bookContent)).thenReturn(Success(book))
 

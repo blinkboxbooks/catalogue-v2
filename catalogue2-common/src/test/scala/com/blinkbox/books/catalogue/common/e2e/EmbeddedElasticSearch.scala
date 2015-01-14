@@ -18,6 +18,12 @@ class EmbeddedElasticSearch(config: ElasticsearchConfig) {
   private val settings = ImmutableSettings.settingsBuilder
     .put("path.data", dataDir.toString)
     .put("cluster.name", clusterName)
+    .put("index.store.type", "memory")
+    .put("index.number_of_shards", 1)
+    .put("index.number_of_replicas", 0)
+    .put("discovery.zen.ping.multicast.enabled", false)
+    .put("http.enabled", true)
+    .put("http.port", config.httpPort)
     .build
 
   private lazy val node = nodeBuilder().local(true).settings(settings).build
