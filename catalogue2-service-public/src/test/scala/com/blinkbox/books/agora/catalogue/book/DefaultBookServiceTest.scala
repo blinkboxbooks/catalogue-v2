@@ -49,7 +49,7 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
     title = "title",
     subtitle = Option.empty[String],
     contributors = List(Contributor("role", "id", "contributor", "sortName")),
-    availability = None,
+    availability = Some(BookAvailability(None, Some(Availability(true, "code", "extra")), None, None, None)),
     dates = Some(Dates(publish=Some(now), announce=None)),
     descriptions = List(desc),
     reviews = List.empty[OtherText],
@@ -102,6 +102,13 @@ class DefaultBookServiceTest extends FlatSpecLike with Matchers with MockitoSyru
   
   it should "have an empty sample link if there is no sample epub" in {
     addBook(book.copy(media=Some(Media(List(), List(image)))))
+    whenReady(service.getBookByIsbn(isbn)) { result =>
+      verifyZeroInteractions(linkHelper.linkForSampleMedia("sample"))
+    }
+  }
+  
+  it should "have an empty sample link if the book is undistributed" in {
+    addBook(book.copy(availability=Some(BookAvailability(None, Some(Availability(false, "code", "extra")), None, None, None))))
     whenReady(service.getBookByIsbn(isbn)) { result =>
       verifyZeroInteractions(linkHelper.linkForSampleMedia("sample"))
     }
