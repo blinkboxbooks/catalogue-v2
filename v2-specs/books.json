@@ -65,9 +65,9 @@
                         "in": "query",
                         "type": "string",
                         "enum": [
-                            "ebook",
-                            "paperback",
-                            "hardback"
+                            "Ebook",
+                            "Paperback",
+                            "Hardback"
                         ]
                     },
                     {
@@ -111,8 +111,8 @@
                         "in": "query",
                         "type": "string",
                         "enum": [
-                            "book",
-                            "author"
+                            "Book",
+                            "Author"
                         ],
                         "description": "Limit suggestions to a specific type"
                     }
@@ -194,7 +194,7 @@
                 "error": {
                     "type": "string",
                     "enum": [
-                        "invalid-isbn"
+                        "InvalidIsbn"
                     ]
                 }
             }
@@ -208,7 +208,7 @@
                 "error": {
                     "type": "string",
                     "enum": [
-                        "not-found"
+                        "NotFound"
                     ]
                 }
             }
@@ -441,7 +441,7 @@
                 "role": {
                     "type": "string",
                     "enum": [
-                        "author"
+                        "Author"
                     ],
                     "x-TODO": "Find out other valid vaules for the role"
                 },
