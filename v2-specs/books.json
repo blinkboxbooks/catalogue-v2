@@ -1,0 +1,823 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Catalogue V2 Books APIs",
+        "version": "2.0"
+    },
+    "paths": {
+        "/books": {
+            "get": {
+                "description": "The main browse and search endpoint; supports a wealth of filters and returns full books data together with possible filters (i.e. facets) that can be used to drill down in the result set",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "description": "Free-text user search - should support matching on titles, isbns, authors, categories, tags and description content with proper weighting to build an useful relevance model",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "category",
+                        "description": "Filter using BISAC-mapped categories",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "tag",
+                        "description": "Filter using automatic tags (e.g. \"Free\")",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "published_after",
+                        "description": "Filter by publication date",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    {
+                        "name": "published_before",
+                        "description": "Filter by publication date",
+                        "in": "query",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    {
+                        "name": "price_min",
+                        "description": "Filter by minimum price",
+                        "in": "query",
+                        "type": "number"
+                    },
+                    {
+                        "name": "price_max",
+                        "description": "Filter by maximum price",
+                        "in": "query",
+                        "type": "number"
+                    },
+                    {
+                        "name": "publisher",
+                        "description": "Filter by publisher id",
+                        "in": "query",
+                        "type": "string"
+                    },
+                    {
+                        "name": "available_as",
+                        "description": "This will be implemented only when we will integrate with Waterstones phisical bookshop",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "ebook",
+                            "paperback",
+                            "hardback"
+                        ]
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "Pagination - first result to return"
+                    },
+                    {
+                        "name": "count",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "Pagination - how many results should be returned"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/definitions/BookBrowseResponse"
+                    }
+                }
+            }
+        },
+        "/suggestions": {
+            "get": {
+                "description": "The endpoint to be used to fetch suggestions based on a partial query; this is meant to enable auto-complete like behaviour on client interfaces. Results will be returned grouped by result type (i.e. book and author)",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "type": "string",
+                        "description": "Free-text user input to be used to find suggestions"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "type": "integer",
+                        "description": "Maximum amount of results-per-type to be returned"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "type": "string",
+                        "enum": [
+                            "book",
+                            "author"
+                        ],
+                        "description": "Limit suggestions to a specific type"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/definitions/SuggestionsResponse"
+                    }
+                }
+            }
+        },
+        "/books/{isbn}": {
+            "get": {
+                "description": "Get a single book's metadata by ISBN",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "type": "string",
+                        "in": "path",
+                        "pattern": "/\\d{13}/"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/definitions/Book"
+                    },
+                    "404": {
+                        "description": "Returned if the required book does not exist or if the ISBN isn't a 13 digits number"
+                    }
+                }
+            }
+        },
+        "/books/_multiget": {
+            "get": {
+                "description": "Get a list of books by providing a list of ISBNs; for each ISBN provided in the request there will be an object in the response that will be either a book's metadata or a representation of an error",
+                "parameters": [
+                    {
+                        "name": "isbn",
+                        "type": "array",
+                        "collectionFormat": "multi",
+                        "items": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/definitions/BookMultigetResponse"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "BookMultigetResponse": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/Book"
+                    },
+                    {
+                        "$ref": "#/definitions/InvalidIsbn"
+                    },
+                    {
+                        "$ref": "#/definitions/BookNotFound"
+                    }
+                ]
+            }
+        },
+        "InvalidIsbn": {
+            "type": "object",
+            "properties": {
+                "isbn": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string",
+                    "enum": [
+                        "invalid-isbn"
+                    ]
+                }
+            }
+        },
+        "BookNotFound": {
+            "type": "object",
+            "properties": {
+                "isbn": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string",
+                    "enum": [
+                        "not-found"
+                    ]
+                }
+            }
+        },
+        "SuggestionsResponse": {
+            "type": "object",
+            "properties": {
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BookSuggestion"
+                    }
+                },
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AuthorSuggestion"
+                    }
+                }
+            }
+        },
+        "BookSuggestion": {
+            "type": "object",
+            "properties": {
+                "isbn": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "author": {
+                    "type": "string"
+                },
+                "image": {
+                    "description": "A cover image for the book; should be a small image, suitable for previews and very light on the wire",
+                    "type": "string",
+                    "format": "uri"
+                },
+                "link": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "isbn",
+                "title",
+                "link"
+            ]
+        },
+        "AuthorSuggestion": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "image": {
+                    "description": "A picture of the author; should be a small image, suitable for previews and very light on the wire",
+                    "type": "string",
+                    "format": "uri"
+                },
+                "link": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "link"
+            ]
+        },
+        "BookBrowseResponse": {
+            "title": "Response for a book search",
+            "type": "object",
+            "properties": {
+                "pagination": {
+                    "$ref": "#/definitions/PaginationInfo"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Book"
+                    }
+                },
+                "facets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Facet"
+                    }
+                }
+            }
+        },
+        "Facet": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/FacetFilter"
+                    }
+                }
+            }
+        },
+        "FacetFilter": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "count": {
+                    "type": "integer"
+                },
+                "link": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        },
+        "PaginationInfo": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "links": {
+                    "$ref": "#/definitions/PaginationLinks"
+                }
+            }
+        },
+        "PaginationLinks": {
+            "type": "object",
+            "properties": {
+                "this": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "previous": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "next": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "first": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "last": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "this"
+            ]
+        },
+        "Classification": {
+            "type": "object",
+            "properties": {
+                "realm": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "realm",
+                "id"
+            ]
+        },
+        "ClassificationList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Classification"
+            }
+        },
+        "Availability": {
+            "type": "object",
+            "properties": {
+                "available": {
+                    "type": "boolean"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "extra": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "available",
+                "code"
+            ]
+        },
+        "BookAvailability": {
+            "notificationType": {
+                "$ref": "#/definitions/Availability"
+            },
+            "publishingStatus": {
+                "$ref": "#/definitions/Availability"
+            },
+            "availabilityCode": {
+                "$ref": "#/definitions/Availability"
+            },
+            "productAvailability": {
+                "$ref": "#/definitions/Availability"
+            },
+            "blinkboxBooks": {
+                "$ref": "#/definitions/Availability"
+            }
+        },
+        "Contributor": {
+            "type": "object",
+            "description": "This is just a placeholder for the moment being",
+            "properties": {
+                "role": {
+                    "type": "string",
+                    "enum": [
+                        "author"
+                    ],
+                    "x-TODO": "Find out other valid vaules for the role"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "sortName": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "role",
+                "id",
+                "displayName",
+                "sortName"
+            ]
+        },
+        "TextList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "classification": {
+                        "$ref": "#/definitions/ClassificationList"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "author": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "classification",
+                    "content",
+                    "type"
+                ]
+            }
+        },
+        "Regions": {
+            "type": "object",
+            "properties": {
+                "GB": {
+                    "type": "boolean"
+                },
+                "ROW": {
+                    "type": "boolean"
+                },
+                "WORLD": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "Price": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "includesTax": {
+                    "type": "boolean"
+                },
+                "isAgency": {
+                    "type": "boolean"
+                },
+                "discountRate": {
+                    "type": "integer"
+                },
+                "validFrom": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "validUntil": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "applicableRegions": {
+                    "$ref": "#/definitions/Regions"
+                },
+                "tax": {
+                    "type": "object",
+                    "properties": {
+                        "rate": {
+                            "type": "string"
+                        },
+                        "percent": {
+                            "type": "number"
+                        },
+                        "amount": {
+                            "type": "number"
+                        },
+                        "taxableAmount": {
+                            "type": "number"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "amount",
+                "currency",
+                "includesTax",
+                "isAgency"
+            ]
+        },
+        "PriceList": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Price"
+            }
+        },
+        "Statistics": {
+            "type": "object",
+            "properties": {
+                "pages": {
+                    "type": "integer"
+                },
+                "sentences": {
+                    "type": "integer"
+                },
+                "words": {
+                    "type": "integer"
+                },
+                "syllabes": {
+                    "type": "integer"
+                },
+                "polysyllabes": {
+                    "type": "integer"
+                },
+                "smogGrade": {
+                    "type": "integer"
+                },
+                "adultThemes": {
+                    "type": "object",
+                    "properties": {
+                        "rating": {
+                            "type": "number"
+                        },
+                        "reviewers": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "SubjectList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "main": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "type",
+                    "code"
+                ]
+            }
+        },
+        "Series": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "number": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "title"
+            ]
+        },
+        "RelatedList": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "classification": {
+                        "$ref": "#/definitions/Classification"
+                    },
+                    "relation": {
+                        "type": "string"
+                    },
+                    "isbn": {
+                        "type": "string",
+                        "pattern": "/\\d{13}/"
+                    }
+                }
+            }
+        },
+        "Epub": {},
+        "Image": {},
+        "Media": {
+            "type": "object",
+            "properties": {
+                "epubs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Epub"
+                    }
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Image"
+                    }
+                }
+            }
+        },
+        "Source": {
+            "type": "object",
+            "properties": {
+                "deliveredAt": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "uri": {
+                    "type": "string"
+                },
+                "fileName": {
+                    "type": "string"
+                },
+                "contentType": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "system": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "version": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "processedAt": {
+                    "type": "string",
+                    "format": "datetime"
+                }
+            },
+            "required": [
+                "username"
+            ]
+        },
+        "Book": {
+            "type": "object",
+            "description": "Representation of a book's metadata",
+            "properties": {
+                "classification": {
+                    "$ref": "#/definitions/ClassificationList"
+                },
+                "isbn": {
+                    "type": "string"
+                },
+                "format": {
+                    "marvinIncompatible": {
+                        "type": "boolean"
+                    },
+                    "epubType": {
+                        "type": "string"
+                    },
+                    "productForm": {
+                        "type": "string"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "contributors": {
+                    "$ref": "#/definitions/Contributor"
+                },
+                "availability": {
+                    "$ref": "#/definitions/BookAvailability"
+                },
+                "dates": {
+                    "type": "object",
+                    "properties": {
+                        "publish": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "announce": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                },
+                "descriptions": {
+                    "$ref": "#/definitions/TextList"
+                },
+                "reviews": {
+                    "$ref": "#/definitions/TextList"
+                },
+                "languages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "language"
+                    }
+                },
+                "originalLanguages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "language"
+                    }
+                },
+                "supplyRights": {
+                    "$ref": "#/definitions/Regions"
+                },
+                "salesRights": {
+                    "$ref": "#/definitions/Regions"
+                },
+                "publisher": {
+                    "type": "string"
+                },
+                "imprint": {
+                    "type": "string"
+                },
+                "prices": {
+                    "$ref": "#/definitions/PriceList"
+                },
+                "statistics": {
+                    "$ref": "#/definitions/Statistics"
+                },
+                "subjects": {
+                    "$ref": "#/definitions/SubjectList"
+                },
+                "series": {
+                    "$ref": "#/definitions/Series"
+                },
+                "related": {
+                    "$ref": "#/definitions/RelatedList"
+                },
+                "media": {
+                    "$ref": "#/definitions/Media"
+                },
+                "source": {
+                    "$ref": "#/definitions/Source"
+                }
+            },
+            "required": [
+                "isbn",
+                "classification",
+                "title",
+                "source"
+            ]
+        }
+    }
+}
