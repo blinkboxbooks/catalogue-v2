@@ -74,12 +74,14 @@
                         "name": "offset",
                         "in": "query",
                         "type": "integer",
+                        "minimum": 0,
                         "description": "Pagination - first result to return"
                     },
                     {
                         "name": "count",
                         "in": "query",
                         "type": "integer",
+                        "minimum": 1,
                         "description": "Pagination - how many results should be returned"
                     }
                 ],
@@ -104,6 +106,7 @@
                         "name": "limit",
                         "in": "query",
                         "type": "integer",
+                        "minimum": 1,
                         "description": "Maximum amount of results-per-type to be returned"
                     },
                     {
