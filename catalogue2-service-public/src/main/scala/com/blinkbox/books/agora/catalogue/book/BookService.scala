@@ -51,7 +51,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
       isbn = book.isbn,
       title = book.title,
       publicationDate = getWithException(publicationDate, "'publicationDate' missing."),
-      sampleEligible = getSampleUri(media).isDefined,
+      sampleEligible = getSampleUri(book).isDefined,
       images = getImages(media),
       links = Some(generateLinks(book, media))
     )
@@ -65,13 +65,19 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
       .map(uri => V1Image("urn:blinkboxbooks:image:cover", uri.uri))
   }
 
-  private def getSampleUri(media: Media): Option[Uri] = {
-    media.epubs
-      .filter(epub => isRealm(epub.classification, id="sample"))
-      .flatMap(epub => epub.uris)
-      .filter(isStatic)
-      .headOption
+  private def getSampleUri(book: Book): Option[Uri] = {
+    if(!isAvailable(book))
+      Option.empty
+    else
+      book.media.get.epubs
+        .filter(epub => isRealm(epub.classification, id="sample"))
+        .flatMap(epub => epub.uris)
+        .filter(isStatic)
+        .headOption
   }
+  
+  private def isAvailable(book: Book): Boolean =
+    book.availability.flatMap(a => a.publishingStatus).map(ps => ps.available).getOrElse(false)
   
   private def generateLinks(book: Book, media: Media) : List[V1Link] = {
     val bookLinks = List(
@@ -80,7 +86,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
       linkHelper.linkForBookPricing(book.isbn)
     )
     val contributorLinks = for (c <- book.contributors) yield linkHelper.linkForContributor(c.id, c.displayName)
-    val sampleLink = getSampleUri(media).map(uri => linkHelper.linkForSampleMedia(uri.uri))
+    val sampleLink = getSampleUri(book).map(uri => linkHelper.linkForSampleMedia(uri.uri))
     bookLinks ++ contributorLinks ++ sampleLink
   }
   
