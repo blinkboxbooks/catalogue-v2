@@ -1,5 +1,11 @@
 
 
+## 0.1.73 ([#88](https://git.mobcastdev.com/Agora/catalogue-v2/pull/88) 2015-01-14 12:36:08)
+
+CAT-147: Removed sample link for undistributed books
+
+### bugfix
+
 ## 0.1.72 ([#87](https://git.mobcastdev.com/Agora/catalogue-v2/pull/87) 2015-01-13 16:32:57)
 
 PT-582: Remove deprecated components
