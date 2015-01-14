@@ -67,7 +67,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
 
   private def getSampleUri(book: Book): Option[Uri] = {
     if(!isAvailable(book))
-      Option.empty
+      None
     else
       book.media.get.epubs
         .filter(epub => isRealm(epub.classification, id="sample"))
@@ -76,7 +76,7 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   }
   
   private def isAvailable(book: Book): Boolean =
-    book.availability.flatMap(a => a.publishingStatus).map(ps => ps.available).getOrElse(false)
+    book.availability.flatMap(a => a.publishingStatus).exists(ps => ps.available)
   
   private def generateLinks(book: Book, media: Media) : List[V1Link] = {
     val bookLinks = List(
