@@ -151,34 +151,17 @@ paths:
           $ref: "#/definitions/BookMultigetResponse"
 definitions:
   BookMultigetResponse:
-    type: "array"
-    items:
-      type: "object"
-      oneOf:
-        -
+    type: "object"
+    properties:
+      notFound:
+        description: "A list of ISBNs that have not been found in the index"
+        type: "array"
+        items:
+          type: "string"
+      items:
+        type: "array"
+        items:
           $ref: "#/definitions/Book"
-        -
-          $ref: "#/definitions/InvalidIsbn"
-        -
-          $ref: "#/definitions/BookNotFound"
-  InvalidIsbn:
-    type: "object"
-    properties:
-      isbn:
-        type: "string"
-      error:
-        type: "string"
-        enum:
-          - "InvalidIsbn"
-  BookNotFound:
-    type: "object"
-    properties:
-      isbn:
-        type: "string"
-      error:
-        type: "string"
-        enum:
-          - "NotFound"
   SuggestionsResponse:
     type: "object"
     properties:
