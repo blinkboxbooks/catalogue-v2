@@ -266,20 +266,6 @@ definitions:
       last:
         type: "string"
         format: "uri"
-  Classification:
-    type: "object"
-    properties:
-      realm:
-        type: "string"
-      id:
-        type: "string"
-    required:
-      - "realm"
-      - "id"
-  ClassificationList:
-    type: "array"
-    items:
-      $ref: "#/definitions/Classification"
   Availability:
     type: "object"
     properties:
@@ -328,8 +314,6 @@ definitions:
     items:
       type: "object"
       properties:
-        classification:
-          $ref: "#/definitions/ClassificationList"
         content:
           type: "string"
         type:
@@ -337,7 +321,6 @@ definitions:
         author:
           type: "string"
       required:
-        - "classification"
         - "content"
         - "type"
   Regions:
@@ -431,8 +414,6 @@ definitions:
     items:
       type: "object"
       properties:
-        classification:
-          $ref: "#/definitions/Classification"
         relation:
           type: "string"
         isbn:
@@ -441,8 +422,6 @@ definitions:
   Epub:
     type: "object"
     properties:
-      classification:
-        $ref: "#/definitions/ClassificationList"
       uris:
         type: "array"
         items:
@@ -453,15 +432,12 @@ definitions:
       size:
         type: "integer"
     required:
-      - "classification"
       - "uris"
       - "wordCount"
       - "size"
   Image:
     type: "object"
     properties:
-      classification:
-        $ref: "#/definitions/ClassificationList"
       uris:
         type: "array"
         items:
@@ -474,7 +450,6 @@ definitions:
       size:
         type: "integer"
     required:
-      - "classification"
       - "uris"
       - "size"
   Media:
@@ -493,8 +468,6 @@ definitions:
     type: "object"
     description: "Representation of a book's metadata"
     properties:
-      classification:
-        $ref: "#/definitions/ClassificationList"
       isbn:
         type: "string"
       format:
@@ -557,5 +530,4 @@ definitions:
         $ref: "#/definitions/Media"
     required:
       - "isbn"
-      - "classification"
       - "title"
