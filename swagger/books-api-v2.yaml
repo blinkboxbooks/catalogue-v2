@@ -12,13 +12,18 @@ paths:
         -
           name: "q"
           description: |
-            Free-text user search - should support matching on titles, isbns, authors, categories, tags and description
+            Free-text user search - should support matching on titles, isbns, authors, genres, tags and description
             content with proper weighting to build an useful relevance model
           in: "query"
           type: "string"
         -
-          name: "category"
-          description: "Filter using BISAC-mapped categories"
+          name: "genre"
+          description: "Filter using BISAC-mapped genres"
+          in: "query"
+          type: "string"
+        -
+          name: "bisac"
+          description: "Filter using a BISAC code"
           in: "query"
           type: "string"
         -
@@ -108,6 +113,7 @@ paths:
           in: "query"
           type: "string"
           description: "Free-text user input to be used to find suggestions"
+          minLength: 3
         -
           name: "count"
           in: "query"
