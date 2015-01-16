@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: "Catalogue V2 Books APIs"
+  title: Catalogue V2 Books APIs
   version: "2.0"
 paths:
   /books:
@@ -10,94 +10,94 @@ paths:
         filters (i.e. facets) that can be used to drill down in the result set
       parameters:
         -
-          name: "q"
+          name: q
           description: |
             Free-text user search - should support matching on titles, isbns, authors, genres, tags and description
             content with proper weighting to build an useful relevance model
-          in: "query"
-          type: "string"
+          in: query
+          type: string
         -
-          name: "genre"
-          description: "Filter using BISAC-mapped genres"
-          in: "query"
-          type: "string"
+          name: genre
+          description: Filter using BISAC-mapped genres
+          in: query
+          type: string
         -
-          name: "bisac"
-          description: "Filter using a BISAC code"
-          in: "query"
-          type: "string"
+          name: bisac
+          description: Filter using a BISAC code
+          in: query
+          type: string
         -
-          name: "tag"
-          description: "Filter using automatic tags (e.g. \"Free\")"
-          in: "query"
-          type: "string"
+          name: tag
+          description: Filter using automatic tags (e.g. "Free")
+          in: query
+          type: string
         -
-          name: "publishedAfter"
-          description: "Filter by publication date"
-          in: "query"
-          type: "string"
-          format: "date"
+          name: publishedAfter
+          description: Filter by publication date
+          in: query
+          type: string
+          format: date
         -
-          name: "publishedBefore"
-          description: "Filter by publication date"
-          in: "query"
-          type: "string"
-          format: "date"
+          name: publishedBefore
+          description: Filter by publication date
+          in: query
+          type: string
+          format: date
         -
-          name: "minPrice"
-          description: "Filter by minimum price"
-          in: "query"
-          type: "number"
+          name: minPrice
+          description: Filter by minimum price
+          in: query
+          type: number
         -
-          name: "maxPrice"
-          description: "Filter by maximum price"
-          in: "query"
-          type: "number"
+          name: maxPrice
+          description: Filter by maximum price
+          in: query
+          type: number
         -
-          name: "publisher"
-          description: "Filter by publisher id"
-          in: "query"
-          type: "string"
+          name: publisher
+          description: Filter by publisher id
+          in: query
+          type: string
         -
-          name: "availableAs"
-          description: "This will be implemented only when we will integrate with Waterstones physical bookshop"
-          in: "query"
-          type: "string"
-          format: "onixProductForm"
+          name: availableAs
+          description: This will be implemented only when we will integrate with Waterstones physical bookshop
+          in: query
+          type: string
+          format: onixProductForm
         -
-          name: "offset"
-          in: "query"
-          type: "integer"
+          name: offset
+          in: query
+          type: integer
           minimum: 0
-          description: "Pagination - first result to return"
+          description: Pagination - first result to return
         -
-          name: "count"
-          in: "query"
-          type: "integer"
+          name: count
+          in: query
+          type: integer
           minimum: 1
-          description: "Pagination - how many results should be returned"
+          description: Pagination - how many results should be returned
         -
-          name: "sortBy"
-          in: "query"
-          type: "string"
+          name: sortBy
+          in: query
+          type: string
           enum:
-            - "Relevance"
-            - "Popularity"
-            - "Price"
-            - "Title"
-            - "Author"
-            - "PublicationDate"
-          default: "Relevance"
-          description: "Sort criteria"
+            - Relevance
+            - Popularity
+            - Price
+            - Title
+            - Author
+            - PublicationDate
+          default: Relevance
+          description: Sort criteria
         -
-          name: "sortOrder"
-          in: "query"
-          type: "string"
+          name: sortOrder
+          in: query
+          type: string
           enum:
-            - "Asc"
-            - "Desc"
-          default: "Desc"
-          description: "Sort order"
+            - Asc
+            - Desc
+          default: Desc
+          description: Sort order
       responses:
         200:
           $ref: "#/definitions/BookList"
@@ -109,42 +109,42 @@ paths:
         type (i.e. book and author)
       parameters:
         -
-          name: "q"
-          in: "query"
-          type: "string"
-          description: "Free-text user input to be used to find suggestions"
+          name: q
+          in: query
+          type: string
+          description: Free-text user input to be used to find suggestions
           minLength: 3
         -
-          name: "count"
-          in: "query"
-          type: "integer"
+          name: count
+          in: query
+          type: integer
           minimum: 1
-          description: "Maximum amount of results-per-type to be returned"
+          description: Maximum amount of results-per-type to be returned
         -
-          name: "type"
-          in: "query"
-          type: "string"
+          name: type
+          in: query
+          type: string
           enum:
-            - "Book"
-            - "Author"
-          description: "Limit suggestions to a specific type"
+            - Book
+            - Author
+          description: Limit suggestions to a specific type
       responses:
         200:
           $ref: "#/definitions/SuggestionsResponse"
   /books/{isbn}:
     get:
-      description: "Get a single book's metadata by ISBN"
+      description: Get a single book's metadata by ISBN
       parameters:
         -
-          name: "isbn"
-          type: "string"
-          in: "path"
-          pattern: "/\\d{13}/"
+          name: isbn
+          type: string
+          in: path
+          pattern: /\\d{13}/
       responses:
         200:
           $ref: "#/definitions/Book"
         404:
-          description: "Returned if the required book does not exist or if the ISBN isn't a 13 digits number"
+          description: Returned if the required book does not exist or if the ISBN isn't a 13 digits number
   /books/_bulk:
     get:
       description: |
@@ -152,347 +152,347 @@ paths:
         be an object in the response that will be either a book's metadata or a representation of an error
       parameters:
         -
-          name: "isbn"
-          type: "array"
-          collectionFormat: "multi"
+          name: isbn
+          type: array
+          collectionFormat: multi
           items:
-            type: "string"
-          in: "query"
+            type: string
+          in: query
       responses:
         200:
           $ref: "#/definitions/BookBulk"
 definitions:
   BookBulk:
-    type: "object"
+    type: object
     properties:
       notFound:
-        description: "A list of ISBNs that have not been found in the index"
-        type: "array"
+        description: A list of ISBNs that have not been found in the index
+        type: array
         items:
-          type: "string"
+          type: string
       items:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/Book"
   SuggestionsResponse:
-    type: "object"
+    type: object
     properties:
       books:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/BookSuggestion"
       authors:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/AuthorSuggestion"
   BookSuggestion:
-    type: "object"
+    type: object
     properties:
       isbn:
-        type: "string"
+        type: string
       title:
-        type: "string"
+        type: string
       author:
-        type: "string"
+        type: string
       image:
-        description: "A cover image for the book; should be a small image, suitable for previews and very light on the wire"
-        type: "string"
-        format: "uri"
+        description: A cover image for the book; should be a small image, suitable for previews and very light on the wire
+        type: string
+        format: uri
       link:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
     required:
-      - "isbn"
-      - "title"
-      - "link"
+      - isbn
+      - title
+      - link
   AuthorSuggestion:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "string"
+        type: string
       name:
-        type: "string"
+        type: string
       image:
-        description: "A picture of the author; should be a small image, suitable for previews and very light on the wire"
-        type: "string"
-        format: "uri"
+        description: A picture of the author; should be a small image, suitable for previews and very light on the wire
+        type: string
+        format: uri
       link:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
     required:
-      - "id"
-      - "name"
-      - "link"
+      - id
+      - name
+      - link
   BookList:
-    title: "Response for a book search"
-    type: "object"
+    title: Response for a book search
+    type: object
     properties:
       pagination:
         $ref: "#/definitions/PaginationInfo"
       items:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/Book"
       facets:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/Facet"
   Facet:
-    type: "object"
+    type: object
     properties:
       title:
-        type: "string"
+        type: string
       filters:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/FacetFilter"
   FacetFilter:
-    type: "object"
+    type: object
     properties:
       title:
-        type: "string"
+        type: string
       count:
-        type: "integer"
+        type: integer
       link:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
   PaginationInfo:
-    type: "object"
+    type: object
     properties:
       total:
-        type: "integer"
+        type: integer
       links:
         $ref: "#/definitions/PaginationLinks"
   PaginationLinks:
-    type: "object"
+    type: object
     properties:
       previous:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
       next:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
       first:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
       last:
-        type: "string"
-        format: "uri"
+        type: string
+        format: uri
   Contributor:
-    type: "object"
-    description: "A contributor's data"
+    type: object
+    description: A contributor's data
     properties:
       role:
-        type: "string"
-        format: "onixContributorRole"
+        type: string
+        format: onixContributorRole
       id:
-        type: "string"
+        type: string
       displayName:
-        type: "string"
+        type: string
       sortName:
-        type: "string"
+        type: string
     required:
-      - "role"
-      - "id"
-      - "displayName"
-      - "sortName"
+      - role
+      - id
+      - displayName
+      - sortName
   TextList:
-    type: "array"
+    type: array
     items:
-      type: "object"
+      type: object
       properties:
         content:
-          type: "string"
+          type: string
         type:
-          type: "string"
+          type: string
         author:
-          type: "string"
+          type: string
       required:
-        - "content"
-        - "type"
+        - content
+        - type
   Regions:
-    type: "object"
+    type: object
     properties:
       GB:
-        type: "boolean"
+        type: boolean
   Price:
-    type: "object"
+    type: object
     properties:
       amount:
-        type: "number"
+        type: number
       currency:
-        type: "string"
+        type: string
       discountRate:
-        type: "integer"
+        type: integer
       validFrom:
-        type: "string"
-        format: "datetime"
+        type: string
+        format: datetime
       validUntil:
-        type: "string"
-        format: "datetime"
+        type: string
+        format: datetime
       applicableRegions:
         $ref: "#/definitions/Regions"
       tax:
-        type: "object"
+        type: object
         properties:
           rate:
-            type: "string"
+            type: string
           percent:
-            type: "number"
+            type: number
           amount:
-            type: "number"
+            type: number
           taxableAmount:
-            type: "number"
+            type: number
     required:
-      - "amount"
-      - "currency"
+      - amount
+      - currency
   PriceList:
-    type: "array"
+    type: array
     items:
       $ref: "#/definitions/Price"
   Statistics:
-    type: "object"
+    type: object
     properties:
       pages:
-        type: "integer"
+        type: integer
       sentences:
-        type: "integer"
+        type: integer
       words:
-        type: "integer"
+        type: integer
       syllabes:
-        type: "integer"
+        type: integer
       polysyllabes:
-        type: "integer"
+        type: integer
       smogGrade:
-        type: "integer"
+        type: integer
       adultThemes:
-        type: "object"
+        type: object
         properties:
           rating:
-            type: "number"
+            type: number
           reviewers:
-            type: "integer"
+            type: integer
   SubjectList:
-    type: "array"
+    type: array
     items:
-      type: "object"
+      type: object
       properties:
         type:
-          type: "string"
+          type: string
         code:
-          type: "string"
+          type: string
         main:
-          type: "boolean"
+          type: boolean
       required:
-        - "type"
-        - "code"
+        - type
+        - code
   RelatedList:
-    type: "array"
+    type: array
     items:
-      type: "object"
+      type: object
       properties:
         relation:
-          type: "string"
+          type: string
         isbn:
-          type: "string"
-          pattern: "/\\d{13}/"
+          type: string
+          pattern: /\\d{13}/
   Epub:
-    type: "object"
+    type: object
     properties:
       uris:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          format: "uri"
+          type: string
+          format: uri
       wordCount:
-        type: "integer"
+        type: integer
       size:
-        type: "integer"
+        type: integer
     required:
-      - "uris"
-      - "wordCount"
-      - "size"
+      - uris
+      - wordCount
+      - size
   Image:
-    type: "object"
+    type: object
     properties:
       uris:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          format: "uri"
+          type: string
+          format: uri
       width:
-        type: "integer"
+        type: integer
       heigt:
-        type: "integer"
+        type: integer
       size:
-        type: "integer"
+        type: integer
     required:
-      - "uris"
-      - "size"
+      - uris
+      - size
   Media:
-    type: "object"
+    type: object
     properties:
       epubs:
-        description: "A list of Epubs URIs; in this APIs there will only be samples in here"
-        type: "array"
+        description: A list of Epubs URIs; in this APIs there will only be samples in here
+        type: array
         items:
           $ref: "#/definitions/Epub"
       images:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/Image"
   Book:
-    type: "object"
-    description: "Representation of a book's metadata"
+    type: object
+    description: Representation of a book's metadata
     properties:
       isbn:
-        type: "string"
+        type: string
       format:
         marvinIncompatible:
-          type: "boolean"
+          type: boolean
         epubType:
-          type: "string"
+          type: string
         productForm:
-          type: "string"
+          type: string
       title:
-        type: "string"
+        type: string
       subtitle:
-        type: "string"
+        type: string
       description:
-        type: "string"
+        type: string
       contributors:
         $ref: "#/definitions/Contributor"
       dates:
-        type: "object"
+        type: object
         properties:
           publish:
-            type: "string"
-            format: "date"
+            type: string
+            format: date
           announce:
-            type: "string"
-            format: "date"
+            type: string
+            format: date
       descriptions:
         $ref: "#/definitions/TextList"
       reviews:
         $ref: "#/definitions/TextList"
       languages:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          format: "language"
+          type: string
+          format: language
       originalLanguages:
-        type: "array"
+        type: array
         items:
-          type: "string"
-          format: "language"
+          type: string
+          format: language
       supplyRights:
         $ref: "#/definitions/Regions"
       salesRights:
         $ref: "#/definitions/Regions"
       publisher:
-        type: "string"
+        type: string
       imprint:
-        type: "string"
+        type: string
       prices:
         $ref: "#/definitions/PriceList"
       statistics:
@@ -504,5 +504,5 @@ definitions:
       media:
         $ref: "#/definitions/Media"
     required:
-      - "isbn"
-      - "title"
+      - isbn
+      - title
