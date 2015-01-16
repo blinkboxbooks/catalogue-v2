@@ -316,10 +316,6 @@ definitions:
         type: "number"
       currency:
         type: "string"
-      includesTax:
-        type: "boolean"
-      isAgency:
-        type: "boolean"
       discountRate:
         type: "integer"
       validFrom:
@@ -344,8 +340,6 @@ definitions:
     required:
       - "amount"
       - "currency"
-      - "includesTax"
-      - "isAgency"
   PriceList:
     type: "array"
     items:
