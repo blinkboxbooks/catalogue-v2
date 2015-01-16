@@ -5,11 +5,15 @@ info:
 paths:
   /books:
     get:
-      description: "The main browse and search endpoint; supports a wealth of filters and returns full books data together with possible filters (i.e. facets) that can be used to drill down in the result set"
+      description: |
+        The main browse and search endpoint; supports a wealth of filters and returns full books data together with possible
+        filters (i.e. facets) that can be used to drill down in the result set
       parameters:
         -
           name: "q"
-          description: "Free-text user search - should support matching on titles, isbns, authors, categories, tags and description content with proper weighting to build an useful relevance model"
+          description: |
+            Free-text user search - should support matching on titles, isbns, authors, categories, tags and description
+            content with proper weighting to build an useful relevance model
           in: "query"
           type: "string"
         -
@@ -35,12 +39,12 @@ paths:
           type: "string"
           format: "date"
         -
-          name: "priceMin"
+          name: "minPrice"
           description: "Filter by minimum price"
           in: "query"
           type: "number"
         -
-          name: "priceMax"
+          name: "maxPrice"
           description: "Filter by maximum price"
           in: "query"
           type: "number"
@@ -51,13 +55,10 @@ paths:
           type: "string"
         -
           name: "availableAs"
-          description: "This will be implemented only when we will integrate with Waterstones phisical bookshop"
+          description: "This will be implemented only when we will integrate with Waterstones physical bookshop"
           in: "query"
           type: "string"
-          enum:
-            - "Ebook"
-            - "Paperback"
-            - "Hardback"
+          format: "onixProductForm"
         -
           name: "offset"
           in: "query"
@@ -94,10 +95,13 @@ paths:
           description: "Sort order"
       responses:
         200:
-          $ref: "#/definitions/BookBrowseResponse"
+          $ref: "#/definitions/BookList"
   /suggestions:
     get:
-      description: "The endpoint to be used to fetch suggestions based on a partial query; this is meant to enable auto-complete like behaviour on client interfaces. Results will be returned grouped by result type (i.e. book and author)"
+      description: |
+        The endpoint to be used to fetch suggestions based on a partial query; this is meant to enable
+        auto-complete like behaviour on client interfaces. Results will be returned grouped by result
+        type (i.e. book and author)
       parameters:
         -
           name: "q"
@@ -105,7 +109,7 @@ paths:
           type: "string"
           description: "Free-text user input to be used to find suggestions"
         -
-          name: "limit"
+          name: "count"
           in: "query"
           type: "integer"
           minimum: 1
@@ -137,7 +141,9 @@ paths:
           description: "Returned if the required book does not exist or if the ISBN isn't a 13 digits number"
   /books/_bulk:
     get:
-      description: "Get a list of books by providing a list of ISBNs; for each ISBN provided in the request there will be an object in the response that will be either a book's metadata or a representation of an error"
+      description: |
+        Get a list of books by providing a list of ISBNs; for each ISBN provided in the request there will
+        be an object in the response that will be either a book's metadata or a representation of an error
       parameters:
         -
           name: "isbn"
@@ -148,9 +154,9 @@ paths:
           in: "query"
       responses:
         200:
-          $ref: "#/definitions/BookMultigetResponse"
+          $ref: "#/definitions/BookBulk"
 definitions:
-  BookMultigetResponse:
+  BookBulk:
     type: "object"
     properties:
       notFound:
@@ -211,7 +217,7 @@ definitions:
       - "id"
       - "name"
       - "link"
-  BookBrowseResponse:
+  BookList:
     title: "Response for a book search"
     type: "object"
     properties:
@@ -266,38 +272,13 @@ definitions:
       last:
         type: "string"
         format: "uri"
-  Availability:
-    type: "object"
-    properties:
-      available:
-        type: "boolean"
-      code:
-        type: "string"
-      extra:
-        type: "string"
-    required:
-      - "available"
-      - "code"
-  BookAvailability:
-    notificationType:
-      $ref: "#/definitions/Availability"
-    publishingStatus:
-      $ref: "#/definitions/Availability"
-    availabilityCode:
-      $ref: "#/definitions/Availability"
-    productAvailability:
-      $ref: "#/definitions/Availability"
-    blinkboxBooks:
-      $ref: "#/definitions/Availability"
   Contributor:
     type: "object"
-    description: "This is just a placeholder for the moment being"
+    description: "A contributor's data"
     properties:
       role:
         type: "string"
-        enum:
-          - "Author"
-        x-TODO: "Find out other valid vaules for the role"
+        format: "onixContributorRole"
       id:
         type: "string"
       displayName:
@@ -327,10 +308,6 @@ definitions:
     type: "object"
     properties:
       GB:
-        type: "boolean"
-      ROW:
-        type: "boolean"
-      WORLD:
         type: "boolean"
   Price:
     type: "object"
@@ -485,8 +462,6 @@ definitions:
         type: "string"
       contributors:
         $ref: "#/definitions/Contributor"
-      availability:
-        $ref: "#/definitions/BookAvailability"
       dates:
         type: "object"
         properties:
