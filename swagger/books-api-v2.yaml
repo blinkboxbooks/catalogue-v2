@@ -139,7 +139,6 @@ paths:
           name: isbn
           type: string
           in: path
-          pattern: /\\d{13}/
       responses:
         200:
           $ref: "#/definitions/Book"
@@ -395,7 +394,6 @@ definitions:
           type: string
         isbn:
           type: string
-          pattern: /\\d{13}/
   Epub:
     type: object
     properties:
