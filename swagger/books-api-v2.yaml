@@ -32,13 +32,13 @@ paths:
           in: query
           type: string
         -
-          name: publishedAfter
+          name: minPublicationDate
           description: Filter by publication date
           in: query
           type: string
           format: date
         -
-          name: publishedBefore
+          name: maxPublicationDate
           description: Filter by publication date
           in: query
           type: string
