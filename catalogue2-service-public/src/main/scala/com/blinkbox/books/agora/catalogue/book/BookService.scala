@@ -19,6 +19,7 @@ trait BookDao {
   def getBooks(isbns: List[String]): Future[List[Book]]
   def getBooksByContributor(id: String, minDate: Option[DateTime], maxDate: Option[DateTime], offset: Int, count: Int, sortField: String, sortDescending: Boolean): Future[BookList]
   def getRelatedBooks(isbn: String, offset: Int, count: Int): Future[BookList]
+  def getDistributionStatus(isbn: String): Future[Option[DistributionStatus]]
 }
 
 trait BookService {
@@ -47,13 +48,14 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
     def getWithException[T](from: Option[T], exceptionMessage: String): T = from.getOrElse(throw new IllegalArgumentException(exceptionMessage))
     val media = getWithException(book.media, "'media' missing.")
     val publicationDate = book.dates.map(_.publish).flatten
+    val sample = getSampleUri(book)
     BookRepresentation(
       isbn = book.isbn,
       title = book.title,
       publicationDate = getWithException(publicationDate, "'publicationDate' missing."),
-      sampleEligible = getSampleUri(book).isDefined,
+      sampleEligible = sample.isDefined,
       images = getImages(media),
-      links = Some(generateLinks(book, media))
+      links = Some(generateLinks(book, media, sample))
     )
   }
   
@@ -66,26 +68,20 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   }
 
   private def getSampleUri(book: Book): Option[Uri] = {
-    if(!isAvailable(book))
-      None
-    else
-      book.media.get.epubs
-        .filter(epub => isRealm(epub.classification, id="sample"))
-        .flatMap(epub => epub.uris)
-        .find(isStatic)
+        book.media.get.epubs
+          .filter(epub => isRealm(epub.classification, id="sample"))
+          .flatMap(epub => epub.uris)
+          .find(isStatic)
   }
   
-  private def isAvailable(book: Book): Boolean =
-    book.availability.flatMap(a => a.publishingStatus).exists(ps => ps.available)
-  
-  private def generateLinks(book: Book, media: Media) : List[V1Link] = {
+  private def generateLinks(book: Book, media: Media, sample: Option[Uri]) : List[V1Link] = {
     val bookLinks = List(
       linkHelper.linkForBookSynopsis(book.isbn),
       linkHelper.linkForPublisher(123, book.publisher.get), // TODO - publisher ID!!!
       linkHelper.linkForBookPricing(book.isbn)
     )
     val contributorLinks = for (c <- book.contributors) yield linkHelper.linkForContributor(c.id, c.displayName)
-    val sampleLink = getSampleUri(book).map(uri => linkHelper.linkForSampleMedia(uri.uri))
+    val sampleLink = sample.map(uri => linkHelper.linkForSampleMedia(uri.uri))
     bookLinks ++ contributorLinks ++ sampleLink
   }
   
@@ -133,5 +129,5 @@ class DefaultBookService(dao: BookDao, linkHelper: LinkHelper) extends BookServi
   override def getRelatedBooks(isbn: String, page: Page): Future[ListPage[BookRepresentation]] = {
     val res = dao.getRelatedBooks(isbn, page.offset, page.count)
     res map { bookList => ListPage(bookList.total, page.offset, page.count, bookList.books.map(toBookRepresentation), None) }
-  }
+  }  
 }
