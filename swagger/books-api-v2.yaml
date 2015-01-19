@@ -115,7 +115,6 @@ paths:
           in: query
           type: string
           description: Free-text user input to be used to find suggestions
-          minLength: 3
         -
           name: count
           in: query
