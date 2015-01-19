@@ -12,6 +12,7 @@ import spray.http.StatusCodes
 import com.sksamuel.elastic4s.ElasticDsl._
 import org.joda.time.DateTime
 import scala.concurrent.{Future, ExecutionContext}
+import com.blinkbox.books.catalogue.common.DistributionStatus
 
 class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with ElasticSearchSupport {
   import ElasticClientApi._
@@ -40,6 +41,12 @@ class ElasticBookDao(client: ElasticClient, index: String) extends BookDao with 
     } map(_._source) recover {
       case UnsuccessfulResponse(StatusCodes.NotFound, _) => None
     }
+  }
+  
+  override def getDistributionStatus(isbn: String): Future[Option[DistributionStatus]] = {
+	client.execute {
+	  (get id isbn from "distribution-status").sourceIs[DistributionStatus]
+	} map(_._source)
   }
 
   override def getBooks(isbns: List[String]): Future[List[Book]] = {

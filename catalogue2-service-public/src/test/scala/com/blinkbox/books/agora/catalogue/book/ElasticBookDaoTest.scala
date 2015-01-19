@@ -67,6 +67,18 @@ class ElasticBookDaoTest extends FlatSpec
       result should equal(None)
     }
   }
+
+  /*
+  it should "find the distribution status for a given ISBN" in {
+    val undistribute = UndistributeFixtures.simpleWith("123").copy(usable = false)
+    catalogueIndex index (undistribute) andAfter { _ =>
+      whenReady(dao.getDistributionStatus("123")) { result =>
+        assert(isbn == res.isbn)
+        assert(!res.usable)
+      }
+    }
+  }
+  */
   
   it should "find multiple books by ISBN" in {
     whenReady(dao.getBooks(books.map(_.isbn))) { result =>
