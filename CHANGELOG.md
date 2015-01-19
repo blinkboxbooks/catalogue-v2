@@ -1,5 +1,11 @@
 
 
+## 0.1.74 ([#91](https://git.mobcastdev.com/Agora/catalogue-v2/pull/91) 2015-01-19 16:44:31)
+
+Reverted code so we get samples again
+
+### bugfix
+
 ## 0.1.73 ([#88](https://git.mobcastdev.com/Agora/catalogue-v2/pull/88) 2015-01-14 12:36:08)
 
 CAT-147: Removed sample link for undistributed books
