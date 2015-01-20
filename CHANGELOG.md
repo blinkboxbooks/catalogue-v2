@@ -1,5 +1,11 @@
 
 
+## 0.1.75 ([#92](https://git.mobcastdev.com/Agora/catalogue-v2/pull/92) 2015-01-20 11:33:55)
+
+Pt 610 - API path is configurable
+
+### bugfix
+
 ## 0.1.74 ([#91](https://git.mobcastdev.com/Agora/catalogue-v2/pull/91) 2015-01-19 16:44:31)
 
 Reverted code so we get samples again
