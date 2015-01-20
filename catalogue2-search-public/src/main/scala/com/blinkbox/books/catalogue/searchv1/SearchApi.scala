@@ -98,12 +98,10 @@ class SearchApi(apiConfig: ApiConfig, searchConfig: SearchApiConfig, searchServi
     }
 
   val serviceRoutes: Route = get {
-    pathPrefix("catalogue" / "search") {
-      pathPrefix("books") {
-        pathEnd(bookSearchRoute) ~ path(Segment / "similar")(similarBooksRoute)
-      } ~
-      path("suggestions")(suggestionsRoute)
-    }
+    pathPrefix("books") {
+      pathEnd(bookSearchRoute) ~ path(Segment / "similar")(similarBooksRoute)
+    } ~
+    path("suggestions")(suggestionsRoute)
   }
 
   def rejectionHandler = RejectionHandler {
