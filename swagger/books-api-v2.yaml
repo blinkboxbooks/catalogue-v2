@@ -100,6 +100,17 @@ paths:
             - Desc
           default: Desc
           description: Sort order
+        -
+          name: format
+          description: |
+            Decides how many fields to return for each entity; Minimal will include only ids/link, Standard (default) most fields
+            except description and long texts and Full will include all available metadata.
+          in: query
+          type: string
+          enum:
+            - Minimal
+            - Standard
+            - Full
       responses:
         200:
           $ref: "#/definitions/BookList"
