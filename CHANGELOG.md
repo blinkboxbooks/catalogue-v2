@@ -1,5 +1,13 @@
 
 
+## 0.1.76 ([#89](https://git.mobcastdev.com/Agora/catalogue-v2/pull/89) 2015-01-20 17:35:14)
+
+PT-486 Introduce specs for V2 book endpoints
+
+### Improvements
+
+This PR introduces a provisional swagger documentation for the hypothetical V2 book/search APIs. The response specification of a book's meta-data is based on the messages received by Marvin v2, it is very temporary and it is meant to show what data we could use/return in the new service.
+
 ## 0.1.75 ([#92](https://git.mobcastdev.com/Agora/catalogue-v2/pull/92) 2015-01-20 11:33:55)
 
 Pt 610 - API path is configurable
