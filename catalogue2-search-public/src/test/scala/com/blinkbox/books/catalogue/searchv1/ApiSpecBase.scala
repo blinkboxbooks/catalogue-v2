@@ -18,7 +18,7 @@ trait ApiSpecBase extends HttpEsSpec with ScalatestRouteTest with Version1JsonSu
   implicit val routeTestTimeout = RouteTestTimeout(15.seconds)
 
   lazy val searchService = new EsV1SearchService(searchConfig, esClient)
-  lazy val apiUrl = new URL("http://localhost:9595")
+  lazy val apiUrl = new URL("http://localhost:9595/catalogue/search")
   lazy val apiConfig = ApiConfig(apiUrl, apiUrl, 2.seconds)
   lazy val searchApiConfig = SearchApiConfig(50, 10, 10, 60.seconds)
   lazy val apiService = new SearchApi(apiConfig, searchApiConfig, searchService)
